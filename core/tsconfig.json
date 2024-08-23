@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"noEmit": true,
+		"lib": ["ESNext", "DOM"],
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"target": "ESNext",
+		"moduleResolution": "NodeNext",
+		"module": "NodeNext"
+	}
+}

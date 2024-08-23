@@ -1,0 +1,16 @@
+{
+	"scripts": {
+		"build": "./build-images.sh && tsc && biome ci .",
+		"start": "vite --host"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.8.3",
+		"@types/three": "^0.167.1",
+		"blockwise": "^2.8.1",
+		"core": "file:../core",
+		"rxjs": "^7.8.1",
+		"three": "^0.167.1",
+		"typescript": "^5.5.4",
+		"vite": "^5.4.0"
+	}
+}

@@ -1,0 +1,245 @@
+{
+	"name": "new-project",
+	"lockfileVersion": 3,
+	"requires": true,
+	"packages": {
+		"": {
+			"devDependencies": {
+				"@biomejs/biome": "^1.8.3",
+				"blockwise": "^2.8.1",
+				"rxjs": "^7.8.1",
+				"typescript": "^5.5.4",
+				"uid": "^2.0.2"
+			}
+		},
+		"node_modules/@biomejs/biome": {
+			"version": "1.8.3",
+			"resolved": "https://registry.npmjs.org/@biomejs/biome/-/biome-1.8.3.tgz",
+			"integrity": "sha512-/uUV3MV+vyAczO+vKrPdOW0Iaet7UnJMU4bNMinggGJTAnBPjCoLEYcyYtYHNnUNYlv4xZMH6hVIQCAozq8d5w==",
+			"dev": true,
+			"hasInstallScript": true,
+			"bin": {
+				"biome": "bin/biome"
+			},
+			"engines": {
+				"node": ">=14.21.3"
+			},
+			"funding": {
+				"type": "opencollective",
+				"url": "https://opencollective.com/biome"
+			},
+			"optionalDependencies": {
+				"@biomejs/cli-darwin-arm64": "1.8.3",
+				"@biomejs/cli-darwin-x64": "1.8.3",
+				"@biomejs/cli-linux-arm64": "1.8.3",
+				"@biomejs/cli-linux-arm64-musl": "1.8.3",
+				"@biomejs/cli-linux-x64": "1.8.3",
+				"@biomejs/cli-linux-x64-musl": "1.8.3",
+				"@biomejs/cli-win32-arm64": "1.8.3",
+				"@biomejs/cli-win32-x64": "1.8.3"
+			}
+		},
+		"node_modules/@biomejs/cli-darwin-arm64": {
+			"version": "1.8.3",
+			"resolved": "https://registry.npmjs.org/@biomejs/cli-darwin-arm64/-/cli-darwin-arm64-1.8.3.tgz",
+			"integrity": "sha512-9DYOjclFpKrH/m1Oz75SSExR8VKvNSSsLnVIqdnKexj6NwmiMlKk94Wa1kZEdv6MCOHGHgyyoV57Cw8WzL5n3A==",
+			"cpu": [
+				"arm64"
+			],
+			"dev": true,
+			"optional": true,
+			"os": [
+				"darwin"
+			],
+			"engines": {
+				"node": ">=14.21.3"
+			}
+		},
+		"node_modules/@biomejs/cli-darwin-x64": {
+			"version": "1.8.3",
+			"resolved": "https://registry.npmjs.org/@biomejs/cli-darwin-x64/-/cli-darwin-x64-1.8.3.tgz",
+			"integrity": "sha512-UeW44L/AtbmOF7KXLCoM+9PSgPo0IDcyEUfIoOXYeANaNXXf9mLUwV1GeF2OWjyic5zj6CnAJ9uzk2LT3v/wAw==",
+			"cpu": [
+				"x64"
+			],
+			"dev": true,
+			"optional": true,
+			"os": [
+				"darwin"
+			],
+			"engines": {
+				"node": ">=14.21.3"
+			}
+		},
+		"node_modules/@biomejs/cli-linux-arm64": {
+			"version": "1.8.3",
+			"resolved": "https://registry.npmjs.org/@biomejs/cli-linux-arm64/-/cli-linux-arm64-1.8.3.tgz",
+			"integrity": "sha512-fed2ji8s+I/m8upWpTJGanqiJ0rnlHOK3DdxsyVLZQ8ClY6qLuPc9uehCREBifRJLl/iJyQpHIRufLDeotsPtw==",
+			"cpu": [
+				"arm64"
+			],
+			"dev": true,
+			"optional": true,
+			"os": [
+				"linux"
+			],
+			"engines": {
+				"node": ">=14.21.3"
+			}
+		},
+		"node_modules/@biomejs/cli-linux-arm64-musl": {
+			"version": "1.8.3",
+			"resolved": "https://registry.npmjs.org/@biomejs/cli-linux-arm64-musl/-/cli-linux-arm64-musl-1.8.3.tgz",
+			"integrity": "sha512-9yjUfOFN7wrYsXt/T/gEWfvVxKlnh3yBpnScw98IF+oOeCYb5/b/+K7YNqKROV2i1DlMjg9g/EcN9wvj+NkMuQ==",
+			"cpu": [
+				"arm64"
+			],
+			"dev": true,
+			"optional": true,
+			"os": [
+				"linux"
+			],
+			"engines": {
+				"node": ">=14.21.3"
+			}
+		},
+		"node_modules/@biomejs/cli-linux-x64": {
+			"version": "1.8.3",
+			"resolved": "https://registry.npmjs.org/@biomejs/cli-linux-x64/-/cli-linux-x64-1.8.3.tgz",
+			"integrity": "sha512-I8G2QmuE1teISyT8ie1HXsjFRz9L1m5n83U1O6m30Kw+kPMPSKjag6QGUn+sXT8V+XWIZxFFBoTDEDZW2KPDDw==",
+			"cpu": [
+				"x64"
+			],
+			"dev": true,
+			"optional": true,
+			"os": [
+				"linux"
+			],
+			"engines": {
+				"node": ">=14.21.3"
+			}
+		},
+		"node_modules/@biomejs/cli-linux-x64-musl": {
+			"version": "1.8.3",
+			"resolved": "https://registry.npmjs.org/@biomejs/cli-linux-x64-musl/-/cli-linux-x64-musl-1.8.3.tgz",
+			"integrity": "sha512-UHrGJX7PrKMKzPGoEsooKC9jXJMa28TUSMjcIlbDnIO4EAavCoVmNQaIuUSH0Ls2mpGMwUIf+aZJv657zfWWjA==",
+			"cpu": [
+				"x64"
+			],
+			"dev": true,
+			"optional": true,
+			"os": [
+				"linux"
+			],
+			"engines": {
+				"node": ">=14.21.3"
+			}
+		},
+		"node_modules/@biomejs/cli-win32-arm64": {
+			"version": "1.8.3",
+			"resolved": "https://registry.npmjs.org/@biomejs/cli-win32-arm64/-/cli-win32-arm64-1.8.3.tgz",
+			"integrity": "sha512-J+Hu9WvrBevfy06eU1Na0lpc7uR9tibm9maHynLIoAjLZpQU3IW+OKHUtyL8p6/3pT2Ju5t5emReeIS2SAxhkQ==",
+			"cpu": [
+				"arm64"
+			],
+			"dev": true,
+			"optional": true,
+			"os": [
+				"win32"
+			],
+			"engines": {
+				"node": ">=14.21.3"
+			}
+		},
+		"node_modules/@biomejs/cli-win32-x64": {
+			"version": "1.8.3",
+			"resolved": "https://registry.npmjs.org/@biomejs/cli-win32-x64/-/cli-win32-x64-1.8.3.tgz",
+			"integrity": "sha512-/PJ59vA1pnQeKahemaQf4Nyj7IKUvGQSc3Ze1uIGi+Wvr1xF7rGobSrAAG01T/gUDG21vkDsZYM03NAmPiVkqg==",
+			"cpu": [
+				"x64"
+			],
+			"dev": true,
+			"optional": true,
+			"os": [
+				"win32"
+			],
+			"engines": {
+				"node": ">=14.21.3"
+			}
+		},
+		"node_modules/@lukeed/csprng": {
+			"version": "1.1.0",
+			"resolved": "https://registry.npmjs.org/@lukeed/csprng/-/csprng-1.1.0.tgz",
+			"integrity": "sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==",
+			"dev": true,
+			"engines": {
+				"node": ">=8"
+			}
+		},
+		"node_modules/blockwise": {
+			"version": "2.8.1",
+			"resolved": "https://registry.npmjs.org/blockwise/-/blockwise-2.8.1.tgz",
+			"integrity": "sha512-YrBfHRyzYzbJ3TRuOeBEf9mo69xZtaDM47tA6nW93/m1ioKfauFVfsoTitIxUsSqurzuglrVfW4GXndvAjnLAQ==",
+			"dev": true,
+			"hasShrinkwrap": true,
+			"dependencies": {
+				"rxjs": "^7.8.1"
+			}
+		},
+		"node_modules/blockwise/node_modules/rxjs": {
+			"version": "7.8.1",
+			"resolved": "https://registry.npmjs.org/rxjs/-/rxjs-7.8.1.tgz",
+			"integrity": "sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==",
+			"dev": true,
+			"dependencies": {
+				"tslib": "^2.1.0"
+			}
+		},
+		"node_modules/blockwise/node_modules/tslib": {
+			"version": "2.6.2",
+			"resolved": "https://registry.npmjs.org/tslib/-/tslib-2.6.2.tgz",
+			"integrity": "sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==",
+			"dev": true
+		},
+		"node_modules/rxjs": {
+			"version": "7.8.1",
+			"resolved": "https://registry.npmjs.org/rxjs/-/rxjs-7.8.1.tgz",
+			"integrity": "sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==",
+			"dev": true,
+			"dependencies": {
+				"tslib": "^2.1.0"
+			}
+		},
+		"node_modules/tslib": {
+			"version": "2.6.3",
+			"resolved": "https://registry.npmjs.org/tslib/-/tslib-2.6.3.tgz",
+			"integrity": "sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==",
+			"dev": true
+		},
+		"node_modules/typescript": {
+			"version": "5.5.4",
+			"resolved": "https://registry.npmjs.org/typescript/-/typescript-5.5.4.tgz",
+			"integrity": "sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==",
+			"dev": true,
+			"bin": {
+				"tsc": "bin/tsc",
+				"tsserver": "bin/tsserver"
+			},
+			"engines": {
+				"node": ">=14.17"
+			}
+		},
+		"node_modules/uid": {
+			"version": "2.0.2",
+			"resolved": "https://registry.npmjs.org/uid/-/uid-2.0.2.tgz",
+			"integrity": "sha512-u3xV3X7uzvi5b1MncmZo3i2Aw222Zk1keqLA1YkHldREkAhAqi65wuPfe7lHx8H/Wzy+8CE7S7uS3jekIM5s8g==",
+			"dev": true,
+			"dependencies": {
+				"@lukeed/csprng": "^1.0.0"
+			},
+			"engines": {
+				"node": ">=8"
+			}
+		}
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"noEmit": true,
+		"strict": true,
+		"lib": ["ESNext", "DOM"],
+		"moduleResolution": "Bundler",
+		"target": "ES2015",
+		"module": "ESNext"
+	}
+}

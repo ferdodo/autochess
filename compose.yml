@@ -1,0 +1,16 @@
+services:
+  core:
+    build: core
+
+  front-deps:
+    build:
+      context: front
+      target: deps
+
+  front:
+    build: front
+    ports:
+      - "127.0.0.1:2437:5173"
+    depends_on:
+      - front-deps
+      - core
