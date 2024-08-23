@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"build": "./build-images.sh && tsc && biome ci .",
+		"build": "./build-images.sh && tsc && biome ci . && vite build",
 		"start": "vite --host"
 	},
 	"devDependencies": {

@@ -1,0 +1,42 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: build
+
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Download assets
+        run: |
+          wget -qO- ${{ secrets.ASSET_URL }} > encrypted.gpg
+          gpg --batch --yes --passphrase "${{ secrets.ASSET_SECRET_KEY }}" -o Tiny\ RPG\ Character\ Asset\ Pack\ v1.03b\ -Full\ 20\ Characters.zip -d encrypted.gpg
+          md5sum -c Tiny\ RPG\ Character\ Asset\ Pack\ v1.03b\ -Full\ 20\ Characters.zip.md5sum
+        working-directory: ./front
+
+      - name: 🏗️ Build core
+        run: |
+          npm install
+          npm run build
+        working-directory: ./core
+
+      - name: 🏗️ Build front
+        run: |
+          npm install
+          npm run build
+        working-directory: ./front
+
+      - name: 🚀 Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./front/dist
