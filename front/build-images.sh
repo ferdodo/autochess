@@ -11,7 +11,7 @@ if [ ! -f "$ZIP_FILE" ]; then
     exit 1
 fi
 
-unzip "$ZIP_FILE"
+unzip -q "$ZIP_FILE"
 
 function find-images {
     find . -name "*.png"
