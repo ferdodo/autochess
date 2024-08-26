@@ -1,7 +1,6 @@
 import { Appellation } from "../types/appellation";
-import { Rank } from "../types/rank";
 
-export function getHeroRank(appellation: Appellation) {
+export function getHeroRank(appellation: Appellation): number {
 	switch (appellation) {
 		//case Appellation.Archer:
 		//case Appellation.Orc:
@@ -15,7 +14,7 @@ export function getHeroRank(appellation: Appellation) {
 			//case Appellation.ArmoredSkeleton:
 			//case Appellation.Knight:
 			//case Appellation.KnightTemplar:
-			return Rank.One;
+			return 1;
 		//case Appellation.Swordsman:
 		//case Appellation.Wizard:
 		//case Appellation.OrcRider:

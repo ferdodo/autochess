@@ -10,6 +10,20 @@ export class DisplayFactory implements Subscribable<Display> {
 	display: Display = {
 		board: { x: 0, y: 0, w: 10, h: 10 },
 		pieces: [],
+		shop: [
+			{
+				id: uid(),
+				appellation: Appellation.Soldier,
+			},
+			{
+				id: uid(),
+				appellation: Appellation.Soldier,
+			},
+			{
+				id: uid(),
+				appellation: Appellation.Soldier,
+			},
+		],
 	};
 
 	pieceIterators: IterableIterator<Piece>[] = [];

@@ -16,14 +16,14 @@ import { renderPieceBarsBackgroundMesh } from "./utils/render-piece-bars-backgro
 import { renderPieceHealthBarGeometry } from "./utils/render-piece-health-bar-geometry";
 import { renderPieceHealthBarMeshes } from "./utils/render-piece-health-bar-meshes";
 import { renderPieceGradeMesh } from "./utils/render-piece-grade-mesh";
+import { renderShopProductBackgroundMeshes } from "./utils/render-shop-product-background-meshes";
 
 const context = createContext();
-const camera = createCamera();
 
 observeWindowDimentions()
 	.pipe(
 		startWith(getWindowDimentions()),
-		mapRenderer(context.scene, camera),
+		mapRenderer(context),
 		pairwise(),
 		tap(([oldRenderer]) => removeRenderer(oldRenderer)),
 	)
@@ -46,5 +46,6 @@ new DisplayFactory()
 			renderPieceHealthBarGeometry(context, display);
 			renderPieceHealthBarMeshes(context, display);
 			renderPieceGradeMesh(context, display);
+			renderShopProductBackgroundMeshes(context, display);
 		},
 	});

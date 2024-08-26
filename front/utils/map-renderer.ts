@@ -3,15 +3,13 @@ import type { Scene, PerspectiveCamera, OrthographicCamera } from "three";
 import { map } from "rxjs";
 import type { Block } from "blockwise";
 import type { Observable } from "rxjs";
+import type { Context } from "../types/context";
 
-export function mapRenderer(
-	scene: Scene,
-	camera: PerspectiveCamera | OrthographicCamera,
-) {
+export function mapRenderer(context: Context) {
 	return (source: Observable<Block>) =>
 		source.pipe(
 			map((windowDimentions) =>
-				createRenderer(windowDimentions, scene, camera),
+				createRenderer(windowDimentions, context.scene, context.camera),
 			),
 		);
 }
