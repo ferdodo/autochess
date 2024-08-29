@@ -17,35 +17,42 @@ import { renderPieceHealthBarGeometry } from "./utils/render-piece-health-bar-ge
 import { renderPieceHealthBarMeshes } from "./utils/render-piece-health-bar-meshes";
 import { renderPieceGradeMesh } from "./utils/render-piece-grade-mesh";
 import { renderShopProductBackgroundMeshes } from "./utils/render-shop-product-background-meshes";
+import { renderShopProductImageMeshes } from "./utils/render-shop-product-image-meshes";
+import { waitTextureLoaded } from "./utils/load-texture";
 
-const context = createContext();
+waitTextureLoaded
+	.then(() => {
+		const context = createContext();
 
-observeWindowDimentions()
-	.pipe(
-		startWith(getWindowDimentions()),
-		mapRenderer(context),
-		pairwise(),
-		tap(([oldRenderer]) => removeRenderer(oldRenderer)),
-	)
-	.subscribe();
+		observeWindowDimentions()
+			.pipe(
+				startWith(getWindowDimentions()),
+				mapRenderer(context),
+				pairwise(),
+				tap(([oldRenderer]) => removeRenderer(oldRenderer)),
+			)
+			.subscribe();
 
-new DisplayFactory()
-	.simulatePiece()
-	.simulatePiece()
-	.simulatePiece()
-	.simulatePiece()
-	.simulatePiece()
-	.subscribe({
-		next(display: Display) {
-			renderPieceGeometry(context, display);
-			renderPieceAnimatedTexture(context, display);
-			renderPieceMaterial(context, display);
-			renderPieceMesh(context, display);
-			renderPiecesBarsBackgroundGeometry(context, display);
-			renderPieceBarsBackgroundMesh(context, display);
-			renderPieceHealthBarGeometry(context, display);
-			renderPieceHealthBarMeshes(context, display);
-			renderPieceGradeMesh(context, display);
-			renderShopProductBackgroundMeshes(context, display);
-		},
-	});
+		new DisplayFactory()
+			.simulatePiece()
+			.simulatePiece()
+			.simulatePiece()
+			.simulatePiece()
+			.simulatePiece()
+			.subscribe({
+				next(display: Display) {
+					renderPieceGeometry(context, display);
+					renderPieceAnimatedTexture(context, display);
+					renderPieceMaterial(context, display);
+					renderPieceMesh(context, display);
+					renderPiecesBarsBackgroundGeometry(context, display);
+					renderPieceBarsBackgroundMesh(context, display);
+					renderPieceHealthBarGeometry(context, display);
+					renderPieceHealthBarMeshes(context, display);
+					renderPieceGradeMesh(context, display);
+					renderShopProductBackgroundMeshes(context, display);
+					renderShopProductImageMeshes(context, display);
+				},
+			});
+	})
+	.catch(console.error);

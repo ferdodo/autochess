@@ -9,6 +9,7 @@ import type {
 } from "three";
 
 import type { PieceAnimatedTexture } from "./piece-animated-texture";
+import type { Appellation } from "core/types/appellation";
 
 export interface Context {
 	camera: PerspectiveCamera | OrthographicCamera;
@@ -28,5 +29,8 @@ export interface Context {
 	shopProductBackgroundGeometry: PlaneGeometry;
 	shopProductBackgroundMaterial: MeshBasicMaterial;
 	shopProductBackgroundMeshes: Record<string, Mesh>;
+	shopProductImageGeometry: PlaneGeometry;
+	shopProductImageMaterial: Record<Appellation, MeshBasicMaterial>;
+	shopProductImageMeshes: Record<string, Mesh>;
 	scene: Scene;
 }
