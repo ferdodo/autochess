@@ -1,2 +1,2 @@
 #!/bin/bash
-docker cp . autochess-front-1:/autochess
+docker cp . autochess-sandbox-1:/autochess

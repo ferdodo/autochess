@@ -2,9 +2,9 @@ import { PlaneGeometry, MeshBasicMaterial, CircleGeometry } from "three";
 import type { Context } from "../types/context";
 import { createScene } from "./create-scene";
 import { createCamera } from "./create-camera";
-import { Appellation } from "core/types/appellation";
+import { Appellation } from "../types/appellation";
 import { createPieceAnimatedTexture } from "./create-piece-animated-texture";
-import { Animation } from "core/types/animation";
+import { Animation } from "../types/animation";
 
 export function createContext(): Context {
 	const map = createPieceAnimatedTexture(

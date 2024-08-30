@@ -1,7 +1,7 @@
 import { MeshBasicMaterial, DoubleSide } from "three";
-import type { Piece } from "core/types/piece";
+import type { Piece } from "../types/piece";
 import type { Context } from "../types/context";
-import type { Display } from "core/types/display";
+import type { Display } from "../types/display";
 
 export function renderPieceMaterial(context: Context, display: Display): void {
 	for (const piece of display.pieces) {

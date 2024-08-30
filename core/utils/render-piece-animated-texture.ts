@@ -1,8 +1,8 @@
 import type { CanvasTexture } from "three";
 import type { Context } from "../types/context";
-import type { Piece } from "core/types/piece";
+import type { Piece } from "../types/piece";
 import { createPieceAnimatedTexture } from "./create-piece-animated-texture";
-import type { Display } from "core/types/display";
+import type { Display } from "../types/display";
 
 export function renderPieceAnimatedTexture(
 	context: Context,

@@ -1,6 +1,6 @@
 import type { CanvasTexture } from "three";
-import type { Appellation } from "core/types/appellation";
-import type { Animation } from "core/types/animation";
+import type { Appellation } from "./appellation";
+import type { Animation } from "./animation";
 
 export interface PieceAnimatedTexture {
 	texture: CanvasTexture;

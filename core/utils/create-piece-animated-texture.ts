@@ -1,5 +1,5 @@
-import { Appellation } from "core/types/appellation";
-import { Animation } from "core/types/animation";
+import { Appellation } from "../types/appellation";
+import { Animation } from "../types/animation";
 import type { CanvasTexture } from "three";
 import { composeAnimatedTexture } from "./compose-animated-texture";
 import { loadTexture } from "./load-texture";

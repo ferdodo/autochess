@@ -22,7 +22,13 @@ jobs:
           wget -qO- ${{ secrets.ASSET_URL }} > encrypted.gpg
           gpg --batch --yes --passphrase "${{ secrets.ASSET_SECRET_KEY }}" -o Tiny\ RPG\ Character\ Asset\ Pack\ v1.03b\ -Full\ 20\ Characters.zip -d encrypted.gpg
           md5sum -c Tiny\ RPG\ Character\ Asset\ Pack\ v1.03b\ -Full\ 20\ Characters.zip.md5sum
-        working-directory: ./front
+        working-directory: ./assets
+
+      - name: 🏗️ Build assets
+        run: |
+          npm install
+          npm run build
+        working-directory: ./assets
 
       - name: 🏗️ Build core
         run: |
@@ -30,13 +36,13 @@ jobs:
           npm run build
         working-directory: ./core
 
-      - name: 🏗️ Build front
+      - name: 🏗️ Build sandbox
         run: |
           npm install
           npm run build
-        working-directory: ./front
+        working-directory: ./sandbox
 
       - name: 🚀 Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./front/dist
+          folder: ./sandbox/dist

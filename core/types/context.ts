@@ -9,7 +9,7 @@ import type {
 } from "three";
 
 import type { PieceAnimatedTexture } from "./piece-animated-texture";
-import type { Appellation } from "core/types/appellation";
+import type { Appellation } from "./appellation";
 
 export interface Context {
 	camera: PerspectiveCamera | OrthographicCamera;

@@ -1,9 +1,9 @@
 import { Subject, interval, map, combineLatestWith, startWith } from "rxjs";
 import { uid } from "uid";
-import { Animation } from "../types/animation";
-import { Appellation } from "../types/appellation";
-import type { Display } from "../types/display";
-import type { Piece } from "../types/piece";
+import { Animation } from "core/types/animation";
+import { Appellation } from "core/types/appellation";
+import type { Display } from "core/types/display";
+import type { Piece } from "core/types/piece";
 import type { Subscription, Subscribable, Observer } from "rxjs";
 
 export class DisplayFactory implements Subscribable<Display> {

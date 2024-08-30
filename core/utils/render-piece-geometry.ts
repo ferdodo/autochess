@@ -1,5 +1,5 @@
 import { PlaneGeometry } from "three";
-import type { Display } from "core/types/display";
+import type { Display } from "../types/display";
 import type { Context } from "../types/context";
 
 export function renderPieceGeometry(context: Context, display: Display): void {

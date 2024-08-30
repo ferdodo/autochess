@@ -1,16 +1,27 @@
 services:
-  core:
-    build: core
+  assets:
+    build: assets
 
-  front-deps:
+  core-deps:
     build:
-      context: front
+      context: core
       target: deps
 
-  front:
-    build: front
+  core:
+    build: core
+    depends_on:
+      - assets
+      - core-deps
+
+  sandbox-deps:
+    build:
+      context: sandbox
+      target: deps
+
+  sandbox:
+    build: sandbox
     ports:
       - "127.0.0.1:2437:5173"
     depends_on:
-      - front-deps
+      - sandbox-deps
       - core

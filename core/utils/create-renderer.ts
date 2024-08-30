@@ -1,5 +1,4 @@
 import { WebGLRenderer } from "three";
-import type { Scene, PerspectiveCamera, OrthographicCamera } from "three";
 import type { Block } from "blockwise";
 import { createCamera } from "./create-camera";
 import type { Context } from "../types/context";
