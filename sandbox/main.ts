@@ -8,6 +8,7 @@ import { DisplayFactory } from "./utils/display-factory";
 import type { Display } from "core/types/display";
 import { waitTextureLoaded } from "core/utils/load-texture";
 import { render } from "core/utils/render";
+import { createFpsCounter } from "./utils/create-fps-counter";
 
 waitTextureLoaded
 	.then(() => {
@@ -27,5 +28,7 @@ waitTextureLoaded
 				render(context, display);
 			},
 		});
+
+		createFpsCounter();
 	})
 	.catch(console.error);
