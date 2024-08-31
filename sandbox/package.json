@@ -5,7 +5,9 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
+		"@types/dat.gui": "^0.7.13",
 		"core": "file:../core",
+		"dat.gui": "^0.7.9",
 		"rxjs": "^7.8.1",
 		"typescript": "^5.5.4",
 		"uid": "^2.0.2",

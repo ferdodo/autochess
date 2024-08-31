@@ -5,6 +5,17 @@ import { Appellation } from "core/types/appellation";
 import type { Display } from "core/types/display";
 import type { Piece } from "core/types/piece";
 import type { Subscription, Subscribable, Observer } from "rxjs";
+import { GUI } from "dat.gui";
+
+interface PieceHandle {
+	id: string;
+	iterator: IterableIterator<Piece>;
+	simulated: boolean;
+	startSimulation: () => DisplayFactory;
+	stopSimulation: () => DisplayFactory;
+	removePiece: () => DisplayFactory;
+	gui: GUI;
+}
 
 export class DisplayFactory implements Subscribable<Display> {
 	display: Display = {
@@ -26,14 +37,75 @@ export class DisplayFactory implements Subscribable<Display> {
 		],
 	};
 
-	pieceIterators: IterableIterator<Piece>[] = [];
+	gui: GUI = new GUI();
+	pieceHandles: PieceHandle[] = [];
 
-	simulatePiece(): DisplayFactory {
-		this.pieceIterators.push(this.#simulatePiece());
+	constructor() {
+		this.gui.add(this, "addPiece");
+	}
+
+	get pieceIterators(): IterableIterator<Piece>[] {
+		return this.pieceHandles
+			.filter((handle) => handle.simulated)
+			.map((handle) => handle.iterator);
+	}
+
+	addPiece(): DisplayFactory {
+		const iterator = this.#addPiece();
+		const piece = iterator.next().value;
+		this.display.pieces.push(piece);
+		const gui = this.gui.addFolder(piece.id);
+
+		const pieceHandle = {
+			id: piece.id,
+			iterator,
+			simulated: true,
+			startSimulation: () => {
+				pieceHandle.simulated = true;
+				return this;
+			},
+			stopSimulation: () => {
+				pieceHandle.simulated = false;
+
+				this.display.pieces = this.display.pieces.map((p) => {
+					if (p.id === piece.id) {
+						return {
+							...p,
+							animation: Animation.Idle,
+							animationStartAt: Date.now(),
+						};
+					}
+
+					return p;
+				});
+
+				return this;
+			},
+			removePiece: () => {
+				this.display.pieces = this.display.pieces.filter(
+					(p) => p.id !== piece.id,
+				);
+
+				gui.hide();
+
+				this.pieceHandles = this.pieceHandles.filter(
+					(handle) => handle.id !== piece.id,
+				);
+
+				return this;
+			},
+			gui,
+		};
+
+		gui.add(pieceHandle, "startSimulation");
+		gui.add(pieceHandle, "stopSimulation");
+		gui.add(pieceHandle, "removePiece");
+
+		this.pieceHandles.push(pieceHandle);
 		return this;
 	}
 
-	*#simulatePiece(): IterableIterator<Piece> {
+	*#addPiece(): IterableIterator<Piece> {
 		const id = uid();
 
 		let piece = {
@@ -180,11 +252,6 @@ export class DisplayFactory implements Subscribable<Display> {
 
 	subscribe(observerOrNext: Partial<Observer<Display>>): Subscription {
 		const display$ = new Subject<Display>();
-
-		for (const iterator of this.pieceIterators) {
-			this.display.pieces.push(iterator.next().value);
-		}
-
 		display$.next(this.display);
 
 		const animateDisplay = async () => {

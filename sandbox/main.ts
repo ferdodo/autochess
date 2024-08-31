@@ -22,16 +22,10 @@ waitTextureLoaded
 			)
 			.subscribe();
 
-		new DisplayFactory()
-			.simulatePiece()
-			.simulatePiece()
-			.simulatePiece()
-			.simulatePiece()
-			.simulatePiece()
-			.subscribe({
-				next(display: Display) {
-					render(context, display);
-				},
-			});
+		new DisplayFactory().subscribe({
+			next(display: Display) {
+				render(context, display);
+			},
+		});
 	})
 	.catch(console.error);
