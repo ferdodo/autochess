@@ -23,11 +23,27 @@ waitTextureLoaded
 			)
 			.subscribe();
 
-		new DisplayFactory().subscribe({
-			next(display: Display) {
-				render(context, display);
-			},
-		});
+		new DisplayFactory()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.addPiece()
+			.subscribe({
+				next(display: Display) {
+					render(context, display);
+				},
+			});
 
 		createFpsCounter();
 	})

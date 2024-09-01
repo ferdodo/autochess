@@ -5,6 +5,7 @@ import { createCamera } from "./create-camera";
 import { Appellation } from "../types/appellation";
 import { createPieceAnimatedTexture } from "./create-piece-animated-texture";
 import { Animation } from "../types/animation";
+import { createShopProductTraitGeometry } from "./create-shop-product-trait-geometry";
 
 export function createContext(): Context {
 	const map = createPieceAnimatedTexture(
@@ -27,17 +28,17 @@ export function createContext(): Context {
 		pieceHealthBarMeshes: {},
 		pieceMaterials: {},
 		pieceMeshes: {},
+		scene: createScene(),
 		shopProductBackgroundGeometry: new PlaneGeometry(0.1, 0.15),
 		shopProductBackgroundMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
 		shopProductBackgroundMeshes: {},
 		shopProductImageGeometry: new PlaneGeometry(0.1, 0.1),
 		shopProductImageMaterial: {
-			[Appellation.Soldier]: new MeshBasicMaterial({
-				map,
-				transparent: true,
-			}),
+			[Appellation.Soldier]: new MeshBasicMaterial({ map, transparent: true }),
 		},
 		shopProductImageMeshes: {},
-		scene: createScene(),
+		shopProductTraitGeometry: createShopProductTraitGeometry(),
+		shopProductTraitMaterial: new MeshBasicMaterial({ color: 0 }),
+		shopProductTraitMeshes: {},
 	};
 }

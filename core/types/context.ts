@@ -10,6 +10,8 @@ import type {
 
 import type { PieceAnimatedTexture } from "./piece-animated-texture";
 import type { Appellation } from "./appellation";
+import type { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+import type { Trait } from "./trait";
 
 export interface Context {
 	camera: PerspectiveCamera | OrthographicCamera;
@@ -26,11 +28,14 @@ export interface Context {
 	pieceHealthBarMeshes: Record<string, Mesh>;
 	pieceMaterials: Record<string, MeshBasicMaterial>;
 	pieceMeshes: Record<string, Mesh>;
+	scene: Scene;
 	shopProductBackgroundGeometry: PlaneGeometry;
 	shopProductBackgroundMaterial: MeshBasicMaterial;
 	shopProductBackgroundMeshes: Record<string, Mesh>;
 	shopProductImageGeometry: PlaneGeometry;
 	shopProductImageMaterial: Record<Appellation, MeshBasicMaterial>;
 	shopProductImageMeshes: Record<string, Mesh>;
-	scene: Scene;
+	shopProductTraitGeometry: Record<Trait, TextGeometry>;
+	shopProductTraitMaterial: MeshBasicMaterial;
+	shopProductTraitMeshes: Record<string, Record<number, Mesh>>;
 }

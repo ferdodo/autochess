@@ -11,6 +11,7 @@ import { renderPieceGradeMesh } from "./render-piece-grade-mesh";
 import { renderShopProductBackgroundMeshes } from "./render-shop-product-background-meshes";
 import { renderShopProductImageMeshes } from "./render-shop-product-image-meshes";
 import type { Context } from "../types/context";
+import { renderShopProductTraitMeshes } from "./render-product-trait-meshes";
 
 export function render(context: Context, display: Display) {
 	renderPieceGeometry(context, display);
@@ -24,4 +25,5 @@ export function render(context: Context, display: Display) {
 	renderPieceGradeMesh(context, display);
 	renderShopProductBackgroundMeshes(context, display);
 	renderShopProductImageMeshes(context, display);
+	renderShopProductTraitMeshes(context, display);
 }

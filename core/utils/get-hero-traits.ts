@@ -1,9 +1,8 @@
 import { Appellation } from "../types/appellation";
-import type { Hero } from "../types/hero";
 import { Trait } from "../types/trait";
 
-export function getHeroTraits(hero: Hero): Trait[] {
-	switch (hero.appellation) {
+export function getHeroTraits(appellation: Appellation): Trait[] {
+	switch (appellation) {
 		case Appellation.Soldier:
 			return [Trait.Knight, Trait.Ranged];
 		//case Appellation.Knight:
@@ -45,6 +44,6 @@ export function getHeroTraits(hero: Hero): Trait[] {
 		// case Appellation.SkeletonArcher:
 		//return [Trait.Dead, Trait.Ranged];
 		default:
-			throw new Error(`Unknown hero name: ${hero.appellation}`);
+			throw new Error(`Unknown appellation: ${appellation} !`);
 	}
 }

@@ -1,5 +1,5 @@
 FROM node AS deps
-WORKDIR /autochess/front
+WORKDIR /autochess/sandbox
 COPY package.json .
 COPY npm-shrinkwrap.json .
 RUN npm config set maxsockets 1
@@ -7,8 +7,8 @@ RUN npm install
 RUN npm audit --audit-level=low
 
 FROM autochess-core
-WORKDIR /autochess/front
-COPY --from=0 /autochess/front /autochess/front
+WORKDIR /autochess/sandbox
+COPY --from=0 /autochess/sandbox /autochess/sandbox
 
 COPY . .
 
