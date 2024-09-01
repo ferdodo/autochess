@@ -35,7 +35,7 @@ export class DisplayFactory implements Subscribable<Display> {
 				grade: 2,
 			},
 			3: {
-				appellation: Appellation.Soldier,
+				appellation: Appellation.Orc,
 				grade: 3,
 			},
 			4: {
@@ -50,7 +50,7 @@ export class DisplayFactory implements Subscribable<Display> {
 			},
 			{
 				id: uid(),
-				appellation: Appellation.Soldier,
+				appellation: Appellation.Orc,
 			},
 			{
 				id: uid(),
@@ -130,10 +130,15 @@ export class DisplayFactory implements Subscribable<Display> {
 	*#addPiece(): IterableIterator<Piece> {
 		const id = uid();
 
+		const randomAppellation: Appellation =
+			Object.values(Appellation)[
+				Math.floor(Math.random() * Object.values(Appellation).length)
+			];
+
 		let piece = {
 			id,
 			hero: {
-				appellation: Appellation.Soldier,
+				appellation: randomAppellation,
 				position: {
 					x: 0,
 					y: 0,

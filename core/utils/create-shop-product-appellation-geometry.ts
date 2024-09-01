@@ -15,5 +15,6 @@ export function createShopProductAppellationGeometry(): Record<
 
 	return {
 		[Appellation.Soldier]: new TextGeometry(Appellation.Soldier, textParams),
+		[Appellation.Orc]: new TextGeometry(Appellation.Orc, textParams),
 	};
 }

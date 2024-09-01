@@ -13,8 +13,8 @@ export function getHeroTraits(appellation: Appellation): Trait[] {
 		//return [Trait.BladeMaster];
 		// case Appellation.ArmoredAxeman:
 		//return [Trait.Armored];
-		// case Appellation.Orc:
-		//return [Trait.Orc];
+		case Appellation.Orc:
+			return [Trait.Orc];
 		// case Appellation.ArmoredOrc:
 		//return [Trait.Orc, Trait.Armored];
 		// case Appellation.EliteOrc:

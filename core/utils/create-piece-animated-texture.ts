@@ -54,6 +54,51 @@ export function createPieceAnimatedTexture(
 				default:
 					throw new Error(`Unknown animation: ${animation}`);
 			}
+		case Appellation.Orc:
+			switch (animation) {
+				case Animation.Idle:
+					return composeAnimatedTexture(
+						loadTexture(Appellation.Orc, Animation.Idle),
+						6,
+						loadTexture(Appellation.Orc, Animation.Idle),
+						6,
+					);
+				case Animation.Attack:
+					return composeAnimatedTexture(
+						loadTexture(Appellation.Orc, Animation.Attack),
+						6,
+						loadTexture(Appellation.Orc, Animation.Idle),
+						6,
+					);
+				case Animation.Walk:
+					return composeAnimatedTexture(
+						loadTexture(Appellation.Orc, Animation.Walk),
+						8,
+						loadTexture(Appellation.Orc, Animation.Walk),
+						8,
+					);
+				case Animation.Ability:
+					return composeAnimatedTexture(
+						loadTexture(Appellation.Orc, Animation.Ability),
+						6,
+						loadTexture(Appellation.Orc, Animation.Idle),
+						6,
+					);
+				case Animation.Hurt:
+					return composeAnimatedTexture(
+						loadTexture(Appellation.Orc, Animation.Hurt),
+						4,
+						loadTexture(Appellation.Orc, Animation.Idle),
+						6,
+					);
+				case Animation.Death:
+					return composeAnimatedTexture(
+						loadTexture(Appellation.Orc, Animation.Death),
+						4,
+					);
+				default:
+					throw new Error(`Unknown animation: ${animation}`);
+			}
 		default:
 			throw new Error(`Unknown apellation: ${appellation}`);
 	}

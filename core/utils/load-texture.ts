@@ -4,6 +4,14 @@ import SoldierWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full
 import SoldierAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Soldier/Soldier/Soldier-Attack03.png.base64-data-url";
 import SoldierHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Soldier/Soldier/Soldier-Hurt.png.base64-data-url";
 import SoldierDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Soldier/Soldier/Soldier-Death.png.base64-data-url";
+
+import OrcIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc/Orc/Orc-Idle.png.base64-data-url";
+import OrcAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc/Orc/Orc-Attack01.png.base64-data-url";
+import OrcWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc/Orc/Orc-Walk.png.base64-data-url";
+import OrcAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc/Orc/Orc-Attack02.png.base64-data-url";
+import OrcHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc/Orc/Orc-Hurt.png.base64-data-url";
+import OrcDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc/Orc/Orc-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import type { Appellation } from "../types/appellation";
@@ -19,6 +27,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(SoldierAbilityTexture),
 		Hurt: textureLoader.load(SoldierHurtTexture),
 		Death: textureLoader.load(SoldierDeathTexture),
+	},
+	Orc: {
+		Idle: textureLoader.load(OrcIdleTexture),
+		Attack: textureLoader.load(OrcAttackTexture),
+		Walk: textureLoader.load(OrcWalkTexture),
+		Ability: textureLoader.load(OrcAbilityTexture),
+		Hurt: textureLoader.load(OrcHurtTexture),
+		Death: textureLoader.load(OrcDeathTexture),
 	},
 };
 

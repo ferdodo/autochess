@@ -12,5 +12,9 @@ export function createIdleAnimationsByAppellations(): Record<
 			map: createPieceAnimatedTexture(Appellation.Soldier, Animation.Idle)[0],
 			transparent: true,
 		}),
+		[Appellation.Orc]: new MeshBasicMaterial({
+			map: createPieceAnimatedTexture(Appellation.Orc, Animation.Idle)[0],
+			transparent: true,
+		}),
 	};
 }
