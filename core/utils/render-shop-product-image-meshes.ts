@@ -28,7 +28,7 @@ export function renderShopProductImageMeshes(
 			mesh.position.z = background.position.z + 0.0001;
 			mesh.position.x = background.position.x;
 
-			const vector = new Vector3(0, 0.015, 0);
+			const vector = new Vector3(0, 0.01, 0);
 			vector.applyEuler(background.rotation);
 			mesh.position.y = background.position.y + vector.y;
 			mesh.position.z = background.position.z + vector.z;

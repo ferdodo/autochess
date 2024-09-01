@@ -7,6 +7,7 @@ import { createPieceAnimatedTexture } from "./create-piece-animated-texture";
 import { Animation } from "../types/animation";
 import { createShopProductTraitGeometry } from "./create-shop-product-trait-geometry";
 import { createBenchSlotMeshes } from "./create-bench-slot-meshes";
+import { createShopProductAppellationGeometry } from "./create-shop-product-appellation-geometry";
 
 export function createContext(): Context {
 	const map = createPieceAnimatedTexture(
@@ -40,6 +41,9 @@ export function createContext(): Context {
 			[Appellation.Soldier]: new MeshBasicMaterial({ map, transparent: true }),
 		},
 		shopProductImageMeshes: {},
+		shopProductAppellationGeometry: createShopProductAppellationGeometry(),
+		shopProductAppellationMaterial: new MeshBasicMaterial({ color: 0 }),
+		shopProductAppellationMeshes: {},
 		shopProductTraitGeometry: createShopProductTraitGeometry(),
 		shopProductTraitMaterial: new MeshBasicMaterial({ color: 0 }),
 		shopProductTraitMeshes: {},

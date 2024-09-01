@@ -35,6 +35,9 @@ export interface Context {
 	shopProductImageGeometry: PlaneGeometry;
 	shopProductImageMaterial: Record<Appellation, MeshBasicMaterial>;
 	shopProductImageMeshes: Record<string, Mesh>;
+	shopProductAppellationGeometry: Record<Appellation, TextGeometry>;
+	shopProductAppellationMaterial: MeshBasicMaterial;
+	shopProductAppellationMeshes: Record<string, Mesh>;
 	shopProductTraitGeometry: Record<Trait, TextGeometry>;
 	shopProductTraitMaterial: MeshBasicMaterial;
 	shopProductTraitMeshes: Record<string, Record<number, Mesh>>;

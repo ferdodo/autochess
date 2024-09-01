@@ -29,12 +29,11 @@ export function renderShopProductTraitMeshes(
 			if (meshCreated) {
 				context.scene.add(mesh);
 				mesh.rotation.x = background.rotation.x;
-				mesh.position.z = background.position.z + 0.0001;
 				mesh.position.x = background.position.x - 0.03;
 				const vector = new Vector3(0, -0.04 - 0.017 * i, 0);
 				vector.applyEuler(background.rotation);
 				mesh.position.y = background.position.y + vector.y;
-				mesh.position.z = background.position.z + vector.z;
+				mesh.position.z = background.position.z + 0.0001 + vector.z;
 			}
 		}
 	}
