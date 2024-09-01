@@ -23,7 +23,22 @@ export function composeAnimatedTexture(
 
 	const canvasTexture = new CanvasTexture(canvas);
 
-	const paintCanvas = () => {
+	const period = 80;
+	let lastFrame = 0;
+	let disposed = false;
+
+	const paintCanvas = (time: number) => {
+		if (disposed) {
+			return;
+		}
+
+		if (time - lastFrame < period) {
+			requestAnimationFrame(paintCanvas);
+			return;
+		}
+
+		lastFrame = time;
+
 		context.clearRect(0, 0, frameWidth, frameHeight);
 
 		context.drawImage(
@@ -48,15 +63,17 @@ export function composeAnimatedTexture(
 			animationPlayed = true;
 
 			if (endTexture === undefined) {
-				clearInterval(interval);
+				return;
 			}
 		}
 
 		canvasTexture.needsUpdate = true;
+
+		requestAnimationFrame(paintCanvas);
 	};
 
-	paintCanvas();
-	const interval = setInterval(paintCanvas, 80);
+	paintCanvas(0);
+	requestAnimationFrame(paintCanvas);
 
 	canvasTexture.minFilter = NearestFilter;
 	canvasTexture.magFilter = NearestFilter;
@@ -65,7 +82,7 @@ export function composeAnimatedTexture(
 	return [
 		canvasTexture,
 		function dispose() {
-			clearInterval(interval);
+			disposed = true;
 			canvasTexture.dispose();
 		},
 	];
