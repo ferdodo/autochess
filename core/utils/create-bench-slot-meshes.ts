@@ -1,16 +1,9 @@
-import {
-	BoxGeometry,
-	MeshStandardMaterial,
-	Mesh,
-	HemisphereLight,
-} from "three";
+import { BoxGeometry, MeshStandardMaterial, Mesh } from "three";
 
 import type { Scene } from "three";
 
 export function createBenchSlotMeshes(scene: Scene): Record<number, Mesh> {
 	const cubeSize = 1;
-	const hemisphereLight = new HemisphereLight(0xffffff, 0x444444, 0.5);
-	hemisphereLight.position.set(0, 1, 0);
 	const smallCubeSize = 0.1;
 
 	const smallCubeGeometry = new BoxGeometry(
@@ -18,6 +11,7 @@ export function createBenchSlotMeshes(scene: Scene): Record<number, Mesh> {
 		cubeSize,
 		smallCubeSize,
 	);
+
 	const smallCubeMaterial = new MeshStandardMaterial({ color: 0x00f800 });
 
 	const meshes: Record<number, Mesh> = {};
