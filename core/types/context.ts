@@ -38,4 +38,5 @@ export interface Context {
 	shopProductTraitGeometry: Record<Trait, TextGeometry>;
 	shopProductTraitMaterial: MeshBasicMaterial;
 	shopProductTraitMeshes: Record<string, Record<number, Mesh>>;
+	benchSlotMeshes: Record<number, Mesh>;
 }
