@@ -21,6 +21,28 @@ export class DisplayFactory implements Subscribable<Display> {
 	display: Display = {
 		board: { x: 0, y: 0, w: 10, h: 10 },
 		pieces: [],
+		bench: {
+			0: {
+				appellation: Appellation.Soldier,
+				grade: 1,
+			},
+			1: {
+				appellation: Appellation.Soldier,
+				grade: 1,
+			},
+			2: {
+				appellation: Appellation.Soldier,
+				grade: 2,
+			},
+			3: {
+				appellation: Appellation.Soldier,
+				grade: 3,
+			},
+			4: {
+				appellation: Appellation.Soldier,
+				grade: 4,
+			},
+		},
 		shop: [
 			{
 				id: uid(),

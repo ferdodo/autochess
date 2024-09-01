@@ -14,6 +14,10 @@ import type { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js
 import type { Trait } from "./trait";
 
 export interface Context {
+	benchHeroGeometry: PlaneGeometry;
+	benchHeroMaterials: Record<Appellation, MeshBasicMaterial>;
+	benchHeroMeshes: Record<number, [Appellation, Mesh]>;
+	benchSlotMeshes: Record<number, Mesh>;
 	camera: PerspectiveCamera | OrthographicCamera;
 	pieceAnimatedTextures: Record<string, PieceAnimatedTexture>;
 	pieceBarsBackgroundGeometry: PlaneGeometry;
@@ -29,17 +33,16 @@ export interface Context {
 	pieceMaterials: Record<string, MeshBasicMaterial>;
 	pieceMeshes: Record<string, Mesh>;
 	scene: Scene;
+	shopProductAppellationGeometry: Record<Appellation, TextGeometry>;
+	shopProductAppellationMaterial: MeshBasicMaterial;
+	shopProductAppellationMeshes: Record<string, Mesh>;
 	shopProductBackgroundGeometry: PlaneGeometry;
 	shopProductBackgroundMaterial: MeshBasicMaterial;
 	shopProductBackgroundMeshes: Record<string, Mesh>;
 	shopProductImageGeometry: PlaneGeometry;
 	shopProductImageMaterial: Record<Appellation, MeshBasicMaterial>;
 	shopProductImageMeshes: Record<string, Mesh>;
-	shopProductAppellationGeometry: Record<Appellation, TextGeometry>;
-	shopProductAppellationMaterial: MeshBasicMaterial;
-	shopProductAppellationMeshes: Record<string, Mesh>;
 	shopProductTraitGeometry: Record<Trait, TextGeometry>;
 	shopProductTraitMaterial: MeshBasicMaterial;
 	shopProductTraitMeshes: Record<string, Record<number, Mesh>>;
-	benchSlotMeshes: Record<number, Mesh>;
 }
