@@ -1,11 +1,11 @@
 import { Subject, interval, map, combineLatestWith, startWith } from "rxjs";
 import { uid } from "uid";
 import { Animation } from "core/types/animation";
-import { Appellation } from "core/types/appellation";
 import type { Display } from "core/types/display";
 import type { Piece } from "core/types/piece";
 import type { Subscription, Subscribable, Observer } from "rxjs";
 import { GUI } from "dat.gui";
+import { getRandomAppellation } from "./get-random-appellation";
 
 interface PieceHandle {
 	id: string;
@@ -23,38 +23,38 @@ export class DisplayFactory implements Subscribable<Display> {
 		pieces: [],
 		bench: {
 			0: {
-				appellation: Appellation.Soldier,
+				appellation: getRandomAppellation(),
 				grade: 1,
 			},
 			1: {
-				appellation: Appellation.Soldier,
+				appellation: getRandomAppellation(),
 				grade: 1,
 			},
 			2: {
-				appellation: Appellation.Soldier,
+				appellation: getRandomAppellation(),
 				grade: 2,
 			},
 			3: {
-				appellation: Appellation.Orc,
+				appellation: getRandomAppellation(),
 				grade: 3,
 			},
 			4: {
-				appellation: Appellation.Soldier,
+				appellation: getRandomAppellation(),
 				grade: 4,
 			},
 		},
 		shop: [
 			{
 				id: uid(),
-				appellation: Appellation.Soldier,
+				appellation: getRandomAppellation(),
 			},
 			{
 				id: uid(),
-				appellation: Appellation.Orc,
+				appellation: getRandomAppellation(),
 			},
 			{
 				id: uid(),
-				appellation: Appellation.Soldier,
+				appellation: getRandomAppellation(),
 			},
 		],
 	};
@@ -130,15 +130,10 @@ export class DisplayFactory implements Subscribable<Display> {
 	*#addPiece(): IterableIterator<Piece> {
 		const id = uid();
 
-		const randomAppellation: Appellation =
-			Object.values(Appellation)[
-				Math.floor(Math.random() * Object.values(Appellation).length)
-			];
-
 		let piece = {
 			id,
 			hero: {
-				appellation: randomAppellation,
+				appellation: getRandomAppellation(),
 				position: {
 					x: 0,
 					y: 0,

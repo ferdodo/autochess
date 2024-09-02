@@ -10,7 +10,7 @@ export enum Appellation {
 	//Skeleton = "Skeleton",
 	//ArmoredSkeleton = "Armored Skeleton",
 	//Slime = "Slime",
-	//Lancer = "Lancer",
+	Lancer = "Lancer",
 	//Wizard = "Wizard",
 	//Priest = "Priest",
 	//Archer = "Archer",

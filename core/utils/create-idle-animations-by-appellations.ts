@@ -16,5 +16,9 @@ export function createIdleAnimationsByAppellations(): Record<
 			map: createPieceAnimatedTexture(Appellation.Orc, Animation.Idle)[0],
 			transparent: true,
 		}),
+		[Appellation.Lancer]: new MeshBasicMaterial({
+			map: createPieceAnimatedTexture(Appellation.Lancer, Animation.Idle)[0],
+			transparent: true,
+		}),
 	};
 }

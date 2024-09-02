@@ -32,7 +32,7 @@ export function renderBenchHeroMeshes(
 			mesh.position.y = slot.position.y + 0.6;
 			mesh.position.z = slot.position.z + 0.05;
 			mesh.position.x = slot.position.x;
-			mesh.scale.set(0.7, 0.7, 0.7);
+			mesh.scale.set(0.5, 0.5, 0.5);
 		}
 
 		if (appellation !== hero.appellation) {

@@ -12,6 +12,13 @@ import OrcAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 
 import OrcHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc/Orc/Orc-Hurt.png.base64-data-url";
 import OrcDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc/Orc/Orc-Death.png.base64-data-url";
 
+import LancerIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Lancer/Lancer/Lancer-Idle.png.base64-data-url";
+import LancerAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Lancer/Lancer/Lancer-Attack01.png.base64-data-url";
+import LancerWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Lancer/Lancer/Lancer-Walk01.png.base64-data-url";
+import LancerAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Lancer/Lancer/Lancer-Attack03.png.base64-data-url";
+import LancerHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Lancer/Lancer/Lancer-Hurt.png.base64-data-url";
+import LancerDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Lancer/Lancer/Lancer-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import type { Appellation } from "../types/appellation";
@@ -35,6 +42,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(OrcAbilityTexture),
 		Hurt: textureLoader.load(OrcHurtTexture),
 		Death: textureLoader.load(OrcDeathTexture),
+	},
+	Lancer: {
+		Idle: textureLoader.load(LancerIdleTexture),
+		Attack: textureLoader.load(LancerAttackTexture),
+		Walk: textureLoader.load(LancerWalkTexture),
+		Ability: textureLoader.load(LancerAbilityTexture),
+		Hurt: textureLoader.load(LancerHurtTexture),
+		Death: textureLoader.load(LancerDeathTexture),
 	},
 };
 

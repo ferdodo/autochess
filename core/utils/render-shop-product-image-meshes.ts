@@ -33,7 +33,7 @@ export function renderShopProductImageMeshes(
 			mesh.position.y = background.position.y + vector.y;
 			mesh.position.z = background.position.z + vector.z;
 
-			mesh.scale.set(3, 3, 3);
+			mesh.scale.set(2, 2, 2);
 		}
 	}
 

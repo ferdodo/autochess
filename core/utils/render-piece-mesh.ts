@@ -64,7 +64,7 @@ export function renderPieceMesh(context: Context, display: Display): void {
 			mesh.rotation.set(0, piece.right ? Math.PI : 0, 0);
 		}
 
-		const scale = 7.3;
+		const scale = 5.3;
 		mesh.scale.set(scale, scale, 1);
 	}
 
