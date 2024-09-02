@@ -19,9 +19,23 @@ import LancerAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Fu
 import LancerHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Lancer/Lancer/Lancer-Hurt.png.base64-data-url";
 import LancerDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Lancer/Lancer/Lancer-Death.png.base64-data-url";
 
+import PriestIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Priest/Priest/Priest-Idle.png.base64-data-url";
+import PriestAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Priest/Priest/Priest-Attack.png.base64-data-url";
+import PriestWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Priest/Priest/Priest-Walk.png.base64-data-url";
+import PriestAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Priest/Priest/Priest-Heal.png.base64-data-url";
+import PriestHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Priest/Priest/Priest-Hurt.png.base64-data-url";
+import PriestDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Priest/Priest/Priest-Death.png.base64-data-url";
+
+import GreatswordSkeletonIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Greatsword Skeleton/Greatsword Skeleton/Greatsword Skeleton-Idle.png.base64-data-url";
+import GreatswordSkeletonAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Greatsword Skeleton/Greatsword Skeleton/Greatsword Skeleton-Attack01.png.base64-data-url";
+import GreatswordSkeletonWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Greatsword Skeleton/Greatsword Skeleton/Greatsword Skeleton-Walk.png.base64-data-url";
+import GreatswordSkeletonAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Greatsword Skeleton/Greatsword Skeleton/Greatsword Skeleton-Attack02.png.base64-data-url";
+import GreatswordSkeletonHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Greatsword Skeleton/Greatsword Skeleton/Greatsword Skeleton-Hurt.png.base64-data-url";
+import GreatswordSkeletonDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Greatsword Skeleton/Greatsword Skeleton/Greatsword Skeleton-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
-import type { Appellation } from "../types/appellation";
+import { Appellation } from "../types/appellation";
 import type { Animation } from "../types/animation";
 
 const textureLoader = new TextureLoader();
@@ -50,6 +64,22 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(LancerAbilityTexture),
 		Hurt: textureLoader.load(LancerHurtTexture),
 		Death: textureLoader.load(LancerDeathTexture),
+	},
+	Priest: {
+		Idle: textureLoader.load(PriestIdleTexture),
+		Attack: textureLoader.load(PriestAttackTexture),
+		Walk: textureLoader.load(PriestWalkTexture),
+		Ability: textureLoader.load(PriestAbilityTexture),
+		Hurt: textureLoader.load(PriestHurtTexture),
+		Death: textureLoader.load(PriestDeathTexture),
+	},
+	[Appellation.GreatswordSkeleton]: {
+		Idle: textureLoader.load(GreatswordSkeletonIdleTexture),
+		Attack: textureLoader.load(GreatswordSkeletonAttackTexture),
+		Walk: textureLoader.load(GreatswordSkeletonWalkTexture),
+		Ability: textureLoader.load(GreatswordSkeletonAbilityTexture),
+		Hurt: textureLoader.load(GreatswordSkeletonHurtTexture),
+		Death: textureLoader.load(GreatswordSkeletonDeathTexture),
 	},
 };
 

@@ -20,5 +20,16 @@ export function createIdleAnimationsByAppellations(): Record<
 			map: createPieceAnimatedTexture(Appellation.Lancer, Animation.Idle)[0],
 			transparent: true,
 		}),
+		[Appellation.Priest]: new MeshBasicMaterial({
+			map: createPieceAnimatedTexture(Appellation.Priest, Animation.Idle)[0],
+			transparent: true,
+		}),
+		[Appellation.GreatswordSkeleton]: new MeshBasicMaterial({
+			map: createPieceAnimatedTexture(
+				Appellation.GreatswordSkeleton,
+				Animation.Idle,
+			)[0],
+			transparent: true,
+		}),
 	};
 }

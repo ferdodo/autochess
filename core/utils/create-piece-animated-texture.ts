@@ -138,6 +138,90 @@ export function createPieceAnimatedTexture(
 					4,
 				),
 		},
+		[Appellation.Priest]: {
+			[Animation.Idle]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Priest, Animation.Idle),
+					6,
+					loadTexture(Appellation.Priest, Animation.Idle),
+					6,
+				),
+			[Animation.Attack]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Priest, Animation.Attack),
+					9,
+					loadTexture(Appellation.Priest, Animation.Idle),
+					6,
+				),
+			[Animation.Walk]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Priest, Animation.Walk),
+					8,
+					loadTexture(Appellation.Priest, Animation.Walk),
+					8,
+				),
+			[Animation.Ability]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Priest, Animation.Ability),
+					6,
+					loadTexture(Appellation.Priest, Animation.Idle),
+					6,
+				),
+			[Animation.Hurt]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Priest, Animation.Hurt),
+					4,
+					loadTexture(Appellation.Priest, Animation.Idle),
+					6,
+				),
+			[Animation.Death]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Priest, Animation.Death),
+					4,
+				),
+		},
+		[Appellation.GreatswordSkeleton]: {
+			[Animation.Idle]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
+					6,
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
+					6,
+				),
+			[Animation.Attack]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Attack),
+					9,
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
+					6,
+				),
+			[Animation.Walk]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Walk),
+					9,
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Walk),
+					9,
+				),
+			[Animation.Ability]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Ability),
+					12,
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
+					6,
+				),
+			[Animation.Hurt]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Hurt),
+					4,
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
+					6,
+				),
+			[Animation.Death]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.GreatswordSkeleton, Animation.Death),
+					4,
+				),
+		},
 	};
 
 	return createTextureFn[appellation][animation]();

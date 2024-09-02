@@ -12,11 +12,11 @@ export enum Appellation {
 	//Slime = "Slime",
 	Lancer = "Lancer",
 	//Wizard = "Wizard",
-	//Priest = "Priest",
+	Priest = "Priest",
 	//Archer = "Archer",
 	//Werewolf = "Werewolf",
 	//Werebear = "Werebear",
 	//OrcRider = "Orc Rider",
-	//GreatswordSkeleton = "Greatsword Skeleton",
+	GreatswordSkeleton = "Greatsword Skeleton",
 	//SkeletonArcher = "Skeleton Archer",
 }

@@ -17,5 +17,10 @@ export function createShopProductAppellationGeometry(): Record<
 		[Appellation.Soldier]: new TextGeometry(Appellation.Soldier, textParams),
 		[Appellation.Orc]: new TextGeometry(Appellation.Orc, textParams),
 		[Appellation.Lancer]: new TextGeometry(Appellation.Lancer, textParams),
+		[Appellation.Priest]: new TextGeometry(Appellation.Priest, textParams),
+		[Appellation.GreatswordSkeleton]: new TextGeometry(
+			Appellation.GreatswordSkeleton,
+			textParams,
+		),
 	};
 }
