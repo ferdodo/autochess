@@ -45,6 +45,6 @@ waitTextureLoaded
 				},
 			});
 
-		createFpsCounter();
+		createFpsCounter().catch(console.error);
 	})
 	.catch(console.error);

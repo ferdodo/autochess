@@ -1,26 +1,15 @@
 import { Subject } from "rxjs";
-import type { Observable } from "rxjs";
-import { map, sampleTime } from "rxjs/operators";
 
-const frameSubject = new Subject<void>();
+const frameStartSubject = new Subject<void>();
+const frameEndSubject = new Subject<void>();
 
-export function observeFps(interval = 2000): Observable<number> {
-	let frames = 0;
+export const frameStart$ = frameStartSubject.asObservable();
+export const frameEnd$ = frameEndSubject.asObservable();
 
-	return frameSubject.pipe(
-		map(() => {
-			frames++;
-			return frames;
-		}),
-		sampleTime(interval),
-		map(() => {
-			const fps = frames * (1000 / interval);
-			frames = 0;
-			return fps;
-		}),
-	);
+export function notifyFrameStart(): void {
+	frameStartSubject.next();
 }
 
-export function notifyFrame(): void {
-	frameSubject.next();
+export function notifyFrameEnd(): void {
+	frameEndSubject.next();
 }
