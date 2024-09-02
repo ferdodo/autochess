@@ -1,13 +1,34 @@
 import { NearestFilter, CanvasTexture, SRGBColorSpace } from "three";
 import type { Texture } from "three";
 
+const availableCanvas: HTMLCanvasElement[] = [];
+
+function getAvailableCanvas(): HTMLCanvasElement {
+	if (availableCanvas.length === 0) {
+		return document.createElement("canvas");
+	}
+
+	const canvas = availableCanvas.pop();
+
+	if (!canvas) {
+		throw new Error("Canvas not found !");
+	}
+
+	return canvas;
+}
+
+function releaseCanvas(canvas: HTMLCanvasElement) {
+	availableCanvas.push(canvas);
+}
+
 export function composeAnimatedTexture(
 	texture: Texture,
 	totalFrames: number,
 	endTexture?: Texture,
 	endTotalFrames?: number,
 ): [CanvasTexture, () => void] {
-	const canvas = document.createElement("canvas");
+	const canvas = getAvailableCanvas();
+
 	const frameWidth = 100;
 	const frameHeight = 100;
 	canvas.width = frameWidth;
@@ -75,7 +96,7 @@ export function composeAnimatedTexture(
 	paintCanvas(0);
 	requestAnimationFrame(paintCanvas);
 
-	canvasTexture.minFilter = NearestFilter;
+	//canvasTexture.minFilter = NearestFilter;
 	canvasTexture.magFilter = NearestFilter;
 	canvasTexture.colorSpace = SRGBColorSpace;
 
@@ -84,6 +105,7 @@ export function composeAnimatedTexture(
 		function dispose() {
 			disposed = true;
 			canvasTexture.dispose();
+			releaseCanvas(canvas);
 		},
 	];
 }
