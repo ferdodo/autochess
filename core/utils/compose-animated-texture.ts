@@ -74,6 +74,10 @@ export function composeAnimatedTexture(
 			frameHeight,
 		);
 
+		if (currentFrame === 0 && animationPlayed && endTexture === undefined) {
+			return;
+		}
+
 		currentFrame =
 			(currentFrame + 1) %
 			(animationPlayed && endTotalFrames !== undefined
@@ -82,10 +86,6 @@ export function composeAnimatedTexture(
 
 		if (currentFrame === 0) {
 			animationPlayed = true;
-
-			if (endTexture === undefined) {
-				return;
-			}
 		}
 
 		canvasTexture.needsUpdate = true;
