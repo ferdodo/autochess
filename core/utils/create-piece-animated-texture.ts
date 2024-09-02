@@ -264,6 +264,48 @@ export function createPieceAnimatedTexture(
 					4,
 				),
 		},
+		[Appellation.EliteOrc]: {
+			[Animation.Idle]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.EliteOrc, Animation.Idle),
+					6,
+					loadTexture(Appellation.EliteOrc, Animation.Idle),
+					6,
+				),
+			[Animation.Attack]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.EliteOrc, Animation.Attack),
+					7,
+					loadTexture(Appellation.EliteOrc, Animation.Idle),
+					6,
+				),
+			[Animation.Walk]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.EliteOrc, Animation.Walk),
+					8,
+					loadTexture(Appellation.EliteOrc, Animation.Walk),
+					8,
+				),
+			[Animation.Ability]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.EliteOrc, Animation.Ability),
+					11,
+					loadTexture(Appellation.EliteOrc, Animation.Idle),
+					6,
+				),
+			[Animation.Hurt]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.EliteOrc, Animation.Hurt),
+					4,
+					loadTexture(Appellation.EliteOrc, Animation.Idle),
+					6,
+				),
+			[Animation.Death]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.EliteOrc, Animation.Death),
+					4,
+				),
+		},
 	};
 
 	return createTextureFn[appellation][animation]();

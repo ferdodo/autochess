@@ -40,6 +40,13 @@ import SlimeAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Ful
 import SlimeHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Slime/Slime/Slime-Hurt.png.base64-data-url";
 import SlimeDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Slime/Slime/Slime-Death.png.base64-data-url";
 
+import EliteOrcIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Elite Orc/Elite Orc/Elite Orc-Idle.png.base64-data-url";
+import EliteOrcAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Elite Orc/Elite Orc/Elite Orc-Attack01.png.base64-data-url";
+import EliteOrcWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Elite Orc/Elite Orc/Elite Orc-Walk.png.base64-data-url";
+import EliteOrcAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Elite Orc/Elite Orc/Elite Orc-Attack02.png.base64-data-url";
+import EliteOrcHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Elite Orc/Elite Orc/Elite Orc-Hurt.png.base64-data-url";
+import EliteOrcDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Elite Orc/Elite Orc/Elite Orc-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "../types/appellation";
@@ -95,6 +102,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(SlimeAbilityTexture),
 		Hurt: textureLoader.load(SlimeHurtTexture),
 		Death: textureLoader.load(SlimeDeathTexture),
+	},
+	[Appellation.EliteOrc]: {
+		Idle: textureLoader.load(EliteOrcIdleTexture),
+		Attack: textureLoader.load(EliteOrcAttackTexture),
+		Walk: textureLoader.load(EliteOrcWalkTexture),
+		Ability: textureLoader.load(EliteOrcAbilityTexture),
+		Hurt: textureLoader.load(EliteOrcHurtTexture),
+		Death: textureLoader.load(EliteOrcDeathTexture),
 	},
 };
 

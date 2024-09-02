@@ -35,5 +35,9 @@ export function createIdleAnimationsByAppellations(): Record<
 			map: createPieceAnimatedTexture(Appellation.Slime, Animation.Idle)[0],
 			transparent: true,
 		}),
+		[Appellation.EliteOrc]: new MeshBasicMaterial({
+			map: createPieceAnimatedTexture(Appellation.EliteOrc, Animation.Idle)[0],
+			transparent: true,
+		}),
 	};
 }

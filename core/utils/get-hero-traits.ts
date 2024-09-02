@@ -9,6 +9,7 @@ export function getHeroTraits(appellation: Appellation): Trait[] {
 		[Appellation.Priest]: [Trait.Magic, Trait.Light],
 		[Appellation.GreatswordSkeleton]: [Trait.Dead, Trait.BladeMaster],
 		[Appellation.Slime]: [Trait.Beast, Trait.Magic],
+		[Appellation.EliteOrc]: [Trait.Orc, Trait.Dark],
 	};
 
 	return [...traitsByAppellation[appellation]];

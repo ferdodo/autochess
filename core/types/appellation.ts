@@ -6,7 +6,7 @@ export enum Appellation {
 	//ArmoredAxeman = "Armored Axeman",
 	Orc = "Orc",
 	//ArmoredOrc = "Armored Orc",
-	//EliteOrc = "Elite Orc",
+	EliteOrc = "Elite Orc",
 	//Skeleton = "Skeleton",
 	//ArmoredSkeleton = "Armored Skeleton",
 	Slime = "Slime",
