@@ -222,6 +222,48 @@ export function createPieceAnimatedTexture(
 					4,
 				),
 		},
+		[Appellation.Slime]: {
+			[Animation.Idle]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Slime, Animation.Idle),
+					6,
+					loadTexture(Appellation.Slime, Animation.Idle),
+					6,
+				),
+			[Animation.Attack]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Slime, Animation.Attack),
+					6,
+					loadTexture(Appellation.Slime, Animation.Idle),
+					6,
+				),
+			[Animation.Walk]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Slime, Animation.Walk),
+					6,
+					loadTexture(Appellation.Slime, Animation.Walk),
+					6,
+				),
+			[Animation.Ability]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Slime, Animation.Ability),
+					12,
+					loadTexture(Appellation.Slime, Animation.Idle),
+					6,
+				),
+			[Animation.Hurt]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Slime, Animation.Hurt),
+					4,
+					loadTexture(Appellation.Slime, Animation.Idle),
+					6,
+				),
+			[Animation.Death]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Slime, Animation.Death),
+					4,
+				),
+		},
 	};
 
 	return createTextureFn[appellation][animation]();

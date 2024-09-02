@@ -31,5 +31,9 @@ export function createIdleAnimationsByAppellations(): Record<
 			)[0],
 			transparent: true,
 		}),
+		[Appellation.Slime]: new MeshBasicMaterial({
+			map: createPieceAnimatedTexture(Appellation.Slime, Animation.Idle)[0],
+			transparent: true,
+		}),
 	};
 }

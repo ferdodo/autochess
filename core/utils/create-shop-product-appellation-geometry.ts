@@ -22,5 +22,6 @@ export function createShopProductAppellationGeometry(): Record<
 			Appellation.GreatswordSkeleton,
 			textParams,
 		),
+		[Appellation.Slime]: new TextGeometry(Appellation.Slime, textParams),
 	};
 }

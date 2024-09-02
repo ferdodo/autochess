@@ -33,6 +33,13 @@ import GreatswordSkeletonAbilityTexture from "assets/Tiny RPG Character Asset Pa
 import GreatswordSkeletonHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Greatsword Skeleton/Greatsword Skeleton/Greatsword Skeleton-Hurt.png.base64-data-url";
 import GreatswordSkeletonDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Greatsword Skeleton/Greatsword Skeleton/Greatsword Skeleton-Death.png.base64-data-url";
 
+import SlimeIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Slime/Slime/Slime-Idle.png.base64-data-url";
+import SlimeAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Slime/Slime/Slime-Attack01.png.base64-data-url";
+import SlimeWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Slime/Slime/Slime-Walk.png.base64-data-url";
+import SlimeAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Slime/Slime/Slime-Attack02.png.base64-data-url";
+import SlimeHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Slime/Slime/Slime-Hurt.png.base64-data-url";
+import SlimeDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Slime/Slime/Slime-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "../types/appellation";
@@ -80,6 +87,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(GreatswordSkeletonAbilityTexture),
 		Hurt: textureLoader.load(GreatswordSkeletonHurtTexture),
 		Death: textureLoader.load(GreatswordSkeletonDeathTexture),
+	},
+	Slime: {
+		Idle: textureLoader.load(SlimeIdleTexture),
+		Attack: textureLoader.load(SlimeAttackTexture),
+		Walk: textureLoader.load(SlimeWalkTexture),
+		Ability: textureLoader.load(SlimeAbilityTexture),
+		Hurt: textureLoader.load(SlimeHurtTexture),
+		Death: textureLoader.load(SlimeDeathTexture),
 	},
 };
 
