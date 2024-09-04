@@ -1,18 +1,17 @@
 import { Appellation } from "../types/appellation";
 
 export function getHeroRank(appellation: Appellation): number {
-	const appellationByRank: Record<number, Appellation[]> = {
-		1: [Appellation.Soldier, Appellation.Orc],
-		3: [Appellation.Lancer],
+	const rankByAppellation: Record<Appellation, number> = {
+		[Appellation.Soldier]: 1,
+		[Appellation.Orc]: 1,
+		[Appellation.EliteOrc]: 3,
+		[Appellation.Slime]: 2,
+		[Appellation.Lancer]: 3,
+		[Appellation.Priest]: 1,
+		[Appellation.GreatswordSkeleton]: 3,
 	};
 
-	for (const [rank, appellations] of Object.entries(appellationByRank)) {
-		if (appellations.includes(appellation)) {
-			return Number.parseInt(rank);
-		}
-	}
-
-	throw new Error("Unknown rank !");
+	return rankByAppellation[appellation];
 
 	//switch (appellation) {
 	//case Appellation.Archer:
