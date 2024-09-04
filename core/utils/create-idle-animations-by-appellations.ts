@@ -7,37 +7,14 @@ export function createIdleAnimationsByAppellations(): Record<
 	Appellation,
 	MeshBasicMaterial
 > {
-	return {
-		[Appellation.Soldier]: new MeshBasicMaterial({
-			map: createPieceAnimatedTexture(Appellation.Soldier, Animation.Idle)[0],
-			transparent: true,
-		}),
-		[Appellation.Orc]: new MeshBasicMaterial({
-			map: createPieceAnimatedTexture(Appellation.Orc, Animation.Idle)[0],
-			transparent: true,
-		}),
-		[Appellation.Lancer]: new MeshBasicMaterial({
-			map: createPieceAnimatedTexture(Appellation.Lancer, Animation.Idle)[0],
-			transparent: true,
-		}),
-		[Appellation.Priest]: new MeshBasicMaterial({
-			map: createPieceAnimatedTexture(Appellation.Priest, Animation.Idle)[0],
-			transparent: true,
-		}),
-		[Appellation.GreatswordSkeleton]: new MeshBasicMaterial({
-			map: createPieceAnimatedTexture(
-				Appellation.GreatswordSkeleton,
-				Animation.Idle,
-			)[0],
-			transparent: true,
-		}),
-		[Appellation.Slime]: new MeshBasicMaterial({
-			map: createPieceAnimatedTexture(Appellation.Slime, Animation.Idle)[0],
-			transparent: true,
-		}),
-		[Appellation.EliteOrc]: new MeshBasicMaterial({
-			map: createPieceAnimatedTexture(Appellation.EliteOrc, Animation.Idle)[0],
-			transparent: true,
-		}),
-	};
+	return Object.values(Appellation).reduce(
+		(acc, appellation) => {
+			acc[appellation] = new MeshBasicMaterial({
+				map: createPieceAnimatedTexture(appellation, Animation.Idle)[0],
+				transparent: true,
+			});
+			return acc;
+		},
+		{} as Record<Appellation, MeshBasicMaterial>,
+	);
 }
