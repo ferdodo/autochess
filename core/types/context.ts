@@ -6,6 +6,8 @@ import type {
 	CircleGeometry,
 	PerspectiveCamera,
 	OrthographicCamera,
+	Vector3,
+	ArrowHelper,
 } from "three";
 
 import type { PieceAnimatedTexture } from "./piece-animated-texture";
@@ -32,6 +34,9 @@ export interface Context {
 	pieceHealthBarMeshes: Record<string, Mesh>;
 	pieceMaterials: Record<string, MeshBasicMaterial>;
 	pieceMeshes: Record<string, Mesh>;
+	pointer: Vector3;
+	pointerHelper?: ArrowHelper;
+	pointerHelperEnabled: boolean;
 	scene: Scene;
 	shopProductAppellationGeometry: Record<Appellation, TextGeometry>;
 	shopProductAppellationMaterial: MeshBasicMaterial;

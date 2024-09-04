@@ -1,4 +1,10 @@
-import { PlaneGeometry, MeshBasicMaterial, CircleGeometry } from "three";
+import {
+	PlaneGeometry,
+	MeshBasicMaterial,
+	CircleGeometry,
+	Vector3,
+} from "three";
+
 import type { Context } from "../types/context";
 import { createScene } from "./create-scene";
 import { createCamera } from "./create-camera";
@@ -30,6 +36,9 @@ export function createContext(): Context {
 		pieceHealthBarMeshes: {},
 		pieceMaterials: {},
 		pieceMeshes: {},
+		pointer: new Vector3(),
+		pointerHelper: undefined,
+		pointerHelperEnabled: true,
 		scene,
 		shopProductAppellationGeometry: createShopProductAppellationGeometry(),
 		shopProductAppellationMaterial: new MeshBasicMaterial({ color: 0 }),
