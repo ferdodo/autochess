@@ -47,6 +47,13 @@ import EliteOrcAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -
 import EliteOrcHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Elite Orc/Elite Orc/Elite Orc-Hurt.png.base64-data-url";
 import EliteOrcDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Elite Orc/Elite Orc/Elite Orc-Death.png.base64-data-url";
 
+import WizardIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Wizard/Wizard/Wizard-Idle.png.base64-data-url";
+import WizardAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Wizard/Wizard/Wizard-Attack01.png.base64-data-url";
+import WizardWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Wizard/Wizard/Wizard-Walk.png.base64-data-url";
+import WizardAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Wizard/Wizard/Wizard-Attack02.png.base64-data-url";
+import WizardHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Wizard/Wizard/Wizard-Hurt.png.base64-data-url";
+import WizardDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Wizard/Wizard/Wizard-DEATH.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "../types/appellation";
@@ -110,6 +117,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(EliteOrcAbilityTexture),
 		Hurt: textureLoader.load(EliteOrcHurtTexture),
 		Death: textureLoader.load(EliteOrcDeathTexture),
+	},
+	Wizard: {
+		Idle: textureLoader.load(WizardIdleTexture),
+		Attack: textureLoader.load(WizardAttackTexture),
+		Walk: textureLoader.load(WizardWalkTexture),
+		Ability: textureLoader.load(WizardAbilityTexture),
+		Hurt: textureLoader.load(WizardHurtTexture),
+		Death: textureLoader.load(WizardDeathTexture),
 	},
 };
 
