@@ -348,6 +348,48 @@ export function createPieceAnimatedTexture(
 					4,
 				),
 		},
+		[Appellation.Werebear]: {
+			[Animation.Idle]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Werebear, Animation.Idle),
+					6,
+					loadTexture(Appellation.Werebear, Animation.Idle),
+					6,
+				),
+			[Animation.Attack]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Werebear, Animation.Attack),
+					13,
+					loadTexture(Appellation.Werebear, Animation.Idle),
+					6,
+				),
+			[Animation.Walk]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Werebear, Animation.Walk),
+					8,
+					loadTexture(Appellation.Werebear, Animation.Walk),
+					8,
+				),
+			[Animation.Ability]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Werebear, Animation.Ability),
+					9,
+					loadTexture(Appellation.Werebear, Animation.Idle),
+					6,
+				),
+			[Animation.Hurt]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Werebear, Animation.Hurt),
+					4,
+					loadTexture(Appellation.Werebear, Animation.Idle),
+					6,
+				),
+			[Animation.Death]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.Werebear, Animation.Death),
+					4,
+				),
+		},
 	};
 
 	return createTextureFn[appellation][animation]();

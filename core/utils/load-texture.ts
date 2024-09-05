@@ -54,6 +54,13 @@ import WizardAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Fu
 import WizardHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Wizard/Wizard/Wizard-Hurt.png.base64-data-url";
 import WizardDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Wizard/Wizard/Wizard-DEATH.png.base64-data-url";
 
+import WerebearIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Werebear/Werebear/Werebear-Idle.png.base64-data-url";
+import WerebearAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Werebear/Werebear/Werebear-Attack02.png.base64-data-url";
+import WerebearWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Werebear/Werebear/Werebear-Walk.png.base64-data-url";
+import WerebearAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Werebear/Werebear/Werebear-Attack03.png.base64-data-url";
+import WerebearHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Werebear/Werebear/Werebear-Hurt.png.base64-data-url";
+import WerebearDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Werebear/Werebear/Werebear-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "../types/appellation";
@@ -125,6 +132,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(WizardAbilityTexture),
 		Hurt: textureLoader.load(WizardHurtTexture),
 		Death: textureLoader.load(WizardDeathTexture),
+	},
+	Werebear: {
+		Idle: textureLoader.load(WerebearIdleTexture),
+		Attack: textureLoader.load(WerebearAttackTexture),
+		Walk: textureLoader.load(WerebearWalkTexture),
+		Ability: textureLoader.load(WerebearAbilityTexture),
+		Hurt: textureLoader.load(WerebearHurtTexture),
+		Death: textureLoader.load(WerebearDeathTexture),
 	},
 };
 
