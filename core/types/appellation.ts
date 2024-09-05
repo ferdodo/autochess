@@ -1,7 +1,7 @@
 export enum Appellation {
 	Soldier = "Soldier",
 	//Knight = "Knight",
-	//KnightTemplar = "Knight Templar",
+	KnightTemplar = "Knight Templar",
 	//Swordsman = "Swordsman",
 	//ArmoredAxeman = "Armored Axeman",
 	Orc = "Orc",

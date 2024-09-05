@@ -27,5 +27,9 @@ export function createShopProductAppellationGeometry(): Record<
 		[Appellation.Wizard]: new TextGeometry(Appellation.Wizard, textParams),
 		[Appellation.Werebear]: new TextGeometry(Appellation.Werebear, textParams),
 		[Appellation.OrcRider]: new TextGeometry(Appellation.OrcRider, textParams),
+		[Appellation.KnightTemplar]: new TextGeometry(
+			Appellation.KnightTemplar,
+			textParams,
+		),
 	};
 }

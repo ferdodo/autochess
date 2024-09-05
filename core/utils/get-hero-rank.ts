@@ -12,6 +12,7 @@ export function getHeroRank(appellation: Appellation): number {
 		[Appellation.Wizard]: 2,
 		[Appellation.Werebear]: 3,
 		[Appellation.OrcRider]: 2,
+		[Appellation.KnightTemplar]: 1,
 	};
 
 	return rankByAppellation[appellation];

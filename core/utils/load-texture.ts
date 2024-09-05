@@ -68,6 +68,13 @@ import OrcRiderAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -
 import OrcRiderHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc rider/Orc rider/Orc rider-Hurt.png.base64-data-url";
 import OrcRiderDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Orc rider/Orc rider/Orc rider-Death.png.base64-data-url";
 
+import KnightTemplarIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight Templar/Knight Templar/Knight Templar-Idle.png.base64-data-url";
+import KnightTemplarAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight Templar/Knight Templar/Knight Templar-Attack02.png.base64-data-url";
+import KnightTemplarWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight Templar/Knight Templar/Knight Templar-Walk01.png.base64-data-url";
+import KnightTemplarAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight Templar/Knight Templar/Knight Templar-Attack03.png.base64-data-url";
+import KnightTemplarHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight Templar/Knight Templar/Knight Templar-Hurt.png.base64-data-url";
+import KnightTemplarDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight Templar/Knight Templar/Knight Templar-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "../types/appellation";
@@ -155,6 +162,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(OrcRiderAbilityTexture),
 		Hurt: textureLoader.load(OrcRiderHurtTexture),
 		Death: textureLoader.load(OrcRiderDeathTexture),
+	},
+	[Appellation.KnightTemplar]: {
+		Idle: textureLoader.load(KnightTemplarIdleTexture),
+		Attack: textureLoader.load(KnightTemplarAttackTexture),
+		Walk: textureLoader.load(KnightTemplarWalkTexture),
+		Ability: textureLoader.load(KnightTemplarAbilityTexture),
+		Hurt: textureLoader.load(KnightTemplarHurtTexture),
+		Death: textureLoader.load(KnightTemplarDeathTexture),
 	},
 };
 

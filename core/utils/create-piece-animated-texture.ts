@@ -432,6 +432,48 @@ export function createPieceAnimatedTexture(
 					4,
 				),
 		},
+		[Appellation.KnightTemplar]: {
+			[Animation.Idle]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.KnightTemplar, Animation.Idle),
+					6,
+					loadTexture(Appellation.KnightTemplar, Animation.Idle),
+					6,
+				),
+			[Animation.Attack]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.KnightTemplar, Animation.Attack),
+					8,
+					loadTexture(Appellation.KnightTemplar, Animation.Idle),
+					6,
+				),
+			[Animation.Walk]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.KnightTemplar, Animation.Walk),
+					8,
+					loadTexture(Appellation.KnightTemplar, Animation.Walk),
+					8,
+				),
+			[Animation.Ability]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.KnightTemplar, Animation.Ability),
+					11,
+					loadTexture(Appellation.KnightTemplar, Animation.Idle),
+					6,
+				),
+			[Animation.Hurt]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.KnightTemplar, Animation.Hurt),
+					4,
+					loadTexture(Appellation.KnightTemplar, Animation.Idle),
+					6,
+				),
+			[Animation.Death]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.KnightTemplar, Animation.Death),
+					4,
+				),
+		},
 	};
 
 	return createTextureFn[appellation][animation]();
