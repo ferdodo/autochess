@@ -1,5 +1,6 @@
 import {
 	PlaneGeometry,
+	BoxGeometry,
 	MeshBasicMaterial,
 	CircleGeometry,
 	Vector3,
@@ -16,6 +17,12 @@ import { createIdleAnimationsByAppellations } from "./create-idle-animations-by-
 export function createContext(): Context {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
 	const scene = createScene();
+
+	const pieceTargetBoxesMaterial = new MeshBasicMaterial({
+		color: 0x2bfafa,
+		transparent: true,
+		opacity: 0.4,
+	});
 
 	return {
 		benchHeroGeometry: new PlaneGeometry(1, 1),
@@ -36,6 +43,9 @@ export function createContext(): Context {
 		pieceHealthBarMeshes: {},
 		pieceMaterials: {},
 		pieceMeshes: {},
+		pieceTargetBoxes: {},
+		pieceTargetBoxesGeometry: new BoxGeometry(0.08, 0.05, 0.05),
+		pieceTargetBoxesMaterial,
 		pointer: new Vector3(),
 		pointerHelper: undefined,
 		pointerHelperEnabled: true,
