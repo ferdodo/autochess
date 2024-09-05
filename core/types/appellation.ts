@@ -16,7 +16,7 @@ export enum Appellation {
 	//Archer = "Archer",
 	//Werewolf = "Werewolf",
 	Werebear = "Werebear",
-	//OrcRider = "Orc Rider",
+	OrcRider = "Orc Rider",
 	GreatswordSkeleton = "Greatsword Skeleton",
 	//SkeletonArcher = "Skeleton Archer",
 }

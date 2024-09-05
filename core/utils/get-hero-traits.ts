@@ -12,6 +12,7 @@ export function getHeroTraits(appellation: Appellation): Trait[] {
 		[Appellation.EliteOrc]: [Trait.Orc, Trait.Dark],
 		[Appellation.Wizard]: [Trait.Magic, Trait.Dark],
 		[Appellation.Werebear]: [Trait.Beast, Trait.Dark],
+		[Appellation.OrcRider]: [Trait.Orc, Trait.Cavalry],
 	};
 
 	return [...traitsByAppellation[appellation]];

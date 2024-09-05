@@ -390,6 +390,48 @@ export function createPieceAnimatedTexture(
 					4,
 				),
 		},
+		[Appellation.OrcRider]: {
+			[Animation.Idle]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.OrcRider, Animation.Idle),
+					6,
+					loadTexture(Appellation.OrcRider, Animation.Idle),
+					6,
+				),
+			[Animation.Attack]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.OrcRider, Animation.Attack),
+					9,
+					loadTexture(Appellation.OrcRider, Animation.Idle),
+					6,
+				),
+			[Animation.Walk]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.OrcRider, Animation.Walk),
+					8,
+					loadTexture(Appellation.OrcRider, Animation.Walk),
+					8,
+				),
+			[Animation.Ability]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.OrcRider, Animation.Ability),
+					11,
+					loadTexture(Appellation.OrcRider, Animation.Idle),
+					6,
+				),
+			[Animation.Hurt]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.OrcRider, Animation.Hurt),
+					4,
+					loadTexture(Appellation.OrcRider, Animation.Idle),
+					6,
+				),
+			[Animation.Death]: () =>
+				composeAnimatedTexture(
+					loadTexture(Appellation.OrcRider, Animation.Death),
+					4,
+				),
+		},
 	};
 
 	return createTextureFn[appellation][animation]();
