@@ -1,4 +1,4 @@
-import { Mesh } from "three";
+import { Mesh, Raycaster } from "three";
 import type { Display } from "../types/display";
 import type { Context } from "../types/context";
 
@@ -66,6 +66,29 @@ export function renderPieceMesh(context: Context, display: Display): void {
 
 		const scale = 5.3;
 		mesh.scale.set(scale, scale, 1);
+
+		if (piece.transposed) {
+			const raycaster = new Raycaster();
+
+			const direction = context.pointer
+				.clone()
+				.sub(context.camera.position)
+				.normalize();
+
+			raycaster.set(context.camera.position, direction);
+
+			const intersections = raycaster.intersectObject(
+				context.transpositionPlane,
+			);
+
+			if (!intersections.length) {
+				throw new Error("Failed to intersect selected piece with pointer !");
+			}
+
+			const [{ point }] = intersections;
+			mesh.position.x = point.x;
+			mesh.position.z = point.z;
+		}
 	}
 
 	for (const pieceId of Object.keys(context.pieceMeshes)) {
