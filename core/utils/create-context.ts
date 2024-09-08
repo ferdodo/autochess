@@ -13,6 +13,7 @@ import { createShopProductTraitGeometry } from "./create-shop-product-trait-geom
 import { createBenchSlotMeshes } from "./create-bench-slot-meshes";
 import { createShopProductAppellationGeometry } from "./create-shop-product-appellation-geometry";
 import { createIdleAnimationsByAppellations } from "./create-idle-animations-by-appellations";
+import { createTranspositionPlane } from "./create-transposition-plane";
 
 export function createContext(): Context {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
@@ -62,5 +63,6 @@ export function createContext(): Context {
 		shopProductTraitGeometry: createShopProductTraitGeometry(),
 		shopProductTraitMaterial: new MeshBasicMaterial({ color: 0 }),
 		shopProductTraitMeshes: {},
+		transpositionPlane: createTranspositionPlane(scene),
 	};
 }
