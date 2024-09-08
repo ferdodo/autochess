@@ -8,6 +8,7 @@ export interface Piece {
 	hero: Hero;
 	position: Block;
 	animation: Animation;
+	transposed: boolean;
 	animationStartAt: number;
 	attributes: Attributes;
 	right: boolean;

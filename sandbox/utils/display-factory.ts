@@ -13,6 +13,8 @@ interface PieceHandle {
 	simulated: boolean;
 	startSimulation: () => DisplayFactory;
 	stopSimulation: () => DisplayFactory;
+	setTransposed: () => DisplayFactory;
+	unsetTransposed: () => DisplayFactory;
 	removePiece: () => DisplayFactory;
 	gui: GUI;
 }
@@ -116,11 +118,29 @@ export class DisplayFactory implements Subscribable<Display> {
 
 				return this;
 			},
+			setTransposed: () => {
+				this.display.pieces = this.display.pieces.map((p) => {
+					piece.transposed = true;
+					return p.id === piece.id ? { ...p, transposed: true } : p;
+				});
+
+				return this;
+			},
+			unsetTransposed: () => {
+				this.display.pieces = this.display.pieces.map((p) => {
+					piece.transposed = false;
+					return p.id === piece.id ? { ...p, transposed: false } : p;
+				});
+
+				return this;
+			},
 			gui,
 		};
 
 		gui.add(pieceHandle, "startSimulation");
 		gui.add(pieceHandle, "stopSimulation");
+		gui.add(pieceHandle, "setTransposed");
+		gui.add(pieceHandle, "unsetTransposed");
 		gui.add(pieceHandle, "removePiece");
 
 		this.pieceHandles.push(pieceHandle);
@@ -142,6 +162,7 @@ export class DisplayFactory implements Subscribable<Display> {
 				},
 				grade: Math.floor(Math.random() * 5) + 1,
 			},
+			transposed: false,
 			animationStartAt: Date.now(),
 			animation: Animation.Idle,
 			position: {
