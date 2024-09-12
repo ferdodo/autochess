@@ -86,8 +86,7 @@ export function renderPieceMesh(context: Context, display: Display): void {
 			}
 
 			const [{ point }] = intersections;
-			mesh.position.x = point.x;
-			mesh.position.z = point.z;
+			mesh.position.copy(point);
 		}
 	}
 
