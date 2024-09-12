@@ -15,6 +15,7 @@ export function renderPieceMaterial(context: Context, display: Display): void {
 				map: context.pieceAnimatedTextures[piece.id].texture,
 				transparent: true,
 				side: DoubleSide,
+				depthWrite: false,
 			});
 		}
 	}
