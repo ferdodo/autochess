@@ -82,6 +82,13 @@ import KnightAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Fu
 import KnightHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight/Knight/Knight-Hurt.png.base64-data-url";
 import KnightDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight/Knight/Knight-Death.png.base64-data-url";
 
+import SwordsmanIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Swordsman/Swordsman/Swordsman-Idle.png.base64-data-url";
+import SwordsmanAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Swordsman/Swordsman/Swordsman-Attack02.png.base64-data-url";
+import SwordsmanWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Swordsman/Swordsman/Swordsman-Walk.png.base64-data-url";
+import SwordsmanAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Swordsman/Swordsman/Swordsman-Attack3.png.base64-data-url";
+import SwordsmanHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Swordsman/Swordsman/Swordsman-Hurt.png.base64-data-url";
+import SwordsmanDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Swordsman/Swordsman/Swordsman-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "../types/appellation";
@@ -185,6 +192,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(KnightAbilityTexture),
 		Hurt: textureLoader.load(KnightHurtTexture),
 		Death: textureLoader.load(KnightDeathTexture),
+	},
+	[Appellation.Swordsman]: {
+		Idle: textureLoader.load(SwordsmanIdleTexture),
+		Attack: textureLoader.load(SwordsmanAttackTexture),
+		Walk: textureLoader.load(SwordsmanWalkTexture),
+		Ability: textureLoader.load(SwordsmanAbilityTexture),
+		Hurt: textureLoader.load(SwordsmanHurtTexture),
+		Death: textureLoader.load(SwordsmanDeathTexture),
 	},
 };
 

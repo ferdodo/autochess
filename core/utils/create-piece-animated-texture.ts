@@ -105,6 +105,14 @@ export function createPieceAnimatedTexture(
 			[Animation.Hurt]: 4,
 			[Animation.Death]: 4,
 		},
+		[Appellation.Swordsman]: {
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 15,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 12,
+			[Animation.Hurt]: 5,
+			[Animation.Death]: 4,
+		},
 	};
 
 	switch (animation) {

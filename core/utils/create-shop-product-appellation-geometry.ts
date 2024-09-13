@@ -32,5 +32,9 @@ export function createShopProductAppellationGeometry(): Record<
 			textParams,
 		),
 		[Appellation.Knight]: new TextGeometry(Appellation.Knight, textParams),
+		[Appellation.Swordsman]: new TextGeometry(
+			Appellation.Swordsman,
+			textParams,
+		),
 	};
 }
