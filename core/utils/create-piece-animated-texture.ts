@@ -8,473 +8,113 @@ export function createPieceAnimatedTexture(
 	appellation: Appellation,
 	animation: Animation,
 ): [CanvasTexture, () => void] {
-	const createTextureFn: Record<
-		Appellation,
-		Record<Animation, () => [CanvasTexture, () => void]>
-	> = {
+	const framesByAnimations: Record<Appellation, Record<Animation, number>> = {
 		[Appellation.Soldier]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Soldier, Animation.Idle),
-					6,
-					loadTexture(Appellation.Soldier, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Soldier, Animation.Attack),
-					6,
-					loadTexture(Appellation.Soldier, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Soldier, Animation.Walk),
-					8,
-					loadTexture(Appellation.Soldier, Animation.Walk),
-					8,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Soldier, Animation.Ability),
-					8,
-					loadTexture(Appellation.Soldier, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Soldier, Animation.Hurt),
-					4,
-					loadTexture(Appellation.Soldier, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Soldier, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 6,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 8,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.Orc]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Orc, Animation.Idle),
-					6,
-					loadTexture(Appellation.Orc, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Orc, Animation.Attack),
-					6,
-					loadTexture(Appellation.Orc, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Orc, Animation.Walk),
-					8,
-					loadTexture(Appellation.Orc, Animation.Walk),
-					8,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Orc, Animation.Ability),
-					6,
-					loadTexture(Appellation.Orc, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Orc, Animation.Hurt),
-					4,
-					loadTexture(Appellation.Orc, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Orc, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 6,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 6,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.Lancer]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Lancer, Animation.Idle),
-					6,
-					loadTexture(Appellation.Lancer, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Lancer, Animation.Attack),
-					6,
-					loadTexture(Appellation.Lancer, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Lancer, Animation.Walk),
-					8,
-					loadTexture(Appellation.Lancer, Animation.Walk),
-					8,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Lancer, Animation.Ability),
-					8,
-					loadTexture(Appellation.Lancer, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Lancer, Animation.Hurt),
-					4,
-					loadTexture(Appellation.Lancer, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Lancer, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 6,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 8,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.Priest]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Priest, Animation.Idle),
-					6,
-					loadTexture(Appellation.Priest, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Priest, Animation.Attack),
-					9,
-					loadTexture(Appellation.Priest, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Priest, Animation.Walk),
-					8,
-					loadTexture(Appellation.Priest, Animation.Walk),
-					8,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Priest, Animation.Ability),
-					6,
-					loadTexture(Appellation.Priest, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Priest, Animation.Hurt),
-					4,
-					loadTexture(Appellation.Priest, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Priest, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 9,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 6,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.GreatswordSkeleton]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
-					6,
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Attack),
-					9,
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Walk),
-					9,
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Walk),
-					9,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Ability),
-					12,
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Hurt),
-					4,
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.GreatswordSkeleton, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 9,
+			[Animation.Walk]: 9,
+			[Animation.Ability]: 12,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.Slime]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Slime, Animation.Idle),
-					6,
-					loadTexture(Appellation.Slime, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Slime, Animation.Attack),
-					6,
-					loadTexture(Appellation.Slime, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Slime, Animation.Walk),
-					6,
-					loadTexture(Appellation.Slime, Animation.Walk),
-					6,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Slime, Animation.Ability),
-					12,
-					loadTexture(Appellation.Slime, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Slime, Animation.Hurt),
-					4,
-					loadTexture(Appellation.Slime, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Slime, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 6,
+			[Animation.Walk]: 6,
+			[Animation.Ability]: 12,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.EliteOrc]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.EliteOrc, Animation.Idle),
-					6,
-					loadTexture(Appellation.EliteOrc, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.EliteOrc, Animation.Attack),
-					7,
-					loadTexture(Appellation.EliteOrc, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.EliteOrc, Animation.Walk),
-					8,
-					loadTexture(Appellation.EliteOrc, Animation.Walk),
-					8,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.EliteOrc, Animation.Ability),
-					11,
-					loadTexture(Appellation.EliteOrc, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.EliteOrc, Animation.Hurt),
-					4,
-					loadTexture(Appellation.EliteOrc, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.EliteOrc, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 7,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 11,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.Wizard]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Wizard, Animation.Idle),
-					6,
-					loadTexture(Appellation.Wizard, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Wizard, Animation.Attack),
-					6,
-					loadTexture(Appellation.Wizard, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Wizard, Animation.Walk),
-					8,
-					loadTexture(Appellation.Wizard, Animation.Walk),
-					8,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Wizard, Animation.Ability),
-					6,
-					loadTexture(Appellation.Wizard, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Wizard, Animation.Hurt),
-					4,
-					loadTexture(Appellation.Wizard, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Wizard, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 6,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 6,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.Werebear]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Werebear, Animation.Idle),
-					6,
-					loadTexture(Appellation.Werebear, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Werebear, Animation.Attack),
-					13,
-					loadTexture(Appellation.Werebear, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Werebear, Animation.Walk),
-					8,
-					loadTexture(Appellation.Werebear, Animation.Walk),
-					8,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Werebear, Animation.Ability),
-					9,
-					loadTexture(Appellation.Werebear, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Werebear, Animation.Hurt),
-					4,
-					loadTexture(Appellation.Werebear, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.Werebear, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 13,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 9,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.OrcRider]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.OrcRider, Animation.Idle),
-					6,
-					loadTexture(Appellation.OrcRider, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.OrcRider, Animation.Attack),
-					9,
-					loadTexture(Appellation.OrcRider, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.OrcRider, Animation.Walk),
-					8,
-					loadTexture(Appellation.OrcRider, Animation.Walk),
-					8,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.OrcRider, Animation.Ability),
-					11,
-					loadTexture(Appellation.OrcRider, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.OrcRider, Animation.Hurt),
-					4,
-					loadTexture(Appellation.OrcRider, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.OrcRider, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 9,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 11,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 		[Appellation.KnightTemplar]: {
-			[Animation.Idle]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.KnightTemplar, Animation.Idle),
-					6,
-					loadTexture(Appellation.KnightTemplar, Animation.Idle),
-					6,
-				),
-			[Animation.Attack]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.KnightTemplar, Animation.Attack),
-					8,
-					loadTexture(Appellation.KnightTemplar, Animation.Idle),
-					6,
-				),
-			[Animation.Walk]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.KnightTemplar, Animation.Walk),
-					8,
-					loadTexture(Appellation.KnightTemplar, Animation.Walk),
-					8,
-				),
-			[Animation.Ability]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.KnightTemplar, Animation.Ability),
-					11,
-					loadTexture(Appellation.KnightTemplar, Animation.Idle),
-					6,
-				),
-			[Animation.Hurt]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.KnightTemplar, Animation.Hurt),
-					4,
-					loadTexture(Appellation.KnightTemplar, Animation.Idle),
-					6,
-				),
-			[Animation.Death]: () =>
-				composeAnimatedTexture(
-					loadTexture(Appellation.KnightTemplar, Animation.Death),
-					4,
-				),
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 8,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 11,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
 		},
 	};
 
-	return createTextureFn[appellation][animation]();
+	switch (animation) {
+		case Animation.Idle:
+		case Animation.Attack:
+		case Animation.Walk:
+		case Animation.Ability:
+		case Animation.Hurt:
+			return composeAnimatedTexture(
+				loadTexture(appellation, animation),
+				framesByAnimations[appellation][animation],
+				loadTexture(appellation, Animation.Idle),
+				framesByAnimations[appellation][Animation.Idle],
+			);
+		case Animation.Death:
+			return composeAnimatedTexture(
+				loadTexture(appellation, animation),
+				framesByAnimations[appellation][animation],
+			);
+	}
 }
