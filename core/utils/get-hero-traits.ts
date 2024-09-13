@@ -14,6 +14,7 @@ export function getHeroTraits(appellation: Appellation): Trait[] {
 		[Appellation.Werebear]: [Trait.Beast, Trait.Dark],
 		[Appellation.OrcRider]: [Trait.Orc, Trait.Cavalry],
 		[Appellation.KnightTemplar]: [Trait.Knight, Trait.Light],
+		[Appellation.Knight]: [Trait.Knight, Trait.Armored],
 	};
 
 	return [...traitsByAppellation[appellation]];
@@ -22,7 +23,7 @@ export function getHeroTraits(appellation: Appellation): Trait[] {
 	//case Appellation.Soldier:
 	//return [Trait.Knight, Trait.Ranged];
 	//case Appellation.Knight:
-	//	return [Trait.Knight, Trait.Cavalry];
+	//	return [Trait.Knight, Trait.Armored];
 	// case Appellation.KnightTemplar:
 	//return [Trait.Knight, Trait.Light];
 	// case Appellation.Swordsman:

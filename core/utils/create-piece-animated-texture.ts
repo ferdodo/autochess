@@ -97,6 +97,14 @@ export function createPieceAnimatedTexture(
 			[Animation.Hurt]: 4,
 			[Animation.Death]: 4,
 		},
+		[Appellation.Knight]: {
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 10,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 11,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
+		},
 	};
 
 	switch (animation) {

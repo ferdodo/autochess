@@ -75,6 +75,13 @@ import KnightTemplarAbilityTexture from "assets/Tiny RPG Character Asset Pack v1
 import KnightTemplarHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight Templar/Knight Templar/Knight Templar-Hurt.png.base64-data-url";
 import KnightTemplarDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight Templar/Knight Templar/Knight Templar-Death.png.base64-data-url";
 
+import KnightIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight/Knight/Knight-Idle.png.base64-data-url";
+import KnightAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight/Knight/Knight-Attack02.png.base64-data-url";
+import KnightWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight/Knight/Knight-Walk.png.base64-data-url";
+import KnightAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight/Knight/Knight-Attack03.png.base64-data-url";
+import KnightHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight/Knight/Knight-Hurt.png.base64-data-url";
+import KnightDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Knight/Knight/Knight-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "../types/appellation";
@@ -170,6 +177,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(KnightTemplarAbilityTexture),
 		Hurt: textureLoader.load(KnightTemplarHurtTexture),
 		Death: textureLoader.load(KnightTemplarDeathTexture),
+	},
+	[Appellation.Knight]: {
+		Idle: textureLoader.load(KnightIdleTexture),
+		Attack: textureLoader.load(KnightAttackTexture),
+		Walk: textureLoader.load(KnightWalkTexture),
+		Ability: textureLoader.load(KnightAbilityTexture),
+		Hurt: textureLoader.load(KnightHurtTexture),
+		Death: textureLoader.load(KnightDeathTexture),
 	},
 };
 
