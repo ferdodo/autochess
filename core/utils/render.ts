@@ -16,6 +16,7 @@ import { renderShopProductAppellationMeshes } from "./render-shop-product-appell
 import { renderBenchHeroMeshes } from "./render-bench-hero-meshes";
 import { renderPointerHelper } from "./render-pointer-helper";
 import { renderPieceTargetBoxes } from "./render-piece-target-boxes";
+import { renderPieceHighlight } from "./render-piece-highlight";
 
 export function render(context: Context, display: Display) {
 	renderPieceGeometry(context, display);
@@ -34,4 +35,5 @@ export function render(context: Context, display: Display) {
 	renderBenchHeroMeshes(context, display);
 	renderPointerHelper(context);
 	renderPieceTargetBoxes(context, display);
+	renderPieceHighlight(context, display);
 }

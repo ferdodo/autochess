@@ -38,6 +38,7 @@ export interface Context {
 	pieceTargetBoxesGeometry: BoxGeometry;
 	pieceTargetBoxesMaterial: MeshBasicMaterial;
 	pieceTargetBoxes: Record<number, Mesh>;
+	pieceHighlightMeshes: Mesh;
 	pointer: Vector3;
 	pointerHelper?: ArrowHelper;
 	pointerHelperEnabled: boolean;

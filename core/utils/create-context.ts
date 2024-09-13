@@ -14,6 +14,7 @@ import { createBenchSlotMeshes } from "./create-bench-slot-meshes";
 import { createShopProductAppellationGeometry } from "./create-shop-product-appellation-geometry";
 import { createIdleAnimationsByAppellations } from "./create-idle-animations-by-appellations";
 import { createTranspositionPlane } from "./create-transposition-plane";
+import { createHighlightMesh } from "./create-highlight-mesh";
 
 export function createContext(): Context {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
@@ -47,6 +48,7 @@ export function createContext(): Context {
 		pieceTargetBoxes: {},
 		pieceTargetBoxesGeometry: new BoxGeometry(0.08, 0.05, 0.05),
 		pieceTargetBoxesMaterial,
+		pieceHighlightMeshes: createHighlightMesh(scene),
 		pointer: new Vector3(),
 		pointerHelper: undefined,
 		pointerHelperEnabled: true,
