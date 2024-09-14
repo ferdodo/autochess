@@ -6,6 +6,7 @@ import type { Piece } from "core/types/piece";
 import type { Subscription, Subscribable, Observer } from "rxjs";
 import { GUI } from "dat.gui";
 import { getRandomAppellation } from "./get-random-appellation";
+import { Phase } from "core/types/phase";
 
 interface PieceHandle {
 	id: string;
@@ -59,6 +60,7 @@ export class DisplayFactory implements Subscribable<Display> {
 				appellation: getRandomAppellation(),
 			},
 		],
+		phase: Phase.Combat,
 	};
 
 	gui: GUI = new GUI();
@@ -66,12 +68,24 @@ export class DisplayFactory implements Subscribable<Display> {
 
 	constructor() {
 		this.gui.add(this, "addPiece");
+		this.gui.add(this, "setPlanningPhase");
+		this.gui.add(this, "setCombatPhase");
 	}
 
 	get pieceIterators(): IterableIterator<Piece>[] {
 		return this.pieceHandles
 			.filter((handle) => handle.simulated)
 			.map((handle) => handle.iterator);
+	}
+
+	setPlanningPhase(): DisplayFactory {
+		this.display.phase = Phase.Planning;
+		return this;
+	}
+
+	setCombatPhase(): DisplayFactory {
+		this.display.phase = Phase.Combat;
+		return this;
 	}
 
 	addPiece(): DisplayFactory {
@@ -134,6 +148,7 @@ export class DisplayFactory implements Subscribable<Display> {
 
 				return this;
 			},
+
 			gui,
 		};
 
@@ -299,15 +314,17 @@ export class DisplayFactory implements Subscribable<Display> {
 
 		const animateDisplay = async () => {
 			while (true) {
-				for (const iterator of this.pieceIterators) {
-					const piece = iterator.next().value;
+				if (this.display.phase === Phase.Combat) {
+					for (const iterator of this.pieceIterators) {
+						const piece = iterator.next().value;
 
-					this.display = {
-						...this.display,
-						pieces: this.display.pieces.map((p) => {
-							return p.id === piece.id ? piece : p;
-						}),
-					};
+						this.display = {
+							...this.display,
+							pieces: this.display.pieces.map((p) => {
+								return p.id === piece.id ? piece : p;
+							}),
+						};
+					}
 				}
 
 				await new Promise((resolve) => setTimeout(resolve, 1000));
