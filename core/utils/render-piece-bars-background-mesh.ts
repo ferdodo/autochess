@@ -1,33 +1,26 @@
-import { Mesh } from "three";
+import { Mesh, MeshBasicMaterial } from "three";
 import type { Display } from "../types/display";
 import type { Context } from "../types/context";
+import { createPiecesBarsBackgroundGeometry } from "./create-piece-bars-background-geometry";
+
+const pieceBarsBackgroundGeometry = createPiecesBarsBackgroundGeometry();
+const pieceBarsBackgroundMaterial = new MeshBasicMaterial({ color: 0x000000 });
 
 export function renderPieceBarsBackgroundMesh(
 	context: Context,
 	display: Display,
 ): void {
 	for (const piece of display.pieces) {
-		const material = context.pieceBarsBackgroundMaterial;
+		context.pieceRessources[piece.id] ||= {};
+		const meshCreated = !context.pieceRessources[piece.id].barBackground;
 
-		if (!material) {
-			throw new Error("Material not found !");
-		}
-
-		const meshCreated = !context.pieceBarsBackgroundMeshes[piece.id];
-
-		context.pieceBarsBackgroundMeshes[piece.id] ||= new Mesh(
-			context.pieceBarsBackgroundGeometry,
-			material,
-		);
-
-		const mesh: Mesh = context.pieceBarsBackgroundMeshes[piece.id];
+		const mesh: Mesh =
+			context.pieceRessources[piece.id].barBackground ||
+			new Mesh(pieceBarsBackgroundGeometry, pieceBarsBackgroundMaterial);
 
 		if (meshCreated) {
+			context.pieceRessources[piece.id].barBackground = mesh;
 			context.scene.add(mesh);
-		}
-
-		if (mesh.material !== material) {
-			mesh.material = material;
 		}
 
 		const pieceMesh = context.pieceMeshes[piece.id];
@@ -49,10 +42,12 @@ export function renderPieceBarsBackgroundMesh(
 		}
 	}
 
-	for (const pieceId of Object.keys(context.pieceBarsBackgroundMeshes)) {
+	for (const pieceId of Object.keys(context.pieceRessources)) {
 		if (!display.pieces.find((p) => p.id === pieceId)) {
-			context.scene.remove(context.pieceBarsBackgroundMeshes[pieceId]);
-			delete context.pieceBarsBackgroundMeshes[pieceId];
+			if (context.pieceRessources[pieceId].barBackground) {
+				context.scene.remove(context.pieceRessources[pieceId].barBackground);
+				context.pieceRessources[pieceId].barBackground = undefined;
+			}
 		}
 	}
 }

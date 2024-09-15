@@ -1,6 +1,9 @@
 import { PlaneGeometry } from "three";
 import type { Display } from "../types/display";
 import type { Context } from "../types/context";
+import { createPiecesBarsBackgroundGeometry } from "./create-piece-bars-background-geometry";
+
+const pieceBarsBackgroundGeometry = createPiecesBarsBackgroundGeometry();
 
 export function renderPieceHealthBarGeometry(
 	context: Context,
@@ -8,9 +11,9 @@ export function renderPieceHealthBarGeometry(
 ): void {
 	for (const piece of display.pieces) {
 		const barsWidth =
-			context.pieceBarsBackgroundGeometry.parameters.width *
+			pieceBarsBackgroundGeometry.parameters.width *
 			(piece.attributes.health / piece.attributes.maxHealth || 0.001);
-		const barsHeight = context.pieceBarsBackgroundGeometry.parameters.height;
+		const barsHeight = pieceBarsBackgroundGeometry.parameters.height;
 
 		context.pieceHealthBarGeometries[piece.id] ||= new PlaneGeometry(
 			barsWidth,

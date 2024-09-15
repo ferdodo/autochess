@@ -30,7 +30,7 @@ export function renderPieceHealthBarMeshes(
 			context.scene.add(mesh);
 		}
 
-		const backgroundMesh = context.pieceBarsBackgroundMeshes[piece.id];
+		const backgroundMesh = context.pieceRessources[piece.id].barBackground;
 
 		if (!backgroundMesh) {
 			throw new Error("Piece mesh not found !");

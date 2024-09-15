@@ -33,10 +33,6 @@ export function createContext(): Context {
 		benchSlotMeshes: createBenchSlotMeshes(scene),
 		camera: createCamera(),
 		pieceAnimatedTextures: {},
-		pieceBarsBackgroundGeometry: new PlaneGeometry(1, 1),
-		pieceBarsBackgroundMaterial: new MeshBasicMaterial({ color: 0x000000 }),
-		pieceBarsBackgroundMeshes: {},
-		pieceGeometry: new PlaneGeometry(1, 1),
 		pieceGradeGeometry: new CircleGeometry(0.005, 32),
 		pieceGradeMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
 		pieceGradeMeshes: {},
@@ -66,5 +62,6 @@ export function createContext(): Context {
 		shopProductTraitMaterial: new MeshBasicMaterial({ color: 0 }),
 		shopProductTraitMeshes: {},
 		transpositionPlane: createTranspositionPlane(scene),
+		pieceRessources: {},
 	};
 }

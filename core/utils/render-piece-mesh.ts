@@ -1,6 +1,9 @@
 import { Mesh, Raycaster } from "three";
 import type { Display } from "../types/display";
 import type { Context } from "../types/context";
+import { createPieceGeometry } from "./create-piece-geometry";
+
+const pieceGeometry = createPieceGeometry();
 
 export function renderPieceMesh(context: Context, display: Display): void {
 	for (const piece of display.pieces) {
@@ -11,7 +14,7 @@ export function renderPieceMesh(context: Context, display: Display): void {
 		}
 
 		const meshCreated = !context.pieceMeshes[piece.id];
-		context.pieceMeshes[piece.id] ||= new Mesh(context.pieceGeometry, material);
+		context.pieceMeshes[piece.id] ||= new Mesh(pieceGeometry, material);
 		const mesh: Mesh = context.pieceMeshes[piece.id];
 
 		if (meshCreated) {

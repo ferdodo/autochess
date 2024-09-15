@@ -15,6 +15,7 @@ import type { PieceAnimatedTexture } from "./piece-animated-texture";
 import type { Appellation } from "./appellation";
 import type { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import type { Trait } from "./trait";
+import type { PieceRessources } from "./piece-ressources";
 
 export interface Context {
 	benchHeroGeometry: PlaneGeometry;
@@ -23,10 +24,6 @@ export interface Context {
 	benchSlotMeshes: Record<number, Mesh>;
 	camera: PerspectiveCamera | OrthographicCamera;
 	pieceAnimatedTextures: Record<string, PieceAnimatedTexture>;
-	pieceBarsBackgroundGeometry: PlaneGeometry;
-	pieceBarsBackgroundMaterial: MeshBasicMaterial;
-	pieceBarsBackgroundMeshes: Record<string, Mesh>;
-	pieceGeometry: PlaneGeometry;
 	pieceGradeGeometry: CircleGeometry;
 	pieceGradeMaterial: MeshBasicMaterial;
 	pieceGradeMeshes: Record<string, Record<number, Mesh>>;
@@ -56,4 +53,5 @@ export interface Context {
 	shopProductTraitMaterial: MeshBasicMaterial;
 	shopProductTraitMeshes: Record<string, Record<number, Mesh>>;
 	transpositionPlane: Mesh;
+	pieceRessources: Record<string, PieceRessources>;
 }
