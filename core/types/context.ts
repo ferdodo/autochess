@@ -11,7 +11,6 @@ import type {
 	BoxGeometry,
 } from "three";
 
-import type { PieceAnimatedTexture } from "./piece-animated-texture";
 import type { Appellation } from "./appellation";
 import type { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import type { Trait } from "./trait";
@@ -23,7 +22,6 @@ export interface Context {
 	benchHeroMeshes: Record<number, [Appellation, Mesh]>;
 	benchSlotMeshes: Record<number, Mesh>;
 	camera: PerspectiveCamera | OrthographicCamera;
-	pieceAnimatedTextures: Record<string, PieceAnimatedTexture>;
 	pieceGradeGeometry: CircleGeometry;
 	pieceGradeMaterial: MeshBasicMaterial;
 	pieceGradeMeshes: Record<string, Record<number, Mesh>>;

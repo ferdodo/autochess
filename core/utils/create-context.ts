@@ -32,7 +32,6 @@ export function createContext(): Context {
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
 		camera: createCamera(),
-		pieceAnimatedTextures: {},
 		pieceGradeGeometry: new CircleGeometry(0.005, 32),
 		pieceGradeMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
 		pieceGradeMeshes: {},
