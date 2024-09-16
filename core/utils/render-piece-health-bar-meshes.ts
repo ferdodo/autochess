@@ -7,7 +7,7 @@ export function renderPieceHealthBarMeshes(
 	display: Display,
 ): void {
 	for (const piece of display.pieces) {
-		const geometry = context.pieceHealthBarGeometries[piece.id];
+		const geometry = context.pieceRessources[piece.id].healthBarGeometry;
 
 		if (!geometry) {
 			throw new Error("Geometry not found !");

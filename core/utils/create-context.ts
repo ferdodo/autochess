@@ -26,7 +26,6 @@ export function createContext(): Context {
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
 		camera: createCamera(),
-		pieceHealthBarGeometries: {},
 		pieceHealthBarMaterial: new MeshBasicMaterial({ color: 0xff0000 }),
 		pieceHealthBarMeshes: {},
 		pieceHighlightMeshes: createHighlightMesh(scene),

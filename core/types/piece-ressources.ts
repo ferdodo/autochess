@@ -1,8 +1,9 @@
-import type { Mesh } from "three";
+import type { Mesh, PlaneGeometry } from "three";
 import type { PieceAnimatedTexture } from "./piece-animated-texture";
 
 export interface PieceRessources {
 	barBackground?: Mesh;
 	animatedTexture?: PieceAnimatedTexture;
+	healthBarGeometry?: PlaneGeometry;
 	grades: Record<number, Mesh>;
 }

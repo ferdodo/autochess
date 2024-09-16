@@ -15,29 +15,33 @@ export function renderPieceHealthBarGeometry(
 			(piece.attributes.health / piece.attributes.maxHealth || 0.001);
 		const barsHeight = pieceBarsBackgroundGeometry.parameters.height;
 
-		context.pieceHealthBarGeometries[piece.id] ||= new PlaneGeometry(
+		context.pieceRessources[piece.id].healthBarGeometry ||= new PlaneGeometry(
 			barsWidth,
 			barsHeight,
 		);
 
-		const geometry = context.pieceHealthBarGeometries[piece.id];
+		const geometry = context.pieceRessources[piece.id].healthBarGeometry;
+
+		if (!geometry) {
+			throw new Error("Health bar geometry not found !");
+		}
 
 		if (
 			geometry.parameters.width !== barsWidth ||
 			geometry.parameters.height !== barsHeight
 		) {
 			geometry.dispose();
-			context.pieceHealthBarGeometries[piece.id] = new PlaneGeometry(
+			context.pieceRessources[piece.id].healthBarGeometry = new PlaneGeometry(
 				barsWidth,
 				barsHeight,
 			);
 		}
 	}
 
-	for (const pieceId of Object.keys(context.pieceHealthBarGeometries)) {
+	for (const pieceId of Object.keys(context.pieceRessources)) {
 		if (!display.pieces.some((piece) => piece.id === pieceId)) {
-			context.pieceHealthBarGeometries[pieceId].dispose();
-			delete context.pieceHealthBarGeometries[pieceId];
+			context.pieceRessources[pieceId].healthBarGeometry?.dispose();
+			context.pieceRessources[pieceId].healthBarGeometry = undefined;
 		}
 	}
 }
