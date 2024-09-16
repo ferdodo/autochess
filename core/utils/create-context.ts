@@ -1,10 +1,4 @@
-import {
-	PlaneGeometry,
-	BoxGeometry,
-	MeshBasicMaterial,
-	CircleGeometry,
-	Vector3,
-} from "three";
+import { PlaneGeometry, BoxGeometry, MeshBasicMaterial, Vector3 } from "three";
 
 import type { Context } from "../types/context";
 import { createScene } from "./create-scene";
@@ -32,18 +26,16 @@ export function createContext(): Context {
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
 		camera: createCamera(),
-		pieceGradeGeometry: new CircleGeometry(0.005, 32),
-		pieceGradeMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
-		pieceGradeMeshes: {},
 		pieceHealthBarGeometries: {},
 		pieceHealthBarMaterial: new MeshBasicMaterial({ color: 0xff0000 }),
 		pieceHealthBarMeshes: {},
+		pieceHighlightMeshes: createHighlightMesh(scene),
 		pieceMaterials: {},
 		pieceMeshes: {},
+		pieceRessources: {},
 		pieceTargetBoxes: {},
 		pieceTargetBoxesGeometry: new BoxGeometry(0.08, 0.05, 0.05),
 		pieceTargetBoxesMaterial,
-		pieceHighlightMeshes: createHighlightMesh(scene),
 		pointer: new Vector3(),
 		pointerHelper: undefined,
 		pointerHelperEnabled: true,
@@ -61,6 +53,5 @@ export function createContext(): Context {
 		shopProductTraitMaterial: new MeshBasicMaterial({ color: 0 }),
 		shopProductTraitMeshes: {},
 		transpositionPlane: createTranspositionPlane(scene),
-		pieceRessources: {},
 	};
 }

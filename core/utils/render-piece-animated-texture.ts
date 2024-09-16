@@ -9,7 +9,9 @@ export function renderPieceAnimatedTexture(
 	display: Display,
 ): void {
 	for (const piece of display.pieces) {
-		context.pieceRessources[piece.id] ||= {};
+		context.pieceRessources[piece.id] ||= {
+			grades: {},
+		};
 
 		if (
 			context.pieceRessources[piece.id].animatedTexture?.appellation !==

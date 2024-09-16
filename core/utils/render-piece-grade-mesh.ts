@@ -1,20 +1,25 @@
-import { Mesh } from "three";
+import { Mesh, CircleGeometry, MeshBasicMaterial } from "three";
 import type { Display } from "../types/display";
 import type { Context } from "../types/context";
 
+const pieceGradeGeometry = new CircleGeometry(0.005, 32);
+const pieceGradeMaterial = new MeshBasicMaterial({ color: 0xffd700 });
+
 export function renderPieceGradeMesh(context: Context, display: Display): void {
 	for (const piece of display.pieces) {
-		context.pieceGradeMeshes[piece.id] ||= {};
+		context.pieceRessources[piece.id] ||= {
+			grades: {},
+		};
 
 		for (let i = 0; i < piece.hero.grade; i++) {
-			const meshCreated = !context.pieceGradeMeshes[piece.id]?.[i];
+			const meshCreated = !context.pieceRessources[piece.id].grades?.[i];
 
-			context.pieceGradeMeshes[piece.id][i] ||= new Mesh(
-				context.pieceGradeGeometry,
-				context.pieceGradeMaterial,
+			context.pieceRessources[piece.id].grades[i] ||= new Mesh(
+				pieceGradeGeometry,
+				pieceGradeMaterial,
 			);
 
-			const mesh: Mesh = context.pieceGradeMeshes[piece.id][i];
+			const mesh: Mesh = context.pieceRessources[piece.id].grades[i];
 
 			if (meshCreated) {
 				context.scene.add(mesh);
@@ -40,15 +45,14 @@ export function renderPieceGradeMesh(context: Context, display: Display): void {
 			}
 		}
 	}
-
-	for (const pieceId of Object.keys(context.pieceGradeMeshes)) {
-		for (const key of Object.keys(context.pieceGradeMeshes[pieceId])) {
+	for (const pieceId of Object.keys(context.pieceRessources)) {
+		for (const key of Object.keys(context.pieceRessources[pieceId].grades)) {
 			const grade = Number.parseInt(key);
 			const piece = display.pieces.find((p) => p.id === pieceId);
 
 			if (!piece || piece.hero.grade < grade) {
-				context.scene.remove(context.pieceGradeMeshes[pieceId][grade]);
-				delete context.pieceGradeMeshes[pieceId][grade];
+				context.scene.remove(context.pieceRessources[pieceId].grades[grade]);
+				delete context.pieceRessources[pieceId].grades[grade];
 			}
 		}
 	}

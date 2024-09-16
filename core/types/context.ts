@@ -3,7 +3,6 @@ import type {
 	Scene,
 	MeshBasicMaterial,
 	Mesh,
-	CircleGeometry,
 	PerspectiveCamera,
 	OrthographicCamera,
 	Vector3,
@@ -22,9 +21,6 @@ export interface Context {
 	benchHeroMeshes: Record<number, [Appellation, Mesh]>;
 	benchSlotMeshes: Record<number, Mesh>;
 	camera: PerspectiveCamera | OrthographicCamera;
-	pieceGradeGeometry: CircleGeometry;
-	pieceGradeMaterial: MeshBasicMaterial;
-	pieceGradeMeshes: Record<string, Record<number, Mesh>>;
 	pieceHealthBarGeometries: Record<string, PlaneGeometry>;
 	pieceHealthBarMaterial: MeshBasicMaterial;
 	pieceHealthBarMeshes: Record<string, Mesh>;

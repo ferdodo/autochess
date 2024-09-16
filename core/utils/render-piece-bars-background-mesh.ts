@@ -11,7 +11,10 @@ export function renderPieceBarsBackgroundMesh(
 	display: Display,
 ): void {
 	for (const piece of display.pieces) {
-		context.pieceRessources[piece.id] ||= {};
+		context.pieceRessources[piece.id] ||= {
+			grades: {},
+		};
+
 		const meshCreated = !context.pieceRessources[piece.id].barBackground;
 
 		const mesh: Mesh =
