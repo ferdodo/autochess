@@ -7,19 +7,19 @@ const pieceGradeMaterial = new MeshBasicMaterial({ color: 0xffd700 });
 
 export function renderPieceGradeMesh(context: Context, display: Display): void {
 	for (const piece of display.pieces) {
-		context.pieceRessources[piece.id] ||= {
+		context.boardPieces[piece.id] ||= {
 			grades: {},
 		};
 
 		for (let i = 0; i < piece.hero.grade; i++) {
-			const meshCreated = !context.pieceRessources[piece.id].grades?.[i];
+			const meshCreated = !context.boardPieces[piece.id].grades?.[i];
 
-			context.pieceRessources[piece.id].grades[i] ||= new Mesh(
+			context.boardPieces[piece.id].grades[i] ||= new Mesh(
 				pieceGradeGeometry,
 				pieceGradeMaterial,
 			);
 
-			const mesh: Mesh = context.pieceRessources[piece.id].grades[i];
+			const mesh: Mesh = context.boardPieces[piece.id].grades[i];
 
 			if (meshCreated) {
 				context.scene.add(mesh);
@@ -45,14 +45,14 @@ export function renderPieceGradeMesh(context: Context, display: Display): void {
 			}
 		}
 	}
-	for (const pieceId of Object.keys(context.pieceRessources)) {
-		for (const key of Object.keys(context.pieceRessources[pieceId].grades)) {
+	for (const pieceId of Object.keys(context.boardPieces)) {
+		for (const key of Object.keys(context.boardPieces[pieceId].grades)) {
 			const grade = Number.parseInt(key);
 			const piece = display.pieces.find((p) => p.id === pieceId);
 
 			if (!piece || piece.hero.grade < grade) {
-				context.scene.remove(context.pieceRessources[pieceId].grades[grade]);
-				delete context.pieceRessources[pieceId].grades[grade];
+				context.scene.remove(context.boardPieces[pieceId].grades[grade]);
+				delete context.boardPieces[pieceId].grades[grade];
 			}
 		}
 	}

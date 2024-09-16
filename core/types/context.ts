@@ -44,5 +44,5 @@ export interface Context {
 	shopProductTraitMaterial: MeshBasicMaterial;
 	shopProductTraitMeshes: Record<string, Record<number, Mesh>>;
 	transpositionPlane: Mesh;
-	pieceRessources: Record<string, PieceRessources>;
+	boardPieces: Record<string, PieceRessources>;
 }

@@ -9,20 +9,20 @@ export function renderPieceHealthBarMeshes(
 	display: Display,
 ): void {
 	for (const piece of display.pieces) {
-		const geometry = context.pieceRessources[piece.id].healthBarGeometry;
+		const geometry = context.boardPieces[piece.id].healthBarGeometry;
 
 		if (!geometry) {
 			throw new Error("Geometry not found !");
 		}
 
-		const meshCreated = !context.pieceRessources[piece.id].healthBarMesh;
+		const meshCreated = !context.boardPieces[piece.id].healthBarMesh;
 
-		context.pieceRessources[piece.id].healthBarMesh ||= new Mesh(
+		context.boardPieces[piece.id].healthBarMesh ||= new Mesh(
 			geometry,
 			pieceHealthBarMaterial,
 		);
 
-		const mesh = context.pieceRessources[piece.id].healthBarMesh;
+		const mesh = context.boardPieces[piece.id].healthBarMesh;
 
 		if (!mesh) {
 			throw new Error("Mesh not found !");
@@ -36,7 +36,7 @@ export function renderPieceHealthBarMeshes(
 			context.scene.add(mesh);
 		}
 
-		const backgroundMesh = context.pieceRessources[piece.id].barBackground;
+		const backgroundMesh = context.boardPieces[piece.id].barBackground;
 
 		if (!backgroundMesh) {
 			throw new Error("Piece mesh not found !");
@@ -55,13 +55,13 @@ export function renderPieceHealthBarMeshes(
 		}
 	}
 
-	for (const pieceId of Object.keys(context.pieceRessources)) {
+	for (const pieceId of Object.keys(context.boardPieces)) {
 		if (
 			!display.pieces.find((p) => p.id === pieceId) &&
-			context.pieceRessources[pieceId].healthBarMesh
+			context.boardPieces[pieceId].healthBarMesh
 		) {
-			context.scene.remove(context.pieceRessources[pieceId].healthBarMesh);
-			context.pieceRessources[pieceId].healthBarMesh = undefined;
+			context.scene.remove(context.boardPieces[pieceId].healthBarMesh);
+			context.boardPieces[pieceId].healthBarMesh = undefined;
 		}
 	}
 }

@@ -11,18 +11,18 @@ export function renderPieceBarsBackgroundMesh(
 	display: Display,
 ): void {
 	for (const piece of display.pieces) {
-		context.pieceRessources[piece.id] ||= {
+		context.boardPieces[piece.id] ||= {
 			grades: {},
 		};
 
-		const meshCreated = !context.pieceRessources[piece.id].barBackground;
+		const meshCreated = !context.boardPieces[piece.id].barBackground;
 
 		const mesh: Mesh =
-			context.pieceRessources[piece.id].barBackground ||
+			context.boardPieces[piece.id].barBackground ||
 			new Mesh(pieceBarsBackgroundGeometry, pieceBarsBackgroundMaterial);
 
 		if (meshCreated) {
-			context.pieceRessources[piece.id].barBackground = mesh;
+			context.boardPieces[piece.id].barBackground = mesh;
 			context.scene.add(mesh);
 		}
 
@@ -45,11 +45,11 @@ export function renderPieceBarsBackgroundMesh(
 		}
 	}
 
-	for (const pieceId of Object.keys(context.pieceRessources)) {
+	for (const pieceId of Object.keys(context.boardPieces)) {
 		if (!display.pieces.find((p) => p.id === pieceId)) {
-			if (context.pieceRessources[pieceId].barBackground) {
-				context.scene.remove(context.pieceRessources[pieceId].barBackground);
-				context.pieceRessources[pieceId].barBackground = undefined;
+			if (context.boardPieces[pieceId].barBackground) {
+				context.scene.remove(context.boardPieces[pieceId].barBackground);
+				context.boardPieces[pieceId].barBackground = undefined;
 			}
 		}
 	}

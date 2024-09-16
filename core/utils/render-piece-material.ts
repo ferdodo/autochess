@@ -7,12 +7,12 @@ export function renderPieceMaterial(context: Context, display: Display): void {
 	for (const piece of display.pieces) {
 		if (
 			context.pieceMaterials[piece.id]?.map !==
-			context.pieceRessources[piece.id]?.animatedTexture?.texture
+			context.boardPieces[piece.id]?.animatedTexture?.texture
 		) {
 			context.pieceMaterials[piece.id]?.dispose();
 
 			context.pieceMaterials[piece.id] = new MeshBasicMaterial({
-				map: context.pieceRessources[piece.id]?.animatedTexture?.texture,
+				map: context.boardPieces[piece.id]?.animatedTexture?.texture,
 				transparent: true,
 				side: DoubleSide,
 				depthWrite: false,

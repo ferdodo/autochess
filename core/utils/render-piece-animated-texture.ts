@@ -9,24 +9,24 @@ export function renderPieceAnimatedTexture(
 	display: Display,
 ): void {
 	for (const piece of display.pieces) {
-		context.pieceRessources[piece.id] ||= {
+		context.boardPieces[piece.id] ||= {
 			grades: {},
 		};
 
 		if (
-			context.pieceRessources[piece.id].animatedTexture?.appellation !==
+			context.boardPieces[piece.id].animatedTexture?.appellation !==
 				piece.hero.appellation ||
-			context.pieceRessources[piece.id].animatedTexture?.animation !==
+			context.boardPieces[piece.id].animatedTexture?.animation !==
 				piece.animation ||
-			context.pieceRessources[piece.id].animatedTexture?.animationStartAt !==
+			context.boardPieces[piece.id].animatedTexture?.animationStartAt !==
 				piece.animationStartAt
 		) {
-			context.pieceRessources[piece.id].animatedTexture?.dispose();
+			context.boardPieces[piece.id].animatedTexture?.dispose();
 
 			const [texture, dispose]: [CanvasTexture, () => void] =
 				createPieceAnimatedTexture(piece.hero.appellation, piece.animation);
 
-			context.pieceRessources[piece.id].animatedTexture = {
+			context.boardPieces[piece.id].animatedTexture = {
 				texture,
 				animationStartAt: piece.animationStartAt,
 				appellation: piece.hero.appellation,
@@ -36,10 +36,10 @@ export function renderPieceAnimatedTexture(
 		}
 	}
 
-	for (const pieceId of Object.keys(context.pieceRessources)) {
+	for (const pieceId of Object.keys(context.boardPieces)) {
 		if (display.pieces.find((p: Piece) => p.id === pieceId) === undefined) {
-			context.pieceRessources[pieceId].animatedTexture?.dispose();
-			context.pieceRessources[pieceId].animatedTexture = undefined;
+			context.boardPieces[pieceId].animatedTexture?.dispose();
+			context.boardPieces[pieceId].animatedTexture = undefined;
 		}
 	}
 }
