@@ -1,6 +1,8 @@
-import { Mesh } from "three";
+import { Mesh, MeshBasicMaterial } from "three";
 import type { Display } from "../types/display";
 import type { Context } from "../types/context";
+
+const pieceHealthBarMaterial = new MeshBasicMaterial({ color: 0xff0000 });
 
 export function renderPieceHealthBarMeshes(
 	context: Context,
@@ -17,7 +19,7 @@ export function renderPieceHealthBarMeshes(
 
 		context.pieceHealthBarMeshes[piece.id] ||= new Mesh(
 			geometry,
-			context.pieceHealthBarMaterial,
+			pieceHealthBarMaterial,
 		);
 
 		const mesh: Mesh = context.pieceHealthBarMeshes[piece.id];

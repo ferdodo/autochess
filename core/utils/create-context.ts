@@ -1,5 +1,4 @@
 import { PlaneGeometry, BoxGeometry, MeshBasicMaterial, Vector3 } from "three";
-
 import type { Context } from "../types/context";
 import { createScene } from "./create-scene";
 import { createCamera } from "./create-camera";
@@ -26,7 +25,6 @@ export function createContext(): Context {
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
 		camera: createCamera(),
-		pieceHealthBarMaterial: new MeshBasicMaterial({ color: 0xff0000 }),
 		pieceHealthBarMeshes: {},
 		pieceHighlightMeshes: createHighlightMesh(scene),
 		pieceMaterials: {},
