@@ -5,5 +5,6 @@ export interface PieceRessources {
 	barBackground?: Mesh;
 	animatedTexture?: PieceAnimatedTexture;
 	healthBarGeometry?: PlaneGeometry;
+	healthBarMesh?: Mesh;
 	grades: Record<number, Mesh>;
 }
