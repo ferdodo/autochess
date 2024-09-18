@@ -21,8 +21,6 @@ export interface Context {
 	benchHeroMeshes: Record<number, [Appellation, Mesh]>;
 	benchSlotMeshes: Record<number, Mesh>;
 	camera: PerspectiveCamera | OrthographicCamera;
-	pieceMaterials: Record<string, MeshBasicMaterial>;
-	pieceMeshes: Record<string, Mesh>;
 	pieceTargetBoxesGeometry: BoxGeometry;
 	pieceTargetBoxesMaterial: MeshBasicMaterial;
 	pieceTargetBoxes: Record<number, Mesh>;

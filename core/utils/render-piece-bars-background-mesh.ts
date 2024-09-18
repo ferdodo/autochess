@@ -1,56 +1,33 @@
 import { Mesh, MeshBasicMaterial } from "three";
-import type { Display } from "../types/display";
-import type { Context } from "../types/context";
 import { createPiecesBarsBackgroundGeometry } from "./create-piece-bars-background-geometry";
+import type { PieceRessources } from "../types/piece-ressources";
+import type { Piece } from "../types/piece";
 
 const pieceBarsBackgroundGeometry = createPiecesBarsBackgroundGeometry();
 const pieceBarsBackgroundMaterial = new MeshBasicMaterial({ color: 0x000000 });
 
 export function renderPieceBarsBackgroundMesh(
-	context: Context,
-	display: Display,
+	pieceRessources: PieceRessources,
+	piece: Piece | undefined,
 ): void {
-	for (const piece of display.pieces) {
-		context.boardPieces[piece.id] ||= {
-			grades: {},
-		};
-
-		const meshCreated = !context.boardPieces[piece.id].barBackground;
-
-		const mesh: Mesh =
-			context.boardPieces[piece.id].barBackground ||
-			new Mesh(pieceBarsBackgroundGeometry, pieceBarsBackgroundMaterial);
-
-		if (meshCreated) {
-			context.boardPieces[piece.id].barBackground = mesh;
-			context.scene.add(mesh);
+	if (!piece) {
+		if (pieceRessources.barBackground) {
+			pieceRessources.group.remove(pieceRessources.barBackground);
+			pieceRessources.barBackground = undefined;
 		}
 
-		const pieceMesh = context.pieceMeshes[piece.id];
-
-		if (!pieceMesh) {
-			throw new Error("Piece mesh not found !");
-		}
-
-		const targetX = pieceMesh.position.x;
-		const targetY = pieceMesh.position.y + 0.11;
-		const targetZ = pieceMesh.position.z;
-
-		if (
-			targetX !== mesh.position.x ||
-			targetY !== mesh.position.y ||
-			targetZ !== mesh.position.z
-		) {
-			mesh.position.set(targetX, targetY, targetZ);
-		}
+		return;
 	}
 
-	for (const pieceId of Object.keys(context.boardPieces)) {
-		if (!display.pieces.find((p) => p.id === pieceId)) {
-			if (context.boardPieces[pieceId].barBackground) {
-				context.scene.remove(context.boardPieces[pieceId].barBackground);
-				context.boardPieces[pieceId].barBackground = undefined;
-			}
-		}
+	const meshCreated = !pieceRessources.barBackground;
+
+	const mesh: Mesh =
+		pieceRessources.barBackground ||
+		new Mesh(pieceBarsBackgroundGeometry, pieceBarsBackgroundMaterial);
+
+	if (meshCreated) {
+		pieceRessources.barBackground = mesh;
+		pieceRessources.group.add(mesh);
+		mesh.position.set(0, 0.11, 0);
 	}
 }
