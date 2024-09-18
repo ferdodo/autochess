@@ -16,9 +16,7 @@ import type { Trait } from "./trait";
 import type { PieceRessources } from "./piece-ressources";
 
 export interface Context {
-	benchHeroGeometry: PlaneGeometry;
-	benchHeroMaterials: Record<Appellation, MeshBasicMaterial>;
-	benchHeroMeshes: Record<number, [Appellation, Mesh]>;
+	benchHeroMeshes: Record<number, PieceRessources>;
 	benchSlotMeshes: Record<number, Mesh>;
 	camera: PerspectiveCamera | OrthographicCamera;
 	pieceTargetBoxesGeometry: BoxGeometry;

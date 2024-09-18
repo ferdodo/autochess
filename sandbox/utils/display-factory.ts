@@ -24,28 +24,28 @@ export class DisplayFactory implements Subscribable<Display> {
 	display: Display = {
 		board: { x: 0, y: 0, w: 10, h: 10 },
 		pieces: [],
-		bench: {
-			0: {
-				appellation: getRandomAppellation(),
-				grade: 1,
+		bench: [
+			{
+				id: uid(),
+				hero: { appellation: getRandomAppellation(), grade: 1 },
+				position: { x: 0, y: 0, w: 0, h: 0 },
+				animation: Animation.Idle,
+				transposed: false,
+				animationStartAt: Date.now(),
+				attributes: { maxHealth: 100, health: 100, maxMana: 50, mana: 50 },
+				right: false,
 			},
-			1: {
-				appellation: getRandomAppellation(),
-				grade: 1,
+			{
+				id: uid(),
+				hero: { appellation: getRandomAppellation(), grade: 1 },
+				position: { x: 0, y: 0, w: 0, h: 0 },
+				animation: Animation.Idle,
+				transposed: false,
+				animationStartAt: Date.now(),
+				attributes: { maxHealth: 100, health: 100, maxMana: 50, mana: 50 },
+				right: false,
 			},
-			2: {
-				appellation: getRandomAppellation(),
-				grade: 2,
-			},
-			3: {
-				appellation: getRandomAppellation(),
-				grade: 3,
-			},
-			4: {
-				appellation: getRandomAppellation(),
-				grade: 4,
-			},
-		},
+		],
 		shop: [
 			{
 				id: uid(),

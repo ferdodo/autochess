@@ -1,26 +1,28 @@
-import { Mesh } from "three";
 import type { Display } from "../types/display";
 import type { Context } from "../types/context";
-import type { Appellation } from "../types/appellation";
+import { createPieceRessources } from "./create-piece-ressources";
+import { renderPieceAnimatedTexture } from "./render-piece-animated-texture";
+import { renderPieceMaterial } from "./render-piece-material";
+import { renderPieceMesh } from "./render-piece-mesh";
+import { renderPieceBarsBackgroundMesh } from "./render-piece-bars-background-mesh";
+import { renderPieceHealthBarGeometry } from "./render-piece-health-bar-geometry";
+import { renderPieceHealthBarMeshes } from "./render-piece-health-bar-meshes";
+import { renderPieceGradeMesh } from "./render-piece-grade-mesh";
 
 export function renderBenchHeroMeshes(
 	context: Context,
 	display: Display,
 ): void {
-	for (const [_slotNumber, hero] of Object.entries(display.bench)) {
+	for (const [_slotNumber, piece] of Object.entries(display.bench)) {
 		const slotNumber = Number.parseInt(_slotNumber);
 		const meshCreated = !context.benchHeroMeshes[slotNumber];
 
-		context.benchHeroMeshes[slotNumber] ||= [
-			hero.appellation,
-			new Mesh(
-				context.benchHeroGeometry,
-				context.benchHeroMaterials[hero.appellation],
-			),
-		];
+		const pieceRessources =
+			context.benchHeroMeshes[slotNumber] ||
+			createPieceRessources(context.scene);
 
-		const [appellation, mesh]: [Appellation, Mesh] =
-			context.benchHeroMeshes[slotNumber];
+		context.benchHeroMeshes[slotNumber] ||= pieceRessources;
+
 		const slot = context.benchSlotMeshes[slotNumber];
 
 		if (!slot) {
@@ -28,26 +30,18 @@ export function renderBenchHeroMeshes(
 		}
 
 		if (meshCreated) {
-			context.scene.add(mesh);
-			mesh.position.y = slot.position.y + 0.6;
-			mesh.position.z = slot.position.z + 0.05;
-			mesh.position.x = slot.position.x;
-			mesh.scale.set(0.5, 0.5, 0.5);
+			context.scene.add(pieceRessources.group);
+			pieceRessources.group.position.y = slot.position.y + 0.6;
+			pieceRessources.group.position.z = slot.position.z + 0.05;
+			pieceRessources.group.position.x = slot.position.x;
 		}
 
-		if (appellation !== hero.appellation) {
-			mesh.material = context.benchHeroMaterials[hero.appellation];
-		}
-	}
-
-	for (const [_slotNumber, [_appellation, mesh]] of Object.entries(
-		context.benchHeroMeshes,
-	)) {
-		const slotNumber = Number.parseInt(_slotNumber);
-
-		if (!display.bench[slotNumber]) {
-			context.scene.remove(mesh);
-			delete context.benchHeroMeshes[slotNumber];
-		}
+		renderPieceAnimatedTexture(pieceRessources, piece);
+		renderPieceMaterial(pieceRessources, piece);
+		renderPieceMesh(pieceRessources, piece);
+		renderPieceBarsBackgroundMesh(pieceRessources, piece);
+		renderPieceHealthBarGeometry(pieceRessources, piece);
+		renderPieceHealthBarMeshes(pieceRessources, piece);
+		renderPieceGradeMesh(pieceRessources, piece);
 	}
 }

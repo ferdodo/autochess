@@ -20,8 +20,6 @@ export function createContext(): Context {
 	});
 
 	return {
-		benchHeroGeometry: new PlaneGeometry(1, 1),
-		benchHeroMaterials: idleAnimationsByAppellations,
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
 		camera: createCamera(),
