@@ -61,6 +61,7 @@ export class DisplayFactory implements Subscribable<Display> {
 			},
 		],
 		phase: Phase.Combat,
+		money: 100,
 	};
 
 	gui: GUI = new GUI();

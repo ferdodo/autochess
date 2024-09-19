@@ -8,6 +8,7 @@ import { createShopProductAppellationGeometry } from "./create-shop-product-appe
 import { createIdleAnimationsByAppellations } from "./create-idle-animations-by-appellations";
 import { createTranspositionPlane } from "./create-transposition-plane";
 import { createHighlightMesh } from "./create-highlight-mesh";
+import { createMoneyGeometry } from "./create-money-geometry";
 
 export function createContext(): Context {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
@@ -22,9 +23,12 @@ export function createContext(): Context {
 	return {
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
-		camera: createCamera(),
-		pieceHighlightMeshes: createHighlightMesh(scene),
 		boardPieces: {},
+		camera: createCamera(),
+		moneyGeometry: createMoneyGeometry(),
+		moneyMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
+		moneyMesh: undefined,
+		pieceHighlightMeshes: createHighlightMesh(scene),
 		pieceTargetBoxes: {},
 		pieceTargetBoxesGeometry: new BoxGeometry(0.08, 0.05, 0.05),
 		pieceTargetBoxesMaterial,

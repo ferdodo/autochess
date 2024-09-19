@@ -18,11 +18,15 @@ import type { PieceRessources } from "./piece-ressources";
 export interface Context {
 	benchHeroMeshes: Record<number, PieceRessources>;
 	benchSlotMeshes: Record<number, Mesh>;
+	boardPieces: Record<string, PieceRessources>;
 	camera: PerspectiveCamera | OrthographicCamera;
+	moneyGeometry: TextGeometry;
+	moneyMaterial: MeshBasicMaterial;
+	moneyMesh?: Mesh;
+	pieceHighlightMeshes: Mesh;
+	pieceTargetBoxes: Record<number, Mesh>;
 	pieceTargetBoxesGeometry: BoxGeometry;
 	pieceTargetBoxesMaterial: MeshBasicMaterial;
-	pieceTargetBoxes: Record<number, Mesh>;
-	pieceHighlightMeshes: Mesh;
 	pointer: Vector3;
 	pointerHelper?: ArrowHelper;
 	pointerHelperEnabled: boolean;
@@ -40,5 +44,4 @@ export interface Context {
 	shopProductTraitMaterial: MeshBasicMaterial;
 	shopProductTraitMeshes: Record<string, Record<number, Mesh>>;
 	transpositionPlane: Mesh;
-	boardPieces: Record<string, PieceRessources>;
 }

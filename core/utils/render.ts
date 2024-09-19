@@ -1,11 +1,4 @@
 import type { Display } from "../types/display";
-//import { renderPieceAnimatedTexture } from "./render-piece-animated-texture";
-//import { renderPieceMaterial } from "./render-piece-material";
-//import { renderPieceMesh } from "./render-piece-mesh";
-//import { renderPieceBarsBackgroundMesh } from "./render-piece-bars-background-mesh";
-//import { renderPieceHealthBarGeometry } from "./render-piece-health-bar-geometry";
-//import { renderPieceHealthBarMeshes } from "./render-piece-health-bar-meshes";
-//import { renderPieceGradeMesh } from "./render-piece-grade-mesh";
 import { renderShopProductBackgroundMeshes } from "./render-shop-product-background-meshes";
 import { renderShopProductImageMeshes } from "./render-shop-product-image-meshes";
 import type { Context } from "../types/context";
@@ -16,6 +9,8 @@ import { renderPointerHelper } from "./render-pointer-helper";
 import { renderPieceTargetBoxes } from "./render-piece-target-boxes";
 import { renderPieceHighlight } from "./render-piece-highlight";
 import { renderBoardPieces } from "./render-board-pieces";
+import { renderMoneyGeometry } from "./render-money-geometry";
+import { renderMoneyMesh } from "./render-money-mesh";
 
 export function render(context: Context, display: Display) {
 	renderBoardPieces(context, display);
@@ -27,4 +22,6 @@ export function render(context: Context, display: Display) {
 	renderPointerHelper(context);
 	renderPieceTargetBoxes(context, display);
 	renderPieceHighlight(context, display);
+	renderMoneyGeometry(context, display);
+	renderMoneyMesh(context, display);
 }

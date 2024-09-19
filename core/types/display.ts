@@ -9,4 +9,5 @@ export interface Display {
 	shop: Product[];
 	bench: Record<number, Piece>;
 	phase: Phase;
+	money: number;
 }
