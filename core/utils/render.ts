@@ -11,6 +11,8 @@ import { renderPieceHighlight } from "./render-piece-highlight";
 import { renderBoardPieces } from "./render-board-pieces";
 import { renderMoneyGeometry } from "./render-money-geometry";
 import { renderMoneyMesh } from "./render-money-mesh";
+import { renderHealthGeometry } from "./render-health-geometry";
+import { renderHealthMesh } from "./render-health-mesh";
 
 export function render(context: Context, display: Display) {
 	renderBoardPieces(context, display);
@@ -24,4 +26,6 @@ export function render(context: Context, display: Display) {
 	renderPieceHighlight(context, display);
 	renderMoneyGeometry(context, display);
 	renderMoneyMesh(context, display);
+	renderHealthGeometry(context, display);
+	renderHealthMesh(context, display);
 }

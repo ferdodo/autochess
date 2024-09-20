@@ -23,6 +23,9 @@ export interface Context {
 	moneyGeometry: TextGeometry;
 	moneyMaterial: MeshBasicMaterial;
 	moneyMesh?: Mesh;
+	healthGeometry: TextGeometry;
+	healthMaterial: MeshBasicMaterial;
+	healthMesh?: Mesh;
 	pieceHighlightMeshes: Mesh;
 	pieceTargetBoxes: Record<number, Mesh>;
 	pieceTargetBoxesGeometry: BoxGeometry;

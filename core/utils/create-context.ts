@@ -9,6 +9,7 @@ import { createIdleAnimationsByAppellations } from "./create-idle-animations-by-
 import { createTranspositionPlane } from "./create-transposition-plane";
 import { createHighlightMesh } from "./create-highlight-mesh";
 import { createMoneyGeometry } from "./create-money-geometry";
+import { createHealthGeometry } from "./create-health-geometry";
 
 export function createContext(): Context {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
@@ -28,6 +29,9 @@ export function createContext(): Context {
 		moneyGeometry: createMoneyGeometry(),
 		moneyMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
 		moneyMesh: undefined,
+		healthGeometry: createHealthGeometry(),
+		healthMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
+		healthMesh: undefined,
 		pieceHighlightMeshes: createHighlightMesh(scene),
 		pieceTargetBoxes: {},
 		pieceTargetBoxesGeometry: new BoxGeometry(0.08, 0.05, 0.05),
