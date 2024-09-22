@@ -9,6 +9,12 @@ import type { Display } from "core/types/display";
 import { waitTextureLoaded } from "core/utils/load-texture";
 import { render } from "core/utils/render";
 import { createFpsCounter } from "./utils/create-fps-counter";
+import { observeInteractions } from "core/utils/observe-interactions";
+import { logEvent } from "./utils/log-event";
+import type { Subscription } from "rxjs";
+import type { Interaction } from "core/types/interaction";
+
+let oldSubscription: Subscription | undefined;
 
 waitTextureLoaded
 	.then(() => {
@@ -41,6 +47,18 @@ waitTextureLoaded
 			.addPiece()
 			.subscribe({
 				next(display: Display) {
+					const old = oldSubscription;
+
+					oldSubscription = observeInteractions(context, display).subscribe(
+						(interaction: Interaction) => {
+							logEvent(JSON.stringify(interaction));
+						},
+					);
+
+					if (old) {
+						old.unsubscribe();
+					}
+
 					render(context, display);
 				},
 			});
