@@ -6,7 +6,7 @@ RUN npm config set maxsockets 1
 RUN npm install
 RUN npm audit --audit-level=low
 
-FROM autochess-core
+FROM autochess-interface
 WORKDIR /autochess/sandbox
 COPY --from=0 /autochess/sandbox /autochess/sandbox
 

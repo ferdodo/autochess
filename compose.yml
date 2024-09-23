@@ -2,16 +2,20 @@ services:
   assets:
     build: assets
 
-  core-deps:
-    build:
-      context: core
-      target: deps
-
   core:
     build: core
+
+  interface-deps:
+    build:
+      context: interface
+      target: deps
+
+  interface:
+    build: interface
     depends_on:
       - assets
-      - core-deps
+      - core
+      - interface-deps
 
   sandbox-deps:
     build:
@@ -25,3 +29,4 @@ services:
     depends_on:
       - sandbox-deps
       - core
+      - interface

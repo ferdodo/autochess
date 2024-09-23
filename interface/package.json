@@ -4,9 +4,12 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
+		"@types/three": "^0.167.1",
+		"assets": "file:../assets",
 		"blockwise": "^2.8.1",
+		"core": "file:../core",
 		"rxjs": "^7.8.1",
-		"typescript": "^5.5.4",
-		"uid": "^2.0.2"
+		"three": "^0.167.1",
+		"typescript": "^5.5.4"
 	}
 }

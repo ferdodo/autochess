@@ -36,6 +36,12 @@ jobs:
           npm run build
         working-directory: ./core
 
+      - name: 🏗️ Build interface
+        run: |
+          npm install
+          npm run build
+        working-directory: ./interface
+
       - name: 🏗️ Build sandbox
         run: |
           npm install
