@@ -36,5 +36,9 @@ export function createShopProductAppellationGeometry(): Record<
 			Appellation.Swordsman,
 			textParams,
 		),
+		[Appellation.ArmoredAxeman]: new TextGeometry(
+			Appellation.ArmoredAxeman,
+			textParams,
+		),
 	};
 }

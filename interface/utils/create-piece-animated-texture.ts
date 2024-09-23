@@ -113,6 +113,14 @@ export function createPieceAnimatedTexture(
 			[Animation.Hurt]: 5,
 			[Animation.Death]: 4,
 		},
+		[Appellation.ArmoredAxeman]: {
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 9,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 12,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
+		},
 	};
 
 	switch (animation) {

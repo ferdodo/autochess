@@ -16,6 +16,7 @@ export function getHeroTraits(appellation: Appellation): Trait[] {
 		[Appellation.KnightTemplar]: [Trait.Knight, Trait.Light],
 		[Appellation.Knight]: [Trait.Knight, Trait.Armored],
 		[Appellation.Swordsman]: [Trait.BladeMaster],
+		[Appellation.ArmoredAxeman]: [Trait.Armored],
 	};
 
 	return [...traitsByAppellation[appellation]];

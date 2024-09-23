@@ -89,6 +89,13 @@ import SwordsmanAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 
 import SwordsmanHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Swordsman/Swordsman/Swordsman-Hurt.png.base64-data-url";
 import SwordsmanDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Swordsman/Swordsman/Swordsman-Death.png.base64-data-url";
 
+import ArmoredAxemanIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Idle.png.base64-data-url";
+import ArmoredAxemanAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Attack02.png.base64-data-url";
+import ArmoredAxemanWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Walk.png.base64-data-url";
+import ArmoredAxemanAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Attack03.png.base64-data-url";
+import ArmoredAxemanHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Hurt.png.base64-data-url";
+import ArmoredAxemanDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "core/types/appellation";
@@ -200,6 +207,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(SwordsmanAbilityTexture),
 		Hurt: textureLoader.load(SwordsmanHurtTexture),
 		Death: textureLoader.load(SwordsmanDeathTexture),
+	},
+	[Appellation.ArmoredAxeman]: {
+		Idle: textureLoader.load(ArmoredAxemanIdleTexture),
+		Attack: textureLoader.load(ArmoredAxemanAttackTexture),
+		Walk: textureLoader.load(ArmoredAxemanWalkTexture),
+		Ability: textureLoader.load(ArmoredAxemanAbilityTexture),
+		Hurt: textureLoader.load(ArmoredAxemanHurtTexture),
+		Death: textureLoader.load(ArmoredAxemanDeathTexture),
 	},
 };
 
