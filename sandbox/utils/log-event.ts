@@ -1,12 +1,21 @@
 let mouseX = 0;
 let mouseY = 0;
 
-function updateMousePosition(e: MouseEvent) {
+document.addEventListener("mousemove", (e: MouseEvent) => {
 	mouseX = e.clientX;
 	mouseY = e.clientY;
-}
+});
 
-document.addEventListener("mousemove", updateMousePosition);
+document.addEventListener(
+	"touchmove",
+	(event) => {
+		event.preventDefault();
+		const touch = event.touches[0];
+		mouseX = touch.clientX;
+		mouseY = touch.clientY;
+	},
+	false,
+);
 
 export function logEvent(eventText: string) {
 	const eventElement = document.createElement("div");
