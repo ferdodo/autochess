@@ -1,5 +1,5 @@
 import type { Display } from "core/types/display";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 import { renderPieceAnimatedTexture } from "./render-piece-animated-texture";
 import type { PieceRessources } from "../types/piece-ressources";
 import { renderPieceMaterial } from "./render-piece-material";
@@ -11,18 +11,22 @@ import { renderPieceHealthBarGeometry } from "./render-piece-health-bar-geometry
 import { renderPieceHealthBarMeshes } from "./render-piece-health-bar-meshes";
 import { renderPieceGradeMesh } from "./render-piece-grade-mesh";
 
-export function renderBoardPieces(context: Context, display: Display) {
+export function renderBoardPieces(
+	threeContext: ThreeContext,
+	display: Display,
+) {
 	const pieceIds = display.pieces.map((piece) => piece.id);
-	const existingPieceIds = Object.keys(context.boardPieces);
+	const existingPieceIds = Object.keys(threeContext.boardPieces);
 	const allIds = new Set([...pieceIds, ...existingPieceIds]);
 
 	for (const pieceId of allIds) {
 		const piece = display.pieces.find((piece) => piece.id === pieceId);
 
 		const pieceRessource: PieceRessources =
-			context.boardPieces[pieceId] || createPieceRessources(context.scene);
+			threeContext.boardPieces[pieceId] ||
+			createPieceRessources(threeContext.scene);
 
-		context.boardPieces[pieceId] ||= pieceRessource;
+		threeContext.boardPieces[pieceId] ||= pieceRessource;
 		renderPieceAnimatedTexture(pieceRessource, piece);
 		renderPieceMaterial(pieceRessource, piece);
 		renderPieceMesh(pieceRessource, piece);
@@ -32,5 +36,5 @@ export function renderBoardPieces(context: Context, display: Display) {
 		renderPieceGradeMesh(pieceRessource, piece);
 	}
 
-	renderBoardPieceMeshes(context, display);
+	renderBoardPieceMeshes(threeContext, display);
 }

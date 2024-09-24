@@ -1,28 +1,29 @@
 import type { Display } from "core/types/display";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 import { Mesh } from "three";
 
-export function renderMoneyMesh(context: Context, _display: Display) {
-	const meshCreated = !context.moneyMesh;
+export function renderMoneyMesh(threeContext: ThreeContext, _display: Display) {
+	const meshCreated = !threeContext.moneyMesh;
 
 	const mesh =
-		context.moneyMesh || new Mesh(context.moneyGeometry, context.moneyMaterial);
+		threeContext.moneyMesh ||
+		new Mesh(threeContext.moneyGeometry, threeContext.moneyMaterial);
 
-	context.moneyMesh ||= mesh;
+	threeContext.moneyMesh ||= mesh;
 
 	if (meshCreated) {
 		mesh.rotation.set(
-			context.camera.rotation.x,
-			context.camera.rotation.y,
-			context.camera.rotation.z,
+			threeContext.camera.rotation.x,
+			threeContext.camera.rotation.y,
+			threeContext.camera.rotation.z,
 		);
 
 		mesh.position.set(-0.03, 1.05, 1.1);
 
-		context.scene.add(mesh);
+		threeContext.scene.add(mesh);
 	}
 
-	if (context.moneyMesh.geometry !== context.moneyGeometry) {
-		context.moneyMesh.geometry = context.moneyGeometry;
+	if (threeContext.moneyMesh.geometry !== threeContext.moneyGeometry) {
+		threeContext.moneyMesh.geometry = threeContext.moneyGeometry;
 	}
 }

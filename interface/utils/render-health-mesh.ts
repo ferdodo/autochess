@@ -1,29 +1,32 @@
 import type { Display } from "core/types/display";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 import { Mesh } from "three";
 
-export function renderHealthMesh(context: Context, _display: Display) {
-	const meshCreated = !context.healthMesh;
+export function renderHealthMesh(
+	threeContext: ThreeContext,
+	_display: Display,
+) {
+	const meshCreated = !threeContext.healthMesh;
 
 	const mesh =
-		context.healthMesh ||
-		new Mesh(context.healthGeometry, context.healthMaterial);
+		threeContext.healthMesh ||
+		new Mesh(threeContext.healthGeometry, threeContext.healthMaterial);
 
-	context.healthMesh ||= mesh;
+	threeContext.healthMesh ||= mesh;
 
 	if (meshCreated) {
 		mesh.rotation.set(
-			context.camera.rotation.x,
-			context.camera.rotation.y,
-			context.camera.rotation.z,
+			threeContext.camera.rotation.x,
+			threeContext.camera.rotation.y,
+			threeContext.camera.rotation.z,
 		);
 
 		mesh.position.set(0.095, 1.05, 1.1);
 
-		context.scene.add(mesh);
+		threeContext.scene.add(mesh);
 	}
 
-	if (context.healthMesh.geometry !== context.healthGeometry) {
-		context.healthMesh.geometry = context.healthGeometry;
+	if (threeContext.healthMesh.geometry !== threeContext.healthGeometry) {
+		threeContext.healthMesh.geometry = threeContext.healthGeometry;
 	}
 }

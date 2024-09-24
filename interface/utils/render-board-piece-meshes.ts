@@ -1,13 +1,13 @@
 import { Raycaster } from "three";
 import type { Display } from "core/types/display";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 
 export function renderBoardPieceMeshes(
-	context: Context,
+	threeContext: ThreeContext,
 	display: Display,
 ): void {
 	for (const piece of display.pieces) {
-		const pieceRessources = context.boardPieces[piece.id];
+		const pieceRessources = threeContext.boardPieces[piece.id];
 
 		if (!pieceRessources) {
 			throw new Error("Piece ressources not found !");
@@ -58,15 +58,15 @@ export function renderBoardPieceMeshes(
 		if (piece.transposed) {
 			const raycaster = new Raycaster();
 
-			const direction = context.pointer
+			const direction = threeContext.pointer
 				.clone()
-				.sub(context.camera.position)
+				.sub(threeContext.camera.position)
 				.normalize();
 
-			raycaster.set(context.camera.position, direction);
+			raycaster.set(threeContext.camera.position, direction);
 
 			const intersections = raycaster.intersectObject(
-				context.transpositionPlane,
+				threeContext.transpositionPlane,
 			);
 
 			if (!intersections.length) {

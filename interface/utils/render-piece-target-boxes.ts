@@ -1,22 +1,22 @@
 import { Mesh } from "three";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 import type { Display } from "core/types/display";
 
 export function renderPieceTargetBoxes(
-	context: Context,
+	threeContext: ThreeContext,
 	display: Display,
 ): void {
 	for (let x = 0; x < display.board.w; x++) {
 		for (let y = 0; y < display.board.h; y++) {
 			const index = x + y * display.board.w;
-			const meshCreated = !context.pieceTargetBoxes[index];
+			const meshCreated = !threeContext.pieceTargetBoxes[index];
 
-			context.pieceTargetBoxes[index] ||= new Mesh(
-				context.pieceTargetBoxesGeometry,
-				context.pieceTargetBoxesMaterial,
+			threeContext.pieceTargetBoxes[index] ||= new Mesh(
+				threeContext.pieceTargetBoxesGeometry,
+				threeContext.pieceTargetBoxesMaterial,
 			);
 
-			const mesh: Mesh = context.pieceTargetBoxes[index];
+			const mesh: Mesh = threeContext.pieceTargetBoxes[index];
 
 			const cubeSize = 1;
 			const pieceSize = cubeSize / display.board.w;
@@ -31,7 +31,7 @@ export function renderPieceTargetBoxes(
 					relativeOriginZ - pieceSize * y,
 				);
 
-				context.scene.add(mesh);
+				threeContext.scene.add(mesh);
 			}
 
 			mesh.visible = false;

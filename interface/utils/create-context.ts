@@ -1,5 +1,5 @@
 import { PlaneGeometry, BoxGeometry, MeshBasicMaterial, Vector3 } from "three";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 import { createScene } from "./create-scene";
 import { createCamera } from "./create-camera";
 import { createShopProductTraitGeometry } from "./create-shop-product-trait-geometry";
@@ -11,7 +11,7 @@ import { createHighlightMesh } from "./create-highlight-mesh";
 import { createMoneyGeometry } from "./create-money-geometry";
 import { createHealthGeometry } from "./create-health-geometry";
 
-export function createContext(): Context {
+export function createContext(): ThreeContext {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
 	const scene = createScene();
 

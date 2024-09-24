@@ -1,5 +1,5 @@
 import { ArrowHelper, Vector3, MathUtils, PerspectiveCamera } from "three";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 
 const mousePos = new Vector3();
 
@@ -19,43 +19,43 @@ document.addEventListener(
 	false,
 );
 
-export function renderPointerHelper(context: Context): void {
-	if (!context.pointerHelper && context.pointerHelperEnabled) {
-		context.pointer = new Vector3();
+export function renderPointerHelper(threeContext: ThreeContext): void {
+	if (!threeContext.pointerHelper && threeContext.pointerHelperEnabled) {
+		threeContext.pointer = new Vector3();
 
-		context.pointerHelper = new ArrowHelper(
+		threeContext.pointerHelper = new ArrowHelper(
 			new Vector3(0, 0, 1),
-			context.pointer,
+			threeContext.pointer,
 			0.01,
 			0xff0000,
 		);
 
-		context.scene.add(context.pointerHelper);
+		threeContext.scene.add(threeContext.pointerHelper);
 	}
 
-	const cameraPosition = context.camera.position;
+	const cameraPosition = threeContext.camera.position;
 	const pointerDistance = cameraPosition.length() * 0.1;
 
-	if (context.camera instanceof PerspectiveCamera) {
-		const fovRadians = MathUtils.degToRad(context.camera.fov);
+	if (threeContext.camera instanceof PerspectiveCamera) {
+		const fovRadians = MathUtils.degToRad(threeContext.camera.fov);
 		const halfHeight = Math.tan(fovRadians / 2) * pointerDistance;
-		const halfWidth = halfHeight * context.camera.aspect;
+		const halfWidth = halfHeight * threeContext.camera.aspect;
 
 		const x = mousePos.x * halfWidth;
 		const y = mousePos.y * halfHeight;
 		const z = -pointerDistance;
 
 		const pointerVector = new Vector3(x, y, z);
-		pointerVector.applyMatrix4(context.camera.matrixWorld);
+		pointerVector.applyMatrix4(threeContext.camera.matrixWorld);
 
-		context.pointer.copy(pointerVector);
-		context.pointerHelper?.position.copy(context.pointer);
+		threeContext.pointer.copy(pointerVector);
+		threeContext.pointerHelper?.position.copy(threeContext.pointer);
 	}
 
-	if (context.pointerHelper && !context.pointerHelperEnabled) {
-		const helper = context.pointerHelper;
-		context.scene.remove(context.pointerHelper);
-		context.pointerHelper = undefined;
+	if (threeContext.pointerHelper && !threeContext.pointerHelperEnabled) {
+		const helper = threeContext.pointerHelper;
+		threeContext.scene.remove(threeContext.pointerHelper);
+		threeContext.pointerHelper = undefined;
 		helper.dispose();
 	}
 }

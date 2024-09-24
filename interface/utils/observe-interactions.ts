@@ -1,13 +1,13 @@
 import { merge, fromEvent, debounceTime, map } from "rxjs";
 import type { Observable } from "rxjs";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 import type { Interaction } from "core/types/interaction";
 import { Raycaster } from "three";
 import type { Display } from "core/types/display";
 import type { Vector3 } from "three";
 
 export function observeInteractions(
-	context: Context,
+	threeContext: ThreeContext,
 	display: Display,
 ): Observable<Interaction> {
 	const raycaster = new Raycaster();
@@ -27,17 +27,17 @@ export function observeInteractions(
 			let positionX: number | null = null;
 			let positionY: number | null = null;
 
-			const direction: Vector3 = context.pointer
+			const direction: Vector3 = threeContext.pointer
 				.clone()
-				.sub(context.camera.position)
+				.sub(threeContext.camera.position)
 				.normalize();
 
-			raycaster.set(context.camera.position, direction);
+			raycaster.set(threeContext.camera.position, direction);
 
 			for (let x = 0; x < display.board.w; x++) {
 				for (let y = 0; y < display.board.h; y++) {
 					const index = x + y * display.board.w;
-					const targetBox = context.pieceTargetBoxes[index];
+					const targetBox = threeContext.pieceTargetBoxes[index];
 
 					if (!targetBox) {
 						throw new Error("Target box not found !");

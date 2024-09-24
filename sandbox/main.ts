@@ -18,12 +18,12 @@ let oldSubscription: Subscription | undefined;
 
 waitTextureLoaded
 	.then(() => {
-		const context = createContext();
+		const threeContext = createContext();
 
 		observeWindowDimentions()
 			.pipe(
 				startWith(getWindowDimentions()),
-				mapRenderer(context),
+				mapRenderer(threeContext),
 				pairwise(),
 				tap(([oldRenderer]) => removeRenderer(oldRenderer)),
 			)
@@ -49,17 +49,18 @@ waitTextureLoaded
 				next(display: Display) {
 					const old = oldSubscription;
 
-					oldSubscription = observeInteractions(context, display).subscribe(
-						(interaction: Interaction) => {
-							logEvent(JSON.stringify(interaction));
-						},
-					);
+					oldSubscription = observeInteractions(
+						threeContext,
+						display,
+					).subscribe((interaction: Interaction) => {
+						logEvent(JSON.stringify(interaction));
+					});
 
 					if (old) {
 						old.unsubscribe();
 					}
 
-					render(context, display);
+					render(threeContext, display);
 				},
 			});
 

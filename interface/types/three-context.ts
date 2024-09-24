@@ -15,7 +15,7 @@ import type { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js
 import type { Trait } from "core/types/trait";
 import type { PieceRessources } from "./piece-ressources";
 
-export interface Context {
+export interface ThreeContext {
 	benchHeroMeshes: Record<number, PieceRessources>;
 	benchSlotMeshes: Record<number, Mesh>;
 	boardPieces: Record<string, PieceRessources>;

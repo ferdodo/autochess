@@ -2,13 +2,13 @@ import { createRenderer } from "./create-renderer";
 import { map } from "rxjs";
 import type { Block } from "blockwise";
 import type { Observable } from "rxjs";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 
-export function mapRenderer(context: Context) {
+export function mapRenderer(threeContext: ThreeContext) {
 	return (source: Observable<Block>) =>
 		source.pipe(
 			map((windowDimentions) => {
-				return createRenderer(windowDimentions, context);
+				return createRenderer(windowDimentions, threeContext);
 			}),
 		);
 }

@@ -1,33 +1,33 @@
 import { Mesh, Vector3 } from "three";
 import type { Display } from "core/types/display";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 import { getHeroTraits } from "core/utils/get-hero-traits";
 
 export function renderShopProductTraitMeshes(
-	context: Context,
+	threeContext: ThreeContext,
 	display: Display,
 ): void {
 	for (const product of display.shop) {
 		const traits = getHeroTraits(product.appellation);
-		const background = context.shopProductBackgroundMeshes[product.id];
+		const background = threeContext.shopProductBackgroundMeshes[product.id];
 
 		if (!background) {
 			throw new Error("Background not found !");
 		}
 
 		for (const [i, trait] of traits.entries()) {
-			const meshCreated = !context.shopProductTraitMeshes[product.id]?.[i];
-			context.shopProductTraitMeshes[product.id] ||= {};
+			const meshCreated = !threeContext.shopProductTraitMeshes[product.id]?.[i];
+			threeContext.shopProductTraitMeshes[product.id] ||= {};
 
-			context.shopProductTraitMeshes[product.id][i] ||= new Mesh(
-				context.shopProductTraitGeometry[trait],
-				context.shopProductTraitMaterial,
+			threeContext.shopProductTraitMeshes[product.id][i] ||= new Mesh(
+				threeContext.shopProductTraitGeometry[trait],
+				threeContext.shopProductTraitMaterial,
 			);
 
-			const mesh = context.shopProductTraitMeshes[product.id][i];
+			const mesh = threeContext.shopProductTraitMeshes[product.id][i];
 
 			if (meshCreated) {
-				context.scene.add(mesh);
+				threeContext.scene.add(mesh);
 				mesh.rotation.x = background.rotation.x;
 				mesh.position.x = background.position.x - 0.03;
 				const vector = new Vector3(0, -0.04 - 0.017 * i, 0);
@@ -38,15 +38,15 @@ export function renderShopProductTraitMeshes(
 		}
 	}
 
-	for (const productId of Object.keys(context.shopProductTraitMeshes)) {
+	for (const productId of Object.keys(threeContext.shopProductTraitMeshes)) {
 		if (!display.shop.find((p) => p.id === productId)) {
 			for (const mesh of Object.values(
-				context.shopProductTraitMeshes[productId],
+				threeContext.shopProductTraitMeshes[productId],
 			)) {
-				context.scene.remove(mesh);
+				threeContext.scene.remove(mesh);
 			}
 
-			delete context.shopProductTraitMeshes[productId];
+			delete threeContext.shopProductTraitMeshes[productId];
 		}
 	}
 }

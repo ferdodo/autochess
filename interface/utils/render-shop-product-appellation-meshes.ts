@@ -1,29 +1,29 @@
 import { Mesh, Vector3 } from "three";
 import type { Display } from "core/types/display";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 
 export function renderShopProductAppellationMeshes(
-	context: Context,
+	threeContext: ThreeContext,
 	display: Display,
 ): void {
 	for (const product of display.shop) {
-		const background = context.shopProductBackgroundMeshes[product.id];
+		const background = threeContext.shopProductBackgroundMeshes[product.id];
 
 		if (!background) {
 			throw new Error("Background not found !");
 		}
 
-		const meshCreated = !context.shopProductAppellationMeshes[product.id];
+		const meshCreated = !threeContext.shopProductAppellationMeshes[product.id];
 
-		context.shopProductAppellationMeshes[product.id] ||= new Mesh(
-			context.shopProductAppellationGeometry[product.appellation],
-			context.shopProductAppellationMaterial,
+		threeContext.shopProductAppellationMeshes[product.id] ||= new Mesh(
+			threeContext.shopProductAppellationGeometry[product.appellation],
+			threeContext.shopProductAppellationMaterial,
 		);
 
-		const mesh = context.shopProductAppellationMeshes[product.id];
+		const mesh = threeContext.shopProductAppellationMeshes[product.id];
 
 		if (meshCreated) {
-			context.scene.add(mesh);
+			threeContext.scene.add(mesh);
 			mesh.rotation.x = background.rotation.x;
 			mesh.position.x = background.position.x - 0.03;
 			const vector = new Vector3(0, 0.055, 0);
@@ -33,16 +33,18 @@ export function renderShopProductAppellationMeshes(
 		}
 	}
 
-	for (const productId of Object.keys(context.shopProductAppellationMeshes)) {
+	for (const productId of Object.keys(
+		threeContext.shopProductAppellationMeshes,
+	)) {
 		if (!display.shop.find((p) => p.id === productId)) {
-			const mesh = context.shopProductAppellationMeshes[productId];
+			const mesh = threeContext.shopProductAppellationMeshes[productId];
 
 			if (!mesh) {
 				throw new Error("Mesh not found !");
 			}
 
-			context.scene.remove(mesh);
-			delete context.shopProductAppellationMeshes[productId];
+			threeContext.scene.remove(mesh);
+			delete threeContext.shopProductAppellationMeshes[productId];
 		}
 	}
 }

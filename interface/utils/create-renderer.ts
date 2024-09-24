@@ -1,12 +1,15 @@
 import { WebGLRenderer } from "three";
 import type { Block } from "blockwise";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 import { notifyFrameStart, notifyFrameEnd } from "core/utils/observe-fps";
 import { createCamera } from "./create-camera";
 
-export function createRenderer(windowDimentions: Block, context: Context) {
+export function createRenderer(
+	windowDimentions: Block,
+	threeContext: ThreeContext,
+) {
 	const renderer = new WebGLRenderer();
-	context.camera = createCamera();
+	threeContext.camera = createCamera();
 	renderer.setSize(windowDimentions.w, windowDimentions.h);
 	renderer.setClearColor(0x0000ff);
 	document.body.appendChild(renderer.domElement);
@@ -14,7 +17,7 @@ export function createRenderer(windowDimentions: Block, context: Context) {
 	renderer.setAnimationLoop(() => {
 		notifyFrameStart();
 
-		renderer.render(context.scene, context.camera);
+		renderer.render(threeContext.scene, threeContext.camera);
 		notifyFrameEnd();
 	});
 

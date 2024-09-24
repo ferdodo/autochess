@@ -33,10 +33,10 @@ export function composeAnimatedTexture(
 	const frameHeight = 100;
 	canvas.width = frameWidth;
 	canvas.height = frameHeight;
-	const context = canvas.getContext("2d");
+	const canvasContext = canvas.getContext("2d");
 
-	if (!context) {
-		throw new Error("Canvas 2d context not supported !");
+	if (!canvasContext) {
+		throw new Error("Canvas 2d threeContext not supported !");
 	}
 
 	let animationPlayed = false;
@@ -60,9 +60,9 @@ export function composeAnimatedTexture(
 
 		lastFrame = time;
 
-		context.clearRect(0, 0, frameWidth, frameHeight);
+		canvasContext.clearRect(0, 0, frameWidth, frameHeight);
 
-		context.drawImage(
+		canvasContext.drawImage(
 			animationPlayed && endTexture ? endTexture.image : texture.image,
 			currentFrame * frameWidth,
 			0,

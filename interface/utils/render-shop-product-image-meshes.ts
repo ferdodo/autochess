@@ -1,28 +1,28 @@
 import { Mesh, Vector3 } from "three";
 import type { Display } from "core/types/display";
-import type { Context } from "../types/context";
+import type { ThreeContext } from "../types/three-context";
 
 export function renderShopProductImageMeshes(
-	context: Context,
+	threeContext: ThreeContext,
 	display: Display,
 ): void {
 	for (const product of display.shop) {
-		const meshCreated = !context.shopProductImageMeshes[product.id];
+		const meshCreated = !threeContext.shopProductImageMeshes[product.id];
 
-		context.shopProductImageMeshes[product.id] ||= new Mesh(
-			context.shopProductImageGeometry,
-			context.shopProductImageMaterial[product.appellation],
+		threeContext.shopProductImageMeshes[product.id] ||= new Mesh(
+			threeContext.shopProductImageGeometry,
+			threeContext.shopProductImageMaterial[product.appellation],
 		);
 
-		const mesh: Mesh = context.shopProductImageMeshes[product.id];
-		const background = context.shopProductBackgroundMeshes[product.id];
+		const mesh: Mesh = threeContext.shopProductImageMeshes[product.id];
+		const background = threeContext.shopProductBackgroundMeshes[product.id];
 
 		if (!background) {
 			throw new Error("Background not found !");
 		}
 
 		if (meshCreated) {
-			context.scene.add(mesh);
+			threeContext.scene.add(mesh);
 			mesh.rotation.x = background.rotation.x;
 			mesh.position.y = background.position.y;
 			mesh.position.z = background.position.z + 0.0001;
@@ -37,10 +37,10 @@ export function renderShopProductImageMeshes(
 		}
 	}
 
-	for (const productId of Object.keys(context.shopProductImageMeshes)) {
+	for (const productId of Object.keys(threeContext.shopProductImageMeshes)) {
 		if (!display.shop.find((p) => p.id === productId)) {
-			context.scene.remove(context.shopProductImageMeshes[productId]);
-			delete context.shopProductImageMeshes[productId];
+			threeContext.scene.remove(threeContext.shopProductImageMeshes[productId]);
+			delete threeContext.shopProductImageMeshes[productId];
 		}
 	}
 }
