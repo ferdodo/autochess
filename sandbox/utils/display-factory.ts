@@ -72,6 +72,7 @@ export class DisplayFactory implements Subscribable<Display> {
 		this.gui.add(this, "addPiece");
 		this.gui.add(this, "setPlanningPhase");
 		this.gui.add(this, "setCombatPhase");
+		this.gui.close();
 	}
 
 	get pieceIterators(): IterableIterator<Piece>[] {
