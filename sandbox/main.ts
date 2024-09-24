@@ -1,8 +1,6 @@
-import { startWith, pairwise, tap } from "rxjs";
-import { mapRenderer } from "interface/utils/map-renderer";
+import { tap } from "rxjs";
+import { createRenderer } from "interface/utils/create-renderer";
 import { observeWindowDimentions } from "core/utils/observe-window-dimentions";
-import { getWindowDimentions } from "core/utils/get-window-dimentions";
-import { removeRenderer } from "interface/utils/remove-renderer";
 import { createContext } from "interface/utils/create-context";
 import { DisplayFactory } from "./utils/display-factory";
 import type { Display } from "core/types/display";
@@ -13,6 +11,8 @@ import { observeInteractions } from "interface/utils/observe-interactions";
 import { logEvent } from "./utils/log-event";
 import type { Subscription } from "rxjs";
 import type { Interaction } from "core/types/interaction";
+import { createCamera } from "interface/utils/create-camera";
+import { removeRenderer } from "interface/utils/remove-renderer";
 
 let oldSubscription: Subscription | undefined;
 
@@ -22,10 +22,15 @@ waitTextureLoaded
 
 		observeWindowDimentions()
 			.pipe(
-				startWith(getWindowDimentions()),
-				mapRenderer(threeContext),
-				pairwise(),
-				tap(([oldRenderer]) => removeRenderer(oldRenderer)),
+				tap(() => {
+					threeContext.camera = createCamera();
+					removeRenderer(threeContext.renderer);
+
+					threeContext.renderer = createRenderer(
+						threeContext.camera,
+						threeContext.scene,
+					);
+				}),
 			)
 			.subscribe();
 

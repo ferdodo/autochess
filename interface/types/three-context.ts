@@ -8,6 +8,7 @@ import type {
 	Vector3,
 	ArrowHelper,
 	BoxGeometry,
+	WebGLRenderer,
 } from "three";
 
 import type { Appellation } from "core/types/appellation";
@@ -20,12 +21,12 @@ export interface ThreeContext {
 	benchSlotMeshes: Record<number, Mesh>;
 	boardPieces: Record<string, PieceRessources>;
 	camera: PerspectiveCamera | OrthographicCamera;
-	moneyGeometry: TextGeometry;
-	moneyMaterial: MeshBasicMaterial;
-	moneyMesh?: Mesh;
 	healthGeometry: TextGeometry;
 	healthMaterial: MeshBasicMaterial;
 	healthMesh?: Mesh;
+	moneyGeometry: TextGeometry;
+	moneyMaterial: MeshBasicMaterial;
+	moneyMesh?: Mesh;
 	pieceHighlightMeshes: Mesh;
 	pieceTargetBoxes: Record<number, Mesh>;
 	pieceTargetBoxesGeometry: BoxGeometry;
@@ -33,6 +34,7 @@ export interface ThreeContext {
 	pointer: Vector3;
 	pointerHelper?: ArrowHelper;
 	pointerHelperEnabled: boolean;
+	renderer: WebGLRenderer;
 	scene: Scene;
 	shopProductAppellationGeometry: Record<Appellation, TextGeometry>;
 	shopProductAppellationMaterial: MeshBasicMaterial;

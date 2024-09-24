@@ -10,10 +10,12 @@ import { createTranspositionPlane } from "./create-transposition-plane";
 import { createHighlightMesh } from "./create-highlight-mesh";
 import { createMoneyGeometry } from "./create-money-geometry";
 import { createHealthGeometry } from "./create-health-geometry";
+import { createRenderer } from "./create-renderer";
 
 export function createContext(): ThreeContext {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
 	const scene = createScene();
+	const camera = createCamera();
 
 	const pieceTargetBoxesMaterial = new MeshBasicMaterial({
 		color: 0x2bfafa,
@@ -26,12 +28,12 @@ export function createContext(): ThreeContext {
 		benchSlotMeshes: createBenchSlotMeshes(scene),
 		boardPieces: {},
 		camera: createCamera(),
-		moneyGeometry: createMoneyGeometry(),
-		moneyMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
-		moneyMesh: undefined,
 		healthGeometry: createHealthGeometry(),
 		healthMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
 		healthMesh: undefined,
+		moneyGeometry: createMoneyGeometry(),
+		moneyMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
+		moneyMesh: undefined,
 		pieceHighlightMeshes: createHighlightMesh(scene),
 		pieceTargetBoxes: {},
 		pieceTargetBoxesGeometry: new BoxGeometry(0.08, 0.05, 0.05),
@@ -39,6 +41,7 @@ export function createContext(): ThreeContext {
 		pointer: new Vector3(),
 		pointerHelper: undefined,
 		pointerHelperEnabled: true,
+		renderer: createRenderer(camera, scene),
 		scene,
 		shopProductAppellationGeometry: createShopProductAppellationGeometry(),
 		shopProductAppellationMaterial: new MeshBasicMaterial({ color: 0 }),
