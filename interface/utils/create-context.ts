@@ -27,7 +27,7 @@ export function createContext(): ThreeContext {
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
 		boardPieces: {},
-		camera: createCamera(),
+		camera,
 		healthGeometry: createHealthGeometry(),
 		healthMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
 		healthMesh: undefined,
