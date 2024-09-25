@@ -9,12 +9,9 @@ import { render } from "interface/utils/render";
 import { createFpsCounter } from "./utils/create-fps-counter";
 import { observeInteractions } from "interface/utils/observe-interactions";
 import { logEvent } from "./utils/log-event";
-import type { Subscription } from "rxjs";
 import type { Interaction } from "core/types/interaction";
 import { createCamera } from "interface/utils/create-camera";
 import { removeRenderer } from "interface/utils/remove-renderer";
-
-let oldSubscription: Subscription | undefined;
 
 waitTextureLoaded
 	.then(() => {
@@ -34,7 +31,7 @@ waitTextureLoaded
 			)
 			.subscribe();
 
-		new DisplayFactory()
+		const displayFactory = new DisplayFactory()
 			.addPiece()
 			.addPiece()
 			.addPiece()
@@ -49,25 +46,19 @@ waitTextureLoaded
 			.addPiece()
 			.addPiece()
 			.addPiece()
-			.addPiece()
-			.subscribe({
-				next(display: Display) {
-					const old = oldSubscription;
+			.addPiece();
 
-					oldSubscription = observeInteractions(
-						threeContext,
-						display,
-					).subscribe((interaction: Interaction) => {
-						logEvent(JSON.stringify(interaction));
-					});
+		displayFactory.subscribe({
+			next(display: Display) {
+				render(threeContext, display);
+			},
+		});
 
-					if (old) {
-						old.unsubscribe();
-					}
-
-					render(threeContext, display);
-				},
-			});
+		observeInteractions(threeContext, displayFactory.display).subscribe(
+			(interaction: Interaction) => {
+				logEvent(JSON.stringify(interaction));
+			},
+		);
 
 		createFpsCounter(threeContext).catch(console.error);
 	})

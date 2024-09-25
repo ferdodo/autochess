@@ -13,7 +13,6 @@ export async function createFpsCounter(threeContext: ThreeContext) {
 	const texturesPanel = new Stats.Panel("Triangles", "#f8f", "#212");
 	triangleStats.addPanel(trianglePanel);
 	texturesStats.addPanel(texturesPanel);
-	console.log(threeContext.renderer.info);
 	fpsStat.showPanel(0);
 	renderTimeStat.showPanel(1);
 	waitBetweenRendersStat.showPanel(1);
