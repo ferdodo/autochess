@@ -30,11 +30,17 @@ export function renderPieceHighlight(
 				throw new Error("Target box not found !");
 			}
 
+			const boardSlotHasPiece = display.pieces
+				.map((p) => p.position)
+				.some((p) => isBlockPositionEqual(p, position));
+
+			const somePieceIsTransposed = display.pieces.some(
+				(piece) => piece.transposed,
+			);
+
 			if (
 				raycaster.intersectObject(targetBox).length > 0 &&
-				display.pieces
-					.map((p) => p.position)
-					.some((p) => isBlockPositionEqual(p, position))
+				(boardSlotHasPiece || somePieceIsTransposed)
 			) {
 				threeContext.pieceHighlightMeshes.visible = true;
 				threeContext.pieceHighlightMeshes.position.copy(targetBox.position);
