@@ -96,6 +96,13 @@ import ArmoredAxemanAbilityTexture from "assets/Tiny RPG Character Asset Pack v1
 import ArmoredAxemanHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Hurt.png.base64-data-url";
 import ArmoredAxemanDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Death.png.base64-data-url";
 
+import SkeletonIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton/Skeleton/Skeleton-Idle.png.base64-data-url";
+import SkeletonAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton/Skeleton/Skeleton-Attack01.png.base64-data-url";
+import SkeletonWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton/Skeleton/Skeleton-Walk.png.base64-data-url";
+import SkeletonAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton/Skeleton/Skeleton-Attack02.png.base64-data-url";
+import SkeletonHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton/Skeleton/Skeleton-Hurt.png.base64-data-url";
+import SkeletonDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton/Skeleton/Skeleton-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "core/types/appellation";
@@ -215,6 +222,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(ArmoredAxemanAbilityTexture),
 		Hurt: textureLoader.load(ArmoredAxemanHurtTexture),
 		Death: textureLoader.load(ArmoredAxemanDeathTexture),
+	},
+	Skeleton: {
+		Idle: textureLoader.load(SkeletonIdleTexture),
+		Attack: textureLoader.load(SkeletonAttackTexture),
+		Walk: textureLoader.load(SkeletonWalkTexture),
+		Ability: textureLoader.load(SkeletonAbilityTexture),
+		Hurt: textureLoader.load(SkeletonHurtTexture),
+		Death: textureLoader.load(SkeletonDeathTexture),
 	},
 };
 
