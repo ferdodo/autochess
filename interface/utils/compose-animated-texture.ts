@@ -1,11 +1,31 @@
 import { NearestFilter, CanvasTexture, SRGBColorSpace } from "three";
 import type { Texture } from "three";
 
-const availableCanvas: HTMLCanvasElement[] = [];
+const availableCanvas: [
+	HTMLCanvasElement,
+	CanvasTexture,
+	CanvasRenderingContext2D,
+][] = [];
 
-function getAvailableCanvas(): HTMLCanvasElement {
+const frameWidth = 100;
+const frameHeight = 100;
+
+function getAvailableCanvas(): [
+	HTMLCanvasElement,
+	CanvasTexture,
+	CanvasRenderingContext2D,
+] {
 	if (availableCanvas.length === 0) {
-		return document.createElement("canvas");
+		const canvas = document.createElement("canvas");
+		canvas.width = frameWidth;
+		canvas.height = frameHeight;
+		const canvasContext = canvas.getContext("2d");
+
+		if (!canvasContext) {
+			throw new Error("Canvas 2d threeContext not supported !");
+		}
+
+		return [canvas, new CanvasTexture(canvas), canvasContext];
 	}
 
 	const canvas = availableCanvas.pop();
@@ -17,8 +37,12 @@ function getAvailableCanvas(): HTMLCanvasElement {
 	return canvas;
 }
 
-function releaseCanvas(canvas: HTMLCanvasElement) {
-	availableCanvas.push(canvas);
+function releaseCanvas(
+	canvas: HTMLCanvasElement,
+	CanvasTexture: CanvasTexture,
+	context: CanvasRenderingContext2D,
+) {
+	availableCanvas.push([canvas, CanvasTexture, context]);
 }
 
 export function composeAnimatedTexture(
@@ -27,22 +51,10 @@ export function composeAnimatedTexture(
 	endTexture?: Texture,
 	endTotalFrames?: number,
 ): [CanvasTexture, () => void] {
-	const canvas = getAvailableCanvas();
-
-	const frameWidth = 100;
-	const frameHeight = 100;
-	canvas.width = frameWidth;
-	canvas.height = frameHeight;
-	const canvasContext = canvas.getContext("2d");
-
-	if (!canvasContext) {
-		throw new Error("Canvas 2d threeContext not supported !");
-	}
+	const [canvas, canvasTexture, canvasContext] = getAvailableCanvas();
 
 	let animationPlayed = false;
 	let currentFrame = 0;
-
-	const canvasTexture = new CanvasTexture(canvas);
 
 	const period = 80;
 	let lastFrame = 0;
@@ -104,8 +116,7 @@ export function composeAnimatedTexture(
 		canvasTexture,
 		function dispose() {
 			disposed = true;
-			canvasTexture.dispose();
-			releaseCanvas(canvas);
+			releaseCanvas(canvas, canvasTexture, canvasContext);
 		},
 	];
 }
