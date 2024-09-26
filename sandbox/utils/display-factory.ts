@@ -7,6 +7,8 @@ import type { Subscription, Subscribable, Observer } from "rxjs";
 import { GUI } from "dat.gui";
 import { getRandomAppellation } from "./get-random-appellation";
 import { Phase } from "core/types/phase";
+import { observeInteractions } from "interface/utils/observe-interactions";
+import type { ThreeContext } from "interface/types/three-context";
 
 interface PieceHandle {
 	id: string;
@@ -68,11 +70,58 @@ export class DisplayFactory implements Subscribable<Display> {
 	gui: GUI = new GUI();
 	pieceHandles: PieceHandle[] = [];
 
-	constructor() {
+	constructor(threeContext: ThreeContext) {
 		this.gui.add(this, "addPiece");
 		this.gui.add(this, "setPlanningPhase");
 		this.gui.add(this, "setCombatPhase");
 		this.gui.close();
+
+		observeInteractions(threeContext, this.display).subscribe((interaction) => {
+			const transposedPiece = this.display.pieces.find(
+				(piece) => piece.transposed,
+			);
+
+			if (interaction.grabBoardPiece && !transposedPiece) {
+				for (const piece of this.display.pieces) {
+					const handle = this.pieceHandles.find(
+						(handle) => handle.id === piece.id,
+					);
+
+					if (!handle) {
+						continue;
+					}
+
+					if (
+						interaction.grabBoardPiece.positionX === piece.position.x &&
+						interaction.grabBoardPiece.positionY === piece.position.y
+					) {
+						handle.setTransposed();
+						handle.stopSimulation();
+						break;
+					}
+				}
+			}
+
+			if (interaction.ungrabBoardPiece && transposedPiece) {
+				if (transposedPiece) {
+					const handle = this.pieceHandles.find(
+						(handle) => handle.id === transposedPiece.id,
+					);
+
+					if (handle) {
+						transposedPiece.position = {
+							x: interaction.ungrabBoardPiece.positionX,
+							y: interaction.ungrabBoardPiece.positionY,
+							w: 0,
+							h: 0,
+						};
+
+						handle.unsetTransposed();
+						//handle.startSimulation();
+					}
+				}
+			}
+		});
 	}
 
 	get pieceIterators(): IterableIterator<Piece>[] {

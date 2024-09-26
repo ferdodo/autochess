@@ -31,7 +31,7 @@ waitTextureLoaded
 			)
 			.subscribe();
 
-		const displayFactory = new DisplayFactory()
+		const displayFactory = new DisplayFactory(threeContext)
 			.addPiece()
 			.addPiece()
 			.addPiece()
