@@ -9,6 +9,7 @@ import { getRandomAppellation } from "./get-random-appellation";
 import { Phase } from "core/types/phase";
 import { observeInteractions } from "interface/utils/observe-interactions";
 import type { ThreeContext } from "interface/types/three-context";
+import { createRandomPiece } from "./create-random-piece";
 
 interface PieceHandle {
 	id: string;
@@ -117,7 +118,10 @@ export class DisplayFactory implements Subscribable<Display> {
 						};
 
 						handle.unsetTransposed();
-						//handle.startSimulation();
+
+						setTimeout(() => {
+							handle.startSimulation();
+						}, 1500);
 					}
 				}
 			}
@@ -215,43 +219,19 @@ export class DisplayFactory implements Subscribable<Display> {
 	}
 
 	*#addPiece(): IterableIterator<Piece> {
-		const id = uid();
+		const initialPiece = createRandomPiece(this.display);
 
-		let piece = {
-			id,
-			hero: {
-				appellation: getRandomAppellation(),
-				position: {
-					x: 0,
-					y: 0,
-					w: 0,
-					h: 0,
-				},
-				grade: Math.floor(Math.random() * 5) + 1,
-			},
-			transposed: false,
-			animationStartAt: Date.now(),
-			animation: Animation.Idle,
-			position: {
-				x: Math.floor(Math.random() * this.display.board.w),
-				y: Math.floor(Math.random() * this.display.board.w),
-				w: 0,
-				h: 0,
-			},
-			attributes: {
-				maxHealth: 100,
-				health: 100,
-				maxMana: 50,
-				mana: 50,
-			},
-			right: Math.random() > 0.5,
-		};
+		const getPiece = () =>
+			this.display.pieces.find((piece) => piece.id === initialPiece.id) ||
+			initialPiece;
 
 		while (true) {
 			const action = Math.floor(Math.random() * 6);
 
 			switch (action) {
-				case 0:
+				case 0: {
+					let piece = getPiece();
+
 					if (piece.animation === Animation.Idle) {
 						break;
 					}
@@ -268,7 +248,10 @@ export class DisplayFactory implements Subscribable<Display> {
 
 					yield { ...piece };
 					break;
-				case 1:
+				}
+				case 1: {
+					const piece = getPiece();
+
 					if (piece.animation === Animation.Attack) {
 						break;
 					}
@@ -276,7 +259,10 @@ export class DisplayFactory implements Subscribable<Display> {
 					piece.animationStartAt = Date.now();
 					yield { ...piece };
 					break;
-				case 2:
+				}
+				case 2: {
+					const piece = getPiece();
+
 					if (piece.animation === Animation.Death) {
 						break;
 					}
@@ -285,7 +271,10 @@ export class DisplayFactory implements Subscribable<Display> {
 					piece.animationStartAt = Date.now();
 					yield { ...piece };
 					break;
-				case 3:
+				}
+				case 3: {
+					const piece = getPiece();
+
 					if (piece.animation === Animation.Ability) {
 						break;
 					}
@@ -294,7 +283,10 @@ export class DisplayFactory implements Subscribable<Display> {
 					piece.animationStartAt = Date.now();
 					yield { ...piece };
 					break;
+				}
 				case 4: {
+					let piece = getPiece();
+
 					if (piece.animation === Animation.Walk) {
 						break;
 					}
@@ -339,7 +331,8 @@ export class DisplayFactory implements Subscribable<Display> {
 					yield { ...piece };
 					break;
 				}
-				case 5:
+				case 5: {
+					let piece = getPiece();
 					if (piece.animation === Animation.Hurt) {
 						break;
 					}
@@ -356,6 +349,7 @@ export class DisplayFactory implements Subscribable<Display> {
 
 					yield { ...piece };
 					break;
+				}
 			}
 		}
 	}
@@ -379,8 +373,8 @@ export class DisplayFactory implements Subscribable<Display> {
 					}
 				}
 
-				await new Promise((resolve) => setTimeout(resolve, 1000));
 				display$.next(this.display);
+				await new Promise((resolve) => setTimeout(resolve, 1000));
 			}
 		};
 
