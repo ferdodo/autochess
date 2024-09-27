@@ -10,7 +10,7 @@ export async function createFpsCounter(threeContext: ThreeContext) {
 	const triangleStats = new Stats();
 	const texturesStats = new Stats();
 	const trianglePanel = new Stats.Panel("Triangles", "#f8f", "#212");
-	const texturesPanel = new Stats.Panel("Triangles", "#f8f", "#212");
+	const texturesPanel = new Stats.Panel("Textures", "#f8f", "#212");
 	triangleStats.addPanel(trianglePanel);
 	texturesStats.addPanel(texturesPanel);
 	fpsStat.showPanel(0);
@@ -32,7 +32,7 @@ export async function createFpsCounter(threeContext: ThreeContext) {
 	while (true) {
 		await firstValueFrom(frameStart$);
 
-		trianglePanel.update(threeContext.renderer.info.render.triangles, 70000);
+		trianglePanel.update(threeContext.renderer.info.render.triangles, 150000);
 		texturesPanel.update(threeContext.renderer.info.memory.textures, 80);
 
 		waitBetweenRendersStat.end();

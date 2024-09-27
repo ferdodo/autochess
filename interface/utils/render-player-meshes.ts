@@ -18,6 +18,8 @@ export function renderplayerMeshes(
 			threeContext.playerMeshes[i] ||
 			new Mesh(geometry, threeContext.playerMaterial);
 
+		threeContext.playerMeshes[i] = mesh;
+
 		if (meshCreated) {
 			mesh.rotation.set(
 				threeContext.camera.rotation.x,
