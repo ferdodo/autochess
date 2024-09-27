@@ -27,6 +27,16 @@ export class DisplayFactory implements Subscribable<Display> {
 	display: Display = {
 		board: { x: 0, y: 0, w: 10, h: 10 },
 		pieces: [],
+		players: [
+			["player 1", 50],
+			["player 2", 50],
+			["player 3", 50],
+			["player 4", 50],
+			["player 5", 50],
+			["player 6", 50],
+			["player 7", 50],
+			["player 8", 50],
+		],
 		bench: [
 			{
 				id: uid(),

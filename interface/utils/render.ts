@@ -13,6 +13,8 @@ import { renderMoneyGeometry } from "./render-money-geometry";
 import { renderMoneyMesh } from "./render-money-mesh";
 import { renderHealthGeometry } from "./render-health-geometry";
 import { renderHealthMesh } from "./render-health-mesh";
+import { renderPlayerGeometry } from "./render-player-geometry";
+import { renderplayerMeshes } from "./render-player-meshes";
 
 export function render(threeContext: ThreeContext, display: Display) {
 	renderBoardPieces(threeContext, display);
@@ -28,4 +30,6 @@ export function render(threeContext: ThreeContext, display: Display) {
 	renderMoneyMesh(threeContext, display);
 	renderHealthGeometry(threeContext, display);
 	renderHealthMesh(threeContext, display);
+	renderPlayerGeometry(threeContext, display);
+	renderplayerMeshes(threeContext, display);
 }

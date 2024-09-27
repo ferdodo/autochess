@@ -31,6 +31,9 @@ export interface ThreeContext {
 	pieceTargetBoxes: Record<number, Mesh>;
 	pieceTargetBoxesGeometry: BoxGeometry;
 	pieceTargetBoxesMaterial: MeshBasicMaterial;
+	playerGeometries: TextGeometry[];
+	playerMaterial: MeshBasicMaterial;
+	playerMeshes: Mesh[];
 	pointer: Vector3;
 	pointerHelper?: ArrowHelper;
 	pointerHelperEnabled: boolean;
