@@ -6,10 +6,9 @@ import type { Phase } from "./phase";
 export interface Display {
 	board: Block;
 	pieces: Piece[];
-	players: [string, number][];
+	players: [string, number, boolean][];
 	shop: Product[];
 	bench: Record<number, Piece>;
 	phase: Phase;
 	money: number;
-	health: number;
 }

@@ -28,14 +28,14 @@ export class DisplayFactory implements Subscribable<Display> {
 		board: { x: 0, y: 0, w: 10, h: 10 },
 		pieces: [],
 		players: [
-			["player 1", 50],
-			["player 2", 50],
-			["player 3", 50],
-			["player 4", 50],
-			["player 5", 50],
-			["player 6", 50],
-			["player 7", 50],
-			["player 8", 50],
+			["player 1", 50, false],
+			["player 2", 50, false],
+			["player 3", 50, false],
+			["my player", 50, true],
+			["player 5", 50, false],
+			["player 6", 50, false],
+			["player 7", 50, false],
+			["player 8", 50, false],
 		],
 		bench: [
 			{
@@ -75,7 +75,6 @@ export class DisplayFactory implements Subscribable<Display> {
 		],
 		phase: Phase.Combat,
 		money: 100,
-		health: 100,
 	};
 
 	gui: GUI = new GUI();
