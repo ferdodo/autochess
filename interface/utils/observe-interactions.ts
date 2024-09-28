@@ -1,4 +1,4 @@
-import { merge, fromEvent, debounceTime, map } from "rxjs";
+import { merge, fromEvent, debounceTime, map, filter } from "rxjs";
 import type { Observable } from "rxjs";
 import type { ThreeContext } from "../types/three-context";
 import type { Interaction } from "core/types/interaction";
@@ -57,7 +57,22 @@ export function observeInteractions(
 				interaction.ungrabBoardPiece = { positionX, positionY };
 			}
 
+			for (const [_index, targetBox] of Object.entries(
+				threeContext.benchTargetBoxes,
+			)) {
+				const position = Number.parseInt(_index);
+
+				if (raycaster.intersectObject(targetBox).length > 0) {
+					if (grabbing) {
+						interaction.grabBenchPiece = { position };
+					} else {
+						interaction.ungrabBenchPiece = { position };
+					}
+				}
+			}
+
 			return interaction;
 		}),
+		filter((interaction) => Object.keys(interaction).length > 0),
 	);
 }
