@@ -13,6 +13,7 @@ import { renderMoneyGeometry } from "./render-money-geometry";
 import { renderMoneyMesh } from "./render-money-mesh";
 import { renderPlayerGeometry } from "./render-player-geometry";
 import { renderplayerMeshes } from "./render-player-meshes";
+import { renderBenchTargetBoxes } from "./render-bench-target-boxes";
 
 export function render(threeContext: ThreeContext, display: Display) {
 	renderBoardPieces(threeContext, display);
@@ -28,4 +29,5 @@ export function render(threeContext: ThreeContext, display: Display) {
 	renderMoneyMesh(threeContext, display);
 	renderPlayerGeometry(threeContext, display);
 	renderplayerMeshes(threeContext, display);
+	renderBenchTargetBoxes(threeContext, display);
 }

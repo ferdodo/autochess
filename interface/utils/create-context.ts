@@ -26,6 +26,7 @@ export function createContext(): ThreeContext {
 	return {
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
+		benchTargetBoxes: {},
 		boardPieces: {},
 		camera,
 		healthGeometry: createHealthGeometry(),

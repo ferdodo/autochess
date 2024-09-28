@@ -19,6 +19,7 @@ import type { PieceRessources } from "./piece-ressources";
 export interface ThreeContext {
 	benchHeroMeshes: Record<number, PieceRessources>;
 	benchSlotMeshes: Record<number, Mesh>;
+	benchTargetBoxes: Record<number, Mesh>;
 	boardPieces: Record<string, PieceRessources>;
 	camera: PerspectiveCamera | OrthographicCamera;
 	healthGeometry: TextGeometry;
