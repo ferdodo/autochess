@@ -106,7 +106,6 @@ export function composeAnimatedTexture(
 	};
 
 	paintCanvas(0);
-	requestAnimationFrame(paintCanvas);
 
 	//canvasTexture.minFilter = NearestFilter;
 	canvasTexture.magFilter = NearestFilter;
