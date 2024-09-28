@@ -21,7 +21,7 @@ export function createBenchSlotMeshes(scene: Scene): Record<number, Mesh> {
 		scene.add(smallCube);
 		meshes[i] = smallCube;
 		smallCube.position.x = -0.19 + (i % 3) * -0.13;
-		smallCube.position.y = 0.01;
+		smallCube.position.y = 0.0;
 		smallCube.position.z = 0.6 + Math.floor(i / 3) * (smallCubeSize + 0.04);
 	}
 

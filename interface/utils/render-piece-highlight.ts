@@ -49,4 +49,13 @@ export function renderPieceHighlight(
 			}
 		}
 	}
+
+	for (const targetBox of Object.values(threeContext.benchTargetBoxes)) {
+		if (raycaster.intersectObject(targetBox).length > 0) {
+			threeContext.pieceHighlightMeshes.visible = true;
+			threeContext.pieceHighlightMeshes.position.copy(targetBox.position);
+			threeContext.pieceHighlightMeshes.position.y = 0.501;
+			break;
+		}
+	}
 }
