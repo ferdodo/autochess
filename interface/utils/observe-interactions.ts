@@ -1,10 +1,19 @@
-import { merge, fromEvent, debounceTime, map, filter } from "rxjs";
+import { merge, fromEvent, debounceTime, map, filter, delay } from "rxjs";
 import type { Observable } from "rxjs";
 import type { ThreeContext } from "../types/three-context";
 import type { Interaction } from "core/types/interaction";
 import { Raycaster } from "three";
 import type { Display } from "core/types/display";
 import type { Vector3 } from "three";
+
+/**
+ * touchDelay
+ *
+ * Pospone event to prevent touch interactions
+ * to be processed before pointer is positionned
+ * from that same touch event.
+ **/
+const touchDelay = 5;
 
 export function observeInteractions(
 	threeContext: ThreeContext,
@@ -15,11 +24,17 @@ export function observeInteractions(
 	return merge(
 		merge(
 			fromEvent(document, "mousedown").pipe(map(() => true)),
-			fromEvent(document, "touchstart").pipe(map(() => true)),
+			fromEvent(document, "touchstart").pipe(
+				map(() => true),
+				delay(touchDelay),
+			),
 		).pipe(debounceTime(3)),
 		merge(
 			fromEvent(document, "mouseup").pipe(map(() => false)),
-			fromEvent(document, "touchend").pipe(map(() => false)),
+			fromEvent(document, "touchend").pipe(
+				map(() => false),
+				delay(touchDelay),
+			),
 		).pipe(debounceTime(3)),
 	).pipe(
 		map((grabbing: boolean) => {
