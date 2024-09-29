@@ -1,4 +1,4 @@
-import { Raycaster } from "three";
+import { Raycaster, Vector3 } from "three";
 import type { Display } from "core/types/display";
 import type { ThreeContext } from "../types/three-context";
 
@@ -54,6 +54,14 @@ export function renderBoardPieceMeshes(
 			pieceRessources.group.position.y + moveY,
 			pieceRessources.group.position.z + moveZ,
 		);
+
+		const distance = pieceRessources.group.position.distanceTo(
+			new Vector3(targetX, targetY, targetZ),
+		);
+
+		if (distance > 0.15) {
+			pieceRessources.group.position.set(targetX, targetY, targetZ);
+		}
 
 		if (piece.transposed) {
 			const raycaster = new Raycaster();
