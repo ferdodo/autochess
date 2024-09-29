@@ -39,6 +39,9 @@ export interface ThreeContext {
 	pointerHelper?: ArrowHelper;
 	pointerHelperEnabled: boolean;
 	renderer: WebGLRenderer;
+	rerollBackgroundGeometry: PlaneGeometry;
+	rerollBackgroundMaterial: MeshBasicMaterial;
+	rerollBackgroundMesh?: Mesh;
 	scene: Scene;
 	shopProductAppellationGeometry: Record<Appellation, TextGeometry>;
 	shopProductAppellationMaterial: MeshBasicMaterial;

@@ -14,6 +14,7 @@ import { renderMoneyMesh } from "./render-money-mesh";
 import { renderPlayerGeometry } from "./render-player-geometry";
 import { renderplayerMeshes } from "./render-player-meshes";
 import { renderBenchTargetBoxes } from "./render-bench-target-boxes";
+import { renderRerollBackgroundMesh } from "./render-reroll-background-mesh";
 
 export function render(threeContext: ThreeContext, display: Display) {
 	renderBoardPieces(threeContext, display);
@@ -30,4 +31,5 @@ export function render(threeContext: ThreeContext, display: Display) {
 	renderPlayerGeometry(threeContext, display);
 	renderplayerMeshes(threeContext, display);
 	renderBenchTargetBoxes(threeContext, display);
+	renderRerollBackgroundMesh(threeContext, display);
 }
