@@ -8,6 +8,13 @@ document.addEventListener("mousemove", (event) => {
 	mousePos.y = -(event.clientY / window.innerHeight) * 2 + 1;
 });
 
+document.addEventListener("touchstart", (event) => {
+	event.preventDefault();
+	const touch = event.touches[0];
+	mousePos.x = (touch.clientX / window.innerWidth) * 2 - 1;
+	mousePos.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+});
+
 document.addEventListener(
 	"touchmove",
 	(event) => {
