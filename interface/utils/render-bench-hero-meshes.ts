@@ -8,6 +8,7 @@ import { renderPieceBarsBackgroundMesh } from "./render-piece-bars-background-me
 import { renderPieceHealthBarGeometry } from "./render-piece-health-bar-geometry";
 import { renderPieceHealthBarMeshes } from "./render-piece-health-bar-meshes";
 import { renderPieceGradeMesh } from "./render-piece-grade-mesh";
+import { Raycaster } from "three";
 
 export function renderBenchHeroMeshes(
 	threeContext: ThreeContext,
@@ -34,6 +35,28 @@ export function renderBenchHeroMeshes(
 			pieceRessources.group.position.y = slot.position.y + 0.6;
 			pieceRessources.group.position.z = slot.position.z + 0.05;
 			pieceRessources.group.position.x = slot.position.x;
+		}
+
+		if (piece.transposed) {
+			const raycaster = new Raycaster();
+
+			const direction = threeContext.pointer
+				.clone()
+				.sub(threeContext.camera.position)
+				.normalize();
+
+			raycaster.set(threeContext.camera.position, direction);
+
+			const intersections = raycaster.intersectObject(
+				threeContext.transpositionPlane,
+			);
+
+			if (!intersections.length) {
+				throw new Error("Failed to intersect selected piece with pointer !");
+			}
+
+			const [{ point }] = intersections;
+			pieceRessources.group.position.copy(point);
 		}
 
 		renderPieceAnimatedTexture(pieceRessources, piece);
