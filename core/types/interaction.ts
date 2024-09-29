@@ -3,16 +3,13 @@ interface GrabBoardPiece {
 	positionY: number;
 }
 
-interface UngrabBoardPiece {
-	positionX: number;
-	positionY: number;
+interface UngrabPiece {
+	positionX?: number;
+	positionY?: number;
+	benchPosition?: number;
 }
 
 interface GrabBenchPiece {
-	position: number;
-}
-
-interface UngrabBenchPiece {
 	position: number;
 }
 
@@ -22,8 +19,7 @@ interface shopBuy {
 
 export interface Interaction {
 	grabBoardPiece?: GrabBoardPiece;
-	ungrabBoardPiece?: UngrabBoardPiece;
+	ungrabPiece?: UngrabPiece;
 	grabBenchPiece?: GrabBenchPiece;
-	ungrabBenchPiece?: UngrabBenchPiece;
 	shopBuy?: shopBuy;
 }

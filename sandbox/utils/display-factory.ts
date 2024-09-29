@@ -112,20 +112,20 @@ export class DisplayFactory implements Subscribable<Display> {
 				}
 			}
 
-			if (interaction.ungrabBoardPiece && transposedPiece) {
+			if (interaction.ungrabPiece && transposedPiece) {
 				if (transposedPiece) {
 					const handle = this.pieceHandles.find(
 						(handle) => handle.id === transposedPiece.id,
 					);
 
 					if (handle) {
-						transposedPiece.position = {
-							x: interaction.ungrabBoardPiece.positionX,
-							y: interaction.ungrabBoardPiece.positionY,
-							w: 0,
-							h: 0,
-						};
+						const x =
+							interaction.ungrabPiece.positionX ?? transposedPiece.position.x;
 
+						const y =
+							interaction.ungrabPiece.positionY ?? transposedPiece.position.y;
+
+						transposedPiece.position = { x, y, w: 0, h: 0 };
 						handle.unsetTransposed();
 
 						setTimeout(() => {

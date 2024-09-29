@@ -39,8 +39,8 @@ export function observeInteractions(
 	).pipe(
 		map((grabbing: boolean) => {
 			const interaction: Interaction = {};
-			let positionX: number | null = null;
-			let positionY: number | null = null;
+			let positionX: number | undefined = undefined;
+			let positionY: number | undefined = undefined;
 
 			const direction: Vector3 = threeContext.pointer
 				.clone()
@@ -66,10 +66,10 @@ export function observeInteractions(
 				}
 			}
 
-			if (grabbing && positionX !== null && positionY !== null) {
+			if (grabbing && positionX !== undefined && positionY !== undefined) {
 				interaction.grabBoardPiece = { positionX, positionY };
-			} else if (!grabbing && positionX !== null && positionY !== null) {
-				interaction.ungrabBoardPiece = { positionX, positionY };
+			} else if (!grabbing) {
+				interaction.ungrabPiece = { positionX, positionY };
 			}
 
 			for (const [_index, targetBox] of Object.entries(
@@ -81,7 +81,7 @@ export function observeInteractions(
 					if (grabbing) {
 						interaction.grabBenchPiece = { position };
 					} else {
-						interaction.ungrabBenchPiece = { position };
+						interaction.ungrabPiece = { benchPosition: position };
 					}
 				}
 			}
