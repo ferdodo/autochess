@@ -86,6 +86,16 @@ export function observeInteractions(
 				}
 			}
 
+			if (grabbing) {
+				for (const [productId, shopProductBackgroundMesh] of Object.entries(
+					threeContext.shopProductBackgroundMeshes,
+				)) {
+					if (raycaster.intersectObject(shopProductBackgroundMesh).length > 0) {
+						interaction.shopBuy = { productId };
+					}
+				}
+			}
+
 			return interaction;
 		}),
 		filter((interaction) => Object.keys(interaction).length > 0),

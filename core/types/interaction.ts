@@ -14,7 +14,7 @@ interface GrabBenchPiece {
 }
 
 interface shopBuy {
-	slot: number;
+	productId: string;
 }
 
 export interface Interaction {
