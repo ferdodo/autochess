@@ -13,7 +13,7 @@ import type { Vector3 } from "three";
  * to be processed before pointer is positionned
  * from that same touch event.
  **/
-const touchDelay = 5;
+const touchDelay = 25;
 
 export function observeInteractions(
 	threeContext: ThreeContext,
