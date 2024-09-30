@@ -11,6 +11,7 @@ import { createHighlightMesh } from "./create-highlight-mesh";
 import { createMoneyGeometry } from "./create-money-geometry";
 import { createHealthGeometry } from "./create-health-geometry";
 import { createRenderer } from "./create-renderer";
+import { createRerollGeometry } from "./create-reroll-geometry";
 
 export function createContext(): ThreeContext {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
@@ -49,6 +50,9 @@ export function createContext(): ThreeContext {
 		rerollBackgroundGeometry: new PlaneGeometry(0.1, 0.04),
 		rerollBackgroundMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
 		rerollBackgroundMesh: undefined,
+		rerollGeometry: createRerollGeometry(),
+		rerollMaterial: new MeshBasicMaterial({ color: 0 }),
+		rerollMesh: undefined,
 		scene,
 		shopProductAppellationGeometry: createShopProductAppellationGeometry(),
 		shopProductAppellationMaterial: new MeshBasicMaterial({ color: 0 }),

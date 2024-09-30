@@ -15,6 +15,7 @@ import { renderPlayerGeometry } from "./render-player-geometry";
 import { renderplayerMeshes } from "./render-player-meshes";
 import { renderBenchTargetBoxes } from "./render-bench-target-boxes";
 import { renderRerollBackgroundMesh } from "./render-reroll-background-mesh";
+import { renderRerollMesh } from "./render-reroll-mesh";
 
 export function render(threeContext: ThreeContext, display: Display) {
 	renderBoardPieces(threeContext, display);
@@ -32,4 +33,5 @@ export function render(threeContext: ThreeContext, display: Display) {
 	renderplayerMeshes(threeContext, display);
 	renderBenchTargetBoxes(threeContext, display);
 	renderRerollBackgroundMesh(threeContext, display);
+	renderRerollMesh(threeContext, display);
 }

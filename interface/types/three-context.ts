@@ -42,6 +42,9 @@ export interface ThreeContext {
 	rerollBackgroundGeometry: PlaneGeometry;
 	rerollBackgroundMaterial: MeshBasicMaterial;
 	rerollBackgroundMesh?: Mesh;
+	rerollGeometry: TextGeometry;
+	rerollMaterial: MeshBasicMaterial;
+	rerollMesh?: Mesh;
 	scene: Scene;
 	shopProductAppellationGeometry: Record<Appellation, TextGeometry>;
 	shopProductAppellationMaterial: MeshBasicMaterial;
