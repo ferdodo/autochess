@@ -1,4 +1,3 @@
-import { tap } from "rxjs";
 import { createRenderer } from "interface/utils/create-renderer";
 import { observeWindowDimentions } from "core/utils/observe-window-dimentions";
 import { createContext } from "interface/utils/create-context";
@@ -17,19 +16,15 @@ waitTextureLoaded
 	.then(() => {
 		const threeContext = createContext();
 
-		observeWindowDimentions()
-			.pipe(
-				tap(() => {
-					threeContext.camera = createCamera();
-					removeRenderer(threeContext.renderer);
+		observeWindowDimentions().subscribe(() => {
+			threeContext.camera = createCamera();
+			removeRenderer(threeContext.renderer);
 
-					threeContext.renderer = createRenderer(
-						threeContext.camera,
-						threeContext.scene,
-					);
-				}),
-			)
-			.subscribe();
+			threeContext.renderer = createRenderer(
+				threeContext.camera,
+				threeContext.scene,
+			);
+		});
 
 		const displayFactory = new DisplayFactory(threeContext)
 			.addPiece()

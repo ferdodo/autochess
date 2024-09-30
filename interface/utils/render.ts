@@ -16,6 +16,8 @@ import { renderplayerMeshes } from "./render-player-meshes";
 import { renderBenchTargetBoxes } from "./render-bench-target-boxes";
 import { renderRerollBackgroundMesh } from "./render-reroll-background-mesh";
 import { renderRerollMesh } from "./render-reroll-mesh";
+import { renderLevelUpBackgroundMesh } from "./render-level-up-background-mesh";
+import { renderLevelUpMesh } from "./render-level-up-mesh";
 
 export function render(threeContext: ThreeContext, display: Display) {
 	renderBoardPieces(threeContext, display);
@@ -34,4 +36,6 @@ export function render(threeContext: ThreeContext, display: Display) {
 	renderBenchTargetBoxes(threeContext, display);
 	renderRerollBackgroundMesh(threeContext, display);
 	renderRerollMesh(threeContext, display);
+	renderLevelUpBackgroundMesh(threeContext, display);
+	renderLevelUpMesh(threeContext, display);
 }

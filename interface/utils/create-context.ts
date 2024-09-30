@@ -12,6 +12,7 @@ import { createMoneyGeometry } from "./create-money-geometry";
 import { createHealthGeometry } from "./create-health-geometry";
 import { createRenderer } from "./create-renderer";
 import { createRerollGeometry } from "./create-reroll-geometry";
+import { createLevelUpGeometry } from "./create-level-up-geometry";
 
 export function createContext(): ThreeContext {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
@@ -53,6 +54,12 @@ export function createContext(): ThreeContext {
 		rerollGeometry: createRerollGeometry(),
 		rerollMaterial: new MeshBasicMaterial({ color: 0 }),
 		rerollMesh: undefined,
+		levelUpBackgroundGeometry: new PlaneGeometry(0.1, 0.04),
+		levelUpBackgroundMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
+		levelUpBackgroundMesh: undefined,
+		levelUpGeometry: createLevelUpGeometry(),
+		levelUpMaterial: new MeshBasicMaterial({ color: 0 }),
+		levelUpMesh: undefined,
 		scene,
 		shopProductAppellationGeometry: createShopProductAppellationGeometry(),
 		shopProductAppellationMaterial: new MeshBasicMaterial({ color: 0 }),
