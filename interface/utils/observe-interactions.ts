@@ -88,6 +88,24 @@ export function observeInteractions(
 				}
 			}
 
+			if (grabbing && threeContext.rerollBackgroundMesh) {
+				if (
+					raycaster.intersectObject(threeContext.rerollBackgroundMesh).length >
+					0
+				) {
+					interaction.reroll = true;
+				}
+			}
+
+			if (grabbing && threeContext.levelUpBackgroundMesh) {
+				if (
+					raycaster.intersectObject(threeContext.levelUpBackgroundMesh).length >
+					0
+				) {
+					interaction.levelUp = true;
+				}
+			}
+
 			return interaction;
 		}),
 		filter((interaction) => Object.keys(interaction).length > 0),

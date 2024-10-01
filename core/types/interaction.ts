@@ -22,4 +22,6 @@ export interface Interaction {
 	ungrabPiece?: UngrabPiece;
 	grabBenchPiece?: GrabBenchPiece;
 	shopBuy?: shopBuy;
+	reroll?: true;
+	levelUp?: true;
 }
