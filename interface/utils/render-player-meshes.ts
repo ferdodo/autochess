@@ -26,8 +26,6 @@ export function renderplayerMeshes(
 			throw new Error("Player not found !");
 		}
 
-		const isMe: boolean = currentPlayer[2];
-
 		if (meshCreated) {
 			mesh.rotation.set(
 				threeContext.camera.rotation.x,
@@ -40,9 +38,10 @@ export function renderplayerMeshes(
 			const vector = new Vector3(0, -0.02 * i, 0);
 			vector.applyEuler(threeContext.camera.rotation);
 			mesh.position.add(vector);
+			mesh.scale.set(0.5, 0.5, 0.5);
 
-			if (isMe) {
-				mesh.scale.set(1.25, 1.25, 1.25);
+			if (currentPlayer.isMe) {
+				mesh.scale.set(0.75, 0.75, 0.75);
 			}
 		}
 

@@ -14,9 +14,9 @@ export function renderPlayerGeometry(
 		depth: 0.0000001,
 	};
 
-	for (const [_i, [name, health]] of Object.entries(display.players)) {
+	for (const [_i, { name, health, level }] of Object.entries(display.players)) {
 		const i = Number.parseInt(_i);
-		const targetText = `${name} (${health})`;
+		const targetText = `${name} / ${health} Hp / Lvl ${level}`;
 
 		if (threeContext.playerGeometries[i]?.userData.text !== targetText) {
 			threeContext.playerGeometries[i]?.dispose();

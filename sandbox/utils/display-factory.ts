@@ -27,16 +27,21 @@ export class DisplayFactory implements Subscribable<Display> {
 	display: Display = {
 		board: { x: 0, y: 0, w: 10, h: 10 },
 		pieces: [],
-		players: [
-			["player 1", 50, false],
-			["player 2", 50, false],
-			["player 3", 50, false],
-			["my player", 50, true],
-			["player 5", 50, false],
-			["player 6", 50, false],
-			["player 7", 50, false],
-			["player 8", 50, false],
-		],
+		players: (<[string, number, number, boolean][]>[
+			["player 1", 50, 5, false],
+			["player 2", 50, 5, false],
+			["player 3", 50, 4, false],
+			["my player", 50, 6, true],
+			["player 5", 50, 6, false],
+			["player 6", 50, 5, false],
+			["player 7", 50, 5, false],
+			["player 8", 50, 4, false],
+		]).map(([name, health, level, isMe]) => ({
+			name,
+			health,
+			level,
+			isMe,
+		})),
 		bench: [
 			{
 				id: uid(),
