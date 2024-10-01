@@ -12,4 +12,5 @@ export interface Display {
 	bench: Record<number, Piece>;
 	phase: Phase;
 	money: number;
+	levelUpCost: number | null;
 }

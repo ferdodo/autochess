@@ -48,7 +48,7 @@ export interface ThreeContext {
 	levelUpBackgroundGeometry: PlaneGeometry;
 	levelUpBackgroundMaterial: MeshBasicMaterial;
 	levelUpBackgroundMesh?: Mesh;
-	levelUpGeometry: TextGeometry;
+	levelUpGeometry?: TextGeometry;
 	levelUpMaterial: MeshBasicMaterial;
 	levelUpMesh?: Mesh;
 	scene: Scene;
