@@ -5,6 +5,7 @@ import type { Interaction } from "core/types/interaction";
 import { Raycaster } from "three";
 import type { Display } from "core/types/display";
 import type { Vector3 } from "three";
+import { renderCalls$ } from "./render";
 
 export function observeInteractions(
 	threeContext: ThreeContext,
@@ -17,16 +18,14 @@ export function observeInteractions(
 			fromEvent(document, "mousedown").pipe(map(() => true)),
 			fromEvent(document, "touchstart").pipe(
 				map(() => true),
-				delayWhen(() => new Promise((r) => requestAnimationFrame(r))),
-				delayWhen(() => new Promise((r) => requestAnimationFrame(r))),
+				delayWhen(() => renderCalls$),
 			),
 		).pipe(debounceTime(3)),
 		merge(
 			fromEvent(document, "mouseup").pipe(map(() => false)),
 			fromEvent(document, "touchend").pipe(
 				map(() => false),
-				delayWhen(() => new Promise((r) => requestAnimationFrame(r))),
-				delayWhen(() => new Promise((r) => requestAnimationFrame(r))),
+				delayWhen(() => renderCalls$),
 			),
 		).pipe(debounceTime(3)),
 	).pipe(

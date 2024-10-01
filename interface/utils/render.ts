@@ -18,6 +18,8 @@ import { renderRerollBackgroundMesh } from "./render-reroll-background-mesh";
 import { renderRerollMesh } from "./render-reroll-mesh";
 import { renderLevelUpBackgroundMesh } from "./render-level-up-background-mesh";
 import { renderLevelUpMesh } from "./render-level-up-mesh";
+import type { Observable } from "rxjs";
+import { Subject } from "rxjs";
 
 export function render(threeContext: ThreeContext, display: Display) {
 	renderBoardPieces(threeContext, display);
@@ -38,4 +40,9 @@ export function render(threeContext: ThreeContext, display: Display) {
 	renderRerollMesh(threeContext, display);
 	renderLevelUpBackgroundMesh(threeContext, display);
 	renderLevelUpMesh(threeContext, display);
+	_renderCalls$.next();
 }
+
+const _renderCalls$ = new Subject<void>();
+
+export const renderCalls$: Observable<void> = _renderCalls$;
