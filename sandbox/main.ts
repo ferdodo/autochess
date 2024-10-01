@@ -12,6 +12,10 @@ import type { Interaction } from "core/types/interaction";
 import { createCamera } from "interface/utils/create-camera";
 import { removeRenderer } from "interface/utils/remove-renderer";
 
+document.addEventListener("contextmenu", (e) => {
+	e.preventDefault();
+});
+
 waitTextureLoaded
 	.then(() => {
 		const threeContext = createContext();
