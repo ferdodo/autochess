@@ -30,3 +30,17 @@ services:
       - sandbox-deps
       - core
       - interface
+
+  offline-deps:
+    build:
+      context: offline
+      target: deps
+
+  offline:
+    build: offline
+    ports:
+      - "127.0.0.1:5423:5173"
+    depends_on:
+      - offline-deps
+      - core
+      - interface

@@ -1,0 +1,14 @@
+{
+	"scripts": {
+		"build": "tsc && biome ci . && vite build",
+		"start": "vite --host"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.8.3",
+		"core": "file:../core",
+		"interface": "file:../interface",
+		"rxjs": "^7.8.1",
+		"typescript": "^5.5.4",
+		"vite": "^5.4.0"
+	}
+}
