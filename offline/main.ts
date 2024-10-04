@@ -5,6 +5,7 @@ import { waitTextureLoaded } from "interface/utils/load-texture";
 import { createCamera } from "interface/utils/create-camera";
 import { removeRenderer } from "interface/utils/remove-renderer";
 // import { render } from "interface/utils/render";
+import { PlayerSwitch } from "./utils/player-switch";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -12,6 +13,7 @@ document.addEventListener("contextmenu", (e) => {
 
 waitTextureLoaded
 	.then(() => {
+		new PlayerSwitch();
 		const threeContext = createContext();
 
 		observeWindowDimentions().subscribe(() => {
