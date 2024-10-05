@@ -16,20 +16,37 @@ document.addEventListener("contextmenu", (e) => {
 
 waitTextureLoaded
 	.then(() => {
-		new PlayerSwitch();
+		const playerSwitch = new PlayerSwitch();
 		const connectionMockFactory = new ConnectionMockFactory();
 		const backContext = createOfflineBackContext(connectionMockFactory);
 		startServer(backContext);
-		const threeContext = createContext();
+		let currentPlayer = 0;
+
+		playerSwitch.observeCurrentPlayer().subscribe((value) => {
+			currentPlayer = value;
+		});
+
+		const threeContext1 = createContext();
+		const threeContext2 = createContext();
+		playerSwitch.switchPlayer1();
 
 		observeWindowDimentions().subscribe(() => {
-			threeContext.camera = createCamera();
-			removeRenderer(threeContext.renderer);
+			threeContext1.camera = createCamera();
+			threeContext2.camera = createCamera();
+			removeRenderer(threeContext1.renderer);
+			removeRenderer(threeContext2.renderer);
 
-			threeContext.renderer = createRenderer(
-				threeContext.camera,
-				threeContext.scene,
+			threeContext1.renderer = createRenderer(
+				threeContext1.camera,
+				threeContext1.scene,
 			);
+
+			threeContext2.renderer = createRenderer(
+				threeContext2.camera,
+				threeContext2.scene,
+			);
+
+			playerSwitch.switchPlayer(currentPlayer);
 		});
 	})
 	.catch(console.error);
