@@ -129,6 +129,14 @@ export function createPieceAnimatedTexture(
 			[Animation.Hurt]: 4,
 			[Animation.Death]: 4,
 		},
+		[Appellation.ArmoredOrc]: {
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 7,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 9,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
+		},
 	};
 
 	switch (animation) {

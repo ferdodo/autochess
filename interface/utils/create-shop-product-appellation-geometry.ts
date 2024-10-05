@@ -41,5 +41,9 @@ export function createShopProductAppellationGeometry(): Record<
 			textParams,
 		),
 		[Appellation.Skeleton]: new TextGeometry(Appellation.Skeleton, textParams),
+		[Appellation.ArmoredOrc]: new TextGeometry(
+			Appellation.ArmoredOrc,
+			textParams,
+		),
 	};
 }

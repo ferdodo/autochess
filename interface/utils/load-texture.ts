@@ -103,6 +103,13 @@ import SkeletonAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -
 import SkeletonHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton/Skeleton/Skeleton-Hurt.png.base64-data-url";
 import SkeletonDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton/Skeleton/Skeleton-Death.png.base64-data-url";
 
+import ArmoredOrcIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Orc/Armored Orc/Armored Orc-Idle.png.base64-data-url";
+import ArmoredOrcAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Orc/Armored Orc/Armored Orc-Attack01.png.base64-data-url";
+import ArmoredOrcWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Orc/Armored Orc/Armored Orc-Walk.png.base64-data-url";
+import ArmoredOrcAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Orc/Armored Orc/Armored Orc-Attack03.png.base64-data-url";
+import ArmoredOrcHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Orc/Armored Orc/Armored Orc-Hurt.png.base64-data-url";
+import ArmoredOrcDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Orc/Armored Orc/Armored Orc-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "core/types/appellation";
@@ -230,6 +237,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(SkeletonAbilityTexture),
 		Hurt: textureLoader.load(SkeletonHurtTexture),
 		Death: textureLoader.load(SkeletonDeathTexture),
+	},
+	[Appellation.ArmoredOrc]: {
+		Idle: textureLoader.load(ArmoredOrcIdleTexture),
+		Attack: textureLoader.load(ArmoredOrcAttackTexture),
+		Walk: textureLoader.load(ArmoredOrcWalkTexture),
+		Ability: textureLoader.load(ArmoredOrcAbilityTexture),
+		Hurt: textureLoader.load(ArmoredOrcHurtTexture),
+		Death: textureLoader.load(ArmoredOrcDeathTexture),
 	},
 };
 
