@@ -17,7 +17,7 @@ export function renderPieceHealthBarGeometry(
 
 	const barsWidth =
 		pieceBarsBackgroundGeometry.parameters.width *
-		(piece.attributes.health / piece.attributes.maxHealth || 0.001);
+		(piece.hero.attributes.health / piece.hero.attributes.maxHealth || 0.001);
 
 	const barsHeight = pieceBarsBackgroundGeometry.parameters.height;
 

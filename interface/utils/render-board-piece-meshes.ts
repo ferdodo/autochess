@@ -7,7 +7,7 @@ export function renderBoardPieceMeshes(
 	display: Display,
 ): void {
 	for (const piece of display.pieces) {
-		const pieceRessources = threeContext.boardPieces[piece.id];
+		const pieceRessources = threeContext.boardPieces[piece.hero.id];
 
 		if (!pieceRessources) {
 			throw new Error("Piece ressources not found !");
@@ -25,15 +25,15 @@ export function renderBoardPieceMeshes(
 			!pieceRessources.group.position.z
 		) {
 			pieceRessources.group.position.set(
-				relativeOriginX + pieceSize * piece.position.x,
+				relativeOriginX + pieceSize * piece.hero.position.x,
 				relativeOriginY,
-				relativeOriginZ - pieceSize * piece.position.y,
+				relativeOriginZ - pieceSize * piece.hero.position.y,
 			);
 		}
 
-		const targetX = relativeOriginX + pieceSize * piece.position.x;
+		const targetX = relativeOriginX + pieceSize * piece.hero.position.x;
 		const targetY = relativeOriginY;
-		const targetZ = relativeOriginZ - pieceSize * piece.position.y;
+		const targetZ = relativeOriginZ - pieceSize * piece.hero.position.y;
 		const treshold = 0.01;
 
 		const diffX = targetX - pieceRessources.group.position.x;

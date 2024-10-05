@@ -2,7 +2,10 @@ import type { Subscription } from "rxjs";
 import { throttleTime } from "rxjs/operators";
 import { createGameId } from "./create-game-id";
 import type { BackContext } from "../types/back-context";
-import { merge, tap } from "rxjs";
+import { merge, filter } from "rxjs";
+import type { Hero } from "../types/hero";
+import { HeroFactory } from "./hero-factory";
+import { ProductFactory } from "./product-factory";
 
 const MATCHMAKING_THROTTLE_TIME = 5000;
 const MATCHMAKING_LATE = 30000;
@@ -13,57 +16,49 @@ export function matchmake({
 }: BackContext): Subscription {
 	const startWhenEight$ = queuerDataMapper.observe().pipe(
 		throttleTime(MATCHMAKING_THROTTLE_TIME),
-		tap(async (queuers) => {
-			if (queuers.length > 8) {
-				const oldestFirst = [...queuers].sort(
-					(a, b) => a.createdAt - b.createdAt,
-				);
-
-				const players = oldestFirst.slice(0, 8);
-
-				const nicknames = players.reduce(
-					(acc, player) => {
-						acc[player.publicKey] = player.nickname;
-						return acc;
-					},
-					<Record<string, string>>{},
-				);
-
-				await gameDataMapper.createAndRemoveQueuers({
-					id: createGameId(players),
-					publicKeys: players.map((player) => player.publicKey),
-					nicknames,
-				});
-			}
-		}),
+		filter((queuers) => queuers.length >= 8),
 	);
 
 	const startWhenLate$ = queuerDataMapper.observe().pipe(
 		throttleTime(MATCHMAKING_LATE),
-		tap(async (queuers) => {
-			if (queuers.length > 1) {
-				const oldestFirst = [...queuers].sort(
-					(a, b) => a.createdAt - b.createdAt,
-				);
-
-				const players = oldestFirst.slice(0, 8);
-
-				const nicknames = players.reduce(
-					(acc, player) => {
-						acc[player.publicKey] = player.nickname;
-						return acc;
-					},
-					<Record<string, string>>{},
-				);
-
-				await gameDataMapper.createAndRemoveQueuers({
-					id: createGameId(players),
-					publicKeys: players.map((player) => player.publicKey),
-					nicknames,
-				});
-			}
-		}),
+		filter((queuers) => queuers.length > 1),
 	);
 
-	return merge(startWhenEight$, startWhenLate$).subscribe();
+	const heroFactory = new HeroFactory();
+
+	return merge(startWhenEight$, startWhenLate$).subscribe(async (queuers) => {
+		const oldestFirst = [...queuers].sort((a, b) => a.createdAt - b.createdAt);
+
+		const players = oldestFirst.slice(0, 8);
+
+		const nicknames = players.reduce(
+			(acc, player) => {
+				acc[player.publicKey] = player.nickname;
+				return acc;
+			},
+			<Record<string, string>>{},
+		);
+
+		const playerPieces: Record<string, Hero[]> = {};
+
+		for (const player of players) {
+			playerPieces[player.publicKey] = [heroFactory.build()];
+		}
+
+		const shopFactory = new ProductFactory();
+
+		const shop = [
+			shopFactory.build(),
+			shopFactory.build(),
+			shopFactory.build(),
+		];
+
+		await gameDataMapper.createAndRemoveQueuers({
+			id: createGameId(players),
+			publicKeys: players.map((player) => player.publicKey),
+			nicknames,
+			playerPieces: {},
+			shop,
+		});
+	});
 }

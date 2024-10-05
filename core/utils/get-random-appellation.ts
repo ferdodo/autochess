@@ -1,4 +1,4 @@
-import { Appellation } from "core/types/appellation";
+import { Appellation } from "../types/appellation";
 
 export function getRandomAppellation(): Appellation {
 	return Object.values(Appellation)[

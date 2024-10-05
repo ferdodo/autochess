@@ -15,12 +15,12 @@ export function renderBoardPieces(
 	threeContext: ThreeContext,
 	display: Display,
 ) {
-	const pieceIds = display.pieces.map((piece) => piece.id);
+	const pieceIds = display.pieces.map((piece) => piece.hero.id);
 	const existingPieceIds = Object.keys(threeContext.boardPieces);
 	const allIds = new Set([...pieceIds, ...existingPieceIds]);
 
 	for (const pieceId of allIds) {
-		const piece = display.pieces.find((piece) => piece.id === pieceId);
+		const piece = display.pieces.find((piece) => piece.hero.id === pieceId);
 
 		const pieceRessource: PieceRessources =
 			threeContext.boardPieces[pieceId] ||

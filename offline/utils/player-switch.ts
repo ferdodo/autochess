@@ -17,12 +17,9 @@ export class PlayerSwitch {
 
 	switchPlayer(index: number) {
 		const canvases = document.querySelectorAll("canvas");
-		console.log({ canvases, index });
 
 		for (const [i, canvas] of Object.entries(canvases)) {
 			const isVisible = Number.parseInt(i) === index;
-			console.log({ i, isVisible });
-
 			canvas.style.display = isVisible ? "block" : "none";
 
 			if (isVisible) {

@@ -31,7 +31,7 @@ export function renderPieceHighlight(
 			}
 
 			const boardSlotHasPiece = display.pieces
-				.map((p) => p.position)
+				.map((p) => p.hero.position)
 				.some((p) => isBlockPositionEqual(p, position));
 
 			const somePieceIsTransposed = display.pieces.some(
