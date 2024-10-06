@@ -18,7 +18,7 @@ export function renderMoneyMesh(threeContext: ThreeContext, _display: Display) {
 			threeContext.camera.rotation.z,
 		);
 
-		mesh.position.set(-0.03, 1.05, 1.1);
+		mesh.position.set(-0.03, 1.06, 1.1);
 
 		threeContext.scene.add(mesh);
 	}

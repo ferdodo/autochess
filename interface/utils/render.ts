@@ -21,6 +21,8 @@ import { renderLevelUpMesh } from "./render-level-up-mesh";
 import type { Observable } from "rxjs";
 import { Subject } from "rxjs";
 import { renderLevelUpGeometry } from "./render-level-up-geometry";
+import { renderRoundTimeMesh } from "./render-round-time-mesh";
+import { renderRoundTimeGeometry } from "./render-round-time-geometry";
 
 export function render(threeContext: ThreeContext, display: Display) {
 	renderBoardPieces(threeContext, display);
@@ -42,6 +44,8 @@ export function render(threeContext: ThreeContext, display: Display) {
 	renderLevelUpBackgroundMesh(threeContext, display);
 	renderLevelUpGeometry(threeContext, display);
 	renderLevelUpMesh(threeContext, display);
+	renderRoundTimeGeometry(threeContext, display);
+	renderRoundTimeMesh(threeContext, display);
 	_renderCalls$.next();
 }
 

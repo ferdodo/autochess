@@ -27,6 +27,7 @@ export function portray(publicKey: string): OperatorFunction<Game, Display> {
 					phase: Phase.Planning,
 					money: 0,
 					levelUpCost: 2,
+					timeLeft: 30,
 				};
 
 				return display;

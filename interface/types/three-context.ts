@@ -25,6 +25,12 @@ export interface ThreeContext {
 	healthGeometry: TextGeometry;
 	healthMaterial: MeshBasicMaterial;
 	healthMesh?: Mesh;
+	levelUpBackgroundGeometry: PlaneGeometry;
+	levelUpBackgroundMaterial: MeshBasicMaterial;
+	levelUpBackgroundMesh?: Mesh;
+	levelUpGeometry?: TextGeometry;
+	levelUpMaterial: MeshBasicMaterial;
+	levelUpMesh?: Mesh;
 	moneyGeometry: TextGeometry;
 	moneyMaterial: MeshBasicMaterial;
 	moneyMesh?: Mesh;
@@ -45,12 +51,9 @@ export interface ThreeContext {
 	rerollGeometry: TextGeometry;
 	rerollMaterial: MeshBasicMaterial;
 	rerollMesh?: Mesh;
-	levelUpBackgroundGeometry: PlaneGeometry;
-	levelUpBackgroundMaterial: MeshBasicMaterial;
-	levelUpBackgroundMesh?: Mesh;
-	levelUpGeometry?: TextGeometry;
-	levelUpMaterial: MeshBasicMaterial;
-	levelUpMesh?: Mesh;
+	roundTimeGeometry: PlaneGeometry;
+	roundTimeMaterial: MeshBasicMaterial;
+	roundTimeMesh?: Mesh;
 	scene: Scene;
 	shopProductAppellationGeometry: Record<Appellation, TextGeometry>;
 	shopProductAppellationMaterial: MeshBasicMaterial;
