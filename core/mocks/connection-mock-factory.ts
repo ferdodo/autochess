@@ -23,9 +23,11 @@ export class ConnectionMockFactory {
 			messages$: _serverMessage$.pipe(
 				filter((message) => {
 					const [valid, errors] = validateClientMessage(message);
+
 					if (!valid) {
 						console.error(errors);
 					}
+
 					return valid;
 				}),
 			),

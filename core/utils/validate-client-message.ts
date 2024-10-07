@@ -1,20 +1,16 @@
 import type { FromSchema } from "json-schema-to-ts";
-import { validate } from "jsonschema";
 import type { ClientMessage } from "../types/client-message";
 import { clientMessageSchema } from "../types/client-message";
+import { Draft07 } from "json-schema-library";
 
 export function validateClientMessage(
 	message: ClientMessage,
 ): [boolean, string] {
-	const { errors, valid } = validate(
+	const errors = new Draft07(clientMessageSchema).validate(
 		enforceConsistency(message),
-		clientMessageSchema,
-		{
-			required: true,
-		},
 	);
 
-	return [valid, JSON.stringify(errors, null, 2)];
+	return [!errors.length, JSON.stringify(errors, null, 2)];
 }
 
 /**
