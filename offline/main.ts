@@ -9,6 +9,8 @@ import { PlayerSwitch } from "./utils/player-switch";
 import { createOfflineBackContext } from "./utils/create-offline-back-context";
 import { ConnectionMockFactory } from "core/mocks/connection-mock-factory";
 import { startServer } from "core/utils/start-server";
+import type { FrontContext } from "core/types/front-context";
+import { initiateGame } from "core/api/initiate-game";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -19,7 +21,42 @@ waitTextureLoaded
 		const playerSwitch = new PlayerSwitch();
 		const connectionMockFactory = new ConnectionMockFactory();
 		const backContext = createOfflineBackContext(connectionMockFactory);
+
 		startServer(backContext);
+
+		const frontContext1: FrontContext = {
+			connection: connectionMockFactory.createClient()[0],
+			publicKey:
+				"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+			nickname: "playerone",
+			signMessage: async (message) => ({
+				...message,
+				timestamp: Date.now(),
+				signature:
+					"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+			}),
+		};
+
+		const frontContext2: FrontContext = {
+			connection: connectionMockFactory.createClient()[0],
+			publicKey:
+				"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+			nickname: "playertwo",
+			signMessage: async (message) => ({
+				...message,
+				timestamp: Date.now(),
+				signature:
+					"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+			}),
+		};
+
+		Promise.all([initiateGame(frontContext1), initiateGame(frontContext2)])
+			.then(([game1, game2]) => {
+				console.log("game1", game1);
+				console.log("game2", game2);
+			})
+			.catch(console.error);
+
 		let currentPlayer = 0;
 
 		playerSwitch.observeCurrentPlayer().subscribe((value) => {

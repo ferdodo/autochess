@@ -47,7 +47,6 @@ export function observeInteractions(
 					const targetBox = threeContext.pieceTargetBoxes[index];
 
 					if (!targetBox) {
-						console.log({ threeContext });
 						throw new Error("Target box not found !");
 					}
 

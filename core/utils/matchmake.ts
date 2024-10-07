@@ -1,5 +1,5 @@
 import type { Subscription } from "rxjs";
-import { throttleTime } from "rxjs/operators";
+import { debounceTime } from "rxjs/operators";
 import { createGameId } from "./create-game-id";
 import type { BackContext } from "../types/back-context";
 import { merge, filter } from "rxjs";
@@ -7,20 +7,20 @@ import type { Hero } from "../types/hero";
 import { HeroFactory } from "./hero-factory";
 import { ProductFactory } from "./product-factory";
 
-const MATCHMAKING_THROTTLE_TIME = 5000;
-const MATCHMAKING_LATE = 30000;
+const MATCHMAKING_THROTTLE_TIME = 500;
+const MATCHMAKING_LATE = 3000;
 
 export function matchmake({
 	queuerDataMapper,
 	gameDataMapper,
 }: BackContext): Subscription {
 	const startWhenEight$ = queuerDataMapper.observe().pipe(
-		throttleTime(MATCHMAKING_THROTTLE_TIME),
+		debounceTime(MATCHMAKING_THROTTLE_TIME),
 		filter((queuers) => queuers.length >= 8),
 	);
 
 	const startWhenLate$ = queuerDataMapper.observe().pipe(
-		throttleTime(MATCHMAKING_LATE),
+		debounceTime(MATCHMAKING_LATE),
 		filter((queuers) => queuers.length > 1),
 	);
 

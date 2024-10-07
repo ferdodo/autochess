@@ -37,6 +37,7 @@ export function createGameAndQueuerDataMapperMock(): [
 
 				games.push(game);
 				createdGame$.next(game);
+				currentQueuer$.next(queuers);
 				return true;
 			},
 			observeCreated: () => createdGame$.asObservable(),
@@ -49,6 +50,7 @@ export function createGameAndQueuerDataMapperMock(): [
 				}
 
 				queuers.push(queuer);
+				currentQueuer$.next(queuers);
 				return true;
 			},
 			observe: () => currentQueuer$.asObservable(),

@@ -21,9 +21,10 @@ if (isTimestampExpired(joinGameRequest.timestamp)) {
 
 import { initiateGameHandle } from "../api/initiate-game-handle";
 import type { BackContext } from "../types/back-context";
+import { matchmake } from "./matchmake";
 
 export function startServer(context: BackContext) {
-	const subscriptions = [initiateGameHandle(context)];
+	const subscriptions = [initiateGameHandle(context), matchmake(context)];
 
 	return function stopServer() {
 		for (const subscription of subscriptions) {
