@@ -1,14 +1,16 @@
 {
 	"scripts": {
-		"build": "tsc && biome ci ."
+		"build": "tsc && vitest run && biome ci ."
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
+		"@types/node": "^22.7.4",
 		"blockwise": "^2.8.1",
 		"json-schema-library": "^10.0.0-rc2",
 		"json-schema-to-ts": "^3.1.1",
 		"rxjs": "^7.8.1",
 		"typescript": "^5.5.4",
-		"uid": "^2.0.2"
+		"uid": "^2.0.2",
+		"vitest": "^2.1.2"
 	}
 }
