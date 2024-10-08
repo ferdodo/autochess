@@ -1,3 +1,3 @@
 export interface InitiateGameReponse {
-	gameId: string;
+	playsig: string;
 }

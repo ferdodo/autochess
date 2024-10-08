@@ -10,7 +10,7 @@ export function createOfflineBackContext(
 
 	return {
 		connections$: connectionMockFactory.createServer(),
-		isInvalidSignature: () => false,
+		isValidSignature: () => Promise.resolve(true),
 		gameDataMapper,
 		queuerDataMapper,
 		queuerConnections: {},

@@ -41,7 +41,7 @@ export function initiateGameHandle({
 				const connection = queuerConnections[publicKey];
 
 				if (connection) {
-					connection.send({ initiateGameResponse: { gameId: game.id } });
+					connection.send({ initiateGameResponse: { playsig: game.playsig } });
 				}
 			}
 		}),

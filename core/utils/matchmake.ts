@@ -1,6 +1,6 @@
 import type { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
-import { createGameId } from "./create-game-id";
+import { createPlaysig } from "./create-playsig";
 import type { BackContext } from "../types/back-context";
 import { merge, filter } from "rxjs";
 import type { Hero } from "../types/hero";
@@ -54,7 +54,7 @@ export function matchmake({
 		];
 
 		await gameDataMapper.createAndRemoveQueuers({
-			id: createGameId(players),
+			playsig: createPlaysig(players),
 			publicKeys: players.map((player) => player.publicKey),
 			nicknames,
 			playerPieces: {},

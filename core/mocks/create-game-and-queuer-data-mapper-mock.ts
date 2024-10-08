@@ -2,14 +2,14 @@ import type { Game } from "../types/game";
 import type { GameDataMapper } from "../types/game-data-mapper";
 import type { Queuer } from "../types/queuer";
 import type { QueuerDataMapper } from "../types/queuer-data-mapper";
-import { Subject } from "rxjs";
+import { Subject, filter } from "rxjs";
 
 export function createGameAndQueuerDataMapperMock(): [
 	GameDataMapper,
 	QueuerDataMapper,
 ] {
 	const games: Game[] = [];
-	const createdGame$ = new Subject<Game>();
+	const game$ = new Subject<Game>();
 	const currentQueuer$ = new Subject<Queuer[]>();
 	let queuers: Queuer[] = [];
 
@@ -24,7 +24,7 @@ export function createGameAndQueuerDataMapperMock(): [
 					}
 				}
 
-				if (games.find((g) => g.id === game.id)) {
+				if (games.find((g) => g.playsig === game.playsig)) {
 					return false;
 				}
 
@@ -36,11 +36,13 @@ export function createGameAndQueuerDataMapperMock(): [
 				);
 
 				games.push(game);
-				createdGame$.next(game);
+				game$.next(game);
 				currentQueuer$.next(queuers);
 				return true;
 			},
-			observeCreated: () => createdGame$.asObservable(),
+			observeCreated: () => game$.asObservable(),
+			observe: (playsig: string) =>
+				game$.pipe(filter((game) => game.playsig === playsig)),
 		},
 		{
 			read: async () => [...queuers],

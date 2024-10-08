@@ -4,4 +4,5 @@ import type { Observable } from "rxjs";
 export interface GameDataMapper {
 	createAndRemoveQueuers: (game: Game) => Promise<boolean>;
 	observeCreated: () => Observable<Game>;
+	observe(id: string): Observable<Game>;
 }
