@@ -3,18 +3,23 @@ import { map, mergeMap, filter, tap, finalize } from "rxjs/operators";
 import { merge } from "rxjs";
 import type { BackContext } from "../types/back-context";
 import type { InitiateGameRequest } from "../types/initiate-game-request";
+import { checkInvalidSignature } from "../utils/check-invalid-signature";
+import { checkTimestamp } from "../utils/check-timestamp";
 
 export function initiateGameHandle({
 	connections$,
 	gameDataMapper,
 	queuerDataMapper,
 	queuerConnections,
+	isValidSignature,
 }: BackContext): Subscription {
 	const handleRequests$ = connections$.pipe(
 		mergeMap((connection) =>
 			connection.messages$.pipe(
 				map((message) => message.initiateGameRequest),
 				filter(Boolean),
+				checkInvalidSignature(isValidSignature),
+				checkTimestamp(),
 				tap(async ({ publicKey, nickname }: InitiateGameRequest) => {
 					const createdAt = Date.now();
 

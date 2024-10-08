@@ -6,7 +6,7 @@ import type { Playsig } from "./playsig";
 export interface Game {
 	playsig: Playsig;
 	publicKeys: PublicKey[];
-	nicknames: Record<string, string>;
+	nicknames: Record<PublicKey, string>;
 	playerPieces: Record<PublicKey, Hero[]>;
 	shop: Product[];
 }
