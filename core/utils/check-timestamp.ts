@@ -9,5 +9,5 @@ export function checkTimestamp<T>(): OperatorFunction<
 	T & Timestamped
 > {
 	return (source: Observable<T & Timestamped>) =>
-		source.pipe(filter(({ timestamp }) => Date.now() - timestamp > DURATION));
+		source.pipe(filter(({ timestamp }) => Date.now() - timestamp < DURATION));
 }

@@ -19,6 +19,7 @@ export function createGameAndQueuerDataMapperMock(): [
 				games.find((game) =>
 					game.publicKeys.find((publicKey) => publicKey === pKey),
 				),
+			readAll: async () => [...games],
 			createAndRemoveQueuers: async (game: Game) => {
 				const queuersPublicKeys = queuers.map((queuer) => queuer.publicKey);
 

@@ -12,4 +12,5 @@ export interface BackContext {
 	gameDataMapper: GameDataMapper;
 	queuerDataMapper: QueuerDataMapper;
 	queuerConnections: Record<string, Connection<ClientMessage, ServerMessage>>;
+	skipMatchMakeDebounce: boolean;
 }
