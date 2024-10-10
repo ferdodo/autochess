@@ -1,6 +1,6 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, first, tap } from "rxjs/operators";
-import { NEVER, of, merge } from "rxjs";
+import { NEVER, merge } from "rxjs";
 import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
 import type { ObserveGameSubscribe } from "../types/observe-game-subscribe";
@@ -13,13 +13,26 @@ export function observeGameHandle({
 }: BackContext): Subscription {
 	return connections$
 		.pipe(
-			mergeMap((connection) =>
-				connection.messages$.pipe(
+			mergeMap((connection) => {
+				const requests$ = connection.messages$.pipe(
 					map((message) => message.observeGameSubscribe),
 					filter(Boolean),
-					first(),
 					checkInvalidSignature(isValidSignature),
 					checkTimestamp(),
+				);
+
+				const sendCurrent$ = requests$.pipe(
+					tap(async ({ playsig, publicKey }) => {
+						const game = await gameDataMapper.read(playsig);
+
+						if (game?.publicKeys.includes(publicKey)) {
+							connection.send({ observeGameBroadcast: { game } });
+						}
+					}),
+				);
+
+				const subscribeToGame$ = requests$.pipe(
+					first(),
 					mergeMap(async ({ playsig, publicKey }: ObserveGameSubscribe) => {
 						const game = await gameDataMapper.read(playsig);
 
@@ -27,14 +40,16 @@ export function observeGameHandle({
 							return NEVER;
 						}
 
-						return merge(of(game), gameDataMapper.observe(playsig));
+						return gameDataMapper.observe(playsig);
 					}),
 					mergeMap((game$) => game$),
 					tap((game) => {
 						connection.send({ observeGameBroadcast: { game } });
 					}),
-				),
-			),
+				);
+
+				return merge(sendCurrent$, subscribeToGame$);
+			}),
 		)
 		.subscribe();
 }

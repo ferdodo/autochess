@@ -16,5 +16,6 @@ export interface FrontContext {
 	connection: Connection<ServerMessage, ClientMessage>;
 	publicKey: string;
 	nickname: string;
+	playsig?: string;
 	signMessage: <T>(message: SignableMessage & T) => Promise<SignedMessage & T>;
 }
