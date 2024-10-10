@@ -22,9 +22,15 @@ export function initiateGameHandle({
 				checkTimestamp(),
 				tap(async ({ publicKey, nickname }: InitiateGameRequest) => {
 					const createdAt = Date.now();
+					queuerConnections[publicKey] = connection;
+					const saved = await queuerDataMapper.save({
+						publicKey,
+						nickname,
+						createdAt,
+					});
 
-					if (await queuerDataMapper.save({ publicKey, nickname, createdAt })) {
-						queuerConnections[publicKey] = connection;
+					if (!saved) {
+						delete queuerConnections[publicKey];
 					}
 				}),
 				finalize(() => {

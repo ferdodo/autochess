@@ -44,3 +44,10 @@ services:
       - offline-deps
       - core
       - interface
+
+  coverage:
+    build: coverage
+    ports:
+      - "6245:80"
+    depends_on:
+      - core

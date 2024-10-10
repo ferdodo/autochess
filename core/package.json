@@ -1,9 +1,11 @@
 {
 	"scripts": {
-		"build": "tsc && vitest run && biome ci ."
+		"build": "tsc && vitest run --sequence.concurrent --testTimeout 100 && biome ci ."
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
+		"@stryker-mutator/core": "^8.6.0",
+		"@stryker-mutator/vitest-runner": "^8.6.0",
 		"@types/node": "^22.7.4",
 		"blockwise": "^2.8.1",
 		"json-schema-library": "^10.0.0-rc2",

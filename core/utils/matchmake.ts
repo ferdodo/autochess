@@ -13,7 +13,7 @@ const MATCHMAKING_LATE = 3000;
 export function matchmake({
 	queuerDataMapper,
 	gameDataMapper,
-	skipMatchMakeDebounce,
+	config,
 }: BackContext): Subscription {
 	const startWhenEight$ = queuerDataMapper.observe().pipe(
 		debounceTime(MATCHMAKING_THROTTLE_TIME),
@@ -21,9 +21,11 @@ export function matchmake({
 	);
 
 	const startWhenLate$ = queuerDataMapper.observe().pipe(
-		debounce(() =>
-			skipMatchMakeDebounce ? of(undefined) : timer(MATCHMAKING_LATE),
-		),
+		debounce(() => {
+			return config.skipMatchMakeDebounce
+				? of(undefined)
+				: timer(MATCHMAKING_LATE);
+		}),
 		filter((queuers) => queuers.length > 1),
 	);
 

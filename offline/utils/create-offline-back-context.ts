@@ -14,6 +14,8 @@ export function createOfflineBackContext(
 		gameDataMapper,
 		queuerDataMapper,
 		queuerConnections: {},
-		skipMatchMakeDebounce: false,
+		config: {
+			skipMatchMakeDebounce: false,
+		},
 	};
 }

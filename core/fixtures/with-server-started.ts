@@ -16,7 +16,9 @@ export function withServerStarted(): TestContext {
 		gameDataMapper,
 		queuerDataMapper,
 		queuerConnections: {},
-		skipMatchMakeDebounce: false,
+		config: {
+			skipMatchMakeDebounce: false,
+		},
 	};
 
 	startServer(backContext);
