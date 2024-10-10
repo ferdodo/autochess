@@ -11,6 +11,8 @@ import { ConnectionMockFactory } from "core/mocks/connection-mock-factory";
 import { startServer } from "core/utils/start-server";
 import type { FrontContext } from "core/types/front-context";
 import { initiateGame } from "core/api/initiate-game";
+import { observeGame } from "core/api/observe-game";
+import { portray } from "core/utils/portray";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -52,8 +54,17 @@ waitTextureLoaded
 
 		Promise.all([initiateGame(frontContext1), initiateGame(frontContext2)])
 			.then(([game1, game2]) => {
+				frontContext1.playsig = game1.playsig;
+				frontContext2.playsig = game2.playsig;
 				console.log("game1", game1);
 				console.log("game2", game2);
+			})
+			.then(() => {
+				observeGame(frontContext1)
+					.pipe(portray(frontContext1.publicKey))
+					.subscribe((game) => {
+						console.log("game1", game);
+					});
 			})
 			.catch(console.error);
 
