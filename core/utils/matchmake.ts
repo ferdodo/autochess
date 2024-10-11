@@ -44,12 +44,12 @@ export function matchmake({
 			<Record<string, string>>{},
 		);
 
-		const playerPieces: Record<string, Hero[]> = {};
+		const playerHeroes: Record<string, Hero[]> = {};
 		const playerShops: Record<string, Product[]> = {};
 		const shopFactory = new ProductFactory();
 
 		for (const player of players) {
-			playerPieces[player.publicKey] = [heroFactory.build()];
+			playerHeroes[player.publicKey] = [heroFactory.build()];
 			playerShops[player.publicKey] = [
 				shopFactory.build(),
 				shopFactory.build(),
@@ -61,7 +61,7 @@ export function matchmake({
 			playsig: createPlaysig(players),
 			publicKeys: players.map((player) => player.publicKey),
 			nicknames,
-			playerPieces: {},
+			playerHeroes,
 			playerShops,
 		});
 	});

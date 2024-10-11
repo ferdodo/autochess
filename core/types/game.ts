@@ -7,6 +7,6 @@ export interface Game {
 	playsig: Playsig;
 	publicKeys: PublicKey[];
 	nicknames: Record<PublicKey, string>;
-	playerPieces: Record<PublicKey, Hero[]>;
+	playerHeroes: Record<PublicKey, Hero[]>;
 	playerShops: Record<PublicKey, Product[]>;
 }

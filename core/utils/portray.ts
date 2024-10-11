@@ -17,7 +17,7 @@ export function portray(publicKey: string): OperatorFunction<Game, Display> {
 						y: 0,
 					},
 					pieces:
-						game.playerPieces[publicKey]?.map((hero) => ({
+						game.playerHeroes[publicKey]?.map((hero) => ({
 							hero,
 							animation: Animation.Idle,
 							transposed: false,
