@@ -30,7 +30,7 @@ export function portray(publicKey: string): OperatorFunction<Game, Display> {
 						level: 1,
 						isMe: p === publicKey,
 					})),
-					shop: [],
+					shop: game.playerShops[publicKey] || [],
 					bench: {},
 					phase: Phase.Planning,
 					money: 0,

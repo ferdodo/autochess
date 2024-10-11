@@ -8,5 +8,5 @@ export interface Game {
 	publicKeys: PublicKey[];
 	nicknames: Record<PublicKey, string>;
 	playerPieces: Record<PublicKey, Hero[]>;
-	shop: Product[];
+	playerShops: Record<PublicKey, Product[]>;
 }

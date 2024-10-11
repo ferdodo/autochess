@@ -6,6 +6,7 @@ import { merge, filter, timer, of } from "rxjs";
 import type { Hero } from "../types/hero";
 import { HeroFactory } from "./hero-factory";
 import { ProductFactory } from "./product-factory";
+import type { Product } from "../types/product";
 
 const MATCHMAKING_THROTTLE_TIME = 500;
 const MATCHMAKING_LATE = 3000;
@@ -44,25 +45,24 @@ export function matchmake({
 		);
 
 		const playerPieces: Record<string, Hero[]> = {};
+		const playerShops: Record<string, Product[]> = {};
+		const shopFactory = new ProductFactory();
 
 		for (const player of players) {
 			playerPieces[player.publicKey] = [heroFactory.build()];
+			playerShops[player.publicKey] = [
+				shopFactory.build(),
+				shopFactory.build(),
+				shopFactory.build(),
+			];
 		}
-
-		const shopFactory = new ProductFactory();
-
-		const shop = [
-			shopFactory.build(),
-			shopFactory.build(),
-			shopFactory.build(),
-		];
 
 		await gameDataMapper.createAndRemoveQueuers({
 			playsig: createPlaysig(players),
 			publicKeys: players.map((player) => player.publicKey),
 			nicknames,
 			playerPieces: {},
-			shop,
+			playerShops,
 		});
 	});
 }
