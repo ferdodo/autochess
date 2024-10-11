@@ -1,9 +1,10 @@
 import type { Display } from "../types/display";
 import type { Game } from "../types/game";
 import type { Observable, OperatorFunction } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, combineLatestWith, startWith } from "rxjs/operators";
 import { Phase } from "../types/phase";
 import { Animation } from "../types/animation";
+import { interval } from "rxjs";
 
 export function portray(publicKey: string): OperatorFunction<Game, Display> {
 	return (source: Observable<Game>) =>
@@ -40,5 +41,7 @@ export function portray(publicKey: string): OperatorFunction<Game, Display> {
 
 				return display;
 			}),
+			combineLatestWith(interval(100).pipe(startWith(0))),
+			map(([display]) => display),
 		);
 }
