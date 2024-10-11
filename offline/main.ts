@@ -4,7 +4,7 @@ import { createContext } from "interface/utils/create-context";
 import { waitTextureLoaded } from "interface/utils/load-texture";
 import { createCamera } from "interface/utils/create-camera";
 import { removeRenderer } from "interface/utils/remove-renderer";
-// import { render } from "interface/utils/render";
+import { render } from "interface/utils/render";
 import { PlayerSwitch } from "./utils/player-switch";
 import { createOfflineBackContext } from "./utils/create-offline-back-context";
 import { ConnectionMockFactory } from "core/mocks/connection-mock-factory";
@@ -62,8 +62,16 @@ waitTextureLoaded
 			.then(() => {
 				observeGame(frontContext1)
 					.pipe(portray(frontContext1.publicKey))
-					.subscribe((game) => {
-						console.log("game1", game);
+					.subscribe((display) => {
+						render(threeContext1, display);
+						//console.log("game1", game);
+					});
+
+				observeGame(frontContext2)
+					.pipe(portray(frontContext2.publicKey))
+					.subscribe((display) => {
+						render(threeContext2, display);
+						//console.log("game2", game);
 					});
 			})
 			.catch(console.error);
