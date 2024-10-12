@@ -7,6 +7,7 @@ import type { Hero } from "../types/hero";
 import { HeroFactory } from "./hero-factory";
 import { ProductFactory } from "./product-factory";
 import type { Product } from "../types/product";
+import { Phase } from "../types/phase";
 
 const MATCHMAKING_THROTTLE_TIME = 500;
 const MATCHMAKING_LATE = 3000;
@@ -47,6 +48,7 @@ export function matchmake({
 		const playerHeroes: Record<string, Hero[]> = {};
 		const playerShops: Record<string, Product[]> = {};
 		const shopFactory = new ProductFactory();
+		const playerMoney: Record<string, number> = {};
 
 		for (const player of players) {
 			playerHeroes[player.publicKey] = [heroFactory.build()];
@@ -55,6 +57,8 @@ export function matchmake({
 				shopFactory.build(),
 				shopFactory.build(),
 			];
+
+			playerMoney[player.publicKey] = 5;
 		}
 
 		await gameDataMapper.createAndRemoveQueuers({
@@ -63,6 +67,8 @@ export function matchmake({
 			nicknames,
 			playerHeroes,
 			playerShops,
+			playerMoney,
+			phase: Phase.Planning,
 		});
 	});
 }

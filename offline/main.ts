@@ -56,22 +56,18 @@ waitTextureLoaded
 			.then(([game1, game2]) => {
 				frontContext1.playsig = game1.playsig;
 				frontContext2.playsig = game2.playsig;
-				console.log("game1", game1);
-				console.log("game2", game2);
 			})
 			.then(() => {
 				observeGame(frontContext1)
 					.pipe(portray(frontContext1.publicKey))
 					.subscribe((display) => {
 						render(threeContext1, display);
-						//console.log("game1", game);
 					});
 
 				observeGame(frontContext2)
 					.pipe(portray(frontContext2.publicKey))
 					.subscribe((display) => {
 						render(threeContext2, display);
-						//console.log("game2", game);
 					});
 			})
 			.catch(console.error);

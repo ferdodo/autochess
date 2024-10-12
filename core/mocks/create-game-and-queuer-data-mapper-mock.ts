@@ -18,6 +18,17 @@ export function createGameAndQueuerDataMapperMock(): [
 			read: async (playsig: string) =>
 				games.find((game) => game.playsig === playsig),
 			readAll: async () => [...games],
+			update: async (game: Game) => {
+				const index = games.findIndex((g) => g.playsig === game.playsig);
+
+				if (index === -1) {
+					return false;
+				}
+
+				games[index] = game;
+				game$.next(game);
+				return true;
+			},
 			createAndRemoveQueuers: async (game: Game) => {
 				const queuersPublicKeys = queuers.map((queuer) => queuer.publicKey);
 

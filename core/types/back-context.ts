@@ -5,6 +5,7 @@ import type { GameDataMapper } from "./game-data-mapper";
 import type { QueuerDataMapper } from "./queuer-data-mapper";
 import type { ServerMessage } from "./server-message";
 import type { Signed } from "./signed";
+import type { PoolDataMapper } from "./pool-data-mapper";
 
 interface BackContextConfig {
 	skipMatchMakeDebounce: boolean;
@@ -16,5 +17,6 @@ export interface BackContext {
 	gameDataMapper: GameDataMapper;
 	queuerDataMapper: QueuerDataMapper;
 	queuerConnections: Record<string, Connection<ClientMessage, ServerMessage>>;
+	poolDataMapper: PoolDataMapper;
 	config: BackContextConfig;
 }
