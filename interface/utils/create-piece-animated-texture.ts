@@ -137,6 +137,14 @@ export function createPieceAnimatedTexture(
 			[Animation.Hurt]: 4,
 			[Animation.Death]: 4,
 		},
+		[Appellation.SkeletonArcher]: {
+			[Animation.Idle]: 6,
+			[Animation.Attack]: 9,
+			[Animation.Walk]: 8,
+			[Animation.Ability]: 9,
+			[Animation.Hurt]: 4,
+			[Animation.Death]: 4,
+		},
 	};
 
 	switch (animation) {

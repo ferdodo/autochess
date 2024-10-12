@@ -110,6 +110,13 @@ import ArmoredOrcAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03
 import ArmoredOrcHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Orc/Armored Orc/Armored Orc-Hurt.png.base64-data-url";
 import ArmoredOrcDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Orc/Armored Orc/Armored Orc-Death.png.base64-data-url";
 
+import SkeletonArcherIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton Archer/Skeleton Archer/Skeleton Archer-Idle.png.base64-data-url";
+import SkeletonArcherAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton Archer/Skeleton Archer/Skeleton Archer-Attack.png.base64-data-url";
+import SkeletonArcherWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton Archer/Skeleton Archer/Skeleton Archer-Walk.png.base64-data-url";
+import SkeletonArcherAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton Archer/Skeleton Archer/Skeleton Archer-Attack.png.base64-data-url";
+import SkeletonArcherHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton Archer/Skeleton Archer/Skeleton Archer-Hurt.png.base64-data-url";
+import SkeletonArcherDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton Archer/Skeleton Archer/Skeleton Archer-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "core/types/appellation";
@@ -245,6 +252,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(ArmoredOrcAbilityTexture),
 		Hurt: textureLoader.load(ArmoredOrcHurtTexture),
 		Death: textureLoader.load(ArmoredOrcDeathTexture),
+	},
+	[Appellation.SkeletonArcher]: {
+		Idle: textureLoader.load(SkeletonArcherIdleTexture),
+		Attack: textureLoader.load(SkeletonArcherAttackTexture),
+		Walk: textureLoader.load(SkeletonArcherWalkTexture),
+		Ability: textureLoader.load(SkeletonArcherAbilityTexture),
+		Hurt: textureLoader.load(SkeletonArcherHurtTexture),
+		Death: textureLoader.load(SkeletonArcherDeathTexture),
 	},
 };
 

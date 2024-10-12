@@ -18,6 +18,7 @@ export function getHeroRank(appellation: Appellation): number {
 		[Appellation.ArmoredAxeman]: 1,
 		[Appellation.Skeleton]: 1,
 		[Appellation.ArmoredOrc]: 1,
+		[Appellation.SkeletonArcher]: 1,
 	};
 
 	return rankByAppellation[appellation];
