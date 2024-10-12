@@ -6,16 +6,17 @@ export function renderShopProductImageMeshes(
 	threeContext: ThreeContext,
 	display: Display,
 ): void {
-	for (const product of display.shop) {
-		const meshCreated = !threeContext.shopProductImageMeshes[product.id];
+	for (const [_id, appellation] of Object.entries(display.shop)) {
+		const id = String(_id);
+		const meshCreated = !threeContext.shopProductImageMeshes[id];
 
-		threeContext.shopProductImageMeshes[product.id] ||= new Mesh(
+		threeContext.shopProductImageMeshes[id] ||= new Mesh(
 			threeContext.shopProductImageGeometry,
-			threeContext.shopProductImageMaterial[product.appellation],
+			threeContext.shopProductImageMaterial[appellation],
 		);
 
-		const mesh: Mesh = threeContext.shopProductImageMeshes[product.id];
-		const background = threeContext.shopProductBackgroundMeshes[product.id];
+		const mesh: Mesh = threeContext.shopProductImageMeshes[id];
+		const background = threeContext.shopProductBackgroundMeshes[id];
 
 		if (!background) {
 			throw new Error("Background not found !");
@@ -38,7 +39,7 @@ export function renderShopProductImageMeshes(
 	}
 
 	for (const productId of Object.keys(threeContext.shopProductImageMeshes)) {
-		if (!display.shop.find((p) => p.id === productId)) {
+		if (!display.shop.find((_p, id) => String(id) === productId)) {
 			threeContext.scene.remove(threeContext.shopProductImageMeshes[productId]);
 			delete threeContext.shopProductImageMeshes[productId];
 		}

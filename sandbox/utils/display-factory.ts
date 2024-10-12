@@ -71,18 +71,9 @@ export class DisplayFactory implements Subscribable<Display> {
 			},
 		],
 		shop: [
-			{
-				id: uid(),
-				appellation: getRandomAppellation(),
-			},
-			{
-				id: uid(),
-				appellation: getRandomAppellation(),
-			},
-			{
-				id: uid(),
-				appellation: getRandomAppellation(),
-			},
+			getRandomAppellation(),
+			getRandomAppellation(),
+			getRandomAppellation(),
 		],
 		phase: Phase.Combat,
 		money: 100,

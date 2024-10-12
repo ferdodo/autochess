@@ -5,9 +5,9 @@ import type { BackContext } from "../types/back-context";
 import { merge, filter, timer, of } from "rxjs";
 import type { Hero } from "../types/hero";
 import { HeroFactory } from "./hero-factory";
-import { ProductFactory } from "./product-factory";
-import type { Product } from "../types/product";
+import type { Appellation } from "../types/appellation";
 import { Phase } from "../types/phase";
+import { getRandomAppellation } from "./get-random-appellation";
 
 const MATCHMAKING_THROTTLE_TIME = 500;
 const MATCHMAKING_LATE = 3000;
@@ -46,16 +46,15 @@ export function matchmake({
 		);
 
 		const playerHeroes: Record<string, Hero[]> = {};
-		const playerShops: Record<string, Product[]> = {};
-		const shopFactory = new ProductFactory();
+		const playerShops: Record<string, Appellation[]> = {};
 		const playerMoney: Record<string, number> = {};
 
 		for (const player of players) {
 			playerHeroes[player.publicKey] = [heroFactory.build()];
 			playerShops[player.publicKey] = [
-				shopFactory.build(),
-				shopFactory.build(),
-				shopFactory.build(),
+				getRandomAppellation(),
+				getRandomAppellation(),
+				getRandomAppellation(),
 			];
 
 			playerMoney[player.publicKey] = 5;

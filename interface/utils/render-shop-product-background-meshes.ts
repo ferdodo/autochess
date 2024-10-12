@@ -6,30 +6,31 @@ export function renderShopProductBackgroundMeshes(
 	threeContext: ThreeContext,
 	display: Display,
 ): void {
-	for (const [i, product] of Object.entries(display.shop)) {
-		const meshCreated = !threeContext.shopProductBackgroundMeshes[product.id];
+	for (const [_id] of Object.entries(display.shop)) {
+		const id = String(_id);
+		const i = Number.parseInt(id);
+		const meshCreated = !threeContext.shopProductBackgroundMeshes[id];
 
-		threeContext.shopProductBackgroundMeshes[product.id] ||= new Mesh(
+		threeContext.shopProductBackgroundMeshes[id] ||= new Mesh(
 			threeContext.shopProductBackgroundGeometry,
 			threeContext.shopProductBackgroundMaterial,
 		);
 
-		const mesh: Mesh = threeContext.shopProductBackgroundMeshes[product.id];
+		const mesh: Mesh = threeContext.shopProductBackgroundMeshes[id];
 
 		if (meshCreated) {
 			threeContext.scene.add(mesh);
 			mesh.rotation.x = threeContext.camera.rotation.x;
 			mesh.position.y = 0.7;
 			mesh.position.z = 0.9;
-			const index = Number.parseInt(i);
-			mesh.position.x = index * 0.15;
+			mesh.position.x = i * 0.15;
 		}
 	}
 
 	for (const productId of Object.keys(
 		threeContext.shopProductBackgroundMeshes,
 	)) {
-		if (!display.shop.find((p) => p.id === productId)) {
+		if (!display.shop.find((_p, id) => String(id) === productId)) {
 			threeContext.scene.remove(
 				threeContext.shopProductBackgroundMeshes[productId],
 			);

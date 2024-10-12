@@ -6,21 +6,22 @@ export function renderShopProductAppellationMeshes(
 	threeContext: ThreeContext,
 	display: Display,
 ): void {
-	for (const product of display.shop) {
-		const background = threeContext.shopProductBackgroundMeshes[product.id];
+	for (const [_id, appellation] of Object.entries(display.shop)) {
+		const id = String(_id);
+		const background = threeContext.shopProductBackgroundMeshes[id];
 
 		if (!background) {
 			throw new Error("Background not found !");
 		}
 
-		const meshCreated = !threeContext.shopProductAppellationMeshes[product.id];
+		const meshCreated = !threeContext.shopProductAppellationMeshes[id];
 
-		threeContext.shopProductAppellationMeshes[product.id] ||= new Mesh(
-			threeContext.shopProductAppellationGeometry[product.appellation],
+		threeContext.shopProductAppellationMeshes[id] ||= new Mesh(
+			threeContext.shopProductAppellationGeometry[appellation],
 			threeContext.shopProductAppellationMaterial,
 		);
 
-		const mesh = threeContext.shopProductAppellationMeshes[product.id];
+		const mesh = threeContext.shopProductAppellationMeshes[id];
 
 		if (meshCreated) {
 			threeContext.scene.add(mesh);
@@ -36,7 +37,7 @@ export function renderShopProductAppellationMeshes(
 	for (const productId of Object.keys(
 		threeContext.shopProductAppellationMeshes,
 	)) {
-		if (!display.shop.find((p) => p.id === productId)) {
+		if (!display.shop.find((_p, id) => String(id) === productId)) {
 			const mesh = threeContext.shopProductAppellationMeshes[productId];
 
 			if (!mesh) {

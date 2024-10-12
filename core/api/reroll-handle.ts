@@ -3,7 +3,6 @@ import { map, mergeMap, filter, tap } from "rxjs/operators";
 import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
 import { checkTimestamp } from "../utils/check-timestamp";
-import { uid } from "uid";
 import type { Pool } from "../types/pool";
 import { checkGameHasPlayer } from "../utils/check-game-has-player";
 
@@ -46,18 +45,15 @@ export function rerollHandle({
 							const threeFirstHeroesOfPool = newPool.heroes.slice(0, 3);
 							newPool.heroes = newPool.heroes.slice(3) as Pool["heroes"];
 
-							for (const product of game.playerShops[publicKey]) {
-								newPool.heroes.push(product.appellation);
+							for (const appellation of game.playerShops[publicKey]) {
+								newPool.heroes.push(appellation);
 							}
 
 							const newGame = {
 								...game,
 								playerShops: {
 									...game.playerShops,
-									[publicKey]: threeFirstHeroesOfPool.map((appellation) => ({
-										id: uid(),
-										appellation,
-									})),
+									[publicKey]: threeFirstHeroesOfPool,
 								},
 							};
 

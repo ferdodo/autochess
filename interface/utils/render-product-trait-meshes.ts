@@ -7,24 +7,25 @@ export function renderShopProductTraitMeshes(
 	threeContext: ThreeContext,
 	display: Display,
 ): void {
-	for (const product of display.shop) {
-		const traits = getHeroTraits(product.appellation);
-		const background = threeContext.shopProductBackgroundMeshes[product.id];
+	for (const [_id, appellation] of Object.entries(display.shop)) {
+		const id = String(_id);
+		const traits = getHeroTraits(appellation);
+		const background = threeContext.shopProductBackgroundMeshes[id];
 
 		if (!background) {
 			throw new Error("Background not found !");
 		}
 
 		for (const [i, trait] of traits.entries()) {
-			const meshCreated = !threeContext.shopProductTraitMeshes[product.id]?.[i];
-			threeContext.shopProductTraitMeshes[product.id] ||= {};
+			const meshCreated = !threeContext.shopProductTraitMeshes[id]?.[i];
+			threeContext.shopProductTraitMeshes[id] ||= {};
 
-			threeContext.shopProductTraitMeshes[product.id][i] ||= new Mesh(
+			threeContext.shopProductTraitMeshes[id][i] ||= new Mesh(
 				threeContext.shopProductTraitGeometry[trait],
 				threeContext.shopProductTraitMaterial,
 			);
 
-			const mesh = threeContext.shopProductTraitMeshes[product.id][i];
+			const mesh = threeContext.shopProductTraitMeshes[id][i];
 
 			if (meshCreated) {
 				threeContext.scene.add(mesh);
@@ -39,7 +40,7 @@ export function renderShopProductTraitMeshes(
 	}
 
 	for (const productId of Object.keys(threeContext.shopProductTraitMeshes)) {
-		if (!display.shop.find((p) => p.id === productId)) {
+		if (!display.shop.find((_p, id) => String(id) === productId)) {
 			for (const mesh of Object.values(
 				threeContext.shopProductTraitMeshes[productId],
 			)) {
