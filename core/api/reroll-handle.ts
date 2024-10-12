@@ -5,10 +5,12 @@ import { checkInvalidSignature } from "../utils/check-invalid-signature";
 import { checkTimestamp } from "../utils/check-timestamp";
 import { uid } from "uid";
 import type { Pool } from "../types/pool";
+import { checkGameHasPlayer } from "../utils/check-game-has-player";
 
 export function rerollHandle({
 	connections$,
 	poolDataMapper,
+	gameDataMapper,
 	isValidSignature,
 }: BackContext): Subscription {
 	return connections$
@@ -19,6 +21,7 @@ export function rerollHandle({
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
 					checkTimestamp(),
+					checkGameHasPlayer(gameDataMapper),
 					tap(async ({ publicKey, playsig }) => {
 						const transaction =
 							await poolDataMapper.readAndUpdateWithGame(playsig);

@@ -1,10 +1,10 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, first, tap } from "rxjs/operators";
-import { NEVER, merge } from "rxjs";
+import { merge } from "rxjs";
 import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
-import type { ObserveGameSubscribe } from "../types/observe-game-subscribe";
 import { checkTimestamp } from "../utils/check-timestamp";
+import { checkGameHasPlayer } from "../utils/check-game-has-player";
 
 export function observeGameHandle({
 	connections$,
@@ -19,13 +19,14 @@ export function observeGameHandle({
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
 					checkTimestamp(),
+					checkGameHasPlayer(gameDataMapper),
 				);
 
 				const sendCurrent$ = requests$.pipe(
-					tap(async ({ playsig, publicKey }) => {
+					tap(async ({ playsig }) => {
 						const game = await gameDataMapper.read(playsig);
 
-						if (game?.publicKeys.includes(publicKey)) {
+						if (game) {
 							connection.send({ observeGameBroadcast: { game } });
 						}
 					}),
@@ -33,16 +34,7 @@ export function observeGameHandle({
 
 				const subscribeToGame$ = requests$.pipe(
 					first(),
-					mergeMap(async ({ playsig, publicKey }: ObserveGameSubscribe) => {
-						const game = await gameDataMapper.read(playsig);
-
-						if (!game?.publicKeys.includes(publicKey)) {
-							return NEVER;
-						}
-
-						return gameDataMapper.observe(playsig);
-					}),
-					mergeMap((game$) => game$),
+					mergeMap(({ playsig }) => gameDataMapper.observe(playsig)),
 					tap((game) => {
 						connection.send({ observeGameBroadcast: { game } });
 					}),
