@@ -6,6 +6,9 @@ export function createPoolDataMapperMock(gameDataMapper: GameDataMapper) {
 	let pools: Pool[] = [];
 
 	return {
+		async read(playsig: string) {
+			return pools.find((p) => p.playsig === playsig);
+		},
 		async create(pool: Pool) {
 			const alreadyExists = pools.some((p) => p.playsig === pool.playsig);
 

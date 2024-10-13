@@ -10,6 +10,7 @@ interface ReadAndUpdatePoolWithGame {
 }
 
 export interface PoolDataMapper {
+	read: (playsig: string) => Promise<Pool | undefined>;
 	create(pool: Pool): Promise<boolean>;
 	readAndUpdateWithGame(
 		playsig: Playsig,

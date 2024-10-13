@@ -2,7 +2,7 @@ import type { Game } from "../types/game";
 import type { GameDataMapper } from "../types/game-data-mapper";
 import type { Queuer } from "../types/queuer";
 import type { QueuerDataMapper } from "../types/queuer-data-mapper";
-import { Subject, filter } from "rxjs";
+import { Subject, filter, map } from "rxjs";
 
 export function createGameAndQueuerDataMapperMock(): [
 	GameDataMapper,
@@ -15,9 +15,11 @@ export function createGameAndQueuerDataMapperMock(): [
 
 	return [
 		{
-			read: async (playsig: string) =>
-				games.find((game) => game.playsig === playsig),
-			readAll: async () => [...games],
+			async read(playsig: string) {
+				const game = games.find((game) => game.playsig === playsig);
+				return structuredClone(game);
+			},
+			readAll: async () => structuredClone(games),
 			update: async (game: Game) => {
 				const index = games.findIndex((g) => g.playsig === game.playsig);
 
@@ -54,12 +56,15 @@ export function createGameAndQueuerDataMapperMock(): [
 				currentQueuer$.next(queuers);
 				return true;
 			},
-			observeCreated: () => game$.asObservable(),
+			observeCreated: () => game$.pipe(map((game) => structuredClone(game))),
 			observe: (playsig: string) =>
-				game$.pipe(filter((game) => game.playsig === playsig)),
+				game$.pipe(
+					filter((game) => game.playsig === playsig),
+					map((game) => structuredClone(game)),
+				),
 		},
 		{
-			read: async () => [...queuers],
+			read: async () => structuredClone(queuers),
 			save: async (queuer: Queuer) => {
 				if (queuers.find((q) => q.publicKey === queuer.publicKey)) {
 					return false;
@@ -69,7 +74,8 @@ export function createGameAndQueuerDataMapperMock(): [
 				currentQueuer$.next(queuers);
 				return true;
 			},
-			observe: () => currentQueuer$.asObservable(),
+			observe: () =>
+				currentQueuer$.pipe(map((queuer) => structuredClone(queuer))),
 		},
 	];
 }
