@@ -8,8 +8,7 @@ import { checkTimestamp } from "../utils/check-timestamp";
 
 export function initiateGameHandle({
 	connections$,
-	gameDataMapper,
-	queuerDataMapper,
+	dataMapper: { saveQueuer, observeCreatedGame },
 	queuerConnections,
 	isValidSignature,
 }: BackContext): Subscription {
@@ -23,7 +22,8 @@ export function initiateGameHandle({
 				tap(async ({ publicKey, nickname }: InitiateGameRequest) => {
 					const createdAt = Date.now();
 					queuerConnections[publicKey] = connection;
-					const saved = await queuerDataMapper.save({
+
+					const saved = await saveQueuer({
 						publicKey,
 						nickname,
 						createdAt,
@@ -46,7 +46,7 @@ export function initiateGameHandle({
 		),
 	);
 
-	const sendResponses$ = gameDataMapper.observeCreated().pipe(
+	const sendResponses$ = observeCreatedGame().pipe(
 		tap((game) => {
 			for (const publicKey of game.publicKeys) {
 				const connection = queuerConnections[publicKey];

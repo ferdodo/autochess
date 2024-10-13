@@ -8,21 +8,22 @@ import { HeroFactory } from "./hero-factory";
 import type { Appellation } from "../types/appellation";
 import { Phase } from "../types/phase";
 import { getRandomAppellation } from "./get-random-appellation";
+import { createPool } from "./create-pool";
+import type { Pool } from "../types/pool";
 
 const MATCHMAKING_THROTTLE_TIME = 500;
 const MATCHMAKING_LATE = 3000;
 
 export function matchmake({
-	queuerDataMapper,
-	gameDataMapper,
+	dataMapper: { observeQueuers, createGameWithPoolAndDeleteQueuers },
 	config,
 }: BackContext): Subscription {
-	const startWhenEight$ = queuerDataMapper.observe().pipe(
+	const startWhenEight$ = observeQueuers().pipe(
 		debounceTime(MATCHMAKING_THROTTLE_TIME),
 		filter((queuers) => queuers.length >= 8),
 	);
 
-	const startWhenLate$ = queuerDataMapper.observe().pipe(
+	const startWhenLate$ = observeQueuers().pipe(
 		debounce(() => {
 			return config.skipMatchMakeDebounce
 				? of(undefined)
@@ -48,6 +49,7 @@ export function matchmake({
 		const playerHeroes: Record<string, Hero[]> = {};
 		const playerShops: Record<string, Appellation[]> = {};
 		const playerMoney: Record<string, number> = {};
+		const pool: Pool = createPool();
 
 		for (const player of players) {
 			playerHeroes[player.publicKey] = [heroFactory.build()];
@@ -60,14 +62,18 @@ export function matchmake({
 			playerMoney[player.publicKey] = 5;
 		}
 
-		await gameDataMapper.createAndRemoveQueuers({
-			playsig: createPlaysig(players),
-			publicKeys: players.map((player) => player.publicKey),
-			nicknames,
-			playerHeroes,
-			playerShops,
-			playerMoney,
-			phase: Phase.Planning,
-		});
+		await createGameWithPoolAndDeleteQueuers(
+			{
+				playsig: createPlaysig(players),
+				publicKeys: players.map((player) => player.publicKey),
+				nicknames,
+				playerHeroes,
+				playerShops,
+				playerMoney,
+				phase: Phase.Planning,
+			},
+			pool,
+			players.map((player) => player.publicKey),
+		);
 	});
 }

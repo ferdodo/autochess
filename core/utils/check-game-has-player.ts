@@ -1,15 +1,15 @@
 import type { OperatorFunction } from "rxjs";
 import { mergeMap, filter, map } from "rxjs/operators";
-import type { GameDataMapper } from "../types/game-data-mapper";
 import type { GameScoped } from "../types/game-scoped";
+import type { DataMapper } from "../types/data-mapper";
 
-export function checkGameHasPlayer<T>(
-	gameDataMapper: GameDataMapper,
-): OperatorFunction<T & GameScoped, T & GameScoped> {
+export function checkGameHasPlayer<T>({
+	readGame,
+}: DataMapper): OperatorFunction<T & GameScoped, T & GameScoped> {
 	return (source) =>
 		source.pipe(
 			mergeMap(async (message) => {
-				const game = await gameDataMapper.read(message.playsig);
+				const game = await readGame(message.playsig);
 				const gameHasPlayer = !!game?.publicKeys.includes(message.publicKey);
 				return { gameHasPlayer, message };
 			}),

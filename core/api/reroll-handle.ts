@@ -8,8 +8,7 @@ import { checkGameHasPlayer } from "../utils/check-game-has-player";
 
 export function rerollHandle({
 	connections$,
-	poolDataMapper,
-	gameDataMapper,
+	dataMapper,
 	isValidSignature,
 }: BackContext): Subscription {
 	return connections$
@@ -20,10 +19,10 @@ export function rerollHandle({
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
 					checkTimestamp(),
-					checkGameHasPlayer(gameDataMapper),
+					checkGameHasPlayer(dataMapper),
 					tap(async ({ publicKey, playsig }) => {
 						const transaction =
-							await poolDataMapper.readAndUpdateWithGame(playsig);
+							await dataMapper.readAndUpdatePoolWithGame(playsig);
 
 						if (!transaction) {
 							return;

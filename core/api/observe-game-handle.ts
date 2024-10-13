@@ -8,7 +8,7 @@ import { checkGameHasPlayer } from "../utils/check-game-has-player";
 
 export function observeGameHandle({
 	connections$,
-	gameDataMapper,
+	dataMapper,
 	isValidSignature,
 }: BackContext): Subscription {
 	return connections$
@@ -19,12 +19,12 @@ export function observeGameHandle({
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
 					checkTimestamp(),
-					checkGameHasPlayer(gameDataMapper),
+					checkGameHasPlayer(dataMapper),
 				);
 
 				const sendCurrent$ = requests$.pipe(
 					tap(async ({ playsig }) => {
-						const game = await gameDataMapper.read(playsig);
+						const game = await dataMapper.readGame(playsig);
 
 						if (game) {
 							connection.send({ observeGameBroadcast: { game } });
@@ -34,7 +34,7 @@ export function observeGameHandle({
 
 				const subscribeToGame$ = requests$.pipe(
 					first(),
-					mergeMap(({ playsig }) => gameDataMapper.observe(playsig)),
+					mergeMap(({ playsig }) => dataMapper.observeGame(playsig)),
 					tap((game) => {
 						connection.send({ observeGameBroadcast: { game } });
 					}),
