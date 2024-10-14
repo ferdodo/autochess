@@ -5,7 +5,7 @@ import { observeGame } from "../api/observe-game";
 
 export async function asPlayerReroll(
 	testContext: TestContext,
-	playerNumber: number,
+	playerNumber = 0,
 ) {
 	const frontContext = testContext.frontContexts[playerNumber];
 
