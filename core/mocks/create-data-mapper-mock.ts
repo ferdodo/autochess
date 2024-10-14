@@ -5,7 +5,7 @@ import type { DataMapper } from "../types/data-mapper";
 import type { Pool } from "../types/pool";
 
 export function createDataMapperMock(): DataMapper {
-	const games: Game[] = [];
+	let games: Game[] = [];
 	const game$ = new Subject<Game>();
 	const currentQueuer$ = new Subject<Queuer[]>();
 	let pools: Pool[] = [];
@@ -22,11 +22,11 @@ export function createDataMapperMock(): DataMapper {
 		async saveGame(game: Game) {
 			const index = games.findIndex((g) => g.playsig === game.playsig);
 
-			if (index !== -1) {
+			if (index === -1) {
 				return false;
 			}
 
-			games.push(game);
+			games = games.map((g) => (g.playsig === game.playsig ? game : g));
 			game$.next(game);
 			return true;
 		},
@@ -88,13 +88,13 @@ export function createDataMapperMock(): DataMapper {
 				pool,
 				commit: async (pool: Pool, game: Game) => {
 					const saved = await this.saveGame(game);
-					const alreadyExists = pools.some((p) => p.playsig === pool.playsig);
 
-					if (alreadyExists || !saved) {
+					if (!saved) {
 						return false;
 					}
 
 					pools = pools.map((p) => (p.playsig === pool.playsig ? pool : p));
+
 					return true;
 				},
 				async abort() {

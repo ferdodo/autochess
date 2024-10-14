@@ -9,7 +9,6 @@ import type { Appellation } from "../types/appellation";
 import { Phase } from "../types/phase";
 import { getRandomAppellation } from "./get-random-appellation";
 import { createPool } from "./create-pool";
-import type { Pool } from "../types/pool";
 
 const MATCHMAKING_THROTTLE_TIME = 500;
 const MATCHMAKING_LATE = 3000;
@@ -49,7 +48,8 @@ export function matchmake({
 		const playerHeroes: Record<string, Hero[]> = {};
 		const playerShops: Record<string, Appellation[]> = {};
 		const playerMoney: Record<string, number> = {};
-		const pool: Pool = createPool();
+		const playsig = createPlaysig(players);
+		const pool = createPool(playsig);
 
 		for (const player of players) {
 			playerHeroes[player.publicKey] = [heroFactory.build()];
@@ -64,7 +64,7 @@ export function matchmake({
 
 		await createGameWithPoolAndDeleteQueuers(
 			{
-				playsig: createPlaysig(players),
+				playsig,
 				publicKeys: players.map((player) => player.publicKey),
 				nicknames,
 				playerHeroes,

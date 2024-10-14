@@ -1,7 +1,7 @@
 import type { Pool } from "../types/pool";
 import { getRandomAppellation } from "./get-random-appellation";
 
-export function createPool(): Pool {
+export function createPool(playsig: string): Pool {
 	return {
 		heroes: [
 			getRandomAppellation(),
@@ -31,6 +31,6 @@ export function createPool(): Pool {
 			getRandomAppellation(),
 			getRandomAppellation(),
 		],
-		playsig: "",
+		playsig,
 	};
 }

@@ -54,6 +54,10 @@ export function rerollHandle({
 									...game.playerShops,
 									[publicKey]: threeFirstHeroesOfPool,
 								},
+								playerMoney: {
+									...game.playerMoney,
+									[publicKey]: game.playerMoney[publicKey] - 2,
+								},
 							};
 
 							await commit(newPool, newGame);
