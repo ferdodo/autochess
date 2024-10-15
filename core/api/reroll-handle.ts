@@ -5,6 +5,7 @@ import { checkInvalidSignature } from "../utils/check-invalid-signature";
 import { checkTimestamp } from "../utils/check-timestamp";
 import type { Pool } from "../types/pool";
 import { checkGameHasPlayer } from "../utils/check-game-has-player";
+import { getRerollCost } from "../utils/get-reroll-cost";
 
 export function rerollHandle({
 	connections$,
@@ -31,7 +32,7 @@ export function rerollHandle({
 						const { game, pool, commit, abort } = transaction;
 
 						try {
-							if (game.playerMoney[publicKey] < 2) {
+							if (game.playerMoney[publicKey] < getRerollCost()) {
 								await abort();
 								return;
 							}
@@ -56,7 +57,7 @@ export function rerollHandle({
 								},
 								playerMoney: {
 									...game.playerMoney,
-									[publicKey]: game.playerMoney[publicKey] - 2,
+									[publicKey]: game.playerMoney[publicKey] - getRerollCost(),
 								},
 							};
 

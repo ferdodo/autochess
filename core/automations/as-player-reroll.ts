@@ -2,6 +2,7 @@ import { reroll } from "../api/reroll";
 import type { TestContext } from "../types/test-context";
 import { firstValueFrom, map, filter } from "rxjs";
 import { observeGame } from "../api/observe-game";
+import { getRerollCost } from "../utils/get-reroll-cost";
 
 export async function asPlayerReroll(
 	testContext: TestContext,
@@ -18,6 +19,10 @@ export async function asPlayerReroll(
 			map((game) => game.playerMoney[frontContext.publicKey]),
 		),
 	);
+
+	if (moneyBefore < getRerollCost()) {
+		return;
+	}
 
 	await reroll(frontContext);
 
