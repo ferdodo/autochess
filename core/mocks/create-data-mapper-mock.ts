@@ -19,6 +19,23 @@ export function createDataMapperMock(): DataMapper {
 		async readAllGames() {
 			return structuredClone(games);
 		},
+		async readAndUpdateGame(playsig: string) {
+			const game = games.find((game) => game.playsig === playsig);
+
+			if (!game) {
+				return;
+			}
+
+			return {
+				game,
+				commit: async (game: Game) => {
+					return await this.saveGame(game);
+				},
+				async abort() {
+					return;
+				},
+			};
+		},
 		async saveGame(game: Game) {
 			const index = games.findIndex((g) => g.playsig === game.playsig);
 

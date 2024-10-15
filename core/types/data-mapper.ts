@@ -12,10 +12,17 @@ interface ReadAndUpdatePoolWithGame {
 	abort: () => Promise<void>;
 }
 
+interface ReadAndUpdateGame {
+	game: Game;
+	commit: (game: Game) => Promise<boolean>;
+	abort: () => Promise<void>;
+}
+
 export interface DataMapper {
 	readGame(playsig: string): Promise<Game | undefined>;
 	readAllGames(): Promise<Game[]>;
 	saveGame(game: Game): Promise<boolean>;
+	readAndUpdateGame(playsig: Playsig): Promise<ReadAndUpdateGame | undefined>;
 	createGameWithPoolAndDeleteQueuers(
 		game: Game,
 		pool: Pool,

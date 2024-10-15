@@ -9,6 +9,7 @@ import type { Appellation } from "../types/appellation";
 import { Phase } from "../types/phase";
 import { getRandomAppellation } from "./get-random-appellation";
 import { createPool } from "./create-pool";
+import type { Level } from "../types/level";
 
 const MATCHMAKING_THROTTLE_TIME = 500;
 const MATCHMAKING_LATE = 3000;
@@ -48,6 +49,7 @@ export function matchmake({
 		const playerHeroes: Record<string, Hero[]> = {};
 		const playerShops: Record<string, Appellation[]> = {};
 		const playerMoney: Record<string, number> = {};
+		const playerLevel: Record<string, Level> = {};
 		const playsig = createPlaysig(players);
 		const pool = createPool(playsig);
 
@@ -60,6 +62,7 @@ export function matchmake({
 			];
 
 			playerMoney[player.publicKey] = 5;
+			playerLevel[player.publicKey] = 1;
 		}
 
 		await createGameWithPoolAndDeleteQueuers(
@@ -70,6 +73,7 @@ export function matchmake({
 				playerHeroes,
 				playerShops,
 				playerMoney,
+				playerLevel,
 				phase: Phase.Planning,
 			},
 			pool,
