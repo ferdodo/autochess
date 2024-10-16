@@ -105,13 +105,17 @@ waitTextureLoaded
 
 		observeInteractions(threeContext1, initialDisplay1).subscribe(
 			(interaction) => {
-				cast(frontContext1, interaction);
+				if (currentPlayer === 0) {
+					cast(frontContext1, interaction);
+				}
 			},
 		);
 
 		observeInteractions(threeContext2, initialDisplay2).subscribe(
 			(interaction) => {
-				cast(frontContext2, interaction);
+				if (currentPlayer === 1) {
+					cast(frontContext2, interaction);
+				}
 			},
 		);
 

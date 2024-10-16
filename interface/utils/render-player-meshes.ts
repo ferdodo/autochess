@@ -45,7 +45,7 @@ export function renderplayerMeshes(
 			}
 		}
 
-		if (mesh.geometry !== geometry) {
+		if (mesh.geometry.userData.text !== geometry.userData.text) {
 			mesh.geometry = geometry;
 		}
 	}

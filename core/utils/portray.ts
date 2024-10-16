@@ -29,7 +29,7 @@ export function portray(publicKey: string): OperatorFunction<Game, Display> {
 					players: game.publicKeys.map((p) => ({
 						name: game.nicknames[p],
 						health: 100,
-						level: 1,
+						level: game.playerLevel[p] || 1,
 						isMe: p === publicKey,
 					})),
 					shop: game.playerShops[publicKey] || [],
