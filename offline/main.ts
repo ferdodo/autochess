@@ -13,13 +13,16 @@ import type { FrontContext } from "core/types/front-context";
 import { initiateGame } from "core/api/initiate-game";
 import { observeGame } from "core/api/observe-game";
 import { portray } from "core/utils/portray";
+import { cast } from "core/utils/cast";
+import { observeInteractions } from "interface/utils/observe-interactions";
+import { firstValueFrom, of } from "rxjs";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
 });
 
 waitTextureLoaded
-	.then(() => {
+	.then(async () => {
 		const playerSwitch = new PlayerSwitch();
 		const connectionMockFactory = new ConnectionMockFactory();
 		const backContext = createOfflineBackContext(connectionMockFactory);
@@ -52,26 +55,6 @@ waitTextureLoaded
 			}),
 		};
 
-		Promise.all([initiateGame(frontContext1), initiateGame(frontContext2)])
-			.then(([game1, game2]) => {
-				frontContext1.playsig = game1.playsig;
-				frontContext2.playsig = game2.playsig;
-			})
-			.then(() => {
-				observeGame(frontContext1)
-					.pipe(portray(frontContext1.publicKey))
-					.subscribe((display) => {
-						render(threeContext1, display);
-					});
-
-				observeGame(frontContext2)
-					.pipe(portray(frontContext2.publicKey))
-					.subscribe((display) => {
-						render(threeContext2, display);
-					});
-			})
-			.catch(console.error);
-
 		let currentPlayer = 0;
 
 		playerSwitch.observeCurrentPlayer().subscribe((value) => {
@@ -80,6 +63,7 @@ waitTextureLoaded
 
 		const threeContext1 = createContext();
 		const threeContext2 = createContext();
+
 		playerSwitch.switchPlayer1();
 
 		observeWindowDimentions().subscribe(() => {
@@ -100,5 +84,47 @@ waitTextureLoaded
 
 			playerSwitch.switchPlayer(currentPlayer);
 		});
+
+		const [initiateGameResponse1, initiateGameResponse2] = await Promise.all([
+			initiateGame(frontContext1),
+			initiateGame(frontContext2),
+		]);
+
+		frontContext1.playsig = initiateGameResponse1.playsig;
+		frontContext2.playsig = initiateGameResponse2.playsig;
+		const initialGame1 = await firstValueFrom(observeGame(frontContext1));
+		const initialGame2 = await firstValueFrom(observeGame(frontContext2));
+
+		const initialDisplay1 = await firstValueFrom(
+			of(initialGame1).pipe(portray(frontContext1.publicKey)),
+		);
+
+		const initialDisplay2 = await firstValueFrom(
+			of(initialGame2).pipe(portray(frontContext2.publicKey)),
+		);
+
+		observeInteractions(threeContext1, initialDisplay1).subscribe(
+			(interaction) => {
+				cast(frontContext1, interaction);
+			},
+		);
+
+		observeInteractions(threeContext2, initialDisplay2).subscribe(
+			(interaction) => {
+				cast(frontContext2, interaction);
+			},
+		);
+
+		observeGame(frontContext1)
+			.pipe(portray(frontContext1.publicKey))
+			.subscribe((display) => {
+				render(threeContext1, display);
+			});
+
+		observeGame(frontContext2)
+			.pipe(portray(frontContext2.publicKey))
+			.subscribe((display) => {
+				render(threeContext2, display);
+			});
 	})
 	.catch(console.error);

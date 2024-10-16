@@ -36,6 +36,10 @@ export function renderShopProductTraitMeshes(
 				mesh.position.y = background.position.y + vector.y;
 				mesh.position.z = background.position.z + 0.0001 + vector.z;
 			}
+
+			if (mesh.geometry !== threeContext.shopProductTraitGeometry[trait]) {
+				mesh.geometry = threeContext.shopProductTraitGeometry[trait];
+			}
 		}
 	}
 

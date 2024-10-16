@@ -5,6 +5,7 @@ import { map, combineLatestWith, startWith } from "rxjs/operators";
 import { Phase } from "../types/phase";
 import { Animation } from "../types/animation";
 import { interval } from "rxjs";
+import { getLevelUpCost } from "./get-level-up-cost";
 
 export function portray(publicKey: string): OperatorFunction<Game, Display> {
 	return (source: Observable<Game>) =>
@@ -34,8 +35,8 @@ export function portray(publicKey: string): OperatorFunction<Game, Display> {
 					shop: game.playerShops[publicKey] || [],
 					bench: {},
 					phase: Phase.Planning,
-					money: 0,
-					levelUpCost: 2,
+					money: game.playerMoney[publicKey] || 0,
+					levelUpCost: getLevelUpCost(game, publicKey),
 					timeLeft: 30,
 				};
 

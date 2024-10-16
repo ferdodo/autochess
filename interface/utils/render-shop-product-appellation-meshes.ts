@@ -32,6 +32,12 @@ export function renderShopProductAppellationMeshes(
 			mesh.position.y = background.position.y + vector.y;
 			mesh.position.z = background.position.z + 0.0001 + vector.z;
 		}
+
+		if (
+			mesh.geometry !== threeContext.shopProductAppellationGeometry[appellation]
+		) {
+			mesh.geometry = threeContext.shopProductAppellationGeometry[appellation];
+		}
 	}
 
 	for (const productId of Object.keys(

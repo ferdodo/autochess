@@ -36,6 +36,10 @@ export function renderShopProductImageMeshes(
 
 			mesh.scale.set(2, 2, 2);
 		}
+
+		if (mesh.material !== threeContext.shopProductImageMaterial[appellation]) {
+			mesh.material = threeContext.shopProductImageMaterial[appellation];
+		}
 	}
 
 	for (const productId of Object.keys(threeContext.shopProductImageMeshes)) {
