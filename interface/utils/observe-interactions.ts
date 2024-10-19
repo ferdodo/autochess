@@ -59,7 +59,7 @@ export function observeInteractions(
 			}
 
 			if (grabbing && positionX !== undefined && positionY !== undefined) {
-				interaction.grabBoardPiece = { positionX, positionY };
+				interaction.grabPiece = { positionX, positionY };
 			} else if (!grabbing) {
 				interaction.ungrabPiece = { positionX, positionY };
 			}
@@ -71,7 +71,7 @@ export function observeInteractions(
 
 				if (raycaster.intersectObject(targetBox).length > 0) {
 					if (grabbing) {
-						interaction.grabBenchPiece = { position };
+						interaction.grabPiece = { benchPosition: position };
 					} else {
 						interaction.ungrabPiece = { benchPosition: position };
 					}

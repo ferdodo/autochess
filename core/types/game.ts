@@ -10,6 +10,7 @@ export interface Game {
 	publicKeys: PublicKey[];
 	nicknames: Record<PublicKey, string>;
 	playerHeroes: Record<PublicKey, Hero[]>;
+	playerBenches: Record<PublicKey, Record<number, Hero>>;
 	playerShops: Record<PublicKey, Appellation[]>;
 	playerMoney: Record<PublicKey, number>;
 	playerLevel: Record<PublicKey, Level>;

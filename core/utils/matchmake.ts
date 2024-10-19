@@ -50,6 +50,7 @@ export function matchmake({
 		const playerShops: Record<string, Appellation[]> = {};
 		const playerMoney: Record<string, number> = {};
 		const playerLevel: Record<string, Level> = {};
+		const playerBenches: Record<string, Record<number, Hero>> = {};
 		const playsig = createPlaysig(players);
 		const pool = createPool(playsig);
 
@@ -74,6 +75,7 @@ export function matchmake({
 				playerShops,
 				playerMoney,
 				playerLevel,
+				playerBenches,
 				phase: Phase.Planning,
 			},
 			pool,

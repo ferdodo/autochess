@@ -1,26 +1,12 @@
-interface GrabBoardPiece {
-	positionX: number;
-	positionY: number;
-}
-
-interface UngrabPiece {
-	positionX?: number;
-	positionY?: number;
-	benchPosition?: number;
-}
-
-interface GrabBenchPiece {
-	position: number;
-}
+import type { PieceSlot } from "./piece-slot";
 
 interface shopBuy {
 	productId: string;
 }
 
 export interface Interaction {
-	grabBoardPiece?: GrabBoardPiece;
-	ungrabPiece?: UngrabPiece;
-	grabBenchPiece?: GrabBenchPiece;
+	grabPiece?: PieceSlot;
+	ungrabPiece?: PieceSlot;
 	shopBuy?: shopBuy;
 	reroll?: true;
 	levelUp?: true;

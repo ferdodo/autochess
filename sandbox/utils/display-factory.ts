@@ -95,7 +95,7 @@ export class DisplayFactory implements Subscribable<Display> {
 				(piece) => piece.transposed,
 			);
 
-			if (interaction.grabBoardPiece && !transposedPiece) {
+			if (interaction.grabPiece && !transposedPiece) {
 				for (const piece of this.display.pieces) {
 					const handle = this.pieceHandles.find(
 						(handle) => handle.id === piece.hero.id,
@@ -106,8 +106,8 @@ export class DisplayFactory implements Subscribable<Display> {
 					}
 
 					if (
-						interaction.grabBoardPiece.positionX === piece.hero.position.x &&
-						interaction.grabBoardPiece.positionY === piece.hero.position.y
+						interaction.grabPiece.positionX === piece.hero.position.x &&
+						interaction.grabPiece.positionY === piece.hero.position.y
 					) {
 						handle.setTransposed();
 						handle.stopSimulation();
