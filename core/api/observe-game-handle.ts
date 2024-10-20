@@ -3,7 +3,6 @@ import { map, mergeMap, filter, first, tap } from "rxjs/operators";
 import { merge } from "rxjs";
 import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
-import { checkTimestamp } from "../utils/check-timestamp";
 import { checkGameHasPlayer } from "../utils/check-game-has-player";
 
 export function observeGameHandle({
@@ -18,7 +17,6 @@ export function observeGameHandle({
 					map((message) => message.observeGameSubscribe),
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
-					checkTimestamp(),
 					checkGameHasPlayer(dataMapper),
 				);
 

@@ -2,18 +2,18 @@ import type { PublicKey } from "./public-key";
 import { publicKeySchema } from "./public-key";
 import type { Signature } from "./signature";
 import { signatureSchema } from "./signature";
-import { timestampSchema } from "./timestamp";
-import type { Timestamp } from "./timestamp";
 import { playsigSchema } from "./playsig";
 import type { Playsig } from "./playsig";
 import type { PieceSlot } from "./piece-slot";
 import { pieceSlotSchema } from "./piece-slot";
+import { dateTimeSchema, type DateTime } from "./date-time";
 
 export interface TransposeRequest {
 	publicKey: PublicKey;
 	playsig: Playsig;
 	signature: Signature;
-	timestamp: Timestamp;
+	issuedAt: DateTime;
+	expiresAt: DateTime;
 	grabPiece: PieceSlot;
 	ungrabPiece: PieceSlot;
 }
@@ -24,7 +24,8 @@ export const transposeRequestSchema = {
 		"publicKey",
 		"playsig",
 		"signature",
-		"timestamp",
+		"issuedAt",
+		"expiresAt",
 		"grabPiece",
 		"ungrabPiece",
 	],
@@ -32,7 +33,8 @@ export const transposeRequestSchema = {
 		publicKey: publicKeySchema,
 		playsig: playsigSchema,
 		signature: signatureSchema,
-		timestamp: timestampSchema,
+		expiresAt: dateTimeSchema,
+		issuedAt: dateTimeSchema,
 		grabPiece: pieceSlotSchema,
 		ungrabPiece: pieceSlotSchema,
 	},

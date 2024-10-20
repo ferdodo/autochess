@@ -15,7 +15,8 @@ export function asNewPlayerConnect(testContext: TestContext) {
 		signMessage: async (message) => {
 			return {
 				...message,
-				timestamp: Date.now(),
+				issuedAt: new Date().toISOString(),
+				expiresAt: new Date(Date.now() + 60 * 1000).toISOString(),
 				signature: `${playersCount}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
 			};
 		},

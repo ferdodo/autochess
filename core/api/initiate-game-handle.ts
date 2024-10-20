@@ -4,7 +4,6 @@ import { merge } from "rxjs";
 import type { BackContext } from "../types/back-context";
 import type { InitiateGameRequest } from "../types/initiate-game-request";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
-import { checkTimestamp } from "../utils/check-timestamp";
 
 export function initiateGameHandle({
 	connections$,
@@ -18,7 +17,6 @@ export function initiateGameHandle({
 				map((message) => message.initiateGameRequest),
 				filter(Boolean),
 				checkInvalidSignature(isValidSignature),
-				checkTimestamp(),
 				tap(async ({ publicKey, nickname }: InitiateGameRequest) => {
 					const createdAt = Date.now();
 					queuerConnections[publicKey] = connection;

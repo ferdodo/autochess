@@ -4,24 +4,26 @@ import type { PublicKey } from "./public-key";
 import { publicKeySchema } from "./public-key";
 import type { Signature } from "./signature";
 import { signatureSchema } from "./signature";
-import type { Timestamp } from "./timestamp";
-import { timestampSchema } from "./timestamp";
+import { dateTimeSchema } from "./date-time";
+import type { DateTime } from "./date-time";
 
 export interface InitiateGameRequest {
 	nickname: Nickname;
 	publicKey: PublicKey;
 	signature: Signature;
-	timestamp: Timestamp;
+	issuedAt: DateTime;
+	expiresAt: DateTime;
 }
 
 export const initiateGameRequestSchema = {
 	type: "object",
-	required: ["nickname", "publicKey", "signature", "timestamp"],
+	required: ["nickname", "publicKey", "signature", "issuedAt", "expiresAt"],
 	properties: {
 		nickname: nicknameSchema,
 		publicKey: publicKeySchema,
 		signature: signatureSchema,
-		timestamp: timestampSchema,
+		issuedAt: dateTimeSchema,
+		expiresAt: dateTimeSchema,
 	},
 	additionalProperties: false,
 } as const;

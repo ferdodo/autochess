@@ -36,7 +36,8 @@ waitTextureLoaded
 			nickname: "playerone",
 			signMessage: async (message) => ({
 				...message,
-				timestamp: Date.now(),
+				issuedAt: new Date().toISOString(),
+				expiresAt: new Date(Date.now() + 60000).toISOString(),
 				signature:
 					"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 			}),
@@ -49,7 +50,8 @@ waitTextureLoaded
 			nickname: "playertwo",
 			signMessage: async (message) => ({
 				...message,
-				timestamp: Date.now(),
+				issuedAt: new Date().toISOString(),
+				expiresAt: new Date(Date.now() + 60000).toISOString(),
 				signature:
 					"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
 			}),

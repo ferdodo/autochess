@@ -2,7 +2,6 @@ import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap } from "rxjs/operators";
 import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
-import { checkTimestamp } from "../utils/check-timestamp";
 import { checkGameHasPlayer } from "../utils/check-game-has-player";
 import type { Hero } from "../types/hero";
 
@@ -18,10 +17,8 @@ export function transposeHandle({
 					map((message) => message.transposeRequest),
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
-					checkTimestamp(),
 					checkGameHasPlayer(dataMapper),
 					tap(async ({ publicKey, playsig, grabPiece, ungrabPiece }) => {
-						console.log({ grabPiece, ungrabPiece });
 						const transaction = await dataMapper.readAndUpdateGame(playsig);
 
 						if (!transaction) {
