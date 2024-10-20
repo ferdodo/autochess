@@ -1,5 +1,5 @@
 import type { TestContext } from "../types/test-context";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, map } from "rxjs";
 import { portray } from "./portray";
 import { observeGame } from "../api/observe-game";
 import type { Display } from "../types/display";
@@ -15,7 +15,10 @@ export async function getDisplay(
 	}
 
 	const display = await firstValueFrom(
-		observeGame(frontContext).pipe(portray(frontContext.publicKey)),
+		observeGame(frontContext).pipe(
+			map(({ game }) => game),
+			portray(frontContext.publicKey),
+		),
 	);
 
 	return display;

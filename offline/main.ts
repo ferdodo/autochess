@@ -15,7 +15,7 @@ import { observeGame } from "core/api/observe-game";
 import { portray } from "core/utils/portray";
 import { cast } from "core/utils/cast";
 import { observeInteractions } from "interface/utils/observe-interactions";
-import { firstValueFrom, of } from "rxjs";
+import { firstValueFrom, of, map } from "rxjs";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -96,8 +96,14 @@ waitTextureLoaded
 
 		frontContext1.playsig = initiateGameResponse1.playsig;
 		frontContext2.playsig = initiateGameResponse2.playsig;
-		const initialGame1 = await firstValueFrom(observeGame(frontContext1));
-		const initialGame2 = await firstValueFrom(observeGame(frontContext2));
+
+		const initialGame1 = await firstValueFrom(
+			observeGame(frontContext1).pipe(map(({ game }) => game)),
+		);
+
+		const initialGame2 = await firstValueFrom(
+			observeGame(frontContext2).pipe(map(({ game }) => game)),
+		);
 
 		const initialDisplay1 = await firstValueFrom(
 			of(initialGame1).pipe(portray(frontContext1.publicKey)),
@@ -124,13 +130,19 @@ waitTextureLoaded
 		);
 
 		observeGame(frontContext1)
-			.pipe(portray(frontContext1.publicKey))
+			.pipe(
+				map(({ game }) => game),
+				portray(frontContext1.publicKey),
+			)
 			.subscribe((display) => {
 				render(threeContext1, display);
 			});
 
 		observeGame(frontContext2)
-			.pipe(portray(frontContext2.publicKey))
+			.pipe(
+				map(({ game }) => game),
+				portray(frontContext2.publicKey),
+			)
 			.subscribe((display) => {
 				render(threeContext2, display);
 			});
