@@ -36,6 +36,7 @@ waitTextureLoaded
 			nickname: "playerone",
 			signMessage: async (message) => ({
 				...message,
+				publicKey: frontContext1.publicKey,
 				issuedAt: new Date().toISOString(),
 				expiresAt: new Date(Date.now() + 60000).toISOString(),
 				signature:
@@ -50,6 +51,7 @@ waitTextureLoaded
 			nickname: "playertwo",
 			signMessage: async (message) => ({
 				...message,
+				publicKey: frontContext2.publicKey,
 				issuedAt: new Date().toISOString(),
 				expiresAt: new Date(Date.now() + 60000).toISOString(),
 				signature:

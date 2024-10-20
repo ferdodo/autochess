@@ -4,7 +4,6 @@ import type { ClientMessage } from "./client-message";
 import type { ServerMessage } from "./server-message";
 import type { Signed } from "./signed";
 import type { DataMapper } from "./data-mapper";
-import type { SignableMessage } from "./signable-message";
 import type { SignedMessage } from "./signed-message";
 
 interface BackContextConfig {
@@ -14,7 +13,7 @@ interface BackContextConfig {
 export interface BackContext {
 	connections$: Observable<Connection<ClientMessage, ServerMessage>>;
 	isValidSignature: <T>(message: T & Signed) => Promise<boolean>;
-	signMessage: <T>(message: SignableMessage & T) => Promise<SignedMessage & T>;
+	signMessage: <T>(message: T) => Promise<SignedMessage & T>;
 	dataMapper: DataMapper;
 	queuerConnections: Record<string, Connection<ClientMessage, ServerMessage>>;
 	config: BackContextConfig;

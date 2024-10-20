@@ -3,7 +3,6 @@ import type { ServerMessage } from "./server-message";
 import type { Connection } from "./connection";
 import type { PublicKey } from "./public-key";
 import type { Playsig } from "./playsig";
-import type { SignableMessage } from "./signable-message";
 import type { SignedMessage } from "./signed-message";
 
 export interface FrontContext {
@@ -11,5 +10,5 @@ export interface FrontContext {
 	publicKey: PublicKey;
 	nickname: string;
 	playsig?: Playsig;
-	signMessage: <T>(message: SignableMessage & T) => Promise<SignedMessage & T>;
+	signMessage: <T>(message: T) => Promise<SignedMessage & T>;
 }

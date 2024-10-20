@@ -8,13 +8,16 @@ export function asNewPlayerConnect(testContext: TestContext) {
 	const numberToLetter = (n: number) =>
 		n >= 1 && n <= 26 ? String.fromCharCode(n + 64) : n;
 
+	const publicKey = `${playersCount}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`;
+
 	const frontContext: FrontContext = {
 		connection,
-		publicKey: `${playersCount}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+		publicKey,
 		nickname: `Player${numberToLetter(playersCount + 1)}`,
-		signMessage: async (message) => {
+		async signMessage(message) {
 			return {
 				...message,
+				publicKey,
 				issuedAt: new Date().toISOString(),
 				expiresAt: new Date(Date.now() + 60 * 1000).toISOString(),
 				signature: `${playersCount}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,

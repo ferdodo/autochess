@@ -9,6 +9,7 @@ export function observeGameHandle({
 	connections$,
 	dataMapper,
 	isValidSignature,
+	signMessage,
 }: BackContext): Subscription {
 	return connections$
 		.pipe(
@@ -25,7 +26,9 @@ export function observeGameHandle({
 						const game = await dataMapper.readGame(playsig);
 
 						if (game) {
-							connection.send({ observeGameBroadcast: { game } });
+							connection.send({
+								observeGameBroadcast: await signMessage({ game }),
+							});
 						}
 					}),
 				);
@@ -33,8 +36,10 @@ export function observeGameHandle({
 				const subscribeToGame$ = requests$.pipe(
 					first(),
 					mergeMap(({ playsig }) => dataMapper.observeGame(playsig)),
-					tap((game) => {
-						connection.send({ observeGameBroadcast: { game } });
+					tap(async (game) => {
+						connection.send({
+							observeGameBroadcast: await signMessage({ game }),
+						});
 					}),
 				);
 

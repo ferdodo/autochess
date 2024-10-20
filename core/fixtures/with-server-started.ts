@@ -13,6 +13,7 @@ export function withServerStarted(): TestContext {
 		isValidSignature: () => Promise.resolve(true),
 		signMessage: async (message) => ({
 			...message,
+			publicKey: "Back public key",
 			signature: "signature",
 			issuedAt: new Date().toISOString(),
 			expiresAt: new Date(Date.now() + 60000).toISOString(),
