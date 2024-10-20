@@ -8,6 +8,12 @@ export function createOfflineBackContext(
 	return {
 		connections$: connectionMockFactory.createServer(),
 		isValidSignature: () => Promise.resolve(true),
+		signMessage: async (message) => ({
+			...message,
+			signature: "signature",
+			issuedAt: new Date().toISOString(),
+			expiresAt: new Date(Date.now() + 60000).toISOString(),
+		}),
 		dataMapper: createDataMapperMock(),
 		queuerConnections: {},
 		config: {

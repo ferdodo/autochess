@@ -11,6 +11,12 @@ export function withServerStarted(): TestContext {
 	const backContext: BackContext = {
 		connections$: connectionMockFactory.createServer(),
 		isValidSignature: () => Promise.resolve(true),
+		signMessage: async (message) => ({
+			...message,
+			signature: "signature",
+			issuedAt: new Date().toISOString(),
+			expiresAt: new Date(Date.now() + 60000).toISOString(),
+		}),
 		dataMapper,
 		queuerConnections: {},
 		config: {

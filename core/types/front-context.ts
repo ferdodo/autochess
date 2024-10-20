@@ -1,21 +1,10 @@
 import type { ClientMessage } from "./client-message";
 import type { ServerMessage } from "./server-message";
 import type { Connection } from "./connection";
-import type { DateTime } from "./date-time";
 import type { PublicKey } from "./public-key";
-import type { Signature } from "./signature";
 import type { Playsig } from "./playsig";
-
-interface SignableMessage {
-	publicKey: PublicKey;
-}
-
-interface SignedMessage {
-	publicKey: PublicKey;
-	issuedAt: DateTime;
-	expiresAt: DateTime;
-	signature: Signature;
-}
+import type { SignableMessage } from "./signable-message";
+import type { SignedMessage } from "./signed-message";
 
 export interface FrontContext {
 	connection: Connection<ServerMessage, ClientMessage>;
