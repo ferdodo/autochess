@@ -6,6 +6,7 @@ import type { DateTime } from "./date-time";
 import type { Playsig } from "./playsig";
 import type { PublicKey } from "./public-key";
 import type { Signature } from "./signature";
+import type { FromSchema } from "json-schema-to-ts";
 
 export interface ObserveGameSubscribe {
 	playsig: Playsig;
@@ -27,3 +28,10 @@ export const ObserveGameSubscribeSchema = {
 	},
 	additionalProperties: false,
 } as const;
+
+const a: ObserveGameSubscribe = {} as FromSchema<
+	typeof ObserveGameSubscribeSchema
+>;
+
+const b: FromSchema<typeof ObserveGameSubscribeSchema> =
+	{} as ObserveGameSubscribe;

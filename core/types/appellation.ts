@@ -1,3 +1,5 @@
+import type { FromSchema } from "json-schema-to-ts";
+
 export enum Appellation {
 	Soldier = "Soldier",
 	Knight = "Knight",
@@ -20,3 +22,11 @@ export enum Appellation {
 	GreatswordSkeleton = "Greatsword Skeleton",
 	SkeletonArcher = "Skeleton Archer",
 }
+
+export const appellationSchema = {
+	type: "string",
+	enum: Object.values(Appellation),
+} as const;
+
+const a: Appellation = {} as FromSchema<typeof appellationSchema>;
+const b: FromSchema<typeof appellationSchema> = {} as Appellation;

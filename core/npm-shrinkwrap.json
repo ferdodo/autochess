@@ -9,7 +9,7 @@
 				"@stryker-mutator/core": "^8.6.0",
 				"@stryker-mutator/vitest-runner": "^8.6.0",
 				"@types/node": "^22.7.4",
-				"blockwise": "^2.8.1",
+				"blockwise": "^2.9.1",
 				"json-schema-library": "^10.0.0-rc2",
 				"json-schema-to-ts": "^3.1.1",
 				"rxjs": "^7.8.1",
@@ -2107,9 +2107,9 @@
 			"license": "MIT"
 		},
 		"node_modules/blockwise": {
-			"version": "2.8.1",
-			"resolved": "https://registry.npmjs.org/blockwise/-/blockwise-2.8.1.tgz",
-			"integrity": "sha512-YrBfHRyzYzbJ3TRuOeBEf9mo69xZtaDM47tA6nW93/m1ioKfauFVfsoTitIxUsSqurzuglrVfW4GXndvAjnLAQ==",
+			"version": "2.9.1",
+			"resolved": "https://registry.npmjs.org/blockwise/-/blockwise-2.9.1.tgz",
+			"integrity": "sha512-F25m9n1YZeW+CgNFWx3eqcsFaL5q3b85kQ4ai5h5D1d0vvLF6AHG3JvBt44QQKjkhJr5ruBug0P6y6e/upGCvQ==",
 			"dev": true,
 			"hasShrinkwrap": true,
 			"license": "MIT",

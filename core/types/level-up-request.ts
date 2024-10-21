@@ -6,6 +6,7 @@ import { playsigSchema } from "./playsig";
 import type { Playsig } from "./playsig";
 import { dateTimeSchema } from "./date-time";
 import type { DateTime } from "./date-time";
+import type { FromSchema } from "json-schema-to-ts";
 
 export interface LevelUpRequest {
 	publicKey: PublicKey;
@@ -27,3 +28,6 @@ export const LevelUpRequestSchema = {
 	},
 	additionalProperties: false,
 } as const;
+
+const a: LevelUpRequest = {} as FromSchema<typeof LevelUpRequestSchema>;
+const b: FromSchema<typeof LevelUpRequestSchema> = {} as LevelUpRequest;

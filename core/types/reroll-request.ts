@@ -6,6 +6,7 @@ import { playsigSchema } from "./playsig";
 import type { Playsig } from "./playsig";
 import type { DateTime } from "./date-time";
 import { dateTimeSchema } from "./date-time";
+import type { FromSchema } from "json-schema-to-ts";
 
 export interface RerollRequest {
 	publicKey: PublicKey;
@@ -27,3 +28,6 @@ export const rerollRequestSchema = {
 	},
 	additionalProperties: false,
 } as const;
+
+const a: RerollRequest = {} as FromSchema<typeof rerollRequestSchema>;
+const b: FromSchema<typeof rerollRequestSchema> = {} as RerollRequest;

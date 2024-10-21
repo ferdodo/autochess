@@ -7,6 +7,7 @@ import type { Playsig } from "./playsig";
 import type { PieceSlot } from "./piece-slot";
 import { pieceSlotSchema } from "./piece-slot";
 import { dateTimeSchema, type DateTime } from "./date-time";
+import type { FromSchema } from "json-schema-to-ts";
 
 export interface TransposeRequest {
 	publicKey: PublicKey;
@@ -40,3 +41,6 @@ export const transposeRequestSchema = {
 	},
 	additionalProperties: false,
 } as const;
+
+const a: TransposeRequest = {} as FromSchema<typeof transposeRequestSchema>;
+const b: FromSchema<typeof transposeRequestSchema> = {} as TransposeRequest;

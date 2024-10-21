@@ -1,11 +1,12 @@
 import { publicKeySchema, type PublicKey } from "./public-key";
-import type { Hero } from "./hero";
-import type { Appellation } from "./appellation";
+import { heroSchema, type Hero } from "./hero";
+import { appellationSchema, type Appellation } from "./appellation";
 import type { Playsig } from "./playsig";
-import type { Phase } from "./phase";
-import type { Level } from "./level";
+import { Phase } from "./phase";
+import { levelSchema, type Level } from "./level";
 import { playsigSchema } from "./playsig";
 import { nicknameSchema } from "./nickname";
+import type { FromSchema } from "json-schema-to-ts";
 
 export interface Game {
 	playsig: Playsig;
@@ -46,5 +47,59 @@ export const gameSchema = {
 			minProperties: 2,
 			maxProperties: 8,
 		},
+		playerHeroes: {
+			type: "object",
+			propertyNames: publicKeySchema,
+			additionalProperties: {
+				type: "array",
+				items: heroSchema,
+				minItems: 0,
+				maxItems: 10,
+			},
+		},
+		playerBenches: {
+			type: "object",
+			propertyNames: publicKeySchema,
+			additionalProperties: {
+				type: "object",
+				propertyNames: {
+					type: "integer",
+					minimum: 0,
+					maximum: 5,
+				},
+				additionalProperties: heroSchema,
+			},
+		},
+		playerShops: {
+			type: "object",
+			propertyNames: publicKeySchema,
+			additionalProperties: {
+				type: "array",
+				items: appellationSchema,
+				minItems: 0,
+				maxItems: 3,
+			},
+		},
+		playerMoney: {
+			type: "object",
+			propertyNames: publicKeySchema,
+			additionalProperties: {
+				type: "integer",
+				minimum: 0,
+			},
+		},
+		playerLevel: {
+			type: "object",
+			propertyNames: publicKeySchema,
+			additionalProperties: levelSchema,
+		},
+		phase: {
+			type: "string",
+			enum: Object.values(Phase),
+		},
 	},
-};
+	additionalProperties: false,
+} as const;
+
+const a: Game = {} as FromSchema<typeof gameSchema>;
+const b: FromSchema<typeof gameSchema> = {} as Game;

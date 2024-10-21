@@ -6,6 +6,7 @@ import type { Signature } from "./signature";
 import { signatureSchema } from "./signature";
 import { dateTimeSchema } from "./date-time";
 import type { DateTime } from "./date-time";
+import type { FromSchema } from "json-schema-to-ts";
 
 export interface InitiateGameRequest {
 	nickname: Nickname;
@@ -27,3 +28,10 @@ export const initiateGameRequestSchema = {
 	},
 	additionalProperties: false,
 } as const;
+
+const a: InitiateGameRequest = {} as FromSchema<
+	typeof initiateGameRequestSchema
+>;
+
+const b: FromSchema<typeof initiateGameRequestSchema> =
+	{} as InitiateGameRequest;

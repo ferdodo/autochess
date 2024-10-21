@@ -7,7 +7,7 @@
 		"@stryker-mutator/core": "^8.6.0",
 		"@stryker-mutator/vitest-runner": "^8.6.0",
 		"@types/node": "^22.7.4",
-		"blockwise": "^2.8.1",
+		"blockwise": "^2.9.1",
 		"json-schema-library": "^10.0.0-rc2",
 		"json-schema-to-ts": "^3.1.1",
 		"rxjs": "^7.8.1",

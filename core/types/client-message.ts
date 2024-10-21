@@ -7,6 +7,7 @@ import { rerollRequestSchema } from "./reroll-request";
 import type { RerollRequest } from "./reroll-request";
 import { transposeRequestSchema } from "./transpose-request";
 import type { TransposeRequest } from "./transpose-request";
+import type { FromSchema } from "json-schema-to-ts";
 
 export interface ClientMessage {
 	initiateGameRequest?: InitiateGameRequest;
@@ -27,3 +28,6 @@ export const clientMessageSchema = {
 	},
 	additionalProperties: false,
 } as const;
+
+const a: ClientMessage = {} as FromSchema<typeof clientMessageSchema>;
+const b: FromSchema<typeof clientMessageSchema> = {} as ClientMessage;

@@ -1,3 +1,5 @@
+import type { FromSchema } from "json-schema-to-ts";
+
 export interface PieceSlot {
 	positionX?: number;
 	positionY?: number;
@@ -26,3 +28,6 @@ export const pieceSlotSchema = {
 	},
 	additionalProperties: false,
 } as const;
+
+const a: PieceSlot = {} as FromSchema<typeof pieceSlotSchema>;
+const b: FromSchema<typeof pieceSlotSchema> = {} as PieceSlot;
