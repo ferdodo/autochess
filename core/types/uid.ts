@@ -4,7 +4,7 @@ export type Uid = string;
 
 export const uidSchema = {
 	type: "string",
-	format: "uuid",
+	pattern: "^[a-zA-Z0-9]{11}$",
 } as const;
 
 const a: Uid = {} as FromSchema<typeof uidSchema>;
