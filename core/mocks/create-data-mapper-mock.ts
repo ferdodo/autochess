@@ -11,11 +11,25 @@ export function createDataMapperMock(): DataMapper {
 	let pools: Pool[] = [];
 	let queuers: Queuer[] = [];
 
+	async function readGame(playsig: string) {
+		const game = games.find((game) => game.playsig === playsig);
+		return structuredClone(game);
+	}
+
+	async function saveGame(game: Game) {
+		const index = games.findIndex((g) => g.playsig === game.playsig);
+
+		if (index === -1) {
+			return false;
+		}
+
+		games = games.map((g) => (g.playsig === game.playsig ? game : g));
+		game$.next(game);
+		return true;
+	}
+
 	return {
-		async readGame(playsig: string) {
-			const game = games.find((game) => game.playsig === playsig);
-			return structuredClone(game);
-		},
+		readGame,
 		async readAllGames() {
 			return structuredClone(games);
 		},
@@ -29,24 +43,14 @@ export function createDataMapperMock(): DataMapper {
 			return {
 				game,
 				commit: async (game: Game) => {
-					return await this.saveGame(game);
+					return await saveGame(game);
 				},
 				async abort() {
 					return;
 				},
 			};
 		},
-		async saveGame(game: Game) {
-			const index = games.findIndex((g) => g.playsig === game.playsig);
-
-			if (index === -1) {
-				return false;
-			}
-
-			games = games.map((g) => (g.playsig === game.playsig ? game : g));
-			game$.next(game);
-			return true;
-		},
+		saveGame,
 		async createGameWithPoolAndDeleteQueuers(
 			game: Game,
 			pool: Pool,
@@ -94,7 +98,7 @@ export function createDataMapperMock(): DataMapper {
 		},
 		async readAndUpdatePoolWithGame(playsig: string) {
 			const pool = pools.find((p) => p.playsig === playsig);
-			const game = await this.readGame(playsig);
+			const game = await readGame(playsig);
 
 			if (!game || !pool) {
 				return;
@@ -104,7 +108,7 @@ export function createDataMapperMock(): DataMapper {
 				game,
 				pool,
 				commit: async (pool: Pool, game: Game) => {
-					const saved = await this.saveGame(game);
+					const saved = await saveGame(game);
 
 					if (!saved) {
 						return false;

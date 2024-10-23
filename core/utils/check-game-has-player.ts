@@ -1,19 +1,23 @@
 import type { OperatorFunction } from "rxjs";
 import { mergeMap, filter, map } from "rxjs/operators";
 import type { GameScoped } from "../types/game-scoped";
-import type { DataMapper } from "../types/data-mapper";
+import type { BackContext } from "../types/back-context";
 
-export function checkGameHasPlayer<T>({
-	readGame,
-}: DataMapper): OperatorFunction<T & GameScoped, T & GameScoped> {
+export function checkGameHasPlayer<T>(
+	context: BackContext,
+): OperatorFunction<T & GameScoped, T & GameScoped> {
 	return (source) =>
 		source.pipe(
 			mergeMap(async (message) => {
-				const game = await readGame(message.playsig);
-				const gameHasPlayer = !!game?.publicKeys.includes(message.publicKey);
-				return { gameHasPlayer, message };
+				const { cachedGame, publicKey } = message;
+				const gameHasPlayer = !!cachedGame.game.publicKeys.includes(publicKey);
+				const validCachedGame = await context.isValidSignature(cachedGame);
+				return { gameHasPlayer, validCachedGame, message };
 			}),
-			filter(({ gameHasPlayer }) => gameHasPlayer),
+			filter(
+				({ gameHasPlayer, validCachedGame }) =>
+					gameHasPlayer && validCachedGame,
+			),
 			map(({ message }) => message),
 		);
 }

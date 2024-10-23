@@ -6,11 +6,13 @@ import type { Pool } from "../types/pool";
 import { checkGameHasPlayer } from "../utils/check-game-has-player";
 import { getRerollCost } from "../utils/get-reroll-cost";
 
-export function rerollHandle({
-	connections$,
-	dataMapper,
-	isValidSignature,
-}: BackContext): Subscription {
+export function rerollHandle(context: BackContext): Subscription {
+	const {
+		connections$,
+		dataMapper: { readAndUpdatePoolWithGame },
+		isValidSignature,
+	} = context;
+
 	return connections$
 		.pipe(
 			mergeMap((connection) =>
@@ -18,10 +20,9 @@ export function rerollHandle({
 					map((message) => message.rerollRequest),
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
-					checkGameHasPlayer(dataMapper),
+					checkGameHasPlayer(context),
 					tap(async ({ publicKey, playsig }) => {
-						const transaction =
-							await dataMapper.readAndUpdatePoolWithGame(playsig);
+						const transaction = await readAndUpdatePoolWithGame(playsig);
 
 						if (!transaction) {
 							return;

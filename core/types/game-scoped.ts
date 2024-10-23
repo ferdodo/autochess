@@ -1,7 +1,7 @@
 import type { PublicKey } from "./public-key";
-import type { Playsig } from "./playsig";
+import type { CachedGame } from "./cached-game";
 
 export interface GameScoped {
 	publicKey: PublicKey;
-	playsig: Playsig;
+	cachedGame: CachedGame;
 }

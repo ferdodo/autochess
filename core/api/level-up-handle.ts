@@ -6,11 +6,13 @@ import { checkGameHasPlayer } from "../utils/check-game-has-player";
 import { getLevelUpCost } from "../utils/get-level-up-cost";
 import type { Level } from "../types/level";
 
-export function levelUpHandle({
-	connections$,
-	dataMapper,
-	isValidSignature,
-}: BackContext): Subscription {
+export function levelUpHandle(context: BackContext): Subscription {
+	const {
+		connections$,
+		dataMapper: { readAndUpdateGame },
+		isValidSignature,
+	} = context;
+
 	return connections$
 		.pipe(
 			mergeMap((connection) =>
@@ -18,9 +20,9 @@ export function levelUpHandle({
 					map((message) => message.levelUpRequest),
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
-					checkGameHasPlayer(dataMapper),
+					checkGameHasPlayer(context),
 					tap(async ({ publicKey, playsig }) => {
-						const transaction = await dataMapper.readAndUpdateGame(playsig);
+						const transaction = await readAndUpdateGame(playsig);
 
 						if (!transaction) {
 							return;
