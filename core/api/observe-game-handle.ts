@@ -1,47 +1,57 @@
 import type { Subscription } from "rxjs";
-import { map, mergeMap, filter, first, tap } from "rxjs/operators";
-import { merge } from "rxjs";
+import { map, mergeMap, filter, tap } from "rxjs/operators";
 import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
+import { NEVER } from "rxjs";
 
 export function observeGameHandle({
 	connections$,
-	dataMapper,
+	dataMapper: { readGame, observeGame },
 	isValidSignature,
 	signMessage,
 }: BackContext): Subscription {
 	return connections$
 		.pipe(
 			mergeMap((connection) => {
-				const requests$ = connection.messages$.pipe(
+				let subscribed = false;
+
+				return connection.messages$.pipe(
 					map((message) => message.observeGameSubscribe),
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
-				);
+					mergeMap(async ({ publicKey, playsig }) => {
+						const game = await readGame(playsig);
 
-				const sendCurrent$ = requests$.pipe(
-					tap(async ({ playsig }) => {
-						const game = await dataMapper.readGame(playsig);
-
-						if (game) {
-							connection.send({
-								observeGameBroadcast: await signMessage({ game }),
-							});
+						if (!game) {
+							return NEVER;
 						}
-					}),
-				);
 
-				const subscribeToGame$ = requests$.pipe(
-					first(),
-					mergeMap(({ playsig }) => dataMapper.observeGame(playsig)),
-					tap(async (game) => {
+						if (!game.publicKeys.includes(publicKey)) {
+							return NEVER;
+						}
+
 						connection.send({
 							observeGameBroadcast: await signMessage({ game }),
 						});
-					}),
-				);
 
-				return merge(sendCurrent$, subscribeToGame$);
+						if (subscribed) {
+							return NEVER;
+						}
+
+						subscribed = true;
+
+						return observeGame(playsig).pipe(
+							tap(async (observedGame) => {
+								connection.send({
+									observeGameBroadcast: await signMessage({
+										game: observedGame,
+									}),
+								});
+							}),
+						);
+					}),
+					mergeMap((observable) => observable),
+				);
 			}),
 		)
 		.subscribe();
