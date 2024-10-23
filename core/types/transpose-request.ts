@@ -8,6 +8,8 @@ import type { PieceSlot } from "./piece-slot";
 import { pieceSlotSchema } from "./piece-slot";
 import { dateTimeSchema, type DateTime } from "./date-time";
 import type { FromSchema } from "json-schema-to-ts";
+import { cachedGameSchema } from "./cached-game";
+import type { CachedGame } from "./cached-game";
 
 export interface TransposeRequest {
 	publicKey: PublicKey;
@@ -17,6 +19,7 @@ export interface TransposeRequest {
 	expiresAt: DateTime;
 	grabPiece: PieceSlot;
 	ungrabPiece: PieceSlot;
+	cachedGame: CachedGame;
 }
 
 export const transposeRequestSchema = {
@@ -29,6 +32,7 @@ export const transposeRequestSchema = {
 		"expiresAt",
 		"grabPiece",
 		"ungrabPiece",
+		"cachedGame",
 	],
 	properties: {
 		publicKey: publicKeySchema,
@@ -38,6 +42,7 @@ export const transposeRequestSchema = {
 		issuedAt: dateTimeSchema,
 		grabPiece: pieceSlotSchema,
 		ungrabPiece: pieceSlotSchema,
+		cachedGame: cachedGameSchema,
 	},
 	additionalProperties: false,
 } as const;
