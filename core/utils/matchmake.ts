@@ -12,11 +12,10 @@ import { createPool } from "./create-pool";
 import type { Level } from "../types/level";
 
 const MATCHMAKING_THROTTLE_TIME = 500;
-const MATCHMAKING_LATE = 3000;
 
 export function matchmake({
 	dataMapper: { observeQueuers, createGameWithPoolAndDeleteQueuers },
-	config,
+	lateMatchmakingTimer,
 }: BackContext): Subscription {
 	const startWhenEight$ = observeQueuers().pipe(
 		debounceTime(MATCHMAKING_THROTTLE_TIME),
@@ -24,11 +23,7 @@ export function matchmake({
 	);
 
 	const startWhenLate$ = observeQueuers().pipe(
-		debounce(() => {
-			return config.skipMatchMakeDebounce
-				? of(undefined)
-				: timer(MATCHMAKING_LATE);
-		}),
+		lateMatchmakingTimer,
 		filter((queuers) => queuers.length > 1),
 	);
 

@@ -7,11 +7,16 @@ export async function withTwoPlayerGameStarted(): Promise<TestContext> {
 	const testContext = withServerStarted();
 	asNewPlayerConnect(testContext);
 	asNewPlayerConnect(testContext);
-	testContext.backContext.config.skipMatchMakeDebounce = true;
 
 	await Promise.all([
 		asPlayerInitiateGame(testContext, 0),
 		asPlayerInitiateGame(testContext, 1),
+		new Promise((resolve) =>
+			setTimeout(() => {
+				testContext.skipMatchmakeLateDebounce();
+				resolve(undefined);
+			}, 1),
+		),
 	]);
 
 	return testContext;

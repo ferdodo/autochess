@@ -1,6 +1,7 @@
 import type { BackContext } from "core/types/back-context";
 import type { ConnectionMockFactory } from "core/mocks/connection-mock-factory";
 import { createDataMapperMock } from "core/mocks/create-data-mapper-mock";
+import { debounceTime } from "rxjs";
 
 export function createOfflineBackContext(
 	connectionMockFactory: ConnectionMockFactory,
@@ -10,15 +11,15 @@ export function createOfflineBackContext(
 		isValidSignature: () => Promise.resolve(true),
 		signMessage: async (message) => ({
 			...message,
-			publicKey: "Back public key",
-			signature: "signature",
+			publicKey:
+				"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+			signature:
+				"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
 			issuedAt: new Date().toISOString(),
 			expiresAt: new Date(Date.now() + 60000).toISOString(),
 		}),
 		dataMapper: createDataMapperMock(),
+		lateMatchmakingTimer: (source) => source.pipe(debounceTime(10)),
 		queuerConnections: {},
-		config: {
-			skipMatchMakeDebounce: false,
-		},
 	};
 }

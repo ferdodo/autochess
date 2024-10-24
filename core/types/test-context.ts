@@ -5,5 +5,6 @@ import type { FrontContext } from "./front-context";
 export interface TestContext {
 	connectionMockFactory: ConnectionMockFactory;
 	backContext: BackContext;
+	skipMatchmakeLateDebounce: () => void;
 	frontContexts: Record<number, FrontContext>;
 }

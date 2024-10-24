@@ -5,16 +5,14 @@ import type { ServerMessage } from "./server-message";
 import type { Signed } from "./signed";
 import type { DataMapper } from "./data-mapper";
 import type { SignedMessage } from "./signed-message";
-
-interface BackContextConfig {
-	skipMatchMakeDebounce: boolean;
-}
+import type { MonoTypeOperatorFunction } from "rxjs";
+import type { Queuer } from "./queuer";
 
 export interface BackContext {
 	connections$: Observable<Connection<ClientMessage, ServerMessage>>;
 	isValidSignature: <T>(message: T & Signed) => Promise<boolean>;
 	signMessage: <T>(message: T) => Promise<SignedMessage & T>;
 	dataMapper: DataMapper;
+	lateMatchmakingTimer: MonoTypeOperatorFunction<Queuer[]>;
 	queuerConnections: Record<string, Connection<ClientMessage, ServerMessage>>;
-	config: BackContextConfig;
 }
