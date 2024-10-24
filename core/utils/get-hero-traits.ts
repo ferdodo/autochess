@@ -20,6 +20,7 @@ export function getHeroTraits(appellation: Appellation): Trait[] {
 		[Appellation.Skeleton]: [Trait.Dead],
 		[Appellation.ArmoredOrc]: [Trait.Orc, Trait.Armored],
 		[Appellation.SkeletonArcher]: [Trait.Dead, Trait.Ranged],
+		[Appellation.Archer]: [Trait.Ranged],
 	};
 
 	return [...traitsByAppellation[appellation]];

@@ -117,6 +117,13 @@ import SkeletonArcherAbilityTexture from "assets/Tiny RPG Character Asset Pack v
 import SkeletonArcherHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton Archer/Skeleton Archer/Skeleton Archer-Hurt.png.base64-data-url";
 import SkeletonArcherDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Skeleton Archer/Skeleton Archer/Skeleton Archer-Death.png.base64-data-url";
 
+import ArcherIdleTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Archer/Archer/Archer-Idle.png.base64-data-url";
+import ArcherAttackTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Archer/Archer/Archer-Attack01.png.base64-data-url";
+import ArcherWalkTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Archer/Archer/Archer-Walk.png.base64-data-url";
+import ArcherAbilityTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Archer/Archer/Archer-Attack02.png.base64-data-url";
+import ArcherHurtTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Archer/Archer/Archer-Hurt.png.base64-data-url";
+import ArcherDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Archer/Archer/Archer-Death.png.base64-data-url";
+
 import { TextureLoader } from "three";
 import type { Texture } from "three";
 import { Appellation } from "core/types/appellation";
@@ -260,6 +267,14 @@ const textures: Record<Appellation, Record<Animation, Texture>> = {
 		Ability: textureLoader.load(SkeletonArcherAbilityTexture),
 		Hurt: textureLoader.load(SkeletonArcherHurtTexture),
 		Death: textureLoader.load(SkeletonArcherDeathTexture),
+	},
+	[Appellation.Archer]: {
+		Idle: textureLoader.load(ArcherIdleTexture),
+		Attack: textureLoader.load(ArcherAttackTexture),
+		Walk: textureLoader.load(ArcherWalkTexture),
+		Ability: textureLoader.load(ArcherAbilityTexture),
+		Hurt: textureLoader.load(ArcherHurtTexture),
+		Death: textureLoader.load(ArcherDeathTexture),
 	},
 };
 

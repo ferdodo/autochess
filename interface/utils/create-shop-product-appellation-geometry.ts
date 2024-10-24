@@ -49,5 +49,6 @@ export function createShopProductAppellationGeometry(): Record<
 			Appellation.SkeletonArcher,
 			textParams,
 		),
+		[Appellation.Archer]: new TextGeometry(Appellation.Archer, textParams),
 	};
 }

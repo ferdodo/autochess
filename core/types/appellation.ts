@@ -15,7 +15,7 @@ export enum Appellation {
 	Lancer = "Lancer",
 	Wizard = "Wizard",
 	Priest = "Priest",
-	//Archer = "Archer",
+	Archer = "Archer",
 	//Werewolf = "Werewolf",
 	Werebear = "Werebear",
 	OrcRider = "Orc Rider",
