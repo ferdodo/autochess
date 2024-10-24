@@ -14,5 +14,6 @@ export interface BackContext {
 	signMessage: <T>(message: T) => Promise<SignedMessage & T>;
 	dataMapper: DataMapper;
 	lateMatchmakingTimer: MonoTypeOperatorFunction<Queuer[]>;
+	roundTimer: Observable<void>;
 	queuerConnections: Record<string, Connection<ClientMessage, ServerMessage>>;
 }

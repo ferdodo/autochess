@@ -1,7 +1,7 @@
 import type { BackContext } from "core/types/back-context";
 import type { ConnectionMockFactory } from "core/mocks/connection-mock-factory";
 import { createDataMapperMock } from "core/mocks/create-data-mapper-mock";
-import { debounceTime } from "rxjs";
+import { debounceTime, interval, map, share } from "rxjs";
 
 export function createOfflineBackContext(
 	connectionMockFactory: ConnectionMockFactory,
@@ -20,6 +20,10 @@ export function createOfflineBackContext(
 		}),
 		dataMapper: createDataMapperMock(),
 		lateMatchmakingTimer: (source) => source.pipe(debounceTime(10)),
+		roundTimer: interval(25000).pipe(
+			map(() => undefined),
+			share(),
+		),
 		queuerConnections: {},
 	};
 }

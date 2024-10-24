@@ -6,5 +6,6 @@ export interface TestContext {
 	connectionMockFactory: ConnectionMockFactory;
 	backContext: BackContext;
 	skipMatchmakeLateDebounce: () => void;
+	triggerRoundTimer: () => void;
 	frontContexts: Record<number, FrontContext>;
 }

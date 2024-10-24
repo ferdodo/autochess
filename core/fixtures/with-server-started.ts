@@ -11,6 +11,7 @@ export function withServerStarted(): TestContext {
 	const dataMapper = createDataMapperMock();
 	const connectionMockFactory = new ConnectionMockFactory();
 	const lateMatchMakeDebounceSubject = new Subject<void>();
+	const roundTimerSubject = new Subject<void>();
 
 	const backContext: BackContext = {
 		connections$: connectionMockFactory.createServer(),
@@ -30,6 +31,7 @@ export function withServerStarted(): TestContext {
 			),
 		dataMapper,
 		queuerConnections: {},
+		roundTimer: roundTimerSubject.asObservable(),
 	};
 
 	startServer(backContext);
@@ -39,5 +41,6 @@ export function withServerStarted(): TestContext {
 		backContext,
 		frontContexts: {},
 		skipMatchmakeLateDebounce: () => lateMatchMakeDebounceSubject.next(),
+		triggerRoundTimer: () => roundTimerSubject.next(),
 	};
 }
