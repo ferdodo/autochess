@@ -1,4 +1,4 @@
-FROM node as deps
+FROM node AS deps
 WORKDIR /autochess/interface
 COPY package.json .
 COPY npm-shrinkwrap.json .
