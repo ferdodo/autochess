@@ -1,6 +1,6 @@
 import type { BackContext } from "../types/back-context";
 import type { Subscription } from "rxjs";
-import { tap, mergeMap, filter } from "rxjs";
+import { tap, mergeMap, filter, merge, from } from "rxjs";
 import { Phase } from "../types/phase";
 
 export function setPlanningPhase(backContext: BackContext): Subscription {
@@ -8,7 +8,11 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 		.observeCreatedGame()
 		.pipe(
 			mergeMap((game) =>
-				backContext.dataMapper.observeGame(game.playsig).pipe(
+				merge(
+					backContext.dataMapper.observeGame(game.playsig),
+					from(backContext.dataMapper.readGame(game.playsig)),
+				).pipe(
+					filter(Boolean),
 					filter((game) => game.phase === Phase.Combat),
 					backContext.roundTimer,
 				),
@@ -24,7 +28,7 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 				const { game, commit, abort } = transaction;
 
 				try {
-					if (game.phase !== Phase.Planning) {
+					if (game.phase !== Phase.Combat) {
 						await abort();
 						return;
 					}

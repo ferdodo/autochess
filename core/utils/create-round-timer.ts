@@ -1,7 +1,7 @@
 import { switchMap, distinctUntilKeyChanged, map } from "rxjs/operators";
 import { timer } from "rxjs";
 import type { Game } from "../types/game";
-import type { MonoTypeOperatorFunction, Observable } from "rxjs";
+import type { MonoTypeOperatorFunction } from "rxjs";
 
 export function createRoundTimer(): MonoTypeOperatorFunction<Game> {
 	return (source) => {
