@@ -6,6 +6,7 @@ import { createDataMapperMock } from "../mocks/create-data-mapper-mock";
 import { Subject, withLatestFrom, map } from "rxjs";
 import type { Queuer } from "../types/queuer";
 import type { Observable } from "rxjs";
+import type { Game } from "../types/game";
 
 export function withServerStarted(): TestContext {
 	const dataMapper = createDataMapperMock();
@@ -31,7 +32,11 @@ export function withServerStarted(): TestContext {
 			),
 		dataMapper,
 		queuerConnections: {},
-		roundTimer: roundTimerSubject.asObservable(),
+		roundTimer: (source: Observable<Game>) =>
+			roundTimerSubject.pipe(
+				withLatestFrom(source),
+				map(([_, value]) => value),
+			),
 	};
 
 	startServer(backContext);

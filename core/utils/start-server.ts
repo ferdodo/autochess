@@ -5,6 +5,7 @@ import { rerollHandle } from "../api/reroll-handle";
 import { transposeHandle } from "../api/transpose-handle";
 import type { BackContext } from "../types/back-context";
 import { matchmake } from "./matchmake";
+import { setCombatPhase } from "./set-combat-phase";
 
 export function startServer(context: BackContext) {
 	const subscriptions = [
@@ -14,6 +15,7 @@ export function startServer(context: BackContext) {
 		rerollHandle(context),
 		levelUpHandle(context),
 		transposeHandle(context),
+		setCombatPhase(context),
 	];
 
 	return function stopServer() {

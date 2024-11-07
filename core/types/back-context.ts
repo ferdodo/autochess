@@ -7,6 +7,7 @@ import type { DataMapper } from "./data-mapper";
 import type { SignedMessage } from "./signed-message";
 import type { MonoTypeOperatorFunction } from "rxjs";
 import type { Queuer } from "./queuer";
+import type { Game } from "./game";
 
 export interface BackContext {
 	connections$: Observable<Connection<ClientMessage, ServerMessage>>;
@@ -14,6 +15,6 @@ export interface BackContext {
 	signMessage: <T>(message: T) => Promise<SignedMessage & T>;
 	dataMapper: DataMapper;
 	lateMatchmakingTimer: MonoTypeOperatorFunction<Queuer[]>;
-	roundTimer: Observable<void>;
+	roundTimer: MonoTypeOperatorFunction<Game>;
 	queuerConnections: Record<string, Connection<ClientMessage, ServerMessage>>;
 }
