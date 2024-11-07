@@ -6,6 +6,7 @@ import { transposeHandle } from "../api/transpose-handle";
 import type { BackContext } from "../types/back-context";
 import { matchmake } from "./matchmake";
 import { setCombatPhase } from "./set-combat-phase";
+import { setPlanningPhase } from "./set-planning-phase";
 
 export function startServer(context: BackContext) {
 	const subscriptions = [
@@ -16,6 +17,7 @@ export function startServer(context: BackContext) {
 		levelUpHandle(context),
 		transposeHandle(context),
 		setCombatPhase(context),
+		setPlanningPhase(context),
 	];
 
 	return function stopServer() {
