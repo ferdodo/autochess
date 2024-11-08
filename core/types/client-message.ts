@@ -27,6 +27,8 @@ export const clientMessageSchema = {
 		transposeRequest: transposeRequestSchema,
 	},
 	additionalProperties: false,
+	maxProperties: 1,
+	minProperties: 1,
 } as const;
 
 const a: ClientMessage = {} as FromSchema<typeof clientMessageSchema>;

@@ -4,10 +4,11 @@ import { attributesSchema, type Attributes } from "./attributes";
 import { gradeSchema, type Grade } from "./grade";
 import type { FromSchema } from "json-schema-to-ts";
 import { blockSchema } from "blockwise";
-import { uidSchema } from "./uid";
+import type { HeroId } from "./hero-id";
+import { heroIdSchema } from "./hero-id";
 
 export interface Hero {
-	id: string;
+	id: HeroId;
 	appellation: Appellation;
 	grade: Grade;
 	position: Block;
@@ -18,7 +19,7 @@ export const heroSchema = {
 	type: "object",
 	required: ["id", "appellation", "grade", "position", "attributes"],
 	properties: {
-		id: uidSchema,
+		id: heroIdSchema,
 		appellation: appellationSchema,
 		grade: gradeSchema,
 		position: blockSchema,
