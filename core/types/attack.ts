@@ -1,6 +1,7 @@
 import type { FromSchema } from "json-schema-to-ts";
 import type { HeroId } from "./hero-id";
 import { heroIdSchema } from "./hero-id";
+import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface Attack {
 	attacker: HeroId;
@@ -9,6 +10,8 @@ export interface Attack {
 
 export const attackSchema = {
 	type: "object",
+	title: "Attack",
+	description: "Action of a hero attacking.",
 	required: ["attacker", "target"],
 	properties: {
 		attacker: heroIdSchema,
@@ -19,3 +22,4 @@ export const attackSchema = {
 
 const a: Attack = {} as FromSchema<typeof attackSchema>;
 const b: FromSchema<typeof attackSchema> = {} as Attack;
+const c: JsonSchemaRecommended = attackSchema;

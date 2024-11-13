@@ -6,6 +6,7 @@ import type { FromSchema } from "json-schema-to-ts";
 import { blockSchema } from "blockwise";
 import type { HeroId } from "./hero-id";
 import { heroIdSchema } from "./hero-id";
+import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface Hero {
 	id: HeroId;
@@ -17,6 +18,8 @@ export interface Hero {
 
 export const heroSchema = {
 	type: "object",
+	title: "Hero",
+	description: "Character in the game.",
 	required: ["id", "appellation", "grade", "position", "attributes"],
 	properties: {
 		id: heroIdSchema,
@@ -30,3 +33,4 @@ export const heroSchema = {
 
 const a: Hero = {} as FromSchema<typeof heroSchema>;
 const b: FromSchema<typeof heroSchema> = {} as Hero;
+const c: JsonSchemaRecommended = heroSchema;

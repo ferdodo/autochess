@@ -9,6 +9,7 @@ import type { DateTime } from "./date-time";
 import type { FromSchema } from "json-schema-to-ts";
 import { cachedGameSchema } from "./cached-game";
 import type { CachedGame } from "./cached-game";
+import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface LevelUpRequest {
 	publicKey: PublicKey;
@@ -21,6 +22,8 @@ export interface LevelUpRequest {
 
 export const LevelUpRequestSchema = {
 	type: "object",
+	title: "Level up request",
+	description: "Payload to level up.",
 	required: [
 		"publicKey",
 		"playsig",
@@ -42,3 +45,4 @@ export const LevelUpRequestSchema = {
 
 const a: LevelUpRequest = {} as FromSchema<typeof LevelUpRequestSchema>;
 const b: FromSchema<typeof LevelUpRequestSchema> = {} as LevelUpRequest;
+const c: JsonSchemaRecommended = LevelUpRequestSchema;

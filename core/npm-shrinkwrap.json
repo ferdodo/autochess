@@ -9,8 +9,9 @@
 				"@stryker-mutator/core": "^8.6.0",
 				"@stryker-mutator/vitest-runner": "^8.6.0",
 				"@types/node": "^22.7.4",
-				"blockwise": "^2.9.1",
+				"blockwise": "^2.11.0",
 				"json-schema-library": "^10.0.0-rc2",
+				"json-schema-policies": "^0.6.0",
 				"json-schema-to-ts": "^3.1.1",
 				"rxjs": "^7.8.1",
 				"typescript": "^5.5.4",
@@ -2107,9 +2108,9 @@
 			"license": "MIT"
 		},
 		"node_modules/blockwise": {
-			"version": "2.9.1",
-			"resolved": "https://registry.npmjs.org/blockwise/-/blockwise-2.9.1.tgz",
-			"integrity": "sha512-F25m9n1YZeW+CgNFWx3eqcsFaL5q3b85kQ4ai5h5D1d0vvLF6AHG3JvBt44QQKjkhJr5ruBug0P6y6e/upGCvQ==",
+			"version": "2.11.0",
+			"resolved": "https://registry.npmjs.org/blockwise/-/blockwise-2.11.0.tgz",
+			"integrity": "sha512-LFEduqsoy06glEypwSsqDwUpP8wgcI/r15QoxV0XI7nsFJUbVC94aD02vuhDD6fXRda+xXICKdAeCoQUA8tg0Q==",
 			"dev": true,
 			"hasShrinkwrap": true,
 			"license": "MIT",
@@ -2968,6 +2969,13 @@
 				"smtp-address-parser": "1.0.10",
 				"valid-url": "^1.0.9"
 			}
+		},
+		"node_modules/json-schema-policies": {
+			"version": "0.6.0",
+			"resolved": "https://registry.npmjs.org/json-schema-policies/-/json-schema-policies-0.6.0.tgz",
+			"integrity": "sha512-qirpdtQzIZx+e60IGtLsQbJEoBRWjYTzeMTik1FLeo0KOrQEnETIgltmjqLVrertRapxmlknqr2caAz3iCSuDA==",
+			"dev": true,
+			"hasShrinkwrap": true
 		},
 		"node_modules/json-schema-to-ts": {
 			"version": "3.1.1",

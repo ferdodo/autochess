@@ -3,6 +3,7 @@ import type { FromSchema } from "json-schema-to-ts";
 import { moveSchema } from "./move";
 import type { Attack } from "./attack";
 import { attackSchema } from "./attack";
+import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface Action {
 	move?: Move;
@@ -11,6 +12,10 @@ export interface Action {
 
 export const actionSchema = {
 	type: "object",
+	title: "Action",
+	description:
+		"Action of a hero (move, attack, ability...) " +
+		"in the context of a confrontation.",
 	required: [],
 	properties: {
 		move: moveSchema,
@@ -23,3 +28,4 @@ export const actionSchema = {
 
 const a: Action = {} as FromSchema<typeof actionSchema>;
 const b: FromSchema<typeof actionSchema> = {} as Action;
+const c: JsonSchemaRecommended = actionSchema;

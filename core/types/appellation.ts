@@ -1,4 +1,5 @@
 import type { FromSchema } from "json-schema-to-ts";
+import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export enum Appellation {
 	Soldier = "Soldier",
@@ -25,8 +26,11 @@ export enum Appellation {
 
 export const appellationSchema = {
 	type: "string",
+	title: "Appellation",
+	description: "Appellation of a character.",
 	enum: Object.values(Appellation),
 } as const;
 
 const a: Appellation = {} as FromSchema<typeof appellationSchema>;
 const b: FromSchema<typeof appellationSchema> = {} as Appellation;
+const c: JsonSchemaRecommended = appellationSchema;

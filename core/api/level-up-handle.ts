@@ -4,7 +4,7 @@ import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
 import { checkGameHasPlayer } from "../utils/check-game-has-player";
 import { getLevelUpCost } from "../utils/get-level-up-cost";
-import type { Level } from "../types/level";
+import { levelSchema, type Level } from "../types/level";
 
 export function levelUpHandle(context: BackContext): Subscription {
 	const {
@@ -34,7 +34,7 @@ export function levelUpHandle(context: BackContext): Subscription {
 						try {
 							if (
 								game.playerMoney[publicKey] < cost ||
-								game.playerLevel[publicKey] >= 10
+								game.playerLevel[publicKey] >= levelSchema.maximum
 							) {
 								await abort();
 								return;

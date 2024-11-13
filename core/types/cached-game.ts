@@ -14,6 +14,8 @@ export interface CachedGame {
 
 export const cachedGameSchema = {
 	type: "object",
+	title: "Cached Game",
+	description: "Game, signed by the backend.",
 	properties: {
 		game: gameSchema,
 		signature: signatureSchema,

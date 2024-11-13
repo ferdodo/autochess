@@ -7,6 +7,7 @@ import type { Playsig } from "./playsig";
 import type { PublicKey } from "./public-key";
 import type { Signature } from "./signature";
 import type { FromSchema } from "json-schema-to-ts";
+import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface ObserveGameSubscribe {
 	playsig: Playsig;
@@ -18,6 +19,10 @@ export interface ObserveGameSubscribe {
 
 export const ObserveGameSubscribeSchema = {
 	type: "object",
+	title: "ObserveGameSubscribe",
+	description:
+		"Payload to be sent to subscribe to a game. " +
+		"Game shall be broadcasted uppon subscribe.",
 	required: ["playsig", "issuedAt", "expiresAt", "publicKey", "signature"],
 	properties: {
 		playsig: playsigSchema,
@@ -35,3 +40,5 @@ const a: ObserveGameSubscribe = {} as FromSchema<
 
 const b: FromSchema<typeof ObserveGameSubscribeSchema> =
 	{} as ObserveGameSubscribe;
+
+const c: JsonSchemaRecommended = ObserveGameSubscribeSchema;

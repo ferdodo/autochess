@@ -7,6 +7,7 @@ import { signatureSchema } from "./signature";
 import { dateTimeSchema } from "./date-time";
 import type { DateTime } from "./date-time";
 import type { FromSchema } from "json-schema-to-ts";
+import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface InitiateGameRequest {
 	nickname: Nickname;
@@ -18,6 +19,8 @@ export interface InitiateGameRequest {
 
 export const initiateGameRequestSchema = {
 	type: "object",
+	title: "Initiate game request",
+	description: "Payload to initiate a new game.",
 	required: ["nickname", "publicKey", "signature", "issuedAt", "expiresAt"],
 	properties: {
 		nickname: nicknameSchema,
@@ -35,3 +38,5 @@ const a: InitiateGameRequest = {} as FromSchema<
 
 const b: FromSchema<typeof initiateGameRequestSchema> =
 	{} as InitiateGameRequest;
+
+const c: JsonSchemaRecommended = initiateGameRequestSchema;
