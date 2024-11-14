@@ -1,14 +1,10 @@
 import type { Hero } from "./hero";
-import type { Playsig } from "./playsig";
 import type { FromSchema } from "json-schema-to-ts";
-import { playsigSchema } from "./playsig";
 import { heroSchema } from "./hero";
 import { levelSchema } from "./level";
 import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface Confrontation {
-	playerAPublicKey: Playsig;
-	playerBPublicKey: Playsig;
 	playerAHeroes: Hero[];
 	playerBHeroes: Hero[];
 }
@@ -23,15 +19,8 @@ export const confrontationSchema = {
 		"List of actions can be incrementally appened" +
 		"to represent the current state of a combat, " +
 		"as for representationnal purposes.",
-	required: [
-		"playerAPublicKey",
-		"playerBPublicKey",
-		"playerAHeroes",
-		"playerBHeroes",
-	],
+	required: ["playerAHeroes", "playerBHeroes"],
 	properties: {
-		playerAPublicKey: playsigSchema,
-		playerBPublicKey: playsigSchema,
 		playerAHeroes: {
 			type: "array",
 			title: "Player A heroes",

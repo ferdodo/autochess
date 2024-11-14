@@ -4,6 +4,7 @@ import type { Vector3 } from "three";
 import type { Display } from "core/types/display";
 import { isBlockPositionEqual } from "blockwise";
 import type { Block } from "blockwise";
+import { getBoardBlock } from "core/utils/get-board-block";
 
 export function renderPieceHighlight(
 	threeContext: ThreeContext,
@@ -19,11 +20,12 @@ export function renderPieceHighlight(
 
 	raycaster.set(threeContext.camera.position, direction);
 	threeContext.pieceHighlightMeshes.visible = false;
+	const board = getBoardBlock();
 
-	for (let x = 0; x < display.board.w; x++) {
-		for (let y = 0; y < display.board.h; y++) {
+	for (let x = 0; x < board.w; x++) {
+		for (let y = 0; y < board.h; y++) {
 			const position: Block = { x, y, w: 0, h: 0 };
-			const index = x + y * display.board.w;
+			const index = x + y * board.w;
 			const targetBox = threeContext.pieceTargetBoxes[index];
 
 			if (!targetBox) {

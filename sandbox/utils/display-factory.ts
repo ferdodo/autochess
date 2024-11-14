@@ -10,6 +10,7 @@ import { Phase } from "core/types/phase";
 import { observeInteractions } from "interface/utils/observe-interactions";
 import type { ThreeContext } from "interface/types/three-context";
 import { createRandomPiece } from "./create-random-piece";
+import { getBoardBlock } from "core/utils/get-board-block";
 
 interface PieceHandle {
 	id: string;
@@ -25,7 +26,6 @@ interface PieceHandle {
 
 export class DisplayFactory implements Subscribable<Display> {
 	display: Display = {
-		board: { x: 0, y: 0, w: 10, h: 10 },
 		pieces: [],
 		players: (<[string, number, number, boolean][]>[
 			["player 1", 50, 5, false],
@@ -241,6 +241,8 @@ export class DisplayFactory implements Subscribable<Display> {
 				(piece) => piece.hero.id === initialPiece.hero.id,
 			) || initialPiece;
 
+		const board = getBoardBlock();
+
 		while (true) {
 			const action = Math.floor(Math.random() * 6);
 
@@ -320,7 +322,7 @@ export class DisplayFactory implements Subscribable<Display> {
 						continue;
 					}
 
-					if (x >= this.display.board.w) {
+					if (x >= board.w) {
 						continue;
 					}
 
@@ -328,7 +330,7 @@ export class DisplayFactory implements Subscribable<Display> {
 						continue;
 					}
 
-					if (y >= this.display.board.h) {
+					if (y >= board.h) {
 						continue;
 					}
 

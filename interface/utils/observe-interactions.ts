@@ -6,6 +6,7 @@ import { Raycaster } from "three";
 import type { Display } from "core/types/display";
 import type { Vector3 } from "three";
 import { renderCalls$ } from "./render";
+import { getBoardBlock } from "core/utils/get-board-block";
 
 export function observeInteractions(
 	threeContext: ThreeContext,
@@ -40,10 +41,11 @@ export function observeInteractions(
 				.normalize();
 
 			raycaster.set(threeContext.camera.position, direction);
+			const board = getBoardBlock();
 
-			for (let x = 0; x < display.board.w; x++) {
-				for (let y = 0; y < display.board.h; y++) {
-					const index = x + y * display.board.w;
+			for (let x = 0; x < board.w; x++) {
+				for (let y = 0; y < board.h; y++) {
+					const index = x + y * board.w;
 					const targetBox = threeContext.pieceTargetBoxes[index];
 
 					if (!targetBox) {

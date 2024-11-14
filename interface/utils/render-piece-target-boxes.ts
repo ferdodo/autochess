@@ -1,14 +1,17 @@
 import { Mesh } from "three";
 import type { ThreeContext } from "../types/three-context";
 import type { Display } from "core/types/display";
+import { getBoardBlock } from "core/utils/get-board-block";
 
 export function renderPieceTargetBoxes(
 	threeContext: ThreeContext,
-	display: Display,
+	_display: Display,
 ): void {
-	for (let x = 0; x < display.board.w; x++) {
-		for (let y = 0; y < display.board.h; y++) {
-			const index = x + y * display.board.w;
+	const board = getBoardBlock();
+
+	for (let x = 0; x < board.w; x++) {
+		for (let y = 0; y < board.h; y++) {
+			const index = x + y * board.w;
 			const meshCreated = !threeContext.pieceTargetBoxes[index];
 
 			threeContext.pieceTargetBoxes[index] ||= new Mesh(
@@ -19,7 +22,7 @@ export function renderPieceTargetBoxes(
 			const mesh: Mesh = threeContext.pieceTargetBoxes[index];
 
 			const cubeSize = 1;
-			const pieceSize = cubeSize / display.board.w;
+			const pieceSize = cubeSize / board.w;
 			const relativeOriginX = -(cubeSize / 2) + pieceSize / 2;
 			const relativeOriginY = cubeSize / 2 + pieceSize / 2;
 			const relativeOriginZ = cubeSize / 2 - pieceSize / 2;

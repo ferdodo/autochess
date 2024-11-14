@@ -1,6 +1,7 @@
 import { Mesh } from "three";
 import type { ThreeContext } from "../types/three-context";
 import type { Display } from "core/types/display";
+import { getBoardBlock } from "core/utils/get-board-block";
 
 export function renderBenchTargetBoxes(
 	threeContext: ThreeContext,
@@ -18,7 +19,7 @@ export function renderBenchTargetBoxes(
 
 			const mesh: Mesh = threeContext.benchTargetBoxes[index];
 			const cubeSize = 1;
-			const pieceSize = cubeSize / display.board.w;
+			const pieceSize = cubeSize / getBoardBlock().w;
 			const relativeOriginY = cubeSize / 2 + pieceSize / 2;
 			mesh.position.set(slot.position.x, relativeOriginY, slot.position.z);
 			threeContext.scene.add(mesh);

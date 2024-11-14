@@ -1,6 +1,7 @@
 import { Raycaster, Vector3 } from "three";
 import type { Display } from "core/types/display";
 import type { ThreeContext } from "../types/three-context";
+import { getBoardBlock } from "core/utils/get-board-block";
 
 export function renderBoardPieceMeshes(
 	threeContext: ThreeContext,
@@ -14,7 +15,7 @@ export function renderBoardPieceMeshes(
 		}
 
 		const cubeSize = 1;
-		const pieceSize = 1 / display.board.w;
+		const pieceSize = 1 / getBoardBlock().w;
 		const relativeOriginX = -(cubeSize / 2) + pieceSize / 2;
 		const relativeOriginY = cubeSize / 2 + pieceSize / 2;
 		const relativeOriginZ = cubeSize / 2 - pieceSize / 2;

@@ -12,12 +12,6 @@ export function portray(publicKey: string): OperatorFunction<Game, Display> {
 		source.pipe(
 			map((game: Game) => {
 				const display: Display = {
-					board: {
-						w: 10,
-						h: 10,
-						x: 0,
-						y: 0,
-					},
 					pieces:
 						game.playerHeroes[publicKey]?.map((hero) => ({
 							hero,

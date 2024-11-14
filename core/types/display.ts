@@ -5,7 +5,6 @@ import type { PlayerDisplay } from "./player-display";
 import type { Appellation } from "./appellation";
 
 export interface Display {
-	board: Block;
 	pieces: Piece[];
 	players: PlayerDisplay[];
 	shop: Appellation[];
