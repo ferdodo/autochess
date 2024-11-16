@@ -36,12 +36,7 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 
 					if (game.combats) {
 						for (const combat of game.combats) {
-							const loser = computeCombatLoser(game.combats[0]);
-
-							game.playerHealths[computeCombatLoser(combat)] = Math.max(
-								0,
-								game.playerHealths[computeCombatLoser(combat)] - 1,
-							);
+							game.playerHealths[computeCombatLoser(combat)] -= 1;
 						}
 					}
 
