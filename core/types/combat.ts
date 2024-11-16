@@ -3,8 +3,11 @@ import type { FromSchema } from "json-schema-to-ts";
 import { actionSchema } from "./action";
 import type { JsonSchemaRecommended } from "json-schema-policies";
 import { heroSchema, type Hero } from "./hero";
+import { publicKeySchema, type PublicKey } from "./public-key";
 
 export interface Combat {
+	playerAPublicKey: PublicKey;
+	playerBPublicKey: PublicKey;
 	playerAHeroes: Hero[];
 	playerBHeroes: Hero[];
 	actions: Action[];
@@ -14,8 +17,16 @@ export const combatSchema = {
 	type: "object",
 	title: "Combat",
 	description: "Representation of a combat.",
-	required: ["actions", "playerAHeroes", "playerBHeroes"],
+	required: [
+		"actions",
+		"playerAHeroes",
+		"playerBHeroes",
+		"playerAPublicKey",
+		"playerBPublicKey",
+	],
 	properties: {
+		playerAPublicKey: publicKeySchema,
+		playerBPublicKey: publicKeySchema,
 		actions: {
 			type: "array",
 			title: "Actions",

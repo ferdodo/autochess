@@ -7,7 +7,7 @@ import { findHittableHero } from "./find-hittable-hero";
 import { isConfrontationInProgress } from "./is-confrontation-in-progress";
 import { moveToClosestHittableHero } from "./move-to-closest-hittable-hero";
 
-export function* generateActions(combat: Combat): Iterator<Action> {
+export function* generateActions(combat: Combat): IterableIterator<Action> {
 	const heroOrder = createConfrontationHeroOrder(combat);
 
 	let confrontation: Confrontation = {

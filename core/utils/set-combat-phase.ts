@@ -2,6 +2,7 @@ import type { BackContext } from "../types/back-context";
 import type { Subscription } from "rxjs";
 import { tap, mergeMap, filter, merge, from } from "rxjs";
 import { Phase } from "../types/phase";
+import { generateCombats } from "./generate-combats";
 
 export function setCombatPhase(backContext: BackContext): Subscription {
 	return backContext.dataMapper
@@ -34,6 +35,7 @@ export function setCombatPhase(backContext: BackContext): Subscription {
 					}
 
 					game.phase = Phase.Combat;
+					game.combats = generateCombats(game);
 					await commit(game);
 				} catch (error) {
 					console.error(error);

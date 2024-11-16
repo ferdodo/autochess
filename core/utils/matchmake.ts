@@ -46,6 +46,7 @@ export function matchmake({
 		const playerMoney: Record<string, number> = {};
 		const playerLevel: Record<string, Level> = {};
 		const playerBenches: Record<string, Record<number, Hero>> = {};
+		const playerHealths: Record<string, number> = {};
 		const playsig = createPlaysig(players);
 		const pool = createPool(playsig);
 
@@ -59,6 +60,7 @@ export function matchmake({
 
 			playerMoney[player.publicKey] = 5;
 			playerLevel[player.publicKey] = 1;
+			playerHealths[player.publicKey] = 100;
 		}
 
 		await createGameWithPoolAndDeleteQueuers(
@@ -71,6 +73,7 @@ export function matchmake({
 				playerMoney,
 				playerLevel,
 				playerBenches,
+				playerHealths,
 				phase: Phase.Planning,
 			},
 			pool,

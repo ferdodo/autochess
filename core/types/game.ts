@@ -9,6 +9,10 @@ import { playsigSchema } from "./playsig";
 import { nicknameSchema } from "./nickname";
 import type { FromSchema } from "json-schema-to-ts";
 import type { JsonSchemaRecommended } from "json-schema-policies";
+import { type Combat, combatSchema } from "./combat";
+import { healthSchema, type Health } from "./health";
+import { moneySchema } from "./money";
+import type { Money } from "./money";
 
 export interface Game {
 	playsig: Playsig;
@@ -17,8 +21,10 @@ export interface Game {
 	playerHeroes: Record<PublicKey, Hero[]>;
 	playerBenches: Record<PublicKey, Record<number, Hero>>;
 	playerShops: Record<PublicKey, Appellation[]>;
-	playerMoney: Record<PublicKey, number>;
+	playerMoney: Record<PublicKey, Money>;
 	playerLevel: Record<PublicKey, Level>;
+	playerHealths: Record<PublicKey, Health>;
+	combats?: Combat[];
 	phase: Phase;
 }
 
@@ -38,6 +44,7 @@ export const gameSchema = {
 		"playerShops",
 		"playerMoney",
 		"playerLevel",
+		"playerHealths",
 		"phase",
 	],
 	properties: {
@@ -114,13 +121,7 @@ export const gameSchema = {
 			title: "Players money",
 			description: "Money of all players in the game.",
 			propertyNames: publicKeySchema,
-			additionalProperties: {
-				title: "Money",
-				description: "Money of a player.",
-				type: "integer",
-				minimum: 0,
-				maximum: Number.MAX_VALUE,
-			},
+			additionalProperties: moneySchema,
 		},
 		playerLevel: {
 			type: "object",
@@ -128,6 +129,22 @@ export const gameSchema = {
 			description: "Level of all players in the game.",
 			propertyNames: publicKeySchema,
 			additionalProperties: levelSchema,
+		},
+		combats: {
+			type: "array",
+			title: "Combats",
+			description: "List of combats only during combat phase.",
+			items: combatSchema,
+			minItems: 0,
+			maxItems: 9999,
+			uniqueItems: false,
+		},
+		playerHealths: {
+			type: "object",
+			title: "Player healths",
+			description: "Healths of all players in the game.",
+			propertyNames: publicKeySchema,
+			additionalProperties: healthSchema,
 		},
 		phase: phaseSchema,
 	},
