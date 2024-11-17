@@ -33,7 +33,7 @@ export const combatSchema = {
 			description: "Series of events (actions) happening in a combat.",
 			items: actionSchema,
 			minItems: 1,
-			maxItems: 9999,
+			maxItems: 99999,
 			uniqueItems: false,
 		},
 		playerAHeroes: {

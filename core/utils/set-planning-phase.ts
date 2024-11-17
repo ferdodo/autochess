@@ -14,8 +14,8 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 					from(backContext.dataMapper.readGame(game.playsig)),
 				).pipe(
 					filter(Boolean),
-					filter((game) => game.phase === Phase.Combat),
 					backContext.roundTimer,
+					filter((game) => game.phase === Phase.Combat),
 				),
 			),
 			tap(async ({ playsig }) => {

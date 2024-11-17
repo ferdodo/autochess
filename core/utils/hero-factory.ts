@@ -13,8 +13,8 @@ export class HeroFactory {
 			position: {
 				x: 0,
 				y: 0,
-				w: 0,
-				h: 0,
+				w: 1,
+				h: 1,
 			},
 			attributes: {
 				maxHealth: 100,

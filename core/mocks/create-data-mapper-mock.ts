@@ -7,6 +7,7 @@ import type { Pool } from "../types/pool";
 export function createDataMapperMock(): DataMapper {
 	let games: Game[] = [];
 	const game$ = new Subject<Game>();
+	const createdGames$ = new Subject<Game>();
 	const currentQueuer$ = new Subject<Queuer[]>();
 	let pools: Pool[] = [];
 	let queuers: Queuer[] = [];
@@ -34,7 +35,9 @@ export function createDataMapperMock(): DataMapper {
 			return structuredClone(games);
 		},
 		async readAndUpdateGame(playsig: string) {
-			const game = games.find((game) => game.playsig === playsig);
+			const game = structuredClone(
+				games.find((game) => game.playsig === playsig),
+			);
 
 			if (!game) {
 				return;
@@ -70,11 +73,12 @@ export function createDataMapperMock(): DataMapper {
 			pools.push(pool);
 			games.push(game);
 			game$.next(game);
+			createdGames$.next(game);
 			currentQueuer$.next(queuers);
 			return true;
 		},
 		observeCreatedGame() {
-			return game$.pipe(map((game) => structuredClone(game)));
+			return createdGames$.pipe(map((game) => structuredClone(game)));
 		},
 		observeGame(playsig: string) {
 			return game$.pipe(

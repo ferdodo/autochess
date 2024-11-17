@@ -28,7 +28,7 @@ export function portray(publicKey: string): OperatorFunction<Game, Display> {
 					})),
 					shop: game.playerShops[publicKey] || [],
 					bench: {},
-					phase: Phase.Planning,
+					phase: game.phase,
 					money: game.playerMoney[publicKey] || 0,
 					levelUpCost: getLevelUpCost(game, publicKey),
 					timeLeft: 30,

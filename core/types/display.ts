@@ -1,4 +1,3 @@
-import type { Block } from "blockwise";
 import type { Piece } from "./piece";
 import type { Phase } from "./phase";
 import type { PlayerDisplay } from "./player-display";

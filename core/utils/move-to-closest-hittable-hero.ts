@@ -1,18 +1,27 @@
 import type { Confrontation } from "../types/confrontation";
-import type { Hero } from "../types/hero";
+import type { HeroId } from "../types/hero-id";
 import { findClosestBlock } from "blockwise";
 import { isMoveLegal } from "./is-move-legal";
 import type { Block } from "blockwise";
+import { revertPosition } from "./revert-position";
+import { getHeroAndATeamFromConfrontation } from "./get-hero-and-a-team-from-confrontation";
 
 export function moveToClosestHittableHero(
 	confrontation: Confrontation,
-	hero: Hero,
+	heroId: HeroId,
 ): Block {
-	const isTeamA = confrontation.playerAHeroes.some((h) => h.id === hero.id);
+	const [hero, isTeamA] = getHeroAndATeamFromConfrontation(
+		confrontation,
+		heroId,
+	);
+
 	const { playerAHeroes, playerBHeroes } = confrontation;
 	const enemyList = isTeamA ? playerBHeroes : playerAHeroes;
 	const aliveEnemies = enemyList.filter((h) => h.attributes.health > 0);
-	const aliveEnemiesPosition = aliveEnemies.map((h) => h.position);
+
+	const aliveEnemiesPosition = aliveEnemies
+		.map((h) => h.position)
+		.map(revertPosition);
 
 	if (aliveEnemies.length === 0) {
 		return hero.position;
@@ -23,14 +32,14 @@ export function moveToClosestHittableHero(
 		hero.position,
 	);
 
-	closestEnemyBlock.x += isTeamA ? -1 : 1;
+	closestEnemyBlock.x -= 1;
 
 	const possibleMoves = [
 		{ ...hero.position, x: hero.position.x - 1 },
 		{ ...hero.position, x: hero.position.x + 1 },
 		{ ...hero.position, y: hero.position.y - 1 },
 		{ ...hero.position, y: hero.position.y + 1 },
-	].filter(isMoveLegal(confrontation));
+	].filter(isMoveLegal(confrontation, hero));
 
 	if (possibleMoves.length === 0) {
 		return hero.position;

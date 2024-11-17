@@ -3,7 +3,7 @@ import type { Combat } from "../types/combat";
 import type { PublicKey } from "../types/public-key";
 import { generateActions } from "./generate-actions";
 
-export function generateCombats(game: Game): Combat[] {
+export async function generateCombats(game: Game): Promise<Combat[]> {
 	const players: PublicKey[] = [];
 
 	for (const [player, health] of Object.entries(game.playerHealths)) {
@@ -30,7 +30,12 @@ export function generateCombats(game: Game): Combat[] {
 			actions: [],
 		};
 
-		combat.actions = [...generateActions(combat)];
+		combat.actions = [];
+
+		for await (const action of generateActions(combat)) {
+			combat.actions.push(action);
+		}
+
 		combats.push(combat);
 	}
 

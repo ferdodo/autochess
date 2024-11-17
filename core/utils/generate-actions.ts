@@ -1,13 +1,17 @@
 import type { Action } from "../types/action";
-import type { Combat } from "../types/combat";
+import { combatSchema, type Combat } from "../types/combat";
 import type { Confrontation } from "../types/confrontation";
 import { computeConfrontation } from "./compute-confrontation";
 import { createConfrontationHeroOrder } from "./create-confrontation-hero-order";
 import { findHittableHero } from "./find-hittable-hero";
+import { getHeroAndATeamFromConfrontation } from "./get-hero-and-a-team-from-confrontation";
 import { isConfrontationInProgress } from "./is-confrontation-in-progress";
 import { moveToClosestHittableHero } from "./move-to-closest-hittable-hero";
+import { revertPosition } from "./revert-position";
 
-export function* generateActions(combat: Combat): IterableIterator<Action> {
+export async function* generateActions(
+	combat: Combat,
+): AsyncIterableIterator<Action> {
 	const heroOrder = createConfrontationHeroOrder(combat);
 
 	let confrontation: Confrontation = {
@@ -15,9 +19,17 @@ export function* generateActions(combat: Combat): IterableIterator<Action> {
 		playerBHeroes: combat.playerBHeroes,
 	};
 
+	let actionCount = 0;
+
 	while (isConfrontationInProgress(confrontation)) {
 		for (const hero of heroOrder) {
-			const hittableHero = findHittableHero(confrontation, hero);
+			actionCount += 1;
+
+			if (actionCount > combatSchema.properties.actions.maxItems) {
+				throw new Error("Too many actions !");
+			}
+
+			const hittableHero = findHittableHero(confrontation, hero.id);
 
 			if (hittableHero) {
 				const action = {
@@ -33,7 +45,7 @@ export function* generateActions(combat: Combat): IterableIterator<Action> {
 				const action = {
 					move: {
 						heroId: hero.id,
-						position: moveToClosestHittableHero(confrontation, hero),
+						position: moveToClosestHittableHero(confrontation, hero.id),
 					},
 				};
 

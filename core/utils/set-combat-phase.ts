@@ -35,7 +35,7 @@ export function setCombatPhase(backContext: BackContext): Subscription {
 					}
 
 					game.phase = Phase.Combat;
-					game.combats = generateCombats(game);
+					game.combats = await generateCombats(game);
 					await commit(game);
 				} catch (error) {
 					console.error(error);

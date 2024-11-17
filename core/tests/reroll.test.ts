@@ -1,7 +1,7 @@
 import { test, expect } from "vitest";
-import { withTwoPlayerGameStarted } from "./fixtures/with-two-player-game-started";
-import { asPlayerReroll } from "./automations/as-player-reroll";
-import { getDisplay } from "./utils/get-display";
+import { withTwoPlayerGameStarted } from "../fixtures/with-two-player-game-started";
+import { asPlayerReroll } from "../automations/as-player-reroll";
+import { getDisplay } from "../utils/get-display";
 
 test("Reroll should swap the shop items with random hero from pool", async () => {
 	const testContext = await withTwoPlayerGameStarted();
