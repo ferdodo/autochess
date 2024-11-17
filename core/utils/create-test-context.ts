@@ -46,7 +46,6 @@ export function createTestContext(): TestContext {
 		frontContexts: {},
 		skipMatchmakeLateDebounce: () => lateMatchMakeDebounceSubject.next(),
 		triggerRoundTimer: () => {
-			console.log(Date.now() % 1000, "ACTUAL trigger round timer");
 			roundTimerSubject.next();
 		},
 	};

@@ -1,4 +1,3 @@
-import type { FromSchema } from "json-schema-to-ts";
 import type { ClientMessage } from "../types/client-message";
 import { clientMessageSchema } from "../types/client-message";
 import { Draft07 } from "json-schema-library";

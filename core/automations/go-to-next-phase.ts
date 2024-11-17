@@ -4,12 +4,12 @@ import { portray } from "../utils/portray";
 import { observeGame } from "../api/observe-game";
 import { getDisplay } from "../utils/get-display";
 
-export async function goToNextPhase(testContext: TestContext) {
-	const frontContext = testContext.frontContexts[0];
+export async function goToNextPhase(testContext: TestContext, playerIndex = 0) {
+	const frontContext = testContext.frontContexts[playerIndex];
 	const initialDisplay = await getDisplay(testContext);
 
 	if (!frontContext) {
-		throw new Error("Player 0 not found !");
+		throw new Error(`Player ${playerIndex} not found !`);
 	}
 
 	const whenNextPhase = firstValueFrom(
@@ -20,7 +20,6 @@ export async function goToNextPhase(testContext: TestContext) {
 		),
 	);
 
-	console.log(Date.now() % 1000, "trigger round timer");
 	testContext.triggerRoundTimer();
-	const result = await whenNextPhase;
+	await whenNextPhase;
 }
