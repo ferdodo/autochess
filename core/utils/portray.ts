@@ -2,24 +2,29 @@ import type { Display } from "../types/display";
 import type { Game } from "../types/game";
 import type { Observable, OperatorFunction } from "rxjs";
 import { map, combineLatestWith, startWith } from "rxjs/operators";
-import { Phase } from "../types/phase";
 import { Animation } from "../types/animation";
 import { interval } from "rxjs";
 import { getLevelUpCost } from "./get-level-up-cost";
+import { observePortrayedConfrontation } from "./observe-portrayed-confrontation";
+import type { PublicKey } from "../types/public-key";
+import type { Piece } from "../types/piece";
 
-export function portray(publicKey: string): OperatorFunction<Game, Display> {
+export function portray(publicKey: PublicKey): OperatorFunction<Game, Display> {
 	return (source: Observable<Game>) =>
 		source.pipe(
-			map((game: Game) => {
+			combineLatestWith(source.pipe(observePortrayedConfrontation(publicKey))),
+			map(([game, confrontationPieces]: [Game, Piece[] | undefined]) => {
 				const display: Display = {
 					pieces:
+						confrontationPieces ||
 						game.playerHeroes[publicKey]?.map((hero) => ({
 							hero,
 							animation: Animation.Idle,
 							transposed: false,
 							animationStartAt: Date.now(),
 							right: false,
-						})) || [],
+						})) ||
+						[],
 					players: game.publicKeys.map((p) => ({
 						name: game.nicknames[p],
 						health: game.playerHealths[p] || 0,

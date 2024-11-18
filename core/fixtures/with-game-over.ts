@@ -6,7 +6,6 @@ import { withTwoPlayerGameStarted } from "./with-two-player-game-started";
 
 export async function withGameOver(): Promise<TestContext> {
 	const testContext = await withTwoPlayerGameStarted();
-	const game = await getGame(testContext);
 
 	while (isGameInProgress(await getGame(testContext))) {
 		await goToNextPhase(testContext);
