@@ -13,6 +13,17 @@ export async function getGame(
 		throw new Error(`Player ${player} not found !`);
 	}
 
-	const { game } = await firstValueFrom(observeGame(frontContext));
+	if (!frontContext.playsig) {
+		throw new Error(`Player ${player} has not initiated the game !`);
+	}
+
+	const game = await testContext.backContext.dataMapper.readGame(
+		frontContext.playsig,
+	);
+
+	if (!game) {
+		throw new Error("Game not found !");
+	}
+
 	return game;
 }

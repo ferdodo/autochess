@@ -1,7 +1,7 @@
 import type { Connection } from "../types/connection";
 import { Subject } from "rxjs";
 import type { Observable } from "rxjs";
-import { filter } from "rxjs";
+import { filter, share } from "rxjs";
 import type { ClientMessage } from "../types/client-message";
 import type { ServerMessage } from "../types/server-message";
 import { validateClientMessage } from "../utils/validate-client-message";
@@ -30,6 +30,7 @@ export class ConnectionMockFactory {
 
 					return valid;
 				}),
+				share(),
 			),
 			send(message: ServerMessage) {
 				_clientMessage$.next(message);

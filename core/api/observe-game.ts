@@ -1,6 +1,6 @@
 import type { FrontContext } from "../types/front-context";
 import type { CachedGame } from "../types/cached-game";
-import { filter, map, defer } from "rxjs";
+import { filter, map, defer, share } from "rxjs";
 import type { Observable } from "rxjs";
 
 export function observeGame({
@@ -24,5 +24,5 @@ export function observeGame({
 			map((message) => message.observeGameBroadcast),
 			filter(Boolean),
 		);
-	});
+	}).pipe(share());
 }

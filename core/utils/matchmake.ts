@@ -60,7 +60,7 @@ export function matchmake({
 
 			playerMoney[player.publicKey] = 5;
 			playerLevel[player.publicKey] = 1;
-			playerHealths[player.publicKey] = 100;
+			playerHealths[player.publicKey] = 10;
 		}
 
 		await createGameWithPoolAndDeleteQueuers(
