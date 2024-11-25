@@ -46,7 +46,9 @@ services:
       - interface
 
   coverage:
-    build: coverage
+    build:
+      context: .
+      dockerfile: coverage/Dockerfile
     ports:
       - "6245:80"
     depends_on:

@@ -1,6 +1,7 @@
 FROM autochess-core
-RUN npx stryker run
+COPY .git /autochess/.git
+RUN ./run_coverage.sh
 
 FROM nginx
 COPY --from=0 /autochess/core/reports/mutation /usr/share/nginx/html
-COPY ./index.html /usr/share/nginx/html/index.html
+COPY coverage/index.html /usr/share/nginx/html/index.html

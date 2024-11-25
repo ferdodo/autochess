@@ -48,6 +48,11 @@ jobs:
           npm run build
         working-directory: ./sandbox
 
+      - name: 🏗️ Build coverage
+        run: |
+          ./run_coverage.sh
+        working-directory: ./core
+
       - name: 🚀 Deploy
         uses: JamesIves/github-pages-deploy-action@v4.6.4
         with:
