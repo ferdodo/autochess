@@ -1,14 +1,14 @@
 import type { Subscription } from "rxjs";
 import { debounceTime, debounce } from "rxjs/operators";
-import { createPlaysig } from "./create-playsig";
+import { createPlaysig } from "../utils/create-playsig";
 import type { BackContext } from "../types/back-context";
 import { merge, filter, timer, of } from "rxjs";
 import type { Hero } from "../types/hero";
-import { HeroFactory } from "./hero-factory";
+import { HeroFactory } from "../utils/hero-factory";
 import type { Appellation } from "../types/appellation";
 import { Phase } from "../types/phase";
-import { getRandomAppellation } from "./get-random-appellation";
-import { createPool } from "./create-pool";
+import { getRandomAppellation } from "../utils/get-random-appellation";
+import { createPool } from "../utils/create-pool";
 import type { Level } from "../types/level";
 
 const MATCHMAKING_THROTTLE_TIME = 500;
@@ -75,6 +75,7 @@ export function matchmake({
 				playerBenches,
 				playerHealths,
 				phase: Phase.Planning,
+				phaseStartAt: new Date().toISOString(),
 			},
 			pool,
 			players.map((player) => player.publicKey),

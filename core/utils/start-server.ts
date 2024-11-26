@@ -4,9 +4,9 @@ import { observeGameHandle } from "../api/observe-game-handle";
 import { rerollHandle } from "../api/reroll-handle";
 import { transposeHandle } from "../api/transpose-handle";
 import type { BackContext } from "../types/back-context";
-import { matchmake } from "./matchmake";
-import { setCombatPhase } from "./set-combat-phase";
-import { setPlanningPhase } from "./set-planning-phase";
+import { matchmake } from "../workflows/matchmake";
+import { setCombatPhase } from "../workflows/set-combat-phase";
+import { setPlanningPhase } from "../workflows/set-planning-phase";
 
 export function startServer(context: BackContext) {
 	const subscriptions = [

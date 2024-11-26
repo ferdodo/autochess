@@ -13,6 +13,7 @@ import { type Combat, combatSchema } from "./combat";
 import { healthSchema, type Health } from "./health";
 import { moneySchema } from "./money";
 import type { Money } from "./money";
+import { dateTimeSchema, type DateTime } from "./date-time";
 
 export interface Game {
 	playsig: Playsig;
@@ -26,6 +27,7 @@ export interface Game {
 	playerHealths: Record<PublicKey, Health>;
 	combats?: Combat[];
 	phase: Phase;
+	phaseStartAt: DateTime;
 }
 
 export const gameSchema = {
@@ -46,6 +48,7 @@ export const gameSchema = {
 		"playerLevel",
 		"playerHealths",
 		"phase",
+		"phaseStartAt",
 	],
 	properties: {
 		playsig: playsigSchema,
@@ -147,6 +150,7 @@ export const gameSchema = {
 			additionalProperties: healthSchema,
 		},
 		phase: phaseSchema,
+		phaseStartAt: dateTimeSchema,
 	},
 	additionalProperties: false,
 } as const;
