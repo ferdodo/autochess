@@ -78,7 +78,7 @@ export class DisplayFactory implements Subscribable<Display> {
 		phase: Phase.Combat,
 		money: 100,
 		levelUpCost: 40,
-		timeLeft: 15000,
+		phaseStartAt: new Date().toISOString(),
 	};
 
 	gui: GUI = new GUI();
