@@ -8,9 +8,12 @@ export function renderPieceHealthBarMeshes(
 	pieceRessources: PieceRessources,
 	piece: Piece | undefined,
 ): void {
-	if (!piece && pieceRessources.healthBarMesh) {
-		pieceRessources.group.remove(pieceRessources.healthBarMesh);
-		pieceRessources.healthBarMesh = undefined;
+	if (!piece) {
+		if (pieceRessources.healthBarMesh) {
+			pieceRessources.group.remove(pieceRessources.healthBarMesh);
+			pieceRessources.healthBarMesh = undefined;
+		}
+
 		return;
 	}
 
