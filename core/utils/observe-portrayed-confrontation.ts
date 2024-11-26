@@ -42,8 +42,14 @@ export function observePortrayedConfrontation(
 					const actionIterator = combat.actions[Symbol.iterator]();
 
 					let confrontation = {
-						playerAHeroes: combat.playerAHeroes,
-						playerBHeroes: combat.playerBHeroes,
+						playerAHeroes:
+							publicKey === combat.playerAPublicKey
+								? combat.playerAHeroes
+								: combat.playerBHeroes,
+						playerBHeroes:
+							publicKey === combat.playerAPublicKey
+								? combat.playerBHeroes
+								: combat.playerAHeroes,
 					};
 
 					let portrayedConfrontation: Piece[] = [
