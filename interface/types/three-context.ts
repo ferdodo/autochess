@@ -23,7 +23,6 @@ export interface ThreeContext {
 	boardPieces: Record<string, PieceRessources>;
 	camera: PerspectiveCamera | OrthographicCamera;
 	healthGeometry: TextGeometry;
-	healthMaterial: MeshBasicMaterial;
 	healthMesh?: Mesh;
 	levelUpBackgroundGeometry: PlaneGeometry;
 	levelUpBackgroundMaterial: MeshBasicMaterial;

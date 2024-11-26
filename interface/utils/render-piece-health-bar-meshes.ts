@@ -2,7 +2,8 @@ import { Mesh, MeshBasicMaterial } from "three";
 import type { PieceRessources } from "../types/piece-ressources";
 import type { Piece } from "core/types/piece";
 
-const pieceHealthBarMaterial = new MeshBasicMaterial({ color: 0xff0000 });
+const pieceHealthBarMaterial = new MeshBasicMaterial({ color: 0x02eeee });
+const pieceEnemyHealthBarMaterial = new MeshBasicMaterial({ color: 0xee0202 });
 
 export function renderPieceHealthBarMeshes(
 	pieceRessources: PieceRessources,
@@ -25,7 +26,10 @@ export function renderPieceHealthBarMeshes(
 
 	const meshCreated = !pieceRessources.healthBarMesh;
 
-	pieceRessources.healthBarMesh ||= new Mesh(geometry, pieceHealthBarMaterial);
+	pieceRessources.healthBarMesh ||= new Mesh(
+		geometry,
+		piece.right ? pieceEnemyHealthBarMaterial : pieceHealthBarMaterial,
+	);
 
 	const mesh = pieceRessources.healthBarMesh;
 

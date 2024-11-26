@@ -31,7 +31,6 @@ export function createContext(): ThreeContext {
 		boardPieces: {},
 		camera,
 		healthGeometry: createHealthGeometry(),
-		healthMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
 		healthMesh: undefined,
 		levelUpBackgroundGeometry: new PlaneGeometry(0.1, 0.04),
 		levelUpBackgroundMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
