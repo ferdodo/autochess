@@ -11,5 +11,5 @@ export interface Display {
 	phase: Phase;
 	money: number;
 	levelUpCost: number | null;
-	timeLeft: number;
+	phaseStartAt: string;
 }

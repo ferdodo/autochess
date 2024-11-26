@@ -36,7 +36,7 @@ export function portray(publicKey: PublicKey): OperatorFunction<Game, Display> {
 					phase: game.phase,
 					money: game.playerMoney[publicKey] || 0,
 					levelUpCost: getLevelUpCost(game, publicKey),
-					timeLeft: 30,
+					phaseStartAt: game.phaseStartAt,
 				};
 
 				return display;
