@@ -36,11 +36,7 @@ export function transposeHandle(context: BackContext): Subscription {
 								throw new Error("Player does not have heroes !");
 							}
 
-							const benchHeroes = game.playerBenches[publicKey];
-
-							if (!benchHeroes) {
-								throw new Error("Player does not have bench heroes !");
-							}
+							const benchHeroes = game.playerBenches[publicKey] || [];
 
 							const grabbedHero: Hero | undefined =
 								heroes.find(
@@ -62,10 +58,10 @@ export function transposeHandle(context: BackContext): Subscription {
 							}
 
 							if (
-								grabPiece.positionX &&
-								grabPiece.positionY &&
-								ungrabPiece.positionX &&
-								ungrabPiece.positionY
+								grabPiece.positionX !== undefined &&
+								grabPiece.positionY !== undefined &&
+								ungrabPiece.positionX !== undefined &&
+								ungrabPiece.positionY !== undefined
 							) {
 								if (ungrabbedHero) {
 									const initialPos = grabbedHero.position;
@@ -85,9 +81,9 @@ export function transposeHandle(context: BackContext): Subscription {
 							}
 
 							if (
-								grabPiece.positionX &&
-								grabPiece.positionY &&
-								ungrabPiece.benchPosition
+								grabPiece.positionX !== undefined &&
+								grabPiece.positionY !== undefined &&
+								ungrabPiece.benchPosition !== undefined
 							) {
 								if (ungrabbedHero) {
 									heroes.push(ungrabbedHero);
@@ -100,9 +96,9 @@ export function transposeHandle(context: BackContext): Subscription {
 							}
 
 							if (
-								grabPiece.benchPosition &&
-								ungrabPiece.positionX &&
-								ungrabPiece.positionY
+								grabPiece.benchPosition !== undefined &&
+								ungrabPiece.positionX !== undefined &&
+								ungrabPiece.positionY !== undefined
 							) {
 								heroes.push(grabbedHero);
 
@@ -116,7 +112,10 @@ export function transposeHandle(context: BackContext): Subscription {
 								return;
 							}
 
-							if (grabPiece.benchPosition && ungrabPiece.benchPosition) {
+							if (
+								grabPiece.benchPosition !== undefined &&
+								ungrabPiece.benchPosition !== undefined
+							) {
 								benchHeroes[ungrabPiece.benchPosition] = grabbedHero;
 
 								if (ungrabbedHero) {
