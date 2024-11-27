@@ -1,4 +1,3 @@
-import { observeGame } from "../api/observe-game";
 import { asNewPlayerConnect } from "../automations/as-new-player-connect";
 import { asPlayerInitiateGame } from "../automations/as-player-initiate-game";
 import type { TestContext } from "../types/test-context";

@@ -2,6 +2,7 @@ import { initiateGameHandle } from "../api/initiate-game-handle";
 import { levelUpHandle } from "../api/level-up-handle";
 import { observeGameHandle } from "../api/observe-game-handle";
 import { rerollHandle } from "../api/reroll-handle";
+import { shopBuyHandle } from "../api/shop-buy-handle";
 import { transposeHandle } from "../api/transpose-handle";
 import type { BackContext } from "../types/back-context";
 import { matchmake } from "../workflows/matchmake";
@@ -18,6 +19,7 @@ export function startServer(context: BackContext) {
 		transposeHandle(context),
 		setCombatPhase(context),
 		setPlanningPhase(context),
+		shopBuyHandle(context),
 	];
 
 	return function stopServer() {

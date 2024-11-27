@@ -1,7 +1,12 @@
 #!/bin/bash
 
+check_current_dir() {
+    basename "$(pwd)" | grep -q "^core$"
+}
+
 get_modified_files_in_head() {
     git diff --name-only HEAD --relative=core
+    git ls-files --others --exclude-standard --full-name . | sed 's|^core/||' | grep -v node_modules
 }
 
 get_modified_files_in_previous_commit() {
@@ -9,9 +14,10 @@ get_modified_files_in_previous_commit() {
 }
 
 filter_ts_files() {
-    echo "$1" | grep -E "^(utils|api).*\.ts$" | grep -E -v "*.test.ts$" | head -n 3
+    echo "$1" | grep -E "^(utils|api|workflows).*\.ts$" | grep -E -v "*.test.ts$" | head -n 15
 }
 
+check_current_dir
 head_files=$(get_modified_files_in_head)
 filtered_head_files=$(filter_ts_files "$head_files")
 

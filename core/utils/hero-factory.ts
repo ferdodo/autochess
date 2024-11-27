@@ -1,12 +1,9 @@
 import type { Hero } from "../types/hero";
 import { uid } from "uid";
-import type { Appellation } from "../types/appellation";
 import { getRandomAppellation } from "./get-random-appellation";
 
 export class HeroFactory {
-	build(): Hero {
-		const appellation: Appellation = getRandomAppellation();
-
+	build(appellation = getRandomAppellation()): Hero {
 		return {
 			id: uid(),
 			appellation,

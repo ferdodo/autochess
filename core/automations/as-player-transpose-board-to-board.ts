@@ -5,7 +5,7 @@ import { getGame } from "../utils/get-game";
 import { transpose } from "../api/transpose";
 import type { PieceSlot } from "../types/piece-slot";
 
-export async function asPlayerTranspose(
+export async function asPlayerTransposeBoardToBoard(
 	testContext: TestContext,
 	playerNumber = 0,
 ) {

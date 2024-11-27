@@ -1,6 +1,6 @@
 import { Appellation } from "../types/appellation";
 
-export function getHeroRank(appellation: Appellation): number {
+export function getHeroCost(appellation: Appellation): number {
 	const rankByAppellation: Record<Appellation, number> = {
 		[Appellation.Soldier]: 1,
 		[Appellation.Orc]: 1,
