@@ -7,18 +7,12 @@ export async function transpose(
 	grabPiece: PieceSlot,
 	ungrabPiece: PieceSlot,
 ) {
-	const { connection, publicKey, playsig, signMessage } = frontContext;
-
-	if (!playsig) {
-		throw new Error("playsig is required to transpose !");
-	}
-
+	const { connection, publicKey, signMessage } = frontContext;
 	const cachedGame = await getCachedGame(frontContext);
 
 	connection.send({
 		transposeRequest: await signMessage({
 			publicKey,
-			playsig,
 			grabPiece,
 			ungrabPiece,
 			cachedGame,

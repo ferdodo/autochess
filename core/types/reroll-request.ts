@@ -2,8 +2,6 @@ import type { PublicKey } from "./public-key";
 import { publicKeySchema } from "./public-key";
 import type { Signature } from "./signature";
 import { signatureSchema } from "./signature";
-import { playsigSchema } from "./playsig";
-import type { Playsig } from "./playsig";
 import type { DateTime } from "./date-time";
 import { dateTimeSchema } from "./date-time";
 import type { FromSchema } from "json-schema-to-ts";
@@ -13,7 +11,6 @@ import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface RerollRequest {
 	publicKey: PublicKey;
-	playsig: Playsig;
 	signature: Signature;
 	issuedAt: DateTime;
 	expiresAt: DateTime;
@@ -24,17 +21,9 @@ export const rerollRequestSchema = {
 	type: "object",
 	title: "Reroll request",
 	description: "Payload to request rerolling the shop.",
-	required: [
-		"publicKey",
-		"cachedGame",
-		"playsig",
-		"signature",
-		"issuedAt",
-		"expiresAt",
-	],
+	required: ["publicKey", "cachedGame", "signature", "issuedAt", "expiresAt"],
 	properties: {
 		publicKey: publicKeySchema,
-		playsig: playsigSchema,
 		signature: signatureSchema,
 		issuedAt: dateTimeSchema,
 		expiresAt: dateTimeSchema,

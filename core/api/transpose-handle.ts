@@ -20,8 +20,10 @@ export function transposeHandle(context: BackContext): Subscription {
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
 					checkGameHasPlayer(context),
-					tap(async ({ publicKey, playsig, grabPiece, ungrabPiece }) => {
-						const transaction = await readAndUpdateGame(playsig);
+					tap(async ({ publicKey, grabPiece, ungrabPiece, cachedGame }) => {
+						const transaction = await readAndUpdateGame(
+							cachedGame.game.playsig,
+						);
 
 						if (!transaction) {
 							return;

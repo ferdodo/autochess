@@ -21,8 +21,10 @@ export function levelUpHandle(context: BackContext): Subscription {
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
 					checkGameHasPlayer(context),
-					tap(async ({ publicKey, playsig }) => {
-						const transaction = await readAndUpdateGame(playsig);
+					tap(async ({ publicKey, cachedGame }) => {
+						const transaction = await readAndUpdateGame(
+							cachedGame.game.playsig,
+						);
 
 						if (!transaction) {
 							return;

@@ -21,8 +21,10 @@ export function rerollHandle(context: BackContext): Subscription {
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
 					checkGameHasPlayer(context),
-					tap(async ({ publicKey, playsig }) => {
-						const transaction = await readAndUpdatePoolWithGame(playsig);
+					tap(async ({ publicKey, cachedGame }) => {
+						const transaction = await readAndUpdatePoolWithGame(
+							cachedGame.game.playsig,
+						);
 
 						if (!transaction) {
 							return;
