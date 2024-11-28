@@ -10,7 +10,7 @@ get_modified_files_in_head() {
 }
 
 get_modified_files_in_previous_commit() {
-    git diff-tree --no-commit-id --name-only -r HEAD^ --relative=core
+    git diff-tree --no-commit-id --name-only -r HEAD --relative=core
 }
 
 filter_ts_files() {
