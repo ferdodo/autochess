@@ -6,7 +6,7 @@
 		"@biomejs/biome": "^1.8.3",
 		"@types/three": "^0.167.1",
 		"assets": "file:../assets",
-		"blockwise": "^2.8.1",
+		"blockwise": "^2.11.1",
 		"core": "file:../core",
 		"rxjs": "^7.8.1",
 		"three": "^0.167.1",
