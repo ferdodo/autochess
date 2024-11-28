@@ -81,11 +81,13 @@ export function observeInteractions(
 			}
 
 			if (grabbing) {
-				for (const [productId, shopProductBackgroundMesh] of Object.entries(
-					threeContext.shopProductBackgroundMeshes,
+				for (const [_index, shopProductBackgroundMesh] of Object.entries(
+					Object.values(threeContext.shopProductBackgroundMeshes),
 				)) {
+					const index = Number.parseInt(_index);
+
 					if (raycaster.intersectObject(shopProductBackgroundMesh).length > 0) {
-						interaction.shopBuy = { productId };
+						interaction.shopBuy = index;
 					}
 				}
 			}
