@@ -8,6 +8,7 @@ import { getLevelUpCost } from "./get-level-up-cost";
 import { observePortrayedConfrontation } from "./observe-portrayed-confrontation";
 import type { PublicKey } from "../types/public-key";
 import type { Piece } from "../types/piece";
+import { portrayBench } from "./portray-bench";
 
 export function portray(publicKey: PublicKey): OperatorFunction<Game, Display> {
 	return (source: Observable<Game>) =>
@@ -32,7 +33,7 @@ export function portray(publicKey: PublicKey): OperatorFunction<Game, Display> {
 						isMe: p === publicKey,
 					})),
 					shop: game.playerShops[publicKey] || [],
-					bench: {},
+					bench: portrayBench(game.playerBenches[publicKey] || {}),
 					phase: game.phase,
 					money: game.playerMoney[publicKey] || 0,
 					levelUpCost: getLevelUpCost(game, publicKey),
