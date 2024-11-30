@@ -47,7 +47,10 @@ export function portray(
 							isMe: p === publicKey,
 						})),
 						shop: game.playerShops[publicKey] || [],
-						bench: portrayBench(game.playerBenches[publicKey] || {}),
+						bench: portrayBench(
+							game.playerBenches[publicKey] || {},
+							transposedHero,
+						),
 						phase: game.phase,
 						money: game.playerMoney[publicKey] || 0,
 						levelUpCost: getLevelUpCost(game, publicKey),

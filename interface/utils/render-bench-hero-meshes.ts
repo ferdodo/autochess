@@ -30,12 +30,10 @@ export function renderBenchHeroMeshes(
 			throw new Error("Slot not found !");
 		}
 
-		if (meshCreated) {
-			threeContext.scene.add(pieceRessources.group);
-			pieceRessources.group.position.y = slot.position.y + 0.6;
-			pieceRessources.group.position.z = slot.position.z + 0.05;
-			pieceRessources.group.position.x = slot.position.x;
-		}
+		threeContext.scene.add(pieceRessources.group);
+		pieceRessources.group.position.y = slot.position.y + 0.6;
+		pieceRessources.group.position.z = slot.position.z + 0.05;
+		pieceRessources.group.position.x = slot.position.x;
 
 		if (piece.transposed) {
 			const raycaster = new Raycaster();
