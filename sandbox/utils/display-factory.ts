@@ -90,7 +90,7 @@ export class DisplayFactory implements Subscribable<Display> {
 		this.gui.add(this, "setCombatPhase");
 		this.gui.close();
 
-		observeInteractions(threeContext, this.display).subscribe((interaction) => {
+		observeInteractions(threeContext).subscribe((interaction) => {
 			const transposedPiece = this.display.pieces.find(
 				(piece) => piece.transposed,
 			);

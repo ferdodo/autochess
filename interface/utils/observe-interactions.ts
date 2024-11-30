@@ -3,14 +3,12 @@ import type { Observable } from "rxjs";
 import type { ThreeContext } from "../types/three-context";
 import type { Interaction } from "core/types/interaction";
 import { Raycaster } from "three";
-import type { Display } from "core/types/display";
 import type { Vector3 } from "three";
 import { renderCalls$ } from "./render";
 import { getBoardBlock } from "core/utils/get-board-block";
 
 export function observeInteractions(
 	threeContext: ThreeContext,
-	display: Display,
 ): Observable<Interaction> {
 	const raycaster = new Raycaster();
 

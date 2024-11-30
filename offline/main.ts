@@ -97,42 +97,22 @@ waitTextureLoaded
 		frontContext1.playsig = initiateGameResponse1.playsig;
 		frontContext2.playsig = initiateGameResponse2.playsig;
 
-		const initialGame1 = await firstValueFrom(
-			observeGame(frontContext1).pipe(map(({ game }) => game)),
-		);
+		observeInteractions(threeContext1).subscribe((interaction) => {
+			if (currentPlayer === 0) {
+				cast(frontContext1, interaction);
+			}
+		});
 
-		const initialGame2 = await firstValueFrom(
-			observeGame(frontContext2).pipe(map(({ game }) => game)),
-		);
-
-		const initialDisplay1 = await firstValueFrom(
-			of(initialGame1).pipe(portray(frontContext1.publicKey)),
-		);
-
-		const initialDisplay2 = await firstValueFrom(
-			of(initialGame2).pipe(portray(frontContext2.publicKey)),
-		);
-
-		observeInteractions(threeContext1, initialDisplay1).subscribe(
-			(interaction) => {
-				if (currentPlayer === 0) {
-					cast(frontContext1, interaction);
-				}
-			},
-		);
-
-		observeInteractions(threeContext2, initialDisplay2).subscribe(
-			(interaction) => {
-				if (currentPlayer === 1) {
-					cast(frontContext2, interaction);
-				}
-			},
-		);
+		observeInteractions(threeContext2).subscribe((interaction) => {
+			if (currentPlayer === 1) {
+				cast(frontContext2, interaction);
+			}
+		});
 
 		observeGame(frontContext1)
 			.pipe(
 				map(({ game }) => game),
-				portray(frontContext1.publicKey),
+				portray(frontContext1.publicKey, threeContext1),
 			)
 			.subscribe((display) => {
 				render(threeContext1, display);
@@ -141,7 +121,7 @@ waitTextureLoaded
 		observeGame(frontContext2)
 			.pipe(
 				map(({ game }) => game),
-				portray(frontContext2.publicKey),
+				portray(frontContext2.publicKey, threeContext2),
 			)
 			.subscribe((display) => {
 				render(threeContext2, display);

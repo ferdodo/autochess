@@ -53,11 +53,9 @@ waitTextureLoaded
 			},
 		});
 
-		observeInteractions(threeContext, displayFactory.display).subscribe(
-			(interaction: Interaction) => {
-				logEvent(JSON.stringify(interaction));
-			},
-		);
+		observeInteractions(threeContext).subscribe((interaction: Interaction) => {
+			logEvent(JSON.stringify(interaction));
+		});
 
 		createFpsCounter(threeContext).catch(console.error);
 	})
