@@ -1,14 +1,14 @@
-import type { Display } from "../types/display";
-import type { Game } from "../types/game";
+import type { Display } from "core/types/display";
+import type { Game } from "core/types/game";
 import type { Observable, OperatorFunction } from "rxjs";
 import { map, combineLatestWith, startWith } from "rxjs/operators";
-import { Animation } from "../types/animation";
+import { Animation } from "core/types/animation";
 import { interval } from "rxjs";
-import { getLevelUpCost } from "./get-level-up-cost";
-import { observePortrayedConfrontation } from "./observe-portrayed-confrontation";
-import type { PublicKey } from "../types/public-key";
-import type { Piece } from "../types/piece";
-import { portrayBench } from "./portray-bench";
+import { getLevelUpCost } from "core/utils/get-level-up-cost";
+import { observePortrayedConfrontation } from "core/utils/observe-portrayed-confrontation";
+import type { PublicKey } from "core/types/public-key";
+import type { Piece } from "core/types/piece";
+import { portrayBench } from "core/utils/portray-bench";
 
 export function portray(publicKey: PublicKey): OperatorFunction<Game, Display> {
 	return (source: Observable<Game>) =>

@@ -12,7 +12,7 @@ import { startServer } from "core/utils/start-server";
 import type { FrontContext } from "core/types/front-context";
 import { initiateGame } from "core/api/initiate-game";
 import { observeGame } from "core/api/observe-game";
-import { portray } from "core/utils/portray";
+import { portray } from "interface/utils/portray";
 import { cast } from "core/utils/cast";
 import { observeInteractions } from "interface/utils/observe-interactions";
 import { firstValueFrom, of, map } from "rxjs";
