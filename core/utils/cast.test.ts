@@ -19,7 +19,7 @@ test("cast a reroll", async () => {
 		),
 	);
 
-	await cast(frontContext, { reroll: true });
+	await cast(frontContext, [{ reroll: true }]);
 
 	await firstValueFrom(
 		observeGame(frontContext).pipe(

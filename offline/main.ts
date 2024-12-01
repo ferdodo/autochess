@@ -15,7 +15,8 @@ import { observeGame } from "core/api/observe-game";
 import { portray } from "interface/utils/portray";
 import { cast } from "core/utils/cast";
 import { observeInteractions } from "interface/utils/observe-interactions";
-import { firstValueFrom, of, map } from "rxjs";
+import { map } from "rxjs";
+import { observeInteractionHistory } from "core/utils/observe-interaction-history";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -97,17 +98,21 @@ waitTextureLoaded
 		frontContext1.playsig = initiateGameResponse1.playsig;
 		frontContext2.playsig = initiateGameResponse2.playsig;
 
-		observeInteractions(threeContext1).subscribe((interaction) => {
-			if (currentPlayer === 0) {
-				cast(frontContext1, interaction);
-			}
-		});
+		observeInteractions(threeContext1)
+			.pipe(observeInteractionHistory())
+			.subscribe((interactions) => {
+				if (currentPlayer === 0) {
+					cast(frontContext1, interactions);
+				}
+			});
 
-		observeInteractions(threeContext2).subscribe((interaction) => {
-			if (currentPlayer === 1) {
-				cast(frontContext2, interaction);
-			}
-		});
+		observeInteractions(threeContext2)
+			.pipe(observeInteractionHistory())
+			.subscribe((interactions) => {
+				if (currentPlayer === 1) {
+					cast(frontContext2, interactions);
+				}
+			});
 
 		observeGame(frontContext1)
 			.pipe(

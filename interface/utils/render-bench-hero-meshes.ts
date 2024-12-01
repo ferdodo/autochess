@@ -9,12 +9,23 @@ import { renderPieceHealthBarGeometry } from "./render-piece-health-bar-geometry
 import { renderPieceHealthBarMeshes } from "./render-piece-health-bar-meshes";
 import { renderPieceGradeMesh } from "./render-piece-grade-mesh";
 import { Raycaster } from "three";
+import type { Piece } from "core/types/piece";
 
 export function renderBenchHeroMeshes(
 	threeContext: ThreeContext,
 	display: Display,
 ): void {
-	for (const [_slotNumber, piece] of Object.entries(display.bench)) {
+	const benchWithAllSlots: Record<string, Piece | undefined> = {
+		"0": undefined,
+		"1": undefined,
+		"2": undefined,
+		"3": undefined,
+		"4": undefined,
+		"5": undefined,
+		...display.bench,
+	};
+
+	for (const [_slotNumber, piece] of Object.entries(benchWithAllSlots)) {
 		const slotNumber = Number.parseInt(_slotNumber);
 		const meshCreated = !threeContext.benchHeroMeshes[slotNumber];
 
@@ -35,7 +46,7 @@ export function renderBenchHeroMeshes(
 		pieceRessources.group.position.z = slot.position.z + 0.05;
 		pieceRessources.group.position.x = slot.position.x;
 
-		if (piece.transposed) {
+		if (piece?.transposed) {
 			const raycaster = new Raycaster();
 
 			const direction = threeContext.pointer
