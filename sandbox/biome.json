@@ -1,6 +1,0 @@
-{
-	"$schema": "https://biome.dev/schema.json",
-	"organizeImports": {
-		"enabled": false
-	}
-}

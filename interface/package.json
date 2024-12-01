@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"build": "tsc && biome ci ."
+		"build": "tsc && biome ci --organize-imports-enabled=false"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",

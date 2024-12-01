@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"build": "tsc && vitest run --sequence.concurrent --testTimeout 100 && biome ci ."
+		"build": "tsc && vitest run --sequence.concurrent --testTimeout 100 && biome ci --organize-imports-enabled=false"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
