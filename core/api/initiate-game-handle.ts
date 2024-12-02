@@ -10,6 +10,7 @@ export function initiateGameHandle({
 	dataMapper: { saveQueuer, observeCreatedGame },
 	queuerConnections,
 	isValidSignature,
+	serverPublicKey,
 }: BackContext): Subscription {
 	const handleRequests$ = connections$.pipe(
 		mergeMap((connection) =>
@@ -50,7 +51,22 @@ export function initiateGameHandle({
 				const connection = queuerConnections[publicKey];
 
 				if (connection) {
-					connection.send({ initiateGameResponse: { playsig: game.playsig } });
+					connection.send({
+						initiateGameResponse: {
+							playsig: game.playsig,
+							stamp: {
+								playsig: game.playsig,
+								issuedAt: new Date().toISOString(),
+								publicKey: serverPublicKey,
+								playerPublicKey: publicKey,
+								expiresAt: new Date(
+									Date.now() + 2 * 60 * 60 * 1000,
+								).toISOString(),
+								signature:
+									"000000000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+							},
+						},
+					});
 				}
 			}
 		}),

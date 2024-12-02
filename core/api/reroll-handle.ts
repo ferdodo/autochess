@@ -3,7 +3,7 @@ import { map, mergeMap, filter, tap } from "rxjs/operators";
 import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
 import type { Pool } from "../types/pool";
-import { checkGameHasPlayer } from "../utils/check-game-has-player";
+import { checkStamp } from "../utils/check-stamp";
 import { getRerollCost } from "../utils/get-reroll-cost";
 
 export function rerollHandle(context: BackContext): Subscription {
@@ -20,11 +20,9 @@ export function rerollHandle(context: BackContext): Subscription {
 					map((message) => message.rerollRequest),
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
-					checkGameHasPlayer(context),
-					tap(async ({ publicKey, cachedGame }) => {
-						const transaction = await readAndUpdatePoolWithGame(
-							cachedGame.game.playsig,
-						);
+					checkStamp(context),
+					tap(async ({ publicKey, playsig }) => {
+						const transaction = await readAndUpdatePoolWithGame(playsig);
 
 						if (!transaction) {
 							return;

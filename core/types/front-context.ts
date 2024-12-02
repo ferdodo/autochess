@@ -4,13 +4,13 @@ import type { Connection } from "./connection";
 import type { PublicKey } from "./public-key";
 import type { Playsig } from "./playsig";
 import type { SignedMessage } from "./signed-message";
-import type { CachedGame } from "./cached-game";
+import type { Stamp } from "./stamp";
 
 export interface FrontContext {
 	connection: Connection<ServerMessage, ClientMessage>;
 	publicKey: PublicKey;
 	nickname: string;
 	playsig?: Playsig;
-	cachedGame?: CachedGame;
+	stamp?: Stamp;
 	signMessage: <T>(message: T) => Promise<SignedMessage & T>;
 }

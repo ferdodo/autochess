@@ -1,14 +1,13 @@
 import type { Subscription } from "rxjs";
-import { map, mergeMap, filter, tap } from "rxjs/operators";
+import { map, mergeMap, filter, tap, mergeWith } from "rxjs/operators";
 import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
-import { NEVER } from "rxjs";
+import { NEVER, from } from "rxjs";
 
 export function observeGameHandle({
 	connections$,
 	dataMapper: { readGame, observeGame },
 	isValidSignature,
-	signMessage,
 }: BackContext): Subscription {
 	return connections$
 		.pipe(
@@ -30,22 +29,23 @@ export function observeGameHandle({
 							return NEVER;
 						}
 
-						connection.send({
-							observeGameBroadcast: await signMessage({ game }),
-						});
-
 						if (subscribed) {
+							connection.send({
+								observeGameBroadcast: { game },
+							});
+
 							return NEVER;
 						}
 
 						subscribed = true;
 
 						return observeGame(playsig).pipe(
+							mergeWith(from(readGame(playsig)).pipe(filter(Boolean))),
 							tap(async (observedGame) => {
 								connection.send({
-									observeGameBroadcast: await signMessage({
+									observeGameBroadcast: {
 										game: observedGame,
-									}),
+									},
 								});
 							}),
 						);

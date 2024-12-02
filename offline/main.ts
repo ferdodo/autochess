@@ -97,6 +97,8 @@ waitTextureLoaded
 
 		frontContext1.playsig = initiateGameResponse1.playsig;
 		frontContext2.playsig = initiateGameResponse2.playsig;
+		frontContext1.stamp = initiateGameResponse1.stamp;
+		frontContext2.stamp = initiateGameResponse2.stamp;
 
 		observeInteractions(threeContext1)
 			.pipe(observeInteractionHistory())
@@ -115,19 +117,13 @@ waitTextureLoaded
 			});
 
 		observeGame(frontContext1)
-			.pipe(
-				map(({ game }) => game),
-				portray(frontContext1.publicKey, threeContext1),
-			)
+			.pipe(portray(frontContext1.publicKey, threeContext1))
 			.subscribe((display) => {
 				render(threeContext1, display);
 			});
 
 		observeGame(frontContext2)
-			.pipe(
-				map(({ game }) => game),
-				portray(frontContext2.publicKey, threeContext2),
-			)
+			.pipe(portray(frontContext2.publicKey, threeContext2))
 			.subscribe((display) => {
 				render(threeContext2, display);
 			});

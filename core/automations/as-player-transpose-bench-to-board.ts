@@ -34,7 +34,7 @@ export async function asPlayerTransposeBenchToBoard(
 
 	await firstValueFrom(
 		observeGame(frontContext).pipe(
-			map(({ game }) =>
+			map((game) =>
 				game.playerHeroes[frontContext.publicKey]
 					.map((hero) => `${hero.position.x}${hero.position.y}`)
 					.join(""),

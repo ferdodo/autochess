@@ -1,5 +1,5 @@
 import type { TestContext } from "../types/test-context";
-import { firstValueFrom, map, filter } from "rxjs";
+import { firstValueFrom, map, filter, tap } from "rxjs";
 import { observeGame } from "../api/observe-game";
 import { getGame } from "../utils/get-game";
 import { transpose } from "../api/transpose";
@@ -35,7 +35,7 @@ export async function asPlayerTransposeBoardToBoard(
 
 	await firstValueFrom(
 		observeGame(frontContext).pipe(
-			map(({ game }) =>
+			map((game) =>
 				game.playerHeroes[frontContext.publicKey]
 					.map((hero) => `${hero.position.x}${hero.position.y}`)
 					.join(""),

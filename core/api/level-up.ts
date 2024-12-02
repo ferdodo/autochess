@@ -1,9 +1,16 @@
 import type { FrontContext } from "../types/front-context";
-import { getCachedGame } from "../utils/get-cached-gamed";
 
 export async function levelUp(context: FrontContext): Promise<void> {
-	const { signMessage, connection, publicKey } = context;
-	const cachedGame = await getCachedGame(context);
-	const levelUpRequest = await signMessage({ publicKey, cachedGame });
+	const { signMessage, connection, publicKey, stamp, playsig } = context;
+
+	if (!stamp) {
+		throw new Error("stamp is required to level up !");
+	}
+
+	if (!playsig) {
+		throw new Error("playsig is required to level up !");
+	}
+
+	const levelUpRequest = await signMessage({ publicKey, playsig, stamp });
 	connection.send({ levelUpRequest });
 }

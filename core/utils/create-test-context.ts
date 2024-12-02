@@ -16,6 +16,8 @@ export function createTestContext(): TestContext {
 	const backContext: BackContext = {
 		connections$: connectionMockFactory.createServer(),
 		isValidSignature: () => Promise.resolve(true),
+		serverPublicKey:
+			"ddddddddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
 		signMessage: async (message) => ({
 			...message,
 			publicKey:

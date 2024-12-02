@@ -11,6 +11,7 @@ export async function asPlayerInitiateGame(
 		throw new Error(`Player ${playerNumber} not found !`);
 	}
 
-	const { playsig } = await initiateGame(frontContext);
+	const { playsig, stamp } = await initiateGame(frontContext);
 	frontContext.playsig = playsig;
+	frontContext.stamp = stamp;
 }

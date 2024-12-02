@@ -5,29 +5,40 @@ import { signatureSchema } from "./signature";
 import type { DateTime } from "./date-time";
 import { dateTimeSchema } from "./date-time";
 import type { FromSchema } from "json-schema-to-ts";
-import { cachedGameSchema } from "./cached-game";
-import type { CachedGame } from "./cached-game";
 import type { JsonSchemaRecommended } from "json-schema-policies";
+import type { Stamp } from "./stamp";
+import { stampSchema } from "./stamp";
+import { playsigSchema } from "./playsig";
+import type { Playsig } from "./playsig";
 
 export interface RerollRequest {
 	publicKey: PublicKey;
+	playsig: Playsig;
 	signature: Signature;
 	issuedAt: DateTime;
 	expiresAt: DateTime;
-	cachedGame: CachedGame;
+	stamp: Stamp;
 }
 
 export const rerollRequestSchema = {
 	type: "object",
 	title: "Reroll request",
 	description: "Payload to request rerolling the shop.",
-	required: ["publicKey", "cachedGame", "signature", "issuedAt", "expiresAt"],
+	required: [
+		"publicKey",
+		"playsig",
+		"stamp",
+		"signature",
+		"issuedAt",
+		"expiresAt",
+	],
 	properties: {
 		publicKey: publicKeySchema,
+		playsig: playsigSchema,
 		signature: signatureSchema,
 		issuedAt: dateTimeSchema,
 		expiresAt: dateTimeSchema,
-		cachedGame: cachedGameSchema,
+		stamp: stampSchema,
 	},
 	additionalProperties: false,
 } as const;

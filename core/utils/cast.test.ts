@@ -15,7 +15,7 @@ test("cast a reroll", async () => {
 
 	const moneyBefore = await firstValueFrom(
 		observeGame(frontContext).pipe(
-			map(({ game }) => game.playerMoney[frontContext.publicKey]),
+			map((game) => game.playerMoney[frontContext.publicKey]),
 		),
 	);
 
@@ -23,7 +23,7 @@ test("cast a reroll", async () => {
 
 	await firstValueFrom(
 		observeGame(frontContext).pipe(
-			map(({ game }) => game.playerMoney[frontContext.publicKey]),
+			map((game) => game.playerMoney[frontContext.publicKey]),
 			filter((money) => money !== moneyBefore),
 		),
 	);

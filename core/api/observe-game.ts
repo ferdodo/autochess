@@ -1,14 +1,14 @@
 import type { FrontContext } from "../types/front-context";
-import type { CachedGame } from "../types/cached-game";
 import { filter, map, defer, share } from "rxjs";
 import type { Observable } from "rxjs";
+import type { Game } from "../types/game";
 
 export function observeGame({
 	signMessage,
 	connection,
 	publicKey,
 	playsig,
-}: FrontContext): Observable<CachedGame> {
+}: FrontContext): Observable<Game> {
 	if (!playsig) {
 		throw new Error("playsig is required to observe a game !");
 	}
@@ -23,6 +23,7 @@ export function observeGame({
 		return connection.messages$.pipe(
 			map((message) => message.observeGameBroadcast),
 			filter(Boolean),
+			map(({ game }) => game),
 		);
 	}).pipe(share());
 }

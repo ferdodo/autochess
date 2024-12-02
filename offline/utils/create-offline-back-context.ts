@@ -10,6 +10,8 @@ export function createOfflineBackContext(
 	return {
 		connections$: connectionMockFactory.createServer(),
 		isValidSignature: () => Promise.resolve(true),
+		serverPublicKey:
+			"aaaaaaaaaa00000000000000000000000000000000000000000000000000000000",
 		signMessage: async (message) => ({
 			...message,
 			publicKey:

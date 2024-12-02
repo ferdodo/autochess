@@ -6,42 +6,47 @@ import type { PieceSlot } from "./piece-slot";
 import { pieceSlotSchema } from "./piece-slot";
 import { dateTimeSchema, type DateTime } from "./date-time";
 import type { FromSchema } from "json-schema-to-ts";
-import { cachedGameSchema } from "./cached-game";
-import type { CachedGame } from "./cached-game";
 import type { JsonSchemaRecommended } from "json-schema-policies";
+import { stampSchema } from "./stamp";
+import type { Stamp } from "./stamp";
+import { playsigSchema } from "./playsig";
+import type { Playsig } from "./playsig";
 
 export interface TransposeRequest {
 	publicKey: PublicKey;
+	playsig: Playsig;
 	signature: Signature;
 	issuedAt: DateTime;
 	expiresAt: DateTime;
 	grabPiece: PieceSlot;
 	ungrabPiece: PieceSlot;
-	cachedGame: CachedGame;
+	stamp: Stamp;
 }
 
 export const transposeRequestSchema = {
 	type: "object",
 	title: "Transpose Request",
 	description:
-		"Payload to request transposing a piece " + "on the board or the bench.",
+		"Payload to request transposing a piece on the board or the bench.",
 	required: [
 		"publicKey",
+		"playsig",
 		"signature",
 		"issuedAt",
 		"expiresAt",
 		"grabPiece",
 		"ungrabPiece",
-		"cachedGame",
+		"stamp",
 	],
 	properties: {
 		publicKey: publicKeySchema,
+		playsig: playsigSchema,
 		signature: signatureSchema,
 		expiresAt: dateTimeSchema,
 		issuedAt: dateTimeSchema,
 		grabPiece: pieceSlotSchema,
 		ungrabPiece: pieceSlotSchema,
-		cachedGame: cachedGameSchema,
+		stamp: stampSchema,
 	},
 	additionalProperties: false,
 } as const;

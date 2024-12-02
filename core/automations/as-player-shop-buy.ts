@@ -25,7 +25,7 @@ export async function asPlayerShopBuy(
 	await firstValueFrom(
 		observeGame(frontContext).pipe(
 			map(
-				({ game }) =>
+				(game) =>
 					Object.keys(game.playerBenches[frontContext.publicKey] || {}).length,
 			),
 			filter((benchSize) => benchSize !== benchSizeBefore),

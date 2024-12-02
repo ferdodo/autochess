@@ -6,15 +6,19 @@ import { dateTimeSchema } from "./date-time";
 import type { DateTime } from "./date-time";
 import type { FromSchema } from "json-schema-to-ts";
 import type { JsonSchemaRecommended } from "json-schema-policies";
-import { type CachedGame, cachedGameSchema } from "./cached-game";
+import { stampSchema } from "./stamp";
+import type { Stamp } from "./stamp";
+import { playsigSchema } from "./playsig";
+import type { Playsig } from "./playsig";
 
 export interface ShopBuyRequest {
 	item: number;
 	publicKey: PublicKey;
+	playsig: Playsig;
 	signature: Signature;
 	issuedAt: DateTime;
 	expiresAt: DateTime;
-	cachedGame: CachedGame;
+	stamp: Stamp;
 }
 
 export const shopBuyRequestSchema = {
@@ -27,7 +31,8 @@ export const shopBuyRequestSchema = {
 		"signature",
 		"issuedAt",
 		"expiresAt",
-		"cachedGame",
+		"stamp",
+		"playsig",
 	],
 	properties: {
 		item: {
@@ -41,7 +46,8 @@ export const shopBuyRequestSchema = {
 		signature: signatureSchema,
 		issuedAt: dateTimeSchema,
 		expiresAt: dateTimeSchema,
-		cachedGame: cachedGameSchema,
+		stamp: stampSchema,
+		playsig: playsigSchema,
 	},
 	additionalProperties: false,
 } as const;

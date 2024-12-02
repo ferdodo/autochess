@@ -16,7 +16,7 @@ export async function asPlayerReroll(
 
 	const moneyBefore = await firstValueFrom(
 		observeGame(frontContext).pipe(
-			map(({ game }) => game.playerMoney[frontContext.publicKey]),
+			map((game) => game.playerMoney[frontContext.publicKey]),
 		),
 	);
 
@@ -28,7 +28,7 @@ export async function asPlayerReroll(
 
 	await firstValueFrom(
 		observeGame(frontContext).pipe(
-			map(({ game }) => game.playerMoney[frontContext.publicKey]),
+			map((game) => game.playerMoney[frontContext.publicKey]),
 			filter((money) => money !== moneyBefore),
 		),
 	);

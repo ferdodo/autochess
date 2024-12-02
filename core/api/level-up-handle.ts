@@ -2,7 +2,7 @@ import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap } from "rxjs/operators";
 import type { BackContext } from "../types/back-context";
 import { checkInvalidSignature } from "../utils/check-invalid-signature";
-import { checkGameHasPlayer } from "../utils/check-game-has-player";
+import { checkStamp } from "../utils/check-stamp";
 import { getLevelUpCost } from "../utils/get-level-up-cost";
 import { levelSchema, type Level } from "../types/level";
 
@@ -20,11 +20,9 @@ export function levelUpHandle(context: BackContext): Subscription {
 					map((message) => message.levelUpRequest),
 					filter(Boolean),
 					checkInvalidSignature(isValidSignature),
-					checkGameHasPlayer(context),
-					tap(async ({ publicKey, cachedGame }) => {
-						const transaction = await readAndUpdateGame(
-							cachedGame.game.playsig,
-						);
+					checkStamp(context),
+					tap(async ({ publicKey, playsig }) => {
+						const transaction = await readAndUpdateGame(playsig);
 
 						if (!transaction) {
 							return;
