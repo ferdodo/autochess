@@ -1,7 +1,7 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap } from "rxjs/operators";
 import type { BackContext } from "../types/back-context";
-import { checkInvalidSignature } from "../utils/check-invalid-signature";
+import { checkSignature } from "../utils/check-signature";
 import { checkStamp } from "../utils/check-stamp";
 import type { Hero } from "../types/hero";
 
@@ -18,7 +18,7 @@ export function transposeHandle(context: BackContext): Subscription {
 				connection.messages$.pipe(
 					map((message) => message.transposeRequest),
 					filter(Boolean),
-					checkInvalidSignature(isValidSignature),
+					checkSignature(isValidSignature),
 					checkStamp(context),
 					tap(async ({ publicKey, grabPiece, ungrabPiece, playsig }) => {
 						const transaction = await readAndUpdateGame(playsig);

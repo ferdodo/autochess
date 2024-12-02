@@ -3,7 +3,7 @@ import { map, mergeMap, filter, tap, finalize } from "rxjs/operators";
 import { merge } from "rxjs";
 import type { BackContext } from "../types/back-context";
 import type { InitiateGameRequest } from "../types/initiate-game-request";
-import { checkInvalidSignature } from "../utils/check-invalid-signature";
+import { checkSignature } from "../utils/check-signature";
 
 export function initiateGameHandle({
 	connections$,
@@ -17,7 +17,7 @@ export function initiateGameHandle({
 			connection.messages$.pipe(
 				map((message) => message.initiateGameRequest),
 				filter(Boolean),
-				checkInvalidSignature(isValidSignature),
+				checkSignature(isValidSignature),
 				tap(async ({ publicKey, nickname }: InitiateGameRequest) => {
 					const createdAt = Date.now();
 					queuerConnections[publicKey] = connection;

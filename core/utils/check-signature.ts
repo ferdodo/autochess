@@ -2,8 +2,8 @@ import type { Observable, OperatorFunction } from "rxjs";
 import { mergeMap, filter, map } from "rxjs/operators";
 import type { Signed } from "../types/signed";
 
-export function checkInvalidSignature<T>(
-	checkSignature: (signature: T & Signed) => Promise<boolean>,
+export function checkSignature<T>(
+	isValidSignature: (signature: T & Signed) => Promise<boolean>,
 ): OperatorFunction<T & Signed, T & Signed> {
 	return (source: Observable<T & Signed>) =>
 		source.pipe(
@@ -13,7 +13,7 @@ export function checkInvalidSignature<T>(
 			}),
 			mergeMap(async (message) => ({
 				message,
-				isValid: await checkSignature(message),
+				isValid: await isValidSignature(message),
 			})),
 			filter(({ isValid }) => isValid),
 			map(({ message }) => message),

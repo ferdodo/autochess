@@ -1,7 +1,7 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap, mergeWith } from "rxjs/operators";
 import type { BackContext } from "../types/back-context";
-import { checkInvalidSignature } from "../utils/check-invalid-signature";
+import { checkSignature } from "../utils/check-signature";
 import { NEVER, from } from "rxjs";
 
 export function observeGameHandle({
@@ -17,7 +17,7 @@ export function observeGameHandle({
 				return connection.messages$.pipe(
 					map((message) => message.observeGameSubscribe),
 					filter(Boolean),
-					checkInvalidSignature(isValidSignature),
+					checkSignature(isValidSignature),
 					mergeMap(async ({ publicKey, playsig }) => {
 						const game = await readGame(playsig);
 

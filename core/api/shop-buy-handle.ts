@@ -1,7 +1,7 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap } from "rxjs/operators";
 import type { BackContext } from "../types/back-context";
-import { checkInvalidSignature } from "../utils/check-invalid-signature";
+import { checkSignature } from "../utils/check-signature";
 import { checkStamp } from "../utils/check-stamp";
 import type { Appellation } from "../types/appellation";
 import { getHeroCost } from "../utils/get-hero-cost";
@@ -20,7 +20,7 @@ export function shopBuyHandle(context: BackContext): Subscription {
 				connection.messages$.pipe(
 					map((message) => message.shopBuyRequest),
 					filter(Boolean),
-					checkInvalidSignature(isValidSignature),
+					checkSignature(isValidSignature),
 					checkStamp(context),
 					tap(async ({ item, publicKey, playsig }) => {
 						const transaction = await readAndUpdateGame(playsig);
