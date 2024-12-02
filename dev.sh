@@ -18,8 +18,12 @@ function diff-state {
 }
 
 set -e
-docker compose down
+docker compose down -t 1
 docker compose up -d --build offline sandbox
+echo "╭────────────────────────────────╮"
+echo "│ Sandbox: http://localhost:2437 │"
+echo "│ Offline: http://localhost:5423 │"
+echo "╰────────────────────────────────╯"
 set +e
 
 while true
