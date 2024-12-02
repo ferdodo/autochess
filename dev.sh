@@ -17,7 +17,20 @@ function diff-state {
 	return 1
 }
 
+function setup_pre_commit_hook {
+	if [ -f ".git/hooks/pre-commit" ]; then
+        return 0
+    fi
+
+	ls .git/hooks/pre-commit.sample
+	echo "#!/bin/sh" > .git/hooks/pre-commit
+	echo "docker compose down" >> .git/hooks/pre-commit
+	echo "docker compose up -d --build" >> .git/hooks/pre-commit
+	chmod +x .git/hooks/pre-commit
+}
+
 set -e
+setup_pre_commit_hook
 docker compose down -t 1
 docker compose up -d --build offline sandbox
 echo "╭────────────────────────────────╮"
