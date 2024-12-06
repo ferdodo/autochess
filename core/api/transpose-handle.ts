@@ -36,7 +36,7 @@ export function transposeHandle(context: BackContext): Subscription {
 								throw new Error("Player does not have heroes !");
 							}
 
-							const benchHeroes = game.playerBenches[publicKey] || [];
+							const benchHeroes = game.playerBenches[publicKey] || {};
 
 							const grabbedHero: Hero | undefined =
 								heroes.find(
@@ -89,8 +89,13 @@ export function transposeHandle(context: BackContext): Subscription {
 									heroes.push(ungrabbedHero);
 								}
 
-								benchHeroes[ungrabPiece.benchPosition] = grabbedHero;
 								heroes.splice(heroes.indexOf(grabbedHero), 1);
+
+								game.playerBenches[publicKey] = {
+									...game.playerBenches[publicKey],
+									[ungrabPiece.benchPosition]: grabbedHero,
+								};
+
 								await commit(game);
 								return;
 							}
