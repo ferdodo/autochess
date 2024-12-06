@@ -23,8 +23,10 @@ import { Subject } from "rxjs";
 import { renderLevelUpGeometry } from "./render-level-up-geometry";
 import { renderRoundTimeMesh } from "./render-round-time-mesh";
 import { renderRoundTimeGeometry } from "./render-round-time-geometry";
+import { renderCamera } from "./render-camera";
 
 export function render(threeContext: ThreeContext, display: Display) {
+	renderCamera(threeContext, display);
 	renderBoardPieces(threeContext, display);
 	renderShopProductBackgroundMeshes(threeContext, display);
 	renderShopProductImageMeshes(threeContext, display);
