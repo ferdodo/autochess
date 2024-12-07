@@ -17,7 +17,7 @@ export function createDataMapperMock(): DataMapper {
 		return structuredClone(game);
 	}
 
-	async function saveGame(game: Game) {
+	async function updateGame(game: Game) {
 		const index = games.findIndex((g) => g.playsig === game.playsig);
 
 		if (index === -1) {
@@ -46,14 +46,14 @@ export function createDataMapperMock(): DataMapper {
 			return {
 				game,
 				commit: async (game: Game) => {
-					return await saveGame(game);
+					return await updateGame(game);
 				},
 				async abort() {
 					return;
 				},
 			};
 		},
-		saveGame,
+		updateGame,
 		async createGameWithPoolAndDeleteQueuers(
 			game: Game,
 			pool: Pool,
@@ -77,9 +77,7 @@ export function createDataMapperMock(): DataMapper {
 			currentQueuer$.next(queuers);
 			return true;
 		},
-		observeCreatedGame() {
-			return createdGames$.pipe(map((game) => structuredClone(game)));
-		},
+		createdGame$: createdGames$.pipe(map((game) => structuredClone(game))),
 		observeGame(playsig: string) {
 			return game$.pipe(
 				filter((game) => game.playsig === playsig),
@@ -112,7 +110,7 @@ export function createDataMapperMock(): DataMapper {
 				game,
 				pool,
 				commit: async (pool: Pool, game: Game) => {
-					const saved = await saveGame(game);
+					const saved = await updateGame(game);
 
 					if (!saved) {
 						return false;
@@ -130,7 +128,7 @@ export function createDataMapperMock(): DataMapper {
 		async readQueuers() {
 			return structuredClone(queuers);
 		},
-		async saveQueuer(queuer: Queuer) {
+		async createQueuer(queuer: Queuer) {
 			const index = queuers.findIndex((q) => q.publicKey === queuer.publicKey);
 
 			if (index !== -1) {
@@ -141,8 +139,6 @@ export function createDataMapperMock(): DataMapper {
 			currentQueuer$.next(queuers);
 			return true;
 		},
-		observeQueuers() {
-			return currentQueuer$.pipe(map((queuers) => structuredClone(queuers)));
-		},
+		queuers$: currentQueuer$.pipe(map((queuers) => structuredClone(queuers))),
 	};
 }

@@ -5,8 +5,7 @@ import { Phase } from "../types/phase";
 import { generateCombats } from "../utils/generate-combats";
 
 export function setCombatPhase(backContext: BackContext): Subscription {
-	return backContext.dataMapper
-		.observeCreatedGame()
+	return backContext.dataMapper.createdGame$
 		.pipe(
 			mergeMap((game) =>
 				merge(

@@ -14,15 +14,15 @@ import type { Level } from "../types/level";
 const MATCHMAKING_THROTTLE_TIME = 500;
 
 export function matchmake({
-	dataMapper: { observeQueuers, createGameWithPoolAndDeleteQueuers },
+	dataMapper: { queuers$, createGameWithPoolAndDeleteQueuers },
 	lateMatchmakingTimer,
 }: BackContext): Subscription {
-	const startWhenEight$ = observeQueuers().pipe(
+	const startWhenEight$ = queuers$.pipe(
 		debounceTime(MATCHMAKING_THROTTLE_TIME),
 		filter((queuers) => queuers.length >= 8),
 	);
 
-	const startWhenLate$ = observeQueuers().pipe(
+	const startWhenLate$ = queuers$.pipe(
 		lateMatchmakingTimer,
 		filter((queuers) => queuers.length > 1),
 	);
@@ -30,7 +30,11 @@ export function matchmake({
 	const heroFactory = new HeroFactory();
 
 	return merge(startWhenEight$, startWhenLate$).subscribe(async (queuers) => {
-		const oldestFirst = [...queuers].sort((a, b) => a.createdAt - b.createdAt);
+		const oldestFirst = [...queuers].sort(
+			(a, b) =>
+				new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+		);
+
 		const players = oldestFirst.slice(0, 8);
 
 		const nicknames = players.reduce(

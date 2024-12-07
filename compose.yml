@@ -53,3 +53,12 @@ services:
       - "6245:80"
     depends_on:
       - core
+  
+  database:
+    image: mongo
+
+  back:
+    build: back
+    depends_on:
+      - core
+      - database

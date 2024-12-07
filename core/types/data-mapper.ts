@@ -21,21 +21,21 @@ interface ReadAndUpdateGame {
 export interface DataMapper {
 	readGame(playsig: string): Promise<Game | undefined>;
 	readAllGames(): Promise<Game[]>;
-	saveGame(game: Game): Promise<boolean>;
+	updateGame(game: Game): Promise<boolean>;
 	readAndUpdateGame(playsig: Playsig): Promise<ReadAndUpdateGame | undefined>;
 	createGameWithPoolAndDeleteQueuers(
 		game: Game,
 		pool: Pool,
 		queuersPublicKeys: PublicKey[],
 	): Promise<boolean>;
-	observeCreatedGame(): Observable<Game>;
+	createdGame$: Observable<Game>;
 	observeGame(playsig: string): Observable<Game>;
 	readPool(playsig: string): Promise<Pool | undefined>;
 	createPool(pool: Pool): Promise<boolean>;
 	readAndUpdatePoolWithGame(
 		playsig: Playsig,
 	): Promise<ReadAndUpdatePoolWithGame | undefined>;
-	readQueuers(playsig: string): Promise<Queuer[]>;
-	saveQueuer(queuer: Queuer): Promise<boolean>;
-	observeQueuers(): Observable<Queuer[]>;
+	readQueuers(): Promise<Queuer[]>;
+	createQueuer(queuer: Queuer): Promise<boolean>;
+	queuers$: Observable<Queuer[]>;
 }

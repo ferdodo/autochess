@@ -5,8 +5,7 @@ import { Phase } from "../types/phase";
 import { computeCombatLoser } from "../utils/compute-combat-loser";
 
 export function setPlanningPhase(backContext: BackContext): Subscription {
-	return backContext.dataMapper
-		.observeCreatedGame()
+	return backContext.dataMapper.createdGame$
 		.pipe(
 			mergeMap((game) =>
 				merge(

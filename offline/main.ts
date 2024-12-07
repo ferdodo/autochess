@@ -17,6 +17,7 @@ import { cast } from "core/utils/cast";
 import { observeInteractions } from "interface/utils/observe-interactions";
 import { map } from "rxjs";
 import { observeInteractionHistory } from "core/utils/observe-interaction-history";
+import { logBench } from "./utils/log-bench";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -99,6 +100,8 @@ waitTextureLoaded
 		frontContext2.playsig = initiateGameResponse2.playsig;
 		frontContext1.stamp = initiateGameResponse1.stamp;
 		frontContext2.stamp = initiateGameResponse2.stamp;
+
+		logBench(frontContext1);
 
 		observeInteractions(threeContext1)
 			.pipe(observeInteractionHistory())

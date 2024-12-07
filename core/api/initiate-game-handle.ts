@@ -7,7 +7,7 @@ import { checkSignature } from "../utils/check-signature";
 
 export function initiateGameHandle({
 	connections$,
-	dataMapper: { saveQueuer, observeCreatedGame },
+	dataMapper: { createQueuer, createdGame$ },
 	queuerConnections,
 	isValidSignature,
 	serverPublicKey,
@@ -19,10 +19,10 @@ export function initiateGameHandle({
 				filter(Boolean),
 				checkSignature(isValidSignature),
 				tap(async ({ publicKey, nickname }: InitiateGameRequest) => {
-					const createdAt = Date.now();
+					const createdAt = new Date().toISOString();
 					queuerConnections[publicKey] = connection;
 
-					const saved = await saveQueuer({
+					const saved = await createQueuer({
 						publicKey,
 						nickname,
 						createdAt,
@@ -45,7 +45,7 @@ export function initiateGameHandle({
 		),
 	);
 
-	const sendResponses$ = observeCreatedGame().pipe(
+	const sendResponses$ = createdGame$.pipe(
 		tap((game) => {
 			for (const publicKey of game.publicKeys) {
 				const connection = queuerConnections[publicKey];
