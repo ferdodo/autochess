@@ -1,38 +1,31 @@
-import type { DataSource } from "typeorm";
 import type { Game } from "core/types/game";
-import type { GameRepository } from "../repositories/game-repository";
+import { getGameRepository } from "../repositories/game-repository";
 import type { Playsig } from "core/types/playsig";
-import type { PoolRepository } from "../repositories/pool-repository";
 import type { Pool } from "core/types/pool";
+import type { MikroORM } from "@mikro-orm/core";
+import { getPoolRepository } from "../repositories/pool-repository";
 
 export async function readAndUpdatePoolWithGame(
-	dataSource: DataSource,
-	_gameRepository: GameRepository,
-	_poolRepository: PoolRepository,
+	orm: MikroORM,
 	playsig: Playsig,
 ) {
-	const queryRunner = dataSource.createQueryRunner();
-	await queryRunner.connect();
-	await queryRunner.startTransaction();
-	const gameRepository = queryRunner.manager.withRepository(_gameRepository);
-	const poolRepository = queryRunner.manager.withRepository(_poolRepository);
-	const game = await gameRepository.findOneOrFail({ where: { playsig } });
-	const pool = await poolRepository.findOneOrFail({ where: { playsig } });
+	const em = orm.em.fork();
+	await em.begin();
+	const gameRepository = getGameRepository(em);
+	const poolRepository = getPoolRepository(em);
+	const game = await gameRepository.findOneOrFail({ playsig });
+	const pool = await poolRepository.findOneOrFail({ playsig });
 
 	async function commit(pool: Pool, game: Game) {
-		const { affected } = await gameRepository.update({ playsig }, game);
-
-		const { affected: affectedPool } = await poolRepository.update(
-			{ playsig },
-			pool,
-		);
-
-		await queryRunner.commitTransaction();
+		const affected = await gameRepository.nativeUpdate({ playsig }, game);
+		const affectedPool = await poolRepository.nativeUpdate({ playsig }, pool);
+		await em.flush();
+		await em.commit();
 		return Boolean(affected && affectedPool);
 	}
 
 	async function abort() {
-		await queryRunner.rollbackTransaction();
+		await em.rollback();
 	}
 
 	return { game, pool, commit, abort };

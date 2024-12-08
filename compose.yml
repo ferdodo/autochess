@@ -56,9 +56,18 @@ services:
   
   database:
     image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
 
   back:
     build: back
+    environment:
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: example
+      MONGODB_DATABASE: autochess
     depends_on:
       - core
       - database

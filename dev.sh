@@ -6,6 +6,7 @@ touch $STATE/build
 function sync-containers {
     docker cp . autochess-sandbox-1:/autochess
     docker cp . autochess-offline-1:/autochess
+    docker cp . autochess-back-1:/autochess
 }
 
 function set-state {
@@ -33,10 +34,15 @@ set -e
 setup_pre_commit_hook
 docker compose down -t 1
 docker compose up -d --build offline sandbox back
-echo "╭────────────────────────────────╮"
-echo "│ Sandbox: http://localhost:2437 │"
-echo "│ Offline: http://localhost:5423 │"
-echo "╰────────────────────────────────╯"
+echo "╭──────────────────────────────────────────────────╮"
+echo "│ Sandbox: http://localhost:2437                   │"
+echo "│ Offline: http://localhost:5423                   │"
+echo "│                                                  │"
+echo "│ Live feedback:                                   │"
+echo "│   docker compose logs -f --no-log-prefix back    │"
+echo "│   docker compose logs -f --no-log-prefix sandbox │"
+echo "│   docker compose logs -f --no-log-prefix offline │"
+echo "╰──────────────────────────────────────────────────╯"
 set +e
 
 while true

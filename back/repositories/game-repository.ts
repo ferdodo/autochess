@@ -1,5 +1,3 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import type { Repository, DataSource } from "typeorm";
 import type { Playsig } from "core/types/playsig";
 import type { PublicKey } from "core/types/public-key";
 import type { Hero } from "core/types/hero";
@@ -10,62 +8,53 @@ import type { Health } from "core/types/health";
 import type { Combat } from "core/types/combat";
 import type { Phase } from "core/types/phase";
 import type { DateTime } from "core/types/date-time";
-import type { Game as GameType } from "core/types/game";
-import type { Collection } from "mongodb";
-import type { MongoDriver } from "typeorm/driver/mongodb/MongoDriver";
+import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import type { EntityRepository, EntityManager } from "@mikro-orm/core";
 
 @Entity()
-class Game {
-	@PrimaryGeneratedColumn()
+export class Game {
+	@PrimaryKey()
+	_id: string;
+
+	@Property()
 	playsig: Playsig;
 
-	@Column()
+	@Property()
 	publicKeys: PublicKey[];
 
-	@Column()
+	@Property()
 	nicknames: Record<PublicKey, string>;
 
-	@Column()
+	@Property()
 	playerHeroes: Record<PublicKey, Hero[]>;
 
-	@Column()
+	@Property()
 	playerBenches: Record<PublicKey, Record<number, Hero>>;
 
-	@Column()
+	@Property()
 	playerShops: Record<PublicKey, Appellation[]>;
 
-	@Column()
+	@Property()
 	playerMoney: Record<PublicKey, Money>;
 
-	@Column()
+	@Property()
 	playerLevel: Record<PublicKey, Level>;
 
-	@Column()
+	@Property()
 	playerHealths: Record<PublicKey, Health>;
 
-	@Column()
+	@Property()
 	combats?: Combat[];
 
-	@Column()
+	@Property()
 	phase: Phase;
 
-	@Column()
+	@Property()
 	phaseStartAt: DateTime;
 }
 
-export type GameRepository = Repository<Game>;
+export type GameRepository = EntityRepository<Game>;
 
-export function getGameRepository(dataSource: DataSource): Repository<Game> {
-	return dataSource.getRepository(Game);
-}
-
-export function getGameCollection(
-	dataSource: DataSource,
-): Collection<GameType> {
-	const gameRepository = dataSource.getMongoRepository(Game);
-	const mongoDriver = gameRepository.manager.connection.driver as MongoDriver;
-
-	return mongoDriver.mongodb.MongoClient.getCollection(
-		gameRepository.metadata.targetName,
-	);
+export function getGameRepository(em: EntityManager): EntityRepository<Game> {
+	return em.getRepository(Game);
 }

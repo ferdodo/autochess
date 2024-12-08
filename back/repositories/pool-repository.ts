@@ -1,19 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import type { Repository, DataSource } from "typeorm";
-import type { Playsig } from "core/types/playsig";
 import type { Pool as PoolType } from "core/types/pool";
+import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import type { EntityRepository, EntityManager } from "@mikro-orm/core";
 
 @Entity()
-class Pool {
-	@PrimaryGeneratedColumn()
-	playsig: Playsig;
+export class Pool {
+	@PrimaryKey()
+	_id: string;
 
-	@Column()
+	@Property()
+	playsig: string;
+
+	@Property()
 	heroes: PoolType["heroes"];
 }
 
-export type PoolRepository = Repository<Pool>;
+export type PoolRepository = EntityRepository<Pool>;
 
-export function getPoolRepository(dataSource: DataSource): Repository<Pool> {
-	return dataSource.getRepository(Pool);
+export function getPoolRepository(em: EntityManager): EntityRepository<Pool> {
+	return em.getRepository(Pool);
 }

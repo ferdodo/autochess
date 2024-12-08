@@ -1,14 +1,11 @@
 import type { Pool } from "core/types/pool";
-import type { PoolRepository } from "../repositories/pool-repository";
+import { getPoolRepository } from "../repositories/pool-repository";
+import type { MikroORM } from "@mikro-orm/core";
 
-export async function createPool(
-	poolRepository: PoolRepository,
-	pool: Pool,
-): Promise<boolean> {
-	try {
-		await poolRepository.create(pool);
-		return true;
-	} catch (e) {
-		return false;
-	}
+export async function createPool(orm: MikroORM, pool: Pool): Promise<boolean> {
+	const em = orm.em.fork();
+	const poolRepository = getPoolRepository(em);
+	await poolRepository.create(pool);
+	await em.flush();
+	return true;
 }

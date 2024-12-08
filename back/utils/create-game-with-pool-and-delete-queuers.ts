@@ -1,38 +1,44 @@
-import type { DataSource } from "typeorm";
 import type { Game } from "core/types/game";
-import type { GameRepository } from "../repositories/game-repository";
+import { getGameRepository } from "../repositories/game-repository";
 import type { Pool } from "core/types/pool";
-import type { PoolRepository } from "../repositories/pool-repository";
-import type { QueuerRepository } from "../repositories/queuer-repository";
+import { getPoolRepository } from "../repositories/pool-repository";
+import { getQueuerRepository } from "../repositories/queuer-repository";
 import type { PublicKey } from "core/types/public-key";
+import type { MikroORM } from "@mikro-orm/core";
 
 export async function createGameWithPoolAndDeleteQueuers(
-	dataSource: DataSource,
-	_gameRepository: GameRepository,
-	_poolRepository: PoolRepository,
-	_queuerRepository: QueuerRepository,
+	orm: MikroORM,
 	game: Game,
 	pool: Pool,
 	queuersPublicKeys: PublicKey[],
 ) {
+	const em = orm.em.fork();
+
 	try {
-		const queryRunner = dataSource.createQueryRunner();
-		await queryRunner.connect();
-		await queryRunner.startTransaction();
-		const manager = queryRunner.manager;
-		const gameRepository = manager.withRepository(_gameRepository);
-		const poolRepository = manager.withRepository(_poolRepository);
-		const queuerRepository = manager.withRepository(_queuerRepository);
-		await gameRepository.create(game);
-		await poolRepository.create(pool);
+		await em.begin();
+		const gameRepository = getGameRepository(em);
+		const poolRepository = getPoolRepository(em);
+		const queuerRepository = getQueuerRepository(em);
+
+		await gameRepository.create({
+			_id: Math.random().toString(),
+			...game,
+		});
+
+		await poolRepository.create({
+			_id: Math.random().toString(),
+			...pool,
+		});
 
 		for (const publicKey of queuersPublicKeys) {
-			await queuerRepository.delete({ publicKey });
+			await queuerRepository.nativeDelete({ publicKey });
 		}
 
-		await queryRunner.commitTransaction();
+		await em.flush();
+		await em.commit();
 		return true;
 	} catch (error) {
-		return false;
+		await em.rollback();
+		throw error;
 	}
 }

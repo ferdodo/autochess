@@ -1,45 +1,28 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import type { Repository, DataSource } from "typeorm";
 import type { PublicKey } from "core/types/public-key";
 import type { Nickname } from "core/types/nickname";
 import type { DateTime } from "core/types/date-time";
-import type { Queuer as QueuerType } from "core/types/queuer";
-import type { Collection } from "mongodb";
-import type { MongoDriver } from "typeorm/driver/mongodb/MongoDriver";
+import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import type { EntityRepository, EntityManager } from "@mikro-orm/core";
 
 @Entity()
-class Queuer {
-	@PrimaryGeneratedColumn()
+export class Queuer {
+	@PrimaryKey()
+	_id;
+
+	@Property()
 	publicKey: PublicKey;
 
-	@Column()
+	@Property()
 	nickname: Nickname;
 
-	@Column()
+	@Property()
 	createdAt: DateTime;
 }
 
-export type QueuerRepository = Repository<Queuer>;
+export type QueuerRepository = EntityRepository<Queuer>;
 
 export function getQueuerRepository(
-	dataSource: DataSource,
-): Repository<Queuer> {
-	return dataSource.getRepository(Queuer);
-}
-
-export function getQueuerMongoRepository(
-	dataSource: DataSource,
-): Repository<Queuer> {
-	return dataSource.getMongoRepository(Queuer);
-}
-
-export function getQueuerCollection(
-	dataSource: DataSource,
-): Collection<QueuerType> {
-	const queuerRepository = dataSource.getMongoRepository(Queuer);
-	const mongoDriver = queuerRepository.manager.connection.driver as MongoDriver;
-
-	return mongoDriver.mongodb.MongoClient.getCollection(
-		queuerRepository.metadata.targetName,
-	);
+	em: EntityManager,
+): EntityRepository<Queuer> {
+	return em.getRepository(Queuer);
 }
