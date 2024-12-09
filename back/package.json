@@ -8,10 +8,12 @@
 		"@biomejs/biome": "^1.9.4",
 		"@nestjs/cli": "^10.4.8",
 		"@types/node": "^22.10.1",
-		"core": "../core",
+		"core": "file:../core",
 		"mongodb": "^5.9.2",
 		"rxjs": "^7.8.1",
-		"typescript": "^5.7.2"
+		"typescript": "^5.7.2",
+		"uid": "^2.0.2",
+		"ws": "^8.18.0"
 	},
 	"dependencies": {
 		"@mikro-orm/core": "^6.4.0",

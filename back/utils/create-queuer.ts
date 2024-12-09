@@ -1,6 +1,7 @@
 import { QueuerEntity } from "../entities/queuer";
 import type { Queuer } from "core/types/queuer";
 import type { MikroORM } from "@mikro-orm/core";
+import { uid } from "uid";
 
 export async function createQueuer(
 	orm: MikroORM,
@@ -10,7 +11,7 @@ export async function createQueuer(
 	const queuerRepository = em.getRepository(QueuerEntity);
 
 	await queuerRepository.create({
-		_id: Math.random().toString(),
+		_id: uid(),
 		...queuer,
 	});
 
