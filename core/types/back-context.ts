@@ -1,14 +1,14 @@
 import type { Observable } from "rxjs";
-import type { Connection } from "./connection";
-import type { ClientMessage } from "./client-message";
-import type { ServerMessage } from "./server-message";
-import type { Signed } from "./signed";
-import type { DataMapper } from "./data-mapper";
-import type { SignedMessage } from "./signed-message";
+import type { Connection } from "./connection.js";
+import type { ClientMessage } from "./client-message.js";
+import type { ServerMessage } from "./server-message.js";
+import type { Signed } from "./signed.js";
+import type { DataMapper } from "./data-mapper.js";
+import type { SignedMessage } from "./signed-message.js";
 import type { MonoTypeOperatorFunction } from "rxjs";
-import type { Queuer } from "./queuer";
-import type { Game } from "./game";
-import type { PublicKey } from "./public-key";
+import type { Queuer } from "./queuer.js";
+import type { Game } from "./game.js";
+import type { PublicKey } from "./public-key.js";
 
 export interface BackContext {
 	connections$: Observable<Connection<ClientMessage, ServerMessage>>;

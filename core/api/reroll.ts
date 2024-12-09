@@ -1,4 +1,4 @@
-import type { FrontContext } from "../types/front-context";
+import type { FrontContext } from "../types/front-context.js";
 
 export async function reroll(context: FrontContext): Promise<void> {
 	const { signMessage, connection, publicKey, stamp, playsig } = context;

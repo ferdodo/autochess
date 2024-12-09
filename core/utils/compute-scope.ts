@@ -1,5 +1,5 @@
-import type { Action } from "../types/action";
-import type { Scope } from "../types/scope";
+import type { Action } from "../types/action.js";
+import type { Scope } from "../types/scope.js";
 
 export function computeScope(action: Action): Scope {
 	const scope: Scope = {

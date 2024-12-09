@@ -1,6 +1,6 @@
 import type { Queuer } from "core/types/queuer";
 import type { Collection } from "mongodb";
-import { QueuerEntity } from "../entities/queuer";
+import { QueuerEntity } from "../entities/queuer.js";
 import { Observable, share } from "rxjs";
 import type { MikroORM } from "@mikro-orm/core";
 

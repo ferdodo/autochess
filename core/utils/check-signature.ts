@@ -1,6 +1,6 @@
 import type { Observable, OperatorFunction } from "rxjs";
 import { mergeMap, filter, map } from "rxjs/operators";
-import type { Signed } from "../types/signed";
+import type { Signed } from "../types/signed.js";
 
 export function checkSignature<T>(
 	isValidSignature: (signature: T & Signed) => Promise<boolean>,

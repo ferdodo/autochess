@@ -1,8 +1,8 @@
-import type { BackContext } from "../types/back-context";
+import type { BackContext } from "../types/back-context.js";
 import type { Subscription } from "rxjs";
 import { tap, mergeMap, filter, merge, from } from "rxjs";
-import { Phase } from "../types/phase";
-import { generateCombats } from "../utils/generate-combats";
+import { Phase } from "../types/phase.js";
+import { generateCombats } from "../utils/generate-combats.js";
 
 export function setCombatPhase(backContext: BackContext): Subscription {
 	return backContext.dataMapper.createdGame$

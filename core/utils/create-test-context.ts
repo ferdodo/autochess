@@ -1,11 +1,11 @@
-import type { BackContext } from "../types/back-context";
-import { ConnectionMockFactory } from "../mocks/connection-mock-factory";
-import type { TestContext } from "../types/test-context";
-import { createDataMapperMock } from "../mocks/create-data-mapper-mock";
+import type { BackContext } from "../types/back-context.js";
+import { ConnectionMockFactory } from "../mocks/connection-mock-factory.js";
+import type { TestContext } from "../types/test-context.js";
+import { createDataMapperMock } from "../mocks/create-data-mapper-mock.js";
 import { Subject, withLatestFrom, map, tap, share } from "rxjs";
-import type { Queuer } from "../types/queuer";
+import type { Queuer } from "../types/queuer.js";
 import type { Observable } from "rxjs";
-import type { Game } from "../types/game";
+import type { Game } from "../types/game.js";
 
 export function createTestContext(): TestContext {
 	const dataMapper = createDataMapperMock();

@@ -1,5 +1,5 @@
-import type { FrontContext } from "../types/front-context";
-import type { TestContext } from "../types/test-context";
+import type { FrontContext } from "../types/front-context.js";
+import type { TestContext } from "../types/test-context.js";
 
 export function asNewPlayerConnect(testContext: TestContext) {
 	const [connection] = testContext.connectionMockFactory.createClient();

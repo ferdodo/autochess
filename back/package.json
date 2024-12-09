@@ -1,5 +1,6 @@
 {
 	"main": "dist/main.js",
+	"type": "module",
 	"scripts": {
 		"build": "tsc --noEmit && biome ci --organize-imports-enabled=false && nest build",
 		"start": "nest start -w"

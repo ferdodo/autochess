@@ -1,10 +1,10 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap } from "rxjs/operators";
-import type { BackContext } from "../types/back-context";
-import { checkSignature } from "../utils/check-signature";
-import { checkStamp } from "../utils/check-stamp";
-import { getLevelUpCost } from "../utils/get-level-up-cost";
-import { levelSchema, type Level } from "../types/level";
+import type { BackContext } from "../types/back-context.js";
+import { checkSignature } from "../utils/check-signature.js";
+import { checkStamp } from "../utils/check-stamp.js";
+import { getLevelUpCost } from "../utils/get-level-up-cost.js";
+import { levelSchema, type Level } from "../types/level.js";
 
 export function levelUpHandle(context: BackContext): Subscription {
 	const {

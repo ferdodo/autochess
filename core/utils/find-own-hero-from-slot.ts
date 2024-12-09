@@ -1,7 +1,7 @@
-import type { Game } from "../types/game";
-import type { PieceSlot } from "../types/piece-slot";
-import type { PublicKey } from "../types/public-key";
-import type { Hero } from "../types/hero";
+import type { Game } from "../types/game.js";
+import type { PieceSlot } from "../types/piece-slot.js";
+import type { PublicKey } from "../types/public-key.js";
+import type { Hero } from "../types/hero.js";
 
 export function findOwnHeroFromSlot(
 	game: Game,

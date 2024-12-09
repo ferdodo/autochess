@@ -1,8 +1,8 @@
-import type { Game } from "../types/game";
-import type { Queuer } from "../types/queuer";
+import type { Game } from "../types/game.js";
+import type { Queuer } from "../types/queuer.js";
 import { Subject, filter, map } from "rxjs";
-import type { DataMapper } from "../types/data-mapper";
-import type { Pool } from "../types/pool";
+import type { DataMapper } from "../types/data-mapper.js";
+import type { Pool } from "../types/pool.js";
 
 export function createDataMapperMock(): DataMapper {
 	let games: Game[] = [];

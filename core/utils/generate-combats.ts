@@ -1,7 +1,7 @@
-import type { Game } from "../types/game";
-import type { Combat } from "../types/combat";
-import type { PublicKey } from "../types/public-key";
-import { generateActions } from "./generate-actions";
+import type { Game } from "../types/game.js";
+import type { Combat } from "../types/combat.js";
+import type { PublicKey } from "../types/public-key.js";
+import { generateActions } from "./generate-actions.js";
 
 export async function generateCombats(game: Game): Promise<Combat[]> {
 	const players: PublicKey[] = [];

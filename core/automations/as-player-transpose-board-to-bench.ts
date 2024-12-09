@@ -1,9 +1,9 @@
-import type { TestContext } from "../types/test-context";
+import type { TestContext } from "../types/test-context.js";
 import { firstValueFrom, map, filter } from "rxjs";
-import { observeGame } from "../api/observe-game";
-import { getGame } from "../utils/get-game";
-import { transpose } from "../api/transpose";
-import type { PieceSlot } from "../types/piece-slot";
+import { observeGame } from "../api/observe-game.js";
+import { getGame } from "../utils/get-game.js";
+import { transpose } from "../api/transpose.js";
+import type { PieceSlot } from "../types/piece-slot.js";
 
 export async function asPlayerTransposeBoardToBench(
 	testContext: TestContext,

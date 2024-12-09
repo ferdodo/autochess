@@ -1,4 +1,4 @@
-import type { TestContext } from "../types/test-context";
+import type { TestContext } from "../types/test-context.js";
 import { firstValueFrom, filter } from "rxjs";
 
 export async function goToNextPhase(testContext: TestContext, playerIndex = 0) {

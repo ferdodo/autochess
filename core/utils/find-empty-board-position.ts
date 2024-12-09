@@ -1,6 +1,6 @@
-import { getBoardBlock } from "./get-board-block";
-import type { Game } from "../types/game";
-import type { PublicKey } from "../types/public-key";
+import { getBoardBlock } from "./get-board-block.js";
+import type { Game } from "../types/game.js";
+import type { PublicKey } from "../types/public-key.js";
 import type { Block } from "blockwise";
 
 export function findEmptyBoardPosition(

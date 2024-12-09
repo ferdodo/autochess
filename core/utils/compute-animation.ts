@@ -1,6 +1,6 @@
-import type { Hero } from "../types/hero";
-import type { Action } from "../types/action";
-import { Animation } from "../types/animation";
+import type { Hero } from "../types/hero.js";
+import type { Action } from "../types/action.js";
+import { Animation } from "../types/animation.js";
 
 export function computeAnimation(hero: Hero, actions: Action[]) {
 	for (const action of actions) {

@@ -1,7 +1,7 @@
-import { asNewPlayerConnect } from "../automations/as-new-player-connect";
-import { asPlayerInitiateGame } from "../automations/as-player-initiate-game";
-import type { TestContext } from "../types/test-context";
-import { withServerStarted } from "./with-server-started";
+import { asNewPlayerConnect } from "../automations/as-new-player-connect.js";
+import { asPlayerInitiateGame } from "../automations/as-player-initiate-game.js";
+import type { TestContext } from "../types/test-context.js";
+import { withServerStarted } from "./with-server-started.js";
 
 export async function withTwoPlayerGameStarted(): Promise<TestContext> {
 	const testContext = withServerStarted();

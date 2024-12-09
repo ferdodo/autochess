@@ -1,5 +1,5 @@
-import type { Appellation } from "./appellation";
-import type { Playsig } from "./playsig";
+import type { Appellation } from "./appellation.js";
+import type { Playsig } from "./playsig.js";
 
 type PoolHeroes = [
 	Appellation,

@@ -1,5 +1,5 @@
-import { initiateGame } from "../api/initiate-game";
-import type { TestContext } from "../types/test-context";
+import { initiateGame } from "../api/initiate-game.js";
+import type { TestContext } from "../types/test-context.js";
 
 export async function asPlayerInitiateGame(
 	testContext: TestContext,

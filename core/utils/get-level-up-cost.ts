@@ -1,4 +1,4 @@
-import type { Game } from "../types/game";
+import type { Game } from "../types/game.js";
 
 export function getLevelUpCost(game: Game, publicKey: string): number {
 	const level = game.playerLevel[publicKey];

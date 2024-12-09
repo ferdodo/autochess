@@ -1,7 +1,7 @@
 import type { BackContext } from "core/types/back-context";
-import { createWsServer } from "./create-ws-server";
+import { createWsServer } from "./create-ws-server.js";
 import { debounceTime } from "rxjs";
-import { createDataMapper } from "./create-data-mapper";
+import { createDataMapper } from "./create-data-mapper.js";
 import type { MikroORM } from "@mikro-orm/core";
 import type { Db } from "mongodb";
 import { createRoundTimer } from "core/utils/create-round-timer";

@@ -1,7 +1,7 @@
 import type { Pool } from "core/types/pool";
 import type { Playsig } from "core/types/playsig";
 import type { MikroORM } from "@mikro-orm/core";
-import { PoolEntity } from "../entities/pool";
+import { PoolEntity } from "../entities/pool.js";
 
 export async function readPool(
 	orm: MikroORM,

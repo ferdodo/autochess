@@ -1,4 +1,4 @@
-import type { Game } from "../types/game";
+import type { Game } from "../types/game.js";
 
 export function isGameInProgress(game: Game): boolean {
 	let alivePlayers = 0;

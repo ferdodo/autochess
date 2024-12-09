@@ -1,4 +1,4 @@
-import type { Confrontation } from "../types/confrontation";
+import type { Confrontation } from "../types/confrontation.js";
 
 export function isConfrontationInProgress(
 	confrontation: Confrontation,

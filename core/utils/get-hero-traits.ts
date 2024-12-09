@@ -1,5 +1,5 @@
-import { Appellation } from "../types/appellation";
-import { Trait } from "../types/trait";
+import { Appellation } from "../types/appellation.js";
+import { Trait } from "../types/trait.js";
 
 export function getHeroTraits(appellation: Appellation): Trait[] {
 	const traitsByAppellation: Record<Appellation, Trait[]> = {

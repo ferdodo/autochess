@@ -1,4 +1,4 @@
-import { Phase } from "../types/phase";
+import { Phase } from "../types/phase.js";
 
 export function getPhaseDuration(phase: Phase): number {
 	switch (phase) {

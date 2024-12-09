@@ -1,5 +1,5 @@
-import type { Confrontation } from "../types/confrontation";
-import type { Action } from "../types/action";
+import type { Confrontation } from "../types/confrontation.js";
+import type { Action } from "../types/action.js";
 
 export function computeConfrontation(
 	_confrontation: Confrontation,

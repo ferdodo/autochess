@@ -1,8 +1,8 @@
-import type { Move } from "./move";
+import type { Move } from "./move.js";
 import type { FromSchema } from "json-schema-to-ts";
-import { moveSchema } from "./move";
-import type { Attack } from "./attack";
-import { attackSchema } from "./attack";
+import { moveSchema } from "./move.js";
+import type { Attack } from "./attack.js";
+import { attackSchema } from "./attack.js";
 import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface Action {

@@ -1,7 +1,7 @@
-import type { Hero } from "../types/hero";
-import type { Piece } from "../types/piece";
-import { Animation } from "../types/animation";
-import type { HeroId } from "../types/hero-id";
+import type { Hero } from "../types/hero.js";
+import type { Piece } from "../types/piece.js";
+import { Animation } from "../types/animation.js";
+import type { HeroId } from "../types/hero-id.js";
 
 export function portrayBench(
 	bench: Record<number, Hero>,

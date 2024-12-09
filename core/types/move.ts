@@ -1,5 +1,5 @@
 import type { FromSchema } from "json-schema-to-ts";
-import { heroIdSchema, type HeroId } from "./hero-id";
+import { heroIdSchema, type HeroId } from "./hero-id.js";
 import { blockSchema } from "blockwise";
 import type { Block } from "blockwise";
 import type { JsonSchemaRecommended } from "json-schema-policies";

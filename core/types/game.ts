@@ -1,19 +1,19 @@
-import { publicKeySchema, type PublicKey } from "./public-key";
-import { heroSchema, type Hero } from "./hero";
-import { appellationSchema, type Appellation } from "./appellation";
-import type { Playsig } from "./playsig";
-import { phaseSchema } from "./phase";
-import type { Phase } from "./phase";
-import { levelSchema, type Level } from "./level";
-import { playsigSchema } from "./playsig";
-import { nicknameSchema } from "./nickname";
+import { publicKeySchema, type PublicKey } from "./public-key.js";
+import { heroSchema, type Hero } from "./hero.js";
+import { appellationSchema, type Appellation } from "./appellation.js";
+import type { Playsig } from "./playsig.js";
+import { phaseSchema } from "./phase.js";
+import type { Phase } from "./phase.js";
+import { levelSchema, type Level } from "./level.js";
+import { playsigSchema } from "./playsig.js";
+import { nicknameSchema } from "./nickname.js";
 import type { FromSchema } from "json-schema-to-ts";
 import type { JsonSchemaRecommended } from "json-schema-policies";
-import { type Combat, combatSchema } from "./combat";
-import { healthSchema, type Health } from "./health";
-import { moneySchema } from "./money";
-import type { Money } from "./money";
-import { dateTimeSchema, type DateTime } from "./date-time";
+import { type Combat, combatSchema } from "./combat.js";
+import { healthSchema, type Health } from "./health.js";
+import { moneySchema } from "./money.js";
+import type { Money } from "./money.js";
+import { dateTimeSchema, type DateTime } from "./date-time.js";
 
 export interface Game {
 	playsig: Playsig;

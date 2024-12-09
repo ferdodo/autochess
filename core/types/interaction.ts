@@ -1,4 +1,4 @@
-import type { PieceSlot } from "./piece-slot";
+import type { PieceSlot } from "./piece-slot.js";
 
 export interface Interaction {
 	grabPiece?: PieceSlot;

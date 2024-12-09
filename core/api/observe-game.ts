@@ -1,7 +1,7 @@
-import type { FrontContext } from "../types/front-context";
+import type { FrontContext } from "../types/front-context.js";
 import { filter, map, defer, share } from "rxjs";
 import type { Observable } from "rxjs";
-import type { Game } from "../types/game";
+import type { Game } from "../types/game.js";
 
 export function observeGame({
 	signMessage,

@@ -1,8 +1,8 @@
-import { reroll } from "../api/reroll";
-import type { TestContext } from "../types/test-context";
+import { reroll } from "../api/reroll.js";
+import type { TestContext } from "../types/test-context.js";
 import { firstValueFrom, map, filter } from "rxjs";
-import { observeGame } from "../api/observe-game";
-import { getRerollCost } from "../utils/get-reroll-cost";
+import { observeGame } from "../api/observe-game.js";
+import { getRerollCost } from "../utils/get-reroll-cost.js";
 
 export async function asPlayerReroll(
 	testContext: TestContext,

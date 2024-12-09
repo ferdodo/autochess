@@ -1,15 +1,15 @@
-import type { PublicKey } from "./public-key";
-import { publicKeySchema } from "./public-key";
-import type { Signature } from "./signature";
-import { signatureSchema } from "./signature";
-import type { DateTime } from "./date-time";
-import { dateTimeSchema } from "./date-time";
+import type { PublicKey } from "./public-key.js";
+import { publicKeySchema } from "./public-key.js";
+import type { Signature } from "./signature.js";
+import { signatureSchema } from "./signature.js";
+import type { DateTime } from "./date-time.js";
+import { dateTimeSchema } from "./date-time.js";
 import type { FromSchema } from "json-schema-to-ts";
 import type { JsonSchemaRecommended } from "json-schema-policies";
-import type { Stamp } from "./stamp";
-import { stampSchema } from "./stamp";
-import { playsigSchema } from "./playsig";
-import type { Playsig } from "./playsig";
+import type { Stamp } from "./stamp.js";
+import { stampSchema } from "./stamp.js";
+import { playsigSchema } from "./playsig.js";
+import type { Playsig } from "./playsig.js";
 
 export interface RerollRequest {
 	publicKey: PublicKey;

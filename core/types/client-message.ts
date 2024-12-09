@@ -1,13 +1,19 @@
-import type { InitiateGameRequest } from "./initiate-game-request";
-import { initiateGameRequestSchema } from "./initiate-game-request";
-import { LevelUpRequestSchema, type LevelUpRequest } from "./level-up-request";
-import { ObserveGameSubscribeSchema } from "./observe-game-subscribe";
-import type { ObserveGameSubscribe } from "./observe-game-subscribe";
-import { rerollRequestSchema } from "./reroll-request";
-import type { RerollRequest } from "./reroll-request";
-import { shopBuyRequestSchema, type ShopBuyRequest } from "./shop-buy-request";
-import { transposeRequestSchema } from "./transpose-request";
-import type { TransposeRequest } from "./transpose-request";
+import type { InitiateGameRequest } from "./initiate-game-request.js";
+import { initiateGameRequestSchema } from "./initiate-game-request.js";
+import {
+	LevelUpRequestSchema,
+	type LevelUpRequest,
+} from "./level-up-request.js";
+import { ObserveGameSubscribeSchema } from "./observe-game-subscribe.js";
+import type { ObserveGameSubscribe } from "./observe-game-subscribe.js";
+import { rerollRequestSchema } from "./reroll-request.js";
+import type { RerollRequest } from "./reroll-request.js";
+import {
+	shopBuyRequestSchema,
+	type ShopBuyRequest,
+} from "./shop-buy-request.js";
+import { transposeRequestSchema } from "./transpose-request.js";
+import type { TransposeRequest } from "./transpose-request.js";
 import type { FromSchema } from "json-schema-to-ts";
 import type { JsonSchemaRecommended } from "json-schema-policies";
 

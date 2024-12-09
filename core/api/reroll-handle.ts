@@ -1,10 +1,10 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap } from "rxjs/operators";
-import type { BackContext } from "../types/back-context";
-import { checkSignature } from "../utils/check-signature";
-import type { Pool } from "../types/pool";
-import { checkStamp } from "../utils/check-stamp";
-import { getRerollCost } from "../utils/get-reroll-cost";
+import type { BackContext } from "../types/back-context.js";
+import { checkSignature } from "../utils/check-signature.js";
+import type { Pool } from "../types/pool.js";
+import { checkStamp } from "../utils/check-stamp.js";
+import { getRerollCost } from "../utils/get-reroll-cost.js";
 
 export function rerollHandle(context: BackContext): Subscription {
 	const {

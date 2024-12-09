@@ -1,8 +1,8 @@
-import type { TestContext } from "../types/test-context";
+import type { TestContext } from "../types/test-context.js";
 import { firstValueFrom, map, filter } from "rxjs";
-import { observeGame } from "../api/observe-game";
-import { getGame } from "../utils/get-game";
-import { shopBuy } from "../api/shop-buy";
+import { observeGame } from "../api/observe-game.js";
+import { getGame } from "../utils/get-game.js";
+import { shopBuy } from "../api/shop-buy.js";
 
 export async function asPlayerShopBuy(
 	testContext: TestContext,

@@ -1,10 +1,10 @@
-import type { Confrontation } from "../types/confrontation";
-import type { HeroId } from "../types/hero-id";
+import type { Confrontation } from "../types/confrontation.js";
+import type { HeroId } from "../types/hero-id.js";
 import { findClosestBlock } from "blockwise";
-import { isMoveLegal } from "./is-move-legal";
+import { isMoveLegal } from "./is-move-legal.js";
 import type { Block } from "blockwise";
-import { revertPosition } from "./revert-position";
-import { getHeroAndATeamFromConfrontation } from "./get-hero-and-a-team-from-confrontation";
+import { revertPosition } from "./revert-position.js";
+import { getHeroAndATeamFromConfrontation } from "./get-hero-and-a-team-from-confrontation.js";
 
 export function moveToClosestHittableHero(
 	confrontation: Confrontation,

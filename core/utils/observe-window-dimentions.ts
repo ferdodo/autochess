@@ -1,4 +1,4 @@
-import { getWindowDimentions } from "./get-window-dimentions";
+import { getWindowDimentions } from "./get-window-dimentions.js";
 import type { Observable } from "rxjs";
 import { Subject } from "rxjs";
 import { debounceTime } from "rxjs/operators";

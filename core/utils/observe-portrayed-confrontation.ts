@@ -1,15 +1,15 @@
-import type { Game } from "../types/game";
+import type { Game } from "../types/game.js";
 import type { OperatorFunction } from "rxjs";
 import { switchMap, distinctUntilKeyChanged } from "rxjs/operators";
 import { Observable } from "rxjs";
-import type { Confrontation } from "../types/confrontation";
-import { Phase } from "../types/phase";
-import type { PublicKey } from "../types/public-key";
-import { computeConfrontation } from "./compute-confrontation";
-import type { Piece } from "../types/piece";
-import { Animation } from "../types/animation";
-import { revertPosition } from "./revert-position";
-import { computeAnimation } from "./compute-animation";
+import type { Confrontation } from "../types/confrontation.js";
+import { Phase } from "../types/phase.js";
+import type { PublicKey } from "../types/public-key.js";
+import { computeConfrontation } from "./compute-confrontation.js";
+import type { Piece } from "../types/piece.js";
+import { Animation } from "../types/animation.js";
+import { revertPosition } from "./revert-position.js";
+import { computeAnimation } from "./compute-animation.js";
 
 export function observePortrayedConfrontation(
 	publicKey: PublicKey,

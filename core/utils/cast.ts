@@ -1,9 +1,9 @@
-import { reroll } from "../api/reroll";
-import type { Interaction } from "../types/interaction";
-import type { FrontContext } from "../types/front-context";
-import { levelUp } from "../api/level-up";
-import { shopBuy } from "../api/shop-buy";
-import { transpose } from "../api/transpose";
+import { reroll } from "../api/reroll.js";
+import type { Interaction } from "../types/interaction.js";
+import type { FrontContext } from "../types/front-context.js";
+import { levelUp } from "../api/level-up.js";
+import { shopBuy } from "../api/shop-buy.js";
+import { transpose } from "../api/transpose.js";
 
 export async function cast(
 	frontContext: FrontContext,

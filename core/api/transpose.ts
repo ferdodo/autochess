@@ -1,5 +1,5 @@
-import type { FrontContext } from "../types/front-context";
-import type { PieceSlot } from "../types/piece-slot";
+import type { FrontContext } from "../types/front-context.js";
+import type { PieceSlot } from "../types/piece-slot.js";
 
 export async function transpose(
 	frontContext: FrontContext,

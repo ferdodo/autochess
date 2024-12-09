@@ -1,7 +1,7 @@
-import { withTwoPlayerGameStarted } from "../fixtures/with-two-player-game-started";
-import { findOwnHeroFromSlot } from "./find-own-hero-from-slot";
+import { withTwoPlayerGameStarted } from "../fixtures/with-two-player-game-started.js";
+import { findOwnHeroFromSlot } from "./find-own-hero-from-slot.js";
 import { test, expect } from "vitest";
-import { getGame } from "../utils/get-game";
+import { getGame } from "../utils/get-game.js";
 
 test("findOwnHeroFromSlot", async () => {
 	const testContext = await withTwoPlayerGameStarted();

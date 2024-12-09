@@ -1,9 +1,9 @@
-import type { Action } from "./action";
+import type { Action } from "./action.js";
 import type { FromSchema } from "json-schema-to-ts";
-import { actionSchema } from "./action";
+import { actionSchema } from "./action.js";
 import type { JsonSchemaRecommended } from "json-schema-policies";
-import { heroSchema, type Hero } from "./hero";
-import { publicKeySchema, type PublicKey } from "./public-key";
+import { heroSchema, type Hero } from "./hero.js";
+import { publicKeySchema, type PublicKey } from "./public-key.js";
 
 export interface Combat {
 	playerAPublicKey: PublicKey;

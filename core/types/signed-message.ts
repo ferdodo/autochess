@@ -1,6 +1,6 @@
-import type { DateTime } from "./date-time";
-import type { PublicKey } from "./public-key";
-import type { Signature } from "./signature";
+import type { DateTime } from "./date-time.js";
+import type { PublicKey } from "./public-key.js";
+import type { Signature } from "./signature.js";
 
 export interface SignedMessage {
 	publicKey: PublicKey;

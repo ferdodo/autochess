@@ -1,5 +1,5 @@
 import type { Game } from "core/types/game";
-import { GameEntity } from "../entities/game";
+import { GameEntity } from "../entities/game.js";
 import type { Playsig } from "core/types/playsig";
 import type { MikroORM } from "@mikro-orm/core";
 

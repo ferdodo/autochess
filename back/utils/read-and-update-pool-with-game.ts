@@ -1,9 +1,9 @@
 import type { Game } from "core/types/game";
-import { GameEntity } from "../entities/game";
+import { GameEntity } from "../entities/game.js";
 import type { Playsig } from "core/types/playsig";
 import type { Pool } from "core/types/pool";
 import type { MikroORM } from "@mikro-orm/core";
-import { PoolEntity } from "../entities/pool";
+import { PoolEntity } from "../entities/pool.js";
 
 export async function readAndUpdatePoolWithGame(
 	orm: MikroORM,

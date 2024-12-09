@@ -1,6 +1,6 @@
 import type { FromSchema } from "json-schema-to-ts";
-import type { HeroId } from "./hero-id";
-import { heroIdSchema } from "./hero-id";
+import type { HeroId } from "./hero-id.js";
+import { heroIdSchema } from "./hero-id.js";
 import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface Attack {

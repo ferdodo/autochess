@@ -1,8 +1,8 @@
 import { test } from "vitest";
-import { cast } from "./cast";
-import { withTwoPlayerGameStarted } from "../fixtures/with-two-player-game-started";
+import { cast } from "./cast.js";
+import { withTwoPlayerGameStarted } from "../fixtures/with-two-player-game-started.js";
 import { firstValueFrom, map, filter } from "rxjs";
-import { observeGame } from "../api/observe-game";
+import { observeGame } from "../api/observe-game.js";
 
 test("cast a reroll", async () => {
 	const testContext = await withTwoPlayerGameStarted();

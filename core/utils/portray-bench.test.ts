@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
-import { withOneBoughtHero } from "../fixtures/with-one-bought-hero";
-import { portrayBench } from "./portray-bench";
-import { getGame } from "../utils/get-game";
+import { withOneBoughtHero } from "../fixtures/with-one-bought-hero.js";
+import { portrayBench } from "./portray-bench.js";
+import { getGame } from "../utils/get-game.js";
 
 test("portray-bench", async () => {
 	const testContext = await withOneBoughtHero();

@@ -13,7 +13,7 @@ export function createWsServer<I, O>(): Observable<Connection<I, O>> {
 
 		wss.on("connection", (ws) => {
 			const messages$ = new Observable<I>((messageSubscriber) => {
-				ws.on("message", function message(data) {
+				ws.on("message", async function message(data) {
 					if (data.toString() === "KEEP_ALIVE") {
 						return;
 					}
@@ -27,7 +27,7 @@ export function createWsServer<I, O>(): Observable<Connection<I, O>> {
 						return;
 					}
 
-					const [valid, errors] = validateClientMessage(parsed);
+					const [valid, errors] = await validateClientMessage(parsed);
 
 					if (valid) {
 						messageSubscriber.next(parsed);

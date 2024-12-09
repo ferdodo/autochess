@@ -1,6 +1,6 @@
-import type { Hero } from "../types/hero";
+import type { Hero } from "../types/hero.js";
 import { uid } from "uid";
-import { getRandomAppellation } from "./get-random-appellation";
+import { getRandomAppellation } from "./get-random-appellation.js";
 
 export class HeroFactory {
 	build(appellation = getRandomAppellation()): Hero {

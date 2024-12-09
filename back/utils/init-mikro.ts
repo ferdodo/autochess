@@ -1,7 +1,7 @@
 import { MikroORM } from "@mikro-orm/mongodb";
-import { GameEntity } from "../entities/game";
-import { QueuerEntity } from "../entities/queuer";
-import { PoolEntity } from "../entities/pool";
+import { GameEntity } from "../entities/game.js";
+import { QueuerEntity } from "../entities/queuer.js";
+import { PoolEntity } from "../entities/pool.js";
 
 export function initMikro(): Promise<MikroORM> {
 	return MikroORM.init({

@@ -1,13 +1,11 @@
-import type { Action } from "../types/action";
-import { combatSchema, type Combat } from "../types/combat";
-import type { Confrontation } from "../types/confrontation";
-import { computeConfrontation } from "./compute-confrontation";
-import { createConfrontationHeroOrder } from "./create-confrontation-hero-order";
-import { findHittableHero } from "./find-hittable-hero";
-import { getHeroAndATeamFromConfrontation } from "./get-hero-and-a-team-from-confrontation";
-import { isConfrontationInProgress } from "./is-confrontation-in-progress";
-import { moveToClosestHittableHero } from "./move-to-closest-hittable-hero";
-import { revertPosition } from "./revert-position";
+import type { Action } from "../types/action.js";
+import { combatSchema, type Combat } from "../types/combat.js";
+import type { Confrontation } from "../types/confrontation.js";
+import { computeConfrontation } from "./compute-confrontation.js";
+import { createConfrontationHeroOrder } from "./create-confrontation-hero-order.js";
+import { findHittableHero } from "./find-hittable-hero.js";
+import { isConfrontationInProgress } from "./is-confrontation-in-progress.js";
+import { moveToClosestHittableHero } from "./move-to-closest-hittable-hero.js";
 
 export async function* generateActions(
 	combat: Combat,

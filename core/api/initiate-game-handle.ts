@@ -1,9 +1,9 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap, finalize } from "rxjs/operators";
 import { merge } from "rxjs";
-import type { BackContext } from "../types/back-context";
-import type { InitiateGameRequest } from "../types/initiate-game-request";
-import { checkSignature } from "../utils/check-signature";
+import type { BackContext } from "../types/back-context.js";
+import type { InitiateGameRequest } from "../types/initiate-game-request.js";
+import { checkSignature } from "../utils/check-signature.js";
 
 export function initiateGameHandle({
 	connections$,

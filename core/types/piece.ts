@@ -1,5 +1,5 @@
-import type { Animation } from "./animation";
-import type { Hero } from "./hero";
+import type { Animation } from "./animation.js";
+import type { Hero } from "./hero.js";
 
 export interface Piece {
 	hero: Hero;

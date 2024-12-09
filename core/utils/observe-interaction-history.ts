@@ -1,6 +1,6 @@
 import type { OperatorFunction } from "rxjs";
 import { scan } from "rxjs/operators";
-import type { Interaction } from "../types/interaction";
+import type { Interaction } from "../types/interaction.js";
 
 export function observeInteractionHistory(): OperatorFunction<
 	Interaction,

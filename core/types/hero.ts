@@ -1,11 +1,11 @@
-import { appellationSchema, type Appellation } from "./appellation";
+import { appellationSchema, type Appellation } from "./appellation.js";
 import type { Block } from "blockwise";
-import { attributesSchema, type Attributes } from "./attributes";
-import { gradeSchema, type Grade } from "./grade";
+import { attributesSchema, type Attributes } from "./attributes.js";
+import { gradeSchema, type Grade } from "./grade.js";
 import type { FromSchema } from "json-schema-to-ts";
 import { blockSchema } from "blockwise";
-import type { HeroId } from "./hero-id";
-import { heroIdSchema } from "./hero-id";
+import type { HeroId } from "./hero-id.js";
+import { heroIdSchema } from "./hero-id.js";
 import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface Hero {

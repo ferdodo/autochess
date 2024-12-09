@@ -1,7 +1,7 @@
-import type { Combat } from "../types/combat";
-import type { PublicKey } from "../types/public-key";
-import type { Confrontation } from "../types/confrontation";
-import { computeConfrontation } from "./compute-confrontation";
+import type { Combat } from "../types/combat.js";
+import type { PublicKey } from "../types/public-key.js";
+import type { Confrontation } from "../types/confrontation.js";
+import { computeConfrontation } from "./compute-confrontation.js";
 
 export function computeCombatLoser(combat: Combat): PublicKey {
 	let confrontation: Confrontation = {

@@ -9,7 +9,6 @@ import type { Combat } from "core/types/combat";
 import type { Phase } from "core/types/phase";
 import type { DateTime } from "core/types/date-time";
 import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
-import type { EntityRepository, EntityManager } from "@mikro-orm/core";
 
 @Entity()
 class Game {

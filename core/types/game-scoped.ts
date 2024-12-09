@@ -1,6 +1,6 @@
-import type { PublicKey } from "./public-key";
-import type { Stamp } from "./stamp";
-import type { Playsig } from "./playsig";
+import type { PublicKey } from "./public-key.js";
+import type { Stamp } from "./stamp.js";
+import type { Playsig } from "./playsig.js";
 
 export interface GameScoped {
 	publicKey: PublicKey;

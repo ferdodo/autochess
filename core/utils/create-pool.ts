@@ -1,5 +1,5 @@
-import type { Pool } from "../types/pool";
-import { getRandomAppellation } from "./get-random-appellation";
+import type { Pool } from "../types/pool.js";
+import { getRandomAppellation } from "./get-random-appellation.js";
 
 export function createPool(playsig: string): Pool {
 	return {

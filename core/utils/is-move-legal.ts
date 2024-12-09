@@ -1,9 +1,9 @@
-import type { Confrontation } from "../types/confrontation";
-import { getBoardBlock } from "./get-board-block";
+import type { Confrontation } from "../types/confrontation.js";
+import { getBoardBlock } from "./get-board-block.js";
 import { isBlockIncluding, isBlockGroupColliding } from "blockwise";
 import type { Block } from "blockwise";
-import type { Hero } from "../types/hero";
-import { revertPosition } from "./revert-position";
+import type { Hero } from "../types/hero.js";
+import { revertPosition } from "./revert-position.js";
 
 export function isMoveLegal(confrontation: Confrontation, hero: Hero) {
 	return (move: Block) => {

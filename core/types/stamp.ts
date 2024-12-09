@@ -1,8 +1,8 @@
-import { signatureSchema, type Signature } from "./signature";
-import { dateTimeSchema, type DateTime } from "./date-time";
-import { publicKeySchema, type PublicKey } from "./public-key";
+import { signatureSchema, type Signature } from "./signature.js";
+import { dateTimeSchema, type DateTime } from "./date-time.js";
+import { publicKeySchema, type PublicKey } from "./public-key.js";
 import type { FromSchema } from "json-schema-to-ts";
-import { playsigSchema, type Playsig } from "./playsig";
+import { playsigSchema, type Playsig } from "./playsig.js";
 import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface Stamp {

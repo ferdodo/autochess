@@ -1,6 +1,6 @@
-import type { BackContext } from "./back-context";
-import type { ConnectionMockFactory } from "./../mocks/connection-mock-factory";
-import type { FrontContext } from "./front-context";
+import type { BackContext } from "./back-context.js";
+import type { ConnectionMockFactory } from "../mocks/connection-mock-factory.js";
+import type { FrontContext } from "./front-context.js";
 
 export interface TestContext {
 	connectionMockFactory: ConnectionMockFactory;

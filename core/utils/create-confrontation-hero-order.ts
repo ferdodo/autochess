@@ -1,6 +1,6 @@
-import type { Combat } from "../types/combat";
-import type { Hero } from "../types/hero";
-import { randomizeArray } from "./randomize-array";
+import type { Combat } from "../types/combat.js";
+import type { Hero } from "../types/hero.js";
+import { randomizeArray } from "./randomize-array.js";
 
 export function createConfrontationHeroOrder(combat: Combat): Hero[] {
 	const [playerXHeroes, playerYHeroes] = randomizeArray([

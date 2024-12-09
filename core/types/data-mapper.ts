@@ -1,9 +1,9 @@
-import type { Game } from "./game";
+import type { Game } from "./game.js";
 import type { Observable } from "rxjs";
-import type { Pool } from "./pool";
-import type { Queuer } from "./queuer";
-import type { Playsig } from "./playsig";
-import type { PublicKey } from "./public-key";
+import type { Pool } from "./pool.js";
+import type { Queuer } from "./queuer.js";
+import type { Playsig } from "./playsig.js";
+import type { PublicKey } from "./public-key.js";
 
 interface ReadAndUpdatePoolWithGame {
 	pool: Pool;

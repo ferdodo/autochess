@@ -1,6 +1,6 @@
-import type { Confrontation } from "../types/confrontation";
-import type { HeroId } from "../types/hero-id";
-import type { Hero } from "../types/hero";
+import type { Confrontation } from "../types/confrontation.js";
+import type { HeroId } from "../types/hero-id.js";
+import type { Hero } from "../types/hero.js";
 
 export function getHeroAndATeamFromConfrontation(
 	confrontation: Confrontation,

@@ -1,15 +1,15 @@
 import type { Subscription } from "rxjs";
 import { debounceTime, debounce } from "rxjs/operators";
-import { createPlaysig } from "../utils/create-playsig";
-import type { BackContext } from "../types/back-context";
+import { createPlaysig } from "../utils/create-playsig.js";
+import type { BackContext } from "../types/back-context.js";
 import { merge, filter, timer, of } from "rxjs";
-import type { Hero } from "../types/hero";
-import { HeroFactory } from "../utils/hero-factory";
-import type { Appellation } from "../types/appellation";
-import { Phase } from "../types/phase";
-import { getRandomAppellation } from "../utils/get-random-appellation";
-import { createPool } from "../utils/create-pool";
-import type { Level } from "../types/level";
+import type { Hero } from "../types/hero.js";
+import { HeroFactory } from "../utils/hero-factory.js";
+import type { Appellation } from "../types/appellation.js";
+import { Phase } from "../types/phase.js";
+import { getRandomAppellation } from "../utils/get-random-appellation.js";
+import { createPool } from "../utils/create-pool.js";
+import type { Level } from "../types/level.js";
 
 const MATCHMAKING_THROTTLE_TIME = 500;
 

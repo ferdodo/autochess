@@ -1,8 +1,8 @@
-import type { Confrontation } from "../types/confrontation";
-import type { HeroId } from "../types/hero-id";
-import { getHeroAndATeamFromConfrontation } from "./get-hero-and-a-team-from-confrontation";
-import { revertPosition } from "./revert-position";
-import type { Hero } from "../types/hero";
+import type { Confrontation } from "../types/confrontation.js";
+import type { HeroId } from "../types/hero-id.js";
+import { getHeroAndATeamFromConfrontation } from "./get-hero-and-a-team-from-confrontation.js";
+import { revertPosition } from "./revert-position.js";
+import type { Hero } from "../types/hero.js";
 
 export function findHittableHero(
 	confrontation: Confrontation,

@@ -1,5 +1,5 @@
 import type { Block } from "blockwise";
-import { getBoardBlock } from "./get-board-block";
+import { getBoardBlock } from "./get-board-block.js";
 
 export function revertPosition(block: Block): Block {
 	const boardBlock = getBoardBlock();

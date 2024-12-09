@@ -1,7 +1,7 @@
-import { observeGame } from "../api/observe-game";
-import type { TestContext } from "../types/test-context";
+import { observeGame } from "../api/observe-game.js";
+import type { TestContext } from "../types/test-context.js";
 import { firstValueFrom } from "rxjs";
-import type { Game } from "../types/game";
+import type { Game } from "../types/game.js";
 
 export async function getGame(
 	testContext: TestContext,

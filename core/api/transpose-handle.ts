@@ -1,9 +1,9 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap } from "rxjs/operators";
-import type { BackContext } from "../types/back-context";
-import { checkSignature } from "../utils/check-signature";
-import { checkStamp } from "../utils/check-stamp";
-import type { Hero } from "../types/hero";
+import type { BackContext } from "../types/back-context.js";
+import { checkSignature } from "../utils/check-signature.js";
+import { checkStamp } from "../utils/check-stamp.js";
+import type { Hero } from "../types/hero.js";
 
 export function transposeHandle(context: BackContext): Subscription {
 	const {

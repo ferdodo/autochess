@@ -1,5 +1,5 @@
-import type { FrontContext } from "../types/front-context";
-import type { InitiateGameReponse } from "../types/initiate-game-response";
+import type { FrontContext } from "../types/front-context.js";
+import type { InitiateGameReponse } from "../types/initiate-game-response.js";
 import { firstValueFrom, filter, map } from "rxjs";
 
 export async function initiateGame({

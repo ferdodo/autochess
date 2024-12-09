@@ -1,7 +1,7 @@
-import type { Hero } from "./hero";
+import type { Hero } from "./hero.js";
 import type { FromSchema } from "json-schema-to-ts";
-import { heroSchema } from "./hero";
-import { levelSchema } from "./level";
+import { heroSchema } from "./hero.js";
+import { levelSchema } from "./level.js";
 import type { JsonSchemaRecommended } from "json-schema-policies";
 
 export interface Confrontation {

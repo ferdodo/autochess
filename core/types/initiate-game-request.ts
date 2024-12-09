@@ -1,11 +1,11 @@
-import type { Nickname } from "./nickname";
-import { nicknameSchema } from "./nickname";
-import type { PublicKey } from "./public-key";
-import { publicKeySchema } from "./public-key";
-import type { Signature } from "./signature";
-import { signatureSchema } from "./signature";
-import { dateTimeSchema } from "./date-time";
-import type { DateTime } from "./date-time";
+import type { Nickname } from "./nickname.js";
+import { nicknameSchema } from "./nickname.js";
+import type { PublicKey } from "./public-key.js";
+import { publicKeySchema } from "./public-key.js";
+import type { Signature } from "./signature.js";
+import { signatureSchema } from "./signature.js";
+import { dateTimeSchema } from "./date-time.js";
+import type { DateTime } from "./date-time.js";
 import type { FromSchema } from "json-schema-to-ts";
 import type { JsonSchemaRecommended } from "json-schema-policies";
 

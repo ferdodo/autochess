@@ -1,7 +1,7 @@
 import type { Subscription } from "rxjs";
 import { map, mergeMap, filter, tap, mergeWith } from "rxjs/operators";
-import type { BackContext } from "../types/back-context";
-import { checkSignature } from "../utils/check-signature";
+import type { BackContext } from "../types/back-context.js";
+import { checkSignature } from "../utils/check-signature.js";
 import { NEVER, from } from "rxjs";
 
 export function observeGameHandle({

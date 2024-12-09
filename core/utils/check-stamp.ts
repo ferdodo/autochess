@@ -1,7 +1,7 @@
 import type { OperatorFunction } from "rxjs";
 import { mergeMap, filter, map } from "rxjs/operators";
-import type { GameScoped } from "../types/game-scoped";
-import type { BackContext } from "../types/back-context";
+import type { GameScoped } from "../types/game-scoped.js";
+import type { BackContext } from "../types/back-context.js";
 
 export function checkStamp<T>(
 	context: BackContext,

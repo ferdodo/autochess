@@ -1,4 +1,4 @@
-import { Appellation } from "../types/appellation";
+import { Appellation } from "../types/appellation.js";
 
 export function getHeroCost(appellation: Appellation): number {
 	const rankByAppellation: Record<Appellation, number> = {
