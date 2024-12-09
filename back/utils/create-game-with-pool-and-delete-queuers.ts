@@ -1,8 +1,8 @@
 import type { Game } from "core/types/game";
-import { getGameRepository } from "../repositories/game-repository";
+import { GameEntity } from "../entities/game";
 import type { Pool } from "core/types/pool";
-import { getPoolRepository } from "../repositories/pool-repository";
-import { getQueuerRepository } from "../repositories/queuer-repository";
+import { PoolEntity } from "../entities/pool";
+import { QueuerEntity } from "../entities/queuer";
 import type { PublicKey } from "core/types/public-key";
 import type { MikroORM } from "@mikro-orm/core";
 
@@ -16,9 +16,9 @@ export async function createGameWithPoolAndDeleteQueuers(
 
 	try {
 		await em.begin();
-		const gameRepository = getGameRepository(em);
-		const poolRepository = getPoolRepository(em);
-		const queuerRepository = getQueuerRepository(em);
+		const gameRepository = em.getRepository(GameEntity);
+		const poolRepository = em.getRepository(PoolEntity);
+		const queuerRepository = em.getRepository(QueuerEntity);
 
 		await gameRepository.create({
 			_id: Math.random().toString(),

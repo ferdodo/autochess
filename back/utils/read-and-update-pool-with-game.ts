@@ -1,9 +1,9 @@
 import type { Game } from "core/types/game";
-import { getGameRepository } from "../repositories/game-repository";
+import { GameEntity } from "../entities/game";
 import type { Playsig } from "core/types/playsig";
 import type { Pool } from "core/types/pool";
 import type { MikroORM } from "@mikro-orm/core";
-import { getPoolRepository } from "../repositories/pool-repository";
+import { PoolEntity } from "../entities/pool";
 
 export async function readAndUpdatePoolWithGame(
 	orm: MikroORM,
@@ -11,8 +11,8 @@ export async function readAndUpdatePoolWithGame(
 ) {
 	const em = orm.em.fork();
 	await em.begin();
-	const gameRepository = getGameRepository(em);
-	const poolRepository = getPoolRepository(em);
+	const gameRepository = em.getRepository(GameEntity);
+	const poolRepository = em.getRepository(PoolEntity);
 	const game = await gameRepository.findOneOrFail({ playsig });
 	const pool = await poolRepository.findOneOrFail({ playsig });
 

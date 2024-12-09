@@ -12,7 +12,7 @@ import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
 import type { EntityRepository, EntityManager } from "@mikro-orm/core";
 
 @Entity()
-export class Game {
+class Game {
 	@PrimaryKey()
 	_id: string;
 
@@ -53,8 +53,4 @@ export class Game {
 	phaseStartAt: DateTime;
 }
 
-export type GameRepository = EntityRepository<Game>;
-
-export function getGameRepository(em: EntityManager): EntityRepository<Game> {
-	return em.getRepository(Game);
-}
+export const GameEntity = Game;

@@ -5,7 +5,7 @@ import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
 import type { EntityRepository, EntityManager } from "@mikro-orm/core";
 
 @Entity()
-export class Queuer {
+class Queuer {
 	@PrimaryKey()
 	_id;
 
@@ -19,10 +19,4 @@ export class Queuer {
 	createdAt: DateTime;
 }
 
-export type QueuerRepository = EntityRepository<Queuer>;
-
-export function getQueuerRepository(
-	em: EntityManager,
-): EntityRepository<Queuer> {
-	return em.getRepository(Queuer);
-}
+export const QueuerEntity = Queuer;

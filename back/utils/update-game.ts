@@ -1,10 +1,10 @@
 import type { Game } from "core/types/game";
-import { getGameRepository } from "../repositories/game-repository";
+import { GameEntity } from "../entities/game";
 import type { MikroORM } from "@mikro-orm/core";
 
 export async function updateGame(orm: MikroORM, game: Game): Promise<boolean> {
 	const em = orm.em.fork();
-	const gameRepository = getGameRepository(em);
+	const gameRepository = em.getRepository(GameEntity);
 	const playsig = game.playsig;
 
 	if (!playsig) {

@@ -3,7 +3,7 @@ import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
 import type { EntityRepository, EntityManager } from "@mikro-orm/core";
 
 @Entity()
-export class Pool {
+class Pool {
 	@PrimaryKey()
 	_id: string;
 
@@ -14,8 +14,4 @@ export class Pool {
 	heroes: PoolType["heroes"];
 }
 
-export type PoolRepository = EntityRepository<Pool>;
-
-export function getPoolRepository(em: EntityManager): EntityRepository<Pool> {
-	return em.getRepository(Pool);
-}
+export const PoolEntity = Pool;
