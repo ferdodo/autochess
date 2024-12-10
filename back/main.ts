@@ -5,16 +5,15 @@ import type { Db } from "mongodb";
 import type { MikroORM } from "@mikro-orm/core";
 //import { withServerStarted } from "core/fixtures/with-server-started";
 import { createBackContext } from "./utils/create-back-context.js";
+//import { asNewPlayerConnect } from "core/automations/as-new-player-connect";
+//import { asPlayerInitiateGame } from "core/automations/as-player-initiate-game";
 
-new Promise((resolve) => setTimeout(resolve, 1500)).then(async () => {
+console.log("Starting...");
+
+Promise.resolve().then(async () => {
 	const db: Db = await initMongo();
 	const orm: MikroORM = await initMikro();
-
-	const dataMapper = createDataMapper(orm, db);
-
+	createDataMapper(orm, db);
 	createBackContext(orm, db);
-
-	//await withServerStarted(dataMapper);
-
 	console.log("Success !");
 });

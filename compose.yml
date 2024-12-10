@@ -55,19 +55,42 @@ services:
       - core
   
   database:
-    image: mongo
+    build : database
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - "27017:27017"
+      DB_USERNAME: dbUser
+      DB_PASSWORD: example
+      MONGO_INITDB_DATABASE: '${DB_NAME:-test}'
+      IS_REPLICA_SET_INITIATOR: true
+
+  database1:
+    build : database
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      DB_USERNAME: dbUser
+      DB_PASSWORD: example
+      MONGO_INITDB_DATABASE: '${DB_NAME:-test}'
+
+  database2:
+    build : database
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      DB_USERNAME: dbUser
+      DB_PASSWORD: example
+      MONGO_INITDB_DATABASE: '${DB_NAME:-test}'
 
   back:
     build: back
     environment:
-      MONGODB_USERNAME: root
+      MONGODB_USERNAME: dbUser
       MONGODB_PASSWORD: example
-      MONGODB_DATABASE: autochess
+      MONGODB_DATABASE: test
     depends_on:
       - core
       - database
+      - database1
+      - database2
+

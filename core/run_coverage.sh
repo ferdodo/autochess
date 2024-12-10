@@ -34,4 +34,5 @@ if [ -z "$filtered_files" ]; then
 fi
 
 files_to_mutate=$(echo "$filtered_files" | tr '\n' ',' | sed 's/,$//')
+rm -r dist
 npx stryker run --mutate "$files_to_mutate"

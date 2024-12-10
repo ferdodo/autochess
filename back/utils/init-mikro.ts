@@ -7,6 +7,6 @@ export function initMikro(): Promise<MikroORM> {
 	return MikroORM.init({
 		entities: [GameEntity, QueuerEntity, PoolEntity],
 		dbName: process.env.MONGODB_DATABASE,
-		clientUrl: `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@database:27017/admin`,
+		clientUrl: `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@database:27017,database1:27017,database2:27017/?authSource=${process.env.MONGODB_DATABASE}&replicaSet=rs0`,
 	});
 }
