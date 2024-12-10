@@ -18,8 +18,8 @@ import type { Game } from "core/types/game";
 import type { Queuer } from "core/types/queuer";
 
 export function createDataMapper(orm: MikroORM, db: Db): DataMapper {
-	const gameCollection = db.collection<Game>("games");
-	const queuerCollection = db.collection<Queuer>("queuers");
+	const gameCollection = db.collection<Game>("game");
+	const queuerCollection = db.collection<Queuer>("queuer");
 
 	return {
 		readGame: (playsig) => readGame(orm, playsig),

@@ -1,8 +1,8 @@
 import type { Subscription } from "rxjs";
-import { debounceTime, debounce } from "rxjs/operators";
+import { debounceTime } from "rxjs/operators";
 import { createPlaysig } from "../utils/create-playsig.js";
 import type { BackContext } from "../types/back-context.js";
-import { merge, filter, timer, of } from "rxjs";
+import { merge, filter } from "rxjs";
 import type { Hero } from "../types/hero.js";
 import { HeroFactory } from "../utils/hero-factory.js";
 import type { Appellation } from "../types/appellation.js";

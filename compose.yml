@@ -61,8 +61,10 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
       DB_USERNAME: dbUser
       DB_PASSWORD: example
-      MONGO_INITDB_DATABASE: '${DB_NAME:-test}'
+      MONGO_INITDB_DATABASE: autochess
       IS_REPLICA_SET_INITIATOR: true
+    ports:
+      - "27017:27017"
 
   database1:
     build : database
@@ -71,7 +73,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
       DB_USERNAME: dbUser
       DB_PASSWORD: example
-      MONGO_INITDB_DATABASE: '${DB_NAME:-test}'
+      MONGO_INITDB_DATABASE: autochess
 
   database2:
     build : database
@@ -80,14 +82,14 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
       DB_USERNAME: dbUser
       DB_PASSWORD: example
-      MONGO_INITDB_DATABASE: '${DB_NAME:-test}'
+      MONGO_INITDB_DATABASE: autochess
 
   back:
     build: back
     environment:
       MONGODB_USERNAME: dbUser
       MONGODB_PASSWORD: example
-      MONGODB_DATABASE: test
+      MONGODB_DATABASE: autochess
     depends_on:
       - core
       - database
