@@ -5,6 +5,7 @@ import { PoolEntity } from "../entities/pool.js";
 import { QueuerEntity } from "../entities/queuer.js";
 import type { PublicKey } from "core/types/public-key";
 import type { MikroORM } from "@mikro-orm/core";
+import { mongoSerialize } from "./mongo-serialize.js";
 
 export async function createGameWithPoolAndDeleteQueuers(
 	orm: MikroORM,
@@ -19,16 +20,8 @@ export async function createGameWithPoolAndDeleteQueuers(
 		const gameRepository = em.getRepository(GameEntity);
 		const poolRepository = em.getRepository(PoolEntity);
 		const queuerRepository = em.getRepository(QueuerEntity);
-
-		await gameRepository.create({
-			_id: Math.random().toString(),
-			...game,
-		});
-
-		await poolRepository.create({
-			_id: Math.random().toString(),
-			...pool,
-		});
+		await gameRepository.create(mongoSerialize(game));
+		await poolRepository.create(mongoSerialize(pool));
 
 		for (const publicKey of queuersPublicKeys) {
 			await queuerRepository.nativeDelete({ publicKey });

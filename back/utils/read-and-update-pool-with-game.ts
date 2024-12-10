@@ -4,6 +4,8 @@ import type { Playsig } from "core/types/playsig";
 import type { Pool } from "core/types/pool";
 import type { MikroORM } from "@mikro-orm/core";
 import { PoolEntity } from "../entities/pool.js";
+import type { MongoDeserialized } from "../types/mongo-deserialized.js";
+import { mongoDeserialize } from "./mongo-deserialize.js";
 
 export async function readAndUpdatePoolWithGame(
 	orm: MikroORM,
@@ -13,8 +15,10 @@ export async function readAndUpdatePoolWithGame(
 	await em.begin();
 	const gameRepository = em.getRepository(GameEntity);
 	const poolRepository = em.getRepository(PoolEntity);
-	const game = await gameRepository.findOneOrFail({ playsig });
-	const pool = await poolRepository.findOneOrFail({ playsig });
+	const _game = await gameRepository.findOneOrFail({ playsig });
+	const game: MongoDeserialized<Game> = mongoDeserialize(_game);
+	const _pool = await poolRepository.findOneOrFail({ playsig });
+	const pool: MongoDeserialized<Pool> = mongoDeserialize(_pool);
 
 	async function commit(pool: Pool, game: Game) {
 		const affected = await gameRepository.nativeUpdate({ playsig }, game);
