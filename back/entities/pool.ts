@@ -1,6 +1,5 @@
 import type { Pool as PoolType } from "core/types/pool";
-import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
-import type { EntityRepository, EntityManager } from "@mikro-orm/core";
+import { Entity, PrimaryKey, Property, Unique } from "@mikro-orm/core";
 
 @Entity()
 class Pool {
@@ -8,6 +7,7 @@ class Pool {
 	_id: string;
 
 	@Property()
+	@Unique()
 	playsig: string;
 
 	@Property()

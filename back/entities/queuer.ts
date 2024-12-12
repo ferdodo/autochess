@@ -1,8 +1,7 @@
 import type { PublicKey } from "core/types/public-key";
 import type { Nickname } from "core/types/nickname";
 import type { DateTime } from "core/types/date-time";
-import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
-import type { EntityRepository, EntityManager } from "@mikro-orm/core";
+import { Entity, PrimaryKey, Property, Unique } from "@mikro-orm/core";
 
 @Entity()
 class Queuer {
@@ -10,6 +9,7 @@ class Queuer {
 	_id;
 
 	@Property()
+	@Unique()
 	publicKey: PublicKey;
 
 	@Property()

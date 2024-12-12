@@ -32,7 +32,7 @@ function setup_pre_commit_hook {
 
 set -e
 setup_pre_commit_hook
-docker compose down -t 1
+docker compose down --remove-orphans -t 1
 docker compose up -d --build offline sandbox back
 echo "╭──────────────────────────────────────────────────╮"
 echo "│ Sandbox: http://localhost:2437                   │"
