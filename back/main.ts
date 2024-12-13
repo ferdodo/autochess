@@ -26,6 +26,20 @@ Promise.resolve().then(async () => {
 
 	//asPlayerInitiateGame(testContext);
 
+	const queuer = {
+		nickname: "test",
+		publicKey: "test",
+		createdAt: new Date().toISOString(),
+	};
+
+	await dataMapper.createQueuer(queuer);
+
+	const queuers = await dataMapper.readQueuers();
+
+	if (queuers.length === 0) {
+		throw new Error("Queuers not created");
+	}
+
 	createBackContext(orm, db);
 	console.log("Success !");
 });

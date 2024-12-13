@@ -9,6 +9,10 @@ function sync-containers {
     docker cp . autochess-back-1:/autochess
 }
 
+function at-least-5GB-free-space {
+	[ $(df --output=avail / | tail -n1) -gt 5000000 ]
+}
+
 function set-state {
 	find . -type f -not -path '*/\.*' -printf "%T+\t%M\t%p\n" | md5sum > $STATE/$1
 }
@@ -32,6 +36,7 @@ function setup_pre_commit_hook {
 
 set -e
 setup_pre_commit_hook
+at-least-5GB-free-space
 docker compose down --remove-orphans -t 1
 docker compose up -d --build offline sandbox back
 echo "╭──────────────────────────────────────────────────╮"

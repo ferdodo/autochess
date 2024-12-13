@@ -53,46 +53,142 @@ services:
       - "6245:80"
     depends_on:
       - core
-  
-  database:
-    build : database
+
+  mongo-config-server-node0:
+    build: mongo-config-server
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-      DB_USERNAME: dbUser
-      DB_PASSWORD: example
-      MONGO_INITDB_DATABASE: autochess
+      REPLICASET: configsvrRs
+      NODE_0: mongo-config-server-node0
+      NODE_1: mongo-config-server-node1
+      NODE_2: mongo-config-server-node2
       IS_REPLICA_SET_INITIATOR: true
-    ports:
-      - "27017:27017"
 
-  database1:
-    build : database
+  mongo-config-server-node1:
+    build: mongo-config-server
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-      DB_USERNAME: dbUser
-      DB_PASSWORD: example
-      MONGO_INITDB_DATABASE: autochess
+      REPLICASET: configsvrRs
+      NODE_0: mongo-config-server-node0
+      NODE_1: mongo-config-server-node1
+      NODE_2: mongo-config-server-node2
 
-  database2:
-    build : database
+  mongo-config-server-node2:
+    build: mongo-config-server
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-      DB_USERNAME: dbUser
+      REPLICASET: configsvrRs
+      NODE_0: mongo-config-server-node0
+      NODE_1: mongo-config-server-node1
+      NODE_2: mongo-config-server-node2
+
+  mongo-shard0-node0:
+    build: mongo-shard
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      REPLICASET: shard0rs
+      NODE_0: mongo-shard0-node0
+      NODE_1: mongo-shard0-node1
+      IS_REPLICA_SET_INITIATOR: true
+
+  mongo-shard0-node1:
+    build: mongo-shard
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      REPLICASET: shard0rs
+      NODE_0: mongo-shard0-node0
+      NODE_1: mongo-shard0-node1
+
+  mongo-shard1-node0:
+    build: mongo-shard
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      REPLICASET: shard1rs
+      NODE_0: mongo-shard1-node0
+      NODE_1: mongo-shard1-node1
+      IS_REPLICA_SET_INITIATOR: true
+
+  mongo-shard1-node1:
+    build: mongo-shard
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      REPLICASET: shard1rs
+      NODE_0: mongo-shard1-node0
+      NODE_1: mongo-shard1-node1
+
+  mongo-router-node0:
+    build: mongo-router
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      DB_USERNAME: user
       DB_PASSWORD: example
       MONGO_INITDB_DATABASE: autochess
+      NODE_0: mongo-router-node0
+      NODE_1: mongo-router-node1
+      SHARD_REPLICA_SET_0: shard0rs
+      SHARD_REPLICA_SET_1: shard1rs
+      SHARD_0_NODE_0: mongo-shard0-node0
+      SHARD_0_NODE_1: mongo-shard0-node1
+      SHARD_1_NODE_0: mongo-shard1-node0
+      SHARD_1_NODE_1: mongo-shard1-node1
+      IS_SHARDING_INITIATOR: true
+      CONFIG_SERVER_REPLICA_SET: configsvrRs
+      CONFIG_SERVER_NODE_0: mongo-config-server-node0
+      CONFIG_SERVER_NODE_1: mongo-config-server-node1
+      CONFIG_SERVER_NODE_2: mongo-config-server-node2
+    depends_on:
+      - mongo-config-server-node0
+      - mongo-config-server-node1
+      - mongo-config-server-node2
+      - mongo-shard0-node0
+      - mongo-shard0-node1
+      - mongo-shard1-node0
+      - mongo-shard1-node1
+
+  mongo-router-node1:
+    build: mongo-router
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      DB_USERNAME: user
+      DB_PASSWORD: example
+      MONGO_INITDB_DATABASE: autochess
+      NODE_0: mongo-router-node0
+      NODE_1: mongo-router-node1
+      SHARD_REPLICA_SET_0: shard0rs
+      SHARD_REPLICA_SET_1: shard1rs
+      SHARD_0_NODE_0: mongo-shard0-node0
+      SHARD_0_NODE_1: mongo-shard0-node1
+      SHARD_1_NODE_0: mongo-shard1-node0
+      SHARD_1_NODE_1: mongo-shard1-node1
+      CONFIG_SERVER_REPLICA_SET: configsvrRs
+      CONFIG_SERVER_NODE_0: mongo-config-server-node0
+      CONFIG_SERVER_NODE_1: mongo-config-server-node1
+      CONFIG_SERVER_NODE_2: mongo-config-server-node2
+    depends_on:
+      - mongo-config-server-node0
+      - mongo-config-server-node1
+      - mongo-config-server-node2
+      - mongo-shard0-node0
+      - mongo-shard0-node1
+      - mongo-shard1-node0
+      - mongo-shard1-node1
 
   back:
     build: back
     environment:
-      MONGODB_USERNAME: dbUser
+      MONGODB_USERNAME: user
       MONGODB_PASSWORD: example
       MONGODB_DATABASE: autochess
     depends_on:
       - core
-      - database
-      - database1
-      - database2
-
+      - mongo-router-node0
+      - mongo-router-node1
