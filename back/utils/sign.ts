@@ -3,10 +3,10 @@ import { webcrypto } from "node:crypto";
 
 export async function sign<T>(
 	publicKey: string,
+	privateKeyStr: string,
 	payload: T,
 ): Promise<T & Signed> {
-	const privateKeyStr: string = process.env.SIGNING_PRIVATE_KEY;
-	const privateKeyBuffer: ArrayBuffer = Buffer.from(privateKeyStr, "base64");
+	const privateKeyBuffer: ArrayBuffer = Buffer.from(privateKeyStr, "hex");
 
 	const ecKeyImportParams: EcKeyImportParams = {
 		name: "ECDSA",

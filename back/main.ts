@@ -7,6 +7,7 @@ import { withServerStarted } from "core/fixtures/with-server-started";
 import { createBackContext } from "./utils/create-back-context.js";
 import { asNewPlayerConnect } from "core/automations/as-new-player-connect";
 import { benchMarkDataMapper } from "./benchmark/benchmark-data-mapper.js";
+import { benchmarkSignVerify } from "./benchmark/benchmark-sign-verify.js";
 //import { asPlayerInitiateGame } from "core/automations/as-player-initiate-game";
 
 console.log("Starting...");
@@ -17,6 +18,7 @@ Promise.resolve().then(async () => {
 	const dataMapper = createDataMapper(orm, db);
 
 	await benchMarkDataMapper(dataMapper);
+	await benchmarkSignVerify();
 
 	console.log("Success !");
 });

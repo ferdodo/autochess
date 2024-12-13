@@ -15,7 +15,7 @@ export function createBackContext(orm: MikroORM, db: Db): BackContext {
 		connections$: createWsServer(),
 		isValidSignature: () => Promise.resolve(true),
 		serverPublicKey,
-		signMessage: (message) => sign(serverPublicKey, message),
+		signMessage: (message) => sign(serverPublicKey, "privateKey", message),
 		lateMatchmakingTimer: (source) => source.pipe(debounceTime(10000)),
 		roundTimer: createRoundTimer(),
 		dataMapper: createDataMapper(orm, db),
