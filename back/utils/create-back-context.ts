@@ -5,21 +5,17 @@ import { createDataMapper } from "./create-data-mapper.js";
 import type { MikroORM } from "@mikro-orm/core";
 import type { Db } from "mongodb";
 import { createRoundTimer } from "core/utils/create-round-timer";
+import { sign } from "./sign.js";
 
 export function createBackContext(orm: MikroORM, db: Db): BackContext {
+	const serverPublicKey =
+		"ddddddddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
+
 	return {
 		connections$: createWsServer(),
 		isValidSignature: () => Promise.resolve(true),
-		serverPublicKey:
-			"ddddddddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-		signMessage: async (message) => ({
-			...message,
-			publicKey:
-				"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-			signature: "ccccccccccc",
-			issuedAt: new Date().toISOString(),
-			expiresAt: new Date(Date.now() + 60000).toISOString(),
-		}),
+		serverPublicKey,
+		signMessage: (message) => sign(serverPublicKey, message),
 		lateMatchmakingTimer: (source) => source.pipe(debounceTime(10000)),
 		roundTimer: createRoundTimer(),
 		dataMapper: createDataMapper(orm, db),
