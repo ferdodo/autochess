@@ -6,6 +6,7 @@ import type { MikroORM } from "@mikro-orm/core";
 import { withServerStarted } from "core/fixtures/with-server-started";
 import { createBackContext } from "./utils/create-back-context.js";
 import { asNewPlayerConnect } from "core/automations/as-new-player-connect";
+import { benchMarkDataMapper } from "./benchmark/benchmark-data-mapper.js";
 //import { asPlayerInitiateGame } from "core/automations/as-player-initiate-game";
 
 console.log("Starting...");
@@ -14,32 +15,8 @@ Promise.resolve().then(async () => {
 	const db: Db = await initMongo();
 	const orm: MikroORM = await initMikro();
 	const dataMapper = createDataMapper(orm, db);
-	const testContext = await withServerStarted(dataMapper);
 
-	asNewPlayerConnect(testContext);
-	asNewPlayerConnect(testContext);
+	await benchMarkDataMapper(dataMapper);
 
-	//await Promise.all([
-	//	asPlayerInitiateGame(testContext, 0),
-	//	asPlayerInitiateGame(testContext, 1),
-	//]);
-
-	//asPlayerInitiateGame(testContext);
-
-	const queuer = {
-		nickname: "test",
-		publicKey: "test",
-		createdAt: new Date().toISOString(),
-	};
-
-	await dataMapper.createQueuer(queuer);
-
-	const queuers = await dataMapper.readQueuers();
-
-	if (queuers.length === 0) {
-		throw new Error("Queuers not created");
-	}
-
-	createBackContext(orm, db);
 	console.log("Success !");
 });
