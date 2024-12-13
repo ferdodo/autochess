@@ -2,6 +2,10 @@ import type { Signed } from "core/types/signed";
 import { subtle } from "node:crypto";
 
 export async function verify<T>(payload: T & Signed): Promise<boolean> {
+	if (new Date() > new Date(payload.expiresAt)) {
+		return false;
+	}
+
 	const publicKey: string = payload.publicKey;
 	const signature: string = payload.signature;
 	const publicKeyBuffer: Buffer = Buffer.from(publicKey, "hex");
