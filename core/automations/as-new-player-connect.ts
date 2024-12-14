@@ -1,3 +1,4 @@
+import { createRandomPublicKey } from "../mocks/create-random-public-key.js";
 import type { FrontContext } from "../types/front-context.js";
 import type { TestContext } from "../types/test-context.js";
 
@@ -8,7 +9,7 @@ export function asNewPlayerConnect(testContext: TestContext) {
 	const numberToLetter = (n: number) =>
 		n >= 1 && n <= 26 ? String.fromCharCode(n + 64) : n;
 
-	const publicKey = `${playersCount}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`;
+	const publicKey = createRandomPublicKey();
 
 	const frontContext: FrontContext = {
 		connection,

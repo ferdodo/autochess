@@ -64,6 +64,9 @@ services:
       NODE_1: mongo-config-server-node1
       NODE_2: mongo-config-server-node2
       IS_REPLICA_SET_INITIATOR: true
+    volumes:
+      - mongo-config-server-node0-data:/data/db
+      - mongo-config-server-node0-config:/data/configdb
 
   mongo-config-server-node1:
     build: mongo-config-server
@@ -74,6 +77,9 @@ services:
       NODE_0: mongo-config-server-node0
       NODE_1: mongo-config-server-node1
       NODE_2: mongo-config-server-node2
+    volumes:
+      - mongo-config-server-node1-data:/data/db
+      - mongo-config-server-node1-config:/data/configdb
 
   mongo-config-server-node2:
     build: mongo-config-server
@@ -84,6 +90,9 @@ services:
       NODE_0: mongo-config-server-node0
       NODE_1: mongo-config-server-node1
       NODE_2: mongo-config-server-node2
+    volumes:
+      - mongo-config-server-node2-data:/data/db
+      - mongo-config-server-node2-config:/data/configdb
 
   mongo-shard0-node0:
     build: mongo-shard
@@ -94,6 +103,9 @@ services:
       NODE_0: mongo-shard0-node0
       NODE_1: mongo-shard0-node1
       IS_REPLICA_SET_INITIATOR: true
+    volumes:
+      - mongo-shard0-node0-data:/data/db
+      - mongo-shard0-node0-config:/data/configdb
 
   mongo-shard0-node1:
     build: mongo-shard
@@ -103,6 +115,9 @@ services:
       REPLICASET: shard0rs
       NODE_0: mongo-shard0-node0
       NODE_1: mongo-shard0-node1
+    volumes:
+      - mongo-shard0-node1-data:/data/db
+      - mongo-shard0-node1-config:/data/configdb
 
   mongo-shard1-node0:
     build: mongo-shard
@@ -113,6 +128,9 @@ services:
       NODE_0: mongo-shard1-node0
       NODE_1: mongo-shard1-node1
       IS_REPLICA_SET_INITIATOR: true
+    volumes:
+      - mongo-shard1-node0-data:/data/db
+      - mongo-shard1-node0-config:/data/configdb
 
   mongo-shard1-node1:
     build: mongo-shard
@@ -122,6 +140,9 @@ services:
       REPLICASET: shard1rs
       NODE_0: mongo-shard1-node0
       NODE_1: mongo-shard1-node1
+    volumes:
+      - mongo-shard1-node1-data:/data/db
+      - mongo-shard1-node1-config:/data/configdb
 
   mongo-router-node0:
     build: mongo-router
@@ -152,6 +173,11 @@ services:
       - mongo-shard0-node1
       - mongo-shard1-node0
       - mongo-shard1-node1
+    volumes:
+      - mongo-router-node0-data:/data/db
+      - mongo-router-node0-config:/data/configdb
+    ports:
+      - "27017:27017"
 
   mongo-router-node1:
     build: mongo-router
@@ -181,6 +207,11 @@ services:
       - mongo-shard0-node1
       - mongo-shard1-node0
       - mongo-shard1-node1
+    volumes:
+      - mongo-router-node1-data:/data/db
+      - mongo-router-node1-config:/data/configdb
+    ports:
+      - "27018:27017"
 
   back:
     build: back
@@ -188,8 +219,48 @@ services:
       MONGODB_USERNAME: user
       MONGODB_PASSWORD: example
       MONGODB_DATABASE: autochess
-      VITE_WEBSOCKET_PROTOCOL: ws
+      VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
+    ports:
+      - ${VITE_WEBSOCKET_PORT}:3000
     depends_on:
       - core
       - mongo-router-node0
       - mongo-router-node1
+
+  ingame:
+    build:
+      context: ingame
+      args:
+        - VITE_WEBSOCKET_PROTOCOL=${VITE_WEBSOCKET_PROTOCOL}
+        - VITE_WEBSOCKET_PORT=${VITE_WEBSOCKET_PORT}
+        - VITE_BACK_DOMAIN=${VITE_BACK_DOMAIN}
+    environment:
+      VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
+      VITE_WEBSOCKET_PORT: ${VITE_WEBSOCKET_PORT}
+      VITE_BACK_DOMAIN: ${VITE_BACK_DOMAIN}
+    ports:
+      - 53015:53015
+    depends_on:
+      - back
+      - core
+      - interface
+
+volumes:
+  mongo-config-server-node0-data:
+  mongo-config-server-node0-config:
+  mongo-config-server-node1-data:
+  mongo-config-server-node1-config:
+  mongo-config-server-node2-data:
+  mongo-config-server-node2-config:
+  mongo-shard0-node0-data:
+  mongo-shard0-node0-config:
+  mongo-shard0-node1-data:
+  mongo-shard0-node1-config:
+  mongo-shard1-node0-data:
+  mongo-shard1-node0-config:
+  mongo-shard1-node1-data:
+  mongo-shard1-node1-config:
+  mongo-router-node0-data:
+  mongo-router-node0-config:
+  mongo-router-node1-data:
+  mongo-router-node1-config:

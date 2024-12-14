@@ -5,10 +5,11 @@ import { Observable, share } from "rxjs";
 import type { MikroORM } from "@mikro-orm/core";
 import { mongoDeserialize } from "./mongo-deserialize.js";
 import type { MongoDeserialized } from "../types/mongo-deserialized.js";
+import type { MongoSerialized } from "../types/mongo-serialized.js";
 
 export function observeQueuers(
 	orm: MikroORM,
-	queuerCollection: Collection<Queuer>,
+	queuerCollection: Collection<MongoSerialized<Queuer>>,
 ): Observable<MongoDeserialized<Queuer>[]> {
 	const em = orm.em.fork();
 	const queuerRepository = em.getRepository(QueuerEntity);

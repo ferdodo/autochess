@@ -9,8 +9,8 @@ export const playsigSchema = {
 	description:
 		"Unique identifier for a game. Also a digest that " +
 		"can be computed from from it's public keys.",
-	minLength: 132,
-	maxLength: 132,
+	minLength: 8,
+	maxLength: 64,
 	pattern: "^[0-9a-fA-F]+$",
 } as const;
 

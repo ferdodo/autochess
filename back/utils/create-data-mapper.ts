@@ -16,10 +16,11 @@ import type { Db } from "mongodb";
 import type { MikroORM } from "@mikro-orm/core";
 import type { Game } from "core/types/game";
 import type { Queuer } from "core/types/queuer";
+import type { MongoSerialized } from "../types/mongo-serialized.js";
 
 export function createDataMapper(orm: MikroORM, db: Db): DataMapper {
-	const gameCollection = db.collection<Game>("game");
-	const queuerCollection = db.collection<Queuer>("queuer");
+	const gameCollection = db.collection<MongoSerialized<Game>>("game");
+	const queuerCollection = db.collection<MongoSerialized<Queuer>>("queuer");
 
 	return {
 		readGame: (playsig) => readGame(orm, playsig),

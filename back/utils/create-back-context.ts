@@ -7,6 +7,7 @@ import type { Db } from "mongodb";
 import { createRoundTimer } from "core/utils/create-round-timer";
 import { sign } from "./sign.js";
 import { createKeyPair } from "./create-key-pair.js";
+import { verify } from "./verify.js";
 
 export async function createBackContext(
 	orm: MikroORM,
@@ -16,7 +17,7 @@ export async function createBackContext(
 
 	return {
 		connections$: createWsServer(),
-		isValidSignature: () => Promise.resolve(true),
+		isValidSignature: (signed) => verify(signed),
 		serverPublicKey,
 		signMessage: (message) => sign(serverPublicKey, serverPrivateKey, message),
 		lateMatchmakingTimer: (source) => source.pipe(debounceTime(10000)),

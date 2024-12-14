@@ -7,8 +7,8 @@ export const publicKeySchema = {
 	title: "Public Key",
 	description: "A public key in hexadecimal format.",
 	type: "string",
-	minLength: 66,
-	maxLength: 66,
+	minLength: 240,
+	maxLength: 240,
 	pattern: "^[a-fA-F0-9]+$",
 } as const;
 

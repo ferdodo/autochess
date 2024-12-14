@@ -3,10 +3,18 @@ STATE=`mktemp -d`
 touch $STATE/src
 touch $STATE/build
 
+trap "docker compose down -v -t 1" EXIT
+
 function sync-containers {
-    docker cp . autochess-sandbox-1:/autochess
-    docker cp . autochess-offline-1:/autochess
-    docker cp . autochess-back-1:/autochess
+	for container in sandbox offline back ingame; do
+		docker cp core "autochess-$container-1:/autochess"
+		docker cp interface "autochess-$container-1:/autochess"
+	done
+
+	docker cp ingame "autochess-ingame-1:/autochess"
+	docker cp offline "autochess-offline-1:/autochess"
+	docker cp back "autochess-back-1:/autochess"
+	docker cp sandbox "autochess-sandbox-1:/autochess"
 }
 
 function at-least-5GB-free-space {
@@ -37,14 +45,16 @@ function setup_pre_commit_hook {
 set -e
 setup_pre_commit_hook
 at-least-5GB-free-space
-docker compose down --remove-orphans -t 1
-docker compose up -d --build offline sandbox back
+docker compose down -v --remove-orphans -t 1
+docker compose up -d --build offline sandbox back ingame
 echo "╭──────────────────────────────────────────────────╮"
 echo "│ Sandbox: http://localhost:2437                   │"
 echo "│ Offline: http://localhost:5423                   │"
+echo "│ Ingame:  http://localhost:53015                  │"
 echo "│                                                  │"
 echo "│ Live feedback:                                   │"
 echo "│   docker compose logs -f --no-log-prefix back    │"
+echo "│   docker compose logs -f --no-log-prefix ingame  │"
 echo "│   docker compose logs -f --no-log-prefix sandbox │"
 echo "│   docker compose logs -f --no-log-prefix offline │"
 echo "╰──────────────────────────────────────────────────╯"

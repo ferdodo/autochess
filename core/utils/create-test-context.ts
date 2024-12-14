@@ -6,6 +6,7 @@ import { Subject, withLatestFrom, map, tap, share } from "rxjs";
 import type { Queuer } from "../types/queuer.js";
 import type { Observable } from "rxjs";
 import type { Game } from "../types/game.js";
+import { createRandomPublicKey } from "../mocks/create-random-public-key.js";
 
 export function createTestContext(): TestContext {
 	const dataMapper = createDataMapperMock();
@@ -16,12 +17,10 @@ export function createTestContext(): TestContext {
 	const backContext: BackContext = {
 		connections$: connectionMockFactory.createServer(),
 		isValidSignature: () => Promise.resolve(true),
-		serverPublicKey:
-			"ddddddddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+		serverPublicKey: createRandomPublicKey(),
 		signMessage: async (message) => ({
 			...message,
-			publicKey:
-				"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+			publicKey: createRandomPublicKey(),
 			signature: "ccccccccccc",
 			issuedAt: new Date().toISOString(),
 			expiresAt: new Date(Date.now() + 60000).toISOString(),

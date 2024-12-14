@@ -17,6 +17,31 @@ Promise.resolve().then(async () => {
 	//await benchMarkDataMapper(dataMapper);
 	//await benchmarkSignVerify();
 	const backContext = await createBackContext(orm, db);
+
+	backContext.connections$.subscribe({
+		next: (connection) => {
+			console.log("Connection established");
+
+			connection.messages$.subscribe({
+				next: (message) => {
+					console.log("Message received", Object.keys(message).pop());
+				},
+				error: (error) => {
+					console.error("Message error", error);
+				},
+				complete: () => {
+					console.log("Message stream closed");
+				},
+			});
+		},
+		error: (error) => {
+			console.error("Connection error", error);
+		},
+		complete: () => {
+			console.log("Connection closed");
+		},
+	});
+
 	startServer(backContext);
 	console.log("Server started");
 });

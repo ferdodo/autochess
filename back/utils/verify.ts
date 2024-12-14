@@ -33,10 +33,12 @@ export async function verify<T>(payload: T & Signed): Promise<boolean> {
 
 	const payloadBuffer: Buffer = Buffer.from(payloadSerialised, "utf8");
 
-	return subtle.verify(
+	const result = subtle.verify(
 		ecdsaParams,
 		publicCryptoKey,
 		signatureBuffer,
 		payloadBuffer,
 	);
+
+	return result;
 }

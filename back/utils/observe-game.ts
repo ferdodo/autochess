@@ -4,9 +4,10 @@ import type { Game } from "core/types/game";
 import type { Playsig } from "core/types/playsig";
 import { mongoDeserialize } from "./mongo-deserialize.js";
 import type { MongoDeserialized } from "../types/mongo-deserialized.js";
+import type { MongoSerialized } from "../types/mongo-serialized.js";
 
 export function observeGame(
-	gameCollection: Collection<Game>,
+	gameCollection: Collection<MongoSerialized<Game>>,
 	playsig: Playsig,
 ): Observable<MongoDeserialized<Game>> {
 	return new Observable<MongoDeserialized<Game>>((subscriber) => {

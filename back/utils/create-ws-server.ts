@@ -8,9 +8,9 @@ import { uid } from "uid";
 import type { Server } from "node:https";
 
 export function createWsServer<I, O>(): Observable<Connection<I, O>> {
-	return new Observable<Connection<I, O>>((connexionSubscriber) => {
-		const wss = createWebSocketServer();
+	const wss = createWebSocketServer();
 
+	return new Observable<Connection<I, O>>((connexionSubscriber) => {
 		wss.on("connection", (ws) => {
 			const messages$ = new Observable<I>((messageSubscriber) => {
 				ws.on("message", async function message(data) {

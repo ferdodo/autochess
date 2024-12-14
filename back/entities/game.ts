@@ -43,7 +43,7 @@ class Game {
 	@Property()
 	playerHealths: Record<PublicKey, Health>;
 
-	@Property()
+	@Property({ nullable: true })
 	combats?: Combat[];
 
 	@Property()
