@@ -1,16 +1,7 @@
 {
 	"type": "module",
-	"exports": {
-		"./api/*": "./dist/api/*.js",
-		"./core/*": "./dist/core/*.js",
-		"./types/*": "./dist/types/*.js",
-		"./utils/*": "./dist/utils/*.js",
-		"./mocks/*": "./dist/mocks/*.js",
-		"./fixtures/*": "./dist/fixtures/*.js",
-		"./automations/*": "./dist/automations/*.js"
-	},
 	"scripts": {
-		"build": "tsc --noEmit && vitest run --sequence.concurrent --testTimeout 160 && biome ci --organize-imports-enabled=false && tsc"
+		"build": "tsc --noEmit && vitest run --sequence.concurrent --testTimeout 160 && biome ci --organize-imports-enabled=false"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",

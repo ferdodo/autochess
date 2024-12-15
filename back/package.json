@@ -2,12 +2,10 @@
 	"main": "dist/main.js",
 	"type": "module",
 	"scripts": {
-		"build": "tsc --noEmit && biome ci --organize-imports-enabled=false && nest build",
-		"start": "nest start -w"
+		"build": "tsc"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@nestjs/cli": "^10.4.8",
 		"@types/node": "^22.10.1",
 		"core": "file:../core",
 		"mongodb": "^5.9.2",

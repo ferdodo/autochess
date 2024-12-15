@@ -3,8 +3,6 @@ STATE=`mktemp -d`
 touch $STATE/src
 touch $STATE/build
 
-trap "docker compose down -v -t 1" EXIT
-
 function sync-containers {
 	for container in sandbox offline back ingame; do
 		docker cp core "autochess-$container-1:/autochess"
@@ -45,8 +43,8 @@ function setup_pre_commit_hook {
 set -e
 setup_pre_commit_hook
 at-least-5GB-free-space
-docker compose down -v --remove-orphans -t 1
 docker compose up -d --build offline sandbox back ingame
+trap "docker compose down -v --remove-orphans -t 1" EXIT
 echo "╭──────────────────────────────────────────────────╮"
 echo "│ Sandbox: http://localhost:2437                   │"
 echo "│ Offline: http://localhost:5423                   │"
