@@ -13,8 +13,9 @@ import { cast } from "core/utils/cast";
 import { observeInteractions } from "interface/utils/observe-interactions";
 import { observeInteractionHistory } from "core/utils/observe-interaction-history";
 import { createWsClient } from "./utils/create-ws-client";
-import { createRandomPublicKey } from "core/mocks/create-random-public-key";
 import { switchMap } from "rxjs/operators";
+import { sign } from "./utils/sign";
+import { createKeyPair } from "./utils/create-key-pair";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -23,6 +24,8 @@ document.addEventListener("contextmenu", (e) => {
 waitTextureLoaded
 	.then(async () => {
 		window.document.body.innerHTML = "Connecting to servers...";
+
+		const [publicKey, privateKey] = await createKeyPair();
 
 		const connection = await createWsClient(
 			import.meta.env.VITE_WEBSOCKET_PROTOCOL,
@@ -43,16 +46,9 @@ waitTextureLoaded
 
 		const frontContext1: FrontContext = {
 			connection,
-			publicKey: createRandomPublicKey(),
+			publicKey,
 			nickname: "playerone",
-			signMessage: async (message) => ({
-				...message,
-				publicKey: frontContext1.publicKey,
-				issuedAt: new Date().toISOString(),
-				expiresAt: new Date(Date.now() + 60000).toISOString(),
-				signature:
-					"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-			}),
+			signMessage: (message) => sign(publicKey, privateKey, message),
 		};
 
 		const [initiateGameResponse1] = await Promise.all([

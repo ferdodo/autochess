@@ -11,7 +11,6 @@ export async function initiateGame({
 	connection.send({
 		initiateGameRequest: await signMessage({
 			nickname,
-			publicKey,
 		}),
 	});
 

@@ -1,14 +1,18 @@
 import type { Signed } from "core/types/signed";
 import { subtle } from "node:crypto";
 
-export async function verify<T>(payload: T & Signed): Promise<boolean> {
+export async function verify<T>({
+	publicKey,
+	signature,
+	issuedAt,
+	expiresAt,
+	...payload
+}: T & Signed): Promise<boolean> {
 	try {
-		if (new Date() > new Date(payload.expiresAt)) {
+		if (new Date() > new Date(expiresAt)) {
 			return false;
 		}
 
-		const publicKey: string = payload.publicKey;
-		const signature: string = payload.signature;
 		const publicKeyBuffer: Buffer = Buffer.from(publicKey, "hex");
 
 		const ecKeyImportParams: EcKeyImportParams = {
@@ -26,15 +30,10 @@ export async function verify<T>(payload: T & Signed): Promise<boolean> {
 
 		const ecdsaParams: EcdsaParams = { name: "ECDSA", hash: "SHA-384" };
 		const signatureBuffer: Buffer = Buffer.from(signature, "hex");
+		const payloadSerialised: string = JSON.stringify(payload);
+		const payloadBuffer: Buffer = Buffer.from(payloadSerialised, "utf-8");
 
-		const payloadSerialised: string = JSON.stringify(
-			payload,
-			Object.keys(payload).sort(),
-		);
-
-		const payloadBuffer: Buffer = Buffer.from(payloadSerialised, "utf8");
-
-		const valid = subtle.verify(
+		const valid = await subtle.verify(
 			ecdsaParams,
 			publicCryptoKey,
 			signatureBuffer,
@@ -43,6 +42,8 @@ export async function verify<T>(payload: T & Signed): Promise<boolean> {
 
 		return valid;
 	} catch (_e) {
+		console.log("error", _e);
+
 		return false;
 	}
 }
