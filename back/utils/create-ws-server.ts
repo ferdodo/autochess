@@ -39,7 +39,7 @@ export function createWsServer<I, O>(): Observable<Connection<I, O>> {
 				ws.on("close", () => {
 					messageSubscriber.complete();
 				});
-			});
+			}).pipe(share());
 
 			const send = (payload: O) => {
 				const serialized = JSON.stringify(payload);
