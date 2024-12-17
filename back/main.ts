@@ -7,12 +7,17 @@ import { startServer } from "core/utils/start-server";
 
 console.log("Server is starting...");
 
-Promise.resolve().then(async () => {
-	const db: Db = await initMongo();
-	const orm: MikroORM = await initMikro();
-	const backContext = await createBackContext(orm, db);
-	startServer(backContext);
-	console.log("\n╭───────────────────╮");
-	console.log("│ Autochess Backend |");
-	console.log("╰───────────────────╯\n");
-});
+Promise.resolve()
+	.then(async () => {
+		const db: Db = await initMongo();
+		const orm: MikroORM = await initMikro();
+		const backContext = await createBackContext(orm, db);
+		startServer(backContext);
+		console.log("\n╭───────────────────╮");
+		console.log("│ Autochess Backend |");
+		console.log("╰───────────────────╯\n");
+	})
+	.catch((err) => {
+		console.error(err);
+		process.exit(1);
+	});
