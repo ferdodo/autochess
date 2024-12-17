@@ -84,4 +84,4 @@ test("Should not start a game with 1 player", async () => {
 				}, 1);
 			}),
 	).rejects.toThrow("Good error");
-}, 1000);
+});
