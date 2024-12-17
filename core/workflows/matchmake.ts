@@ -1,5 +1,4 @@
 import type { Subscription } from "rxjs";
-import { createPlaysig } from "../utils/create-playsig.js";
 import type { BackContext } from "../types/back-context.js";
 import { filter } from "rxjs";
 import type { Hero } from "../types/hero.js";
@@ -9,6 +8,7 @@ import { Phase } from "../types/phase.js";
 import { getRandomAppellation } from "../utils/get-random-appellation.js";
 import { createPool } from "../utils/create-pool.js";
 import type { Level } from "../types/level.js";
+import { uid } from "uid";
 
 export function matchmake({
 	dataMapper: { queuers$, createGameWithPoolAndDeleteQueuers },
@@ -36,7 +36,7 @@ export function matchmake({
 			const playerLevel: Record<string, Level> = {};
 			const playerBenches: Record<string, Record<number, Hero>> = {};
 			const playerHealths: Record<string, number> = {};
-			const playsig = createPlaysig(players);
+			const playsig = uid();
 			const pool = createPool(playsig);
 
 			for (const player of players) {
