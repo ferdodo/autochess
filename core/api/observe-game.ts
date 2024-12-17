@@ -14,7 +14,7 @@ export function observeGame({
 	}
 
 	return defer(() => {
-		signMessage({ playsig, publicKey })
+		signMessage({ playsig })
 			.then((observeGameSubscribe) => {
 				connection.send({ observeGameSubscribe });
 			})
