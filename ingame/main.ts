@@ -16,6 +16,7 @@ import { createWsClient } from "./utils/create-ws-client";
 import { switchMap } from "rxjs/operators";
 import { sign } from "./utils/sign";
 import { createKeyPair } from "./utils/create-key-pair";
+import { notify } from "./utils/notify";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -23,8 +24,7 @@ document.addEventListener("contextmenu", (e) => {
 
 waitTextureLoaded
 	.then(async () => {
-		window.document.body.innerHTML = "Connecting to servers...";
-
+		notify("Connecting to servers...");
 		const [publicKey, privateKey] = await createKeyPair();
 
 		const connection = await createWsClient(
@@ -32,15 +32,15 @@ waitTextureLoaded
 			import.meta.env.VITE_WEBSOCKET_PORT,
 			import.meta.env.VITE_BACK_DOMAIN,
 		).catch((err) => {
-			window.document.body.innerHTML = "Connection closed.";
+			notify("Connection failed.");
 			throw err;
 		});
 
-		window.document.body.innerHTML = "Matchmaking...";
+		notify("Matchmaking...");
 
 		connection.messages$.subscribe({
 			complete: () => {
-				window.document.body.innerHTML = "Connection lost !";
+				notify("Connection lost !");
 			},
 		});
 
@@ -55,9 +55,11 @@ waitTextureLoaded
 			initiateGame(frontContext1),
 		]);
 
+		frontContext1.playsig = initiateGameResponse1.playsig;
+		frontContext1.stamp = initiateGameResponse1.stamp;
 		const threeContext1 = createContext();
 
-		window.document.body.innerHTML = "";
+		notify("");
 
 		connection.messages$
 			.pipe(switchMap(() => observeWindowDimentions()))
@@ -71,19 +73,19 @@ waitTextureLoaded
 				);
 			});
 
-		frontContext1.playsig = initiateGameResponse1.playsig;
-		frontContext1.stamp = initiateGameResponse1.stamp;
+		observeGame(frontContext1)
+			.pipe(portray(frontContext1.publicKey, threeContext1))
+			.subscribe((display) => {
+				render(threeContext1, display);
+			});
 
 		observeInteractions(threeContext1)
 			.pipe(observeInteractionHistory())
 			.subscribe((interactions) => {
 				cast(frontContext1, interactions);
 			});
-
-		observeGame(frontContext1)
-			.pipe(portray(frontContext1.publicKey, threeContext1))
-			.subscribe((display) => {
-				render(threeContext1, display);
-			});
 	})
-	.catch(console.error);
+	.catch((err) => {
+		console.error(err);
+		notify("An error occured.");
+	});

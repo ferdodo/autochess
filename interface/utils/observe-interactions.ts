@@ -47,7 +47,7 @@ export function observeInteractions(
 					const targetBox = threeContext.pieceTargetBoxes[index];
 
 					if (!targetBox) {
-						throw new Error("Target box not found !");
+						return {};
 					}
 
 					if (raycaster.intersectObject(targetBox).length > 0) {
