@@ -1,24 +1,33 @@
 import type { Confrontation } from "../types/confrontation.js";
 import type { Action } from "../types/action.js";
+import type { Move } from "../types/move.js";
 
 export function computeConfrontation(
-	_confrontation: Confrontation,
+	confrontation: Confrontation,
 	action: Action,
 ): Confrontation {
-	const confrontation = structuredClone(_confrontation);
-
 	if (action.move) {
+		const move: Move = action.move;
+
 		for (const hero of confrontation.playerAHeroes) {
 			if (hero.id === action.move.heroId) {
-				hero.position = action.move.position;
-				return confrontation;
+				return {
+					...confrontation,
+					playerAHeroes: confrontation.playerAHeroes.map((h) =>
+						h.id === hero.id ? { ...h, position: move.position } : h,
+					),
+				};
 			}
 		}
 
 		for (const hero of confrontation.playerBHeroes) {
 			if (hero.id === action.move.heroId) {
-				hero.position = action.move.position;
-				return confrontation;
+				return {
+					...confrontation,
+					playerBHeroes: confrontation.playerBHeroes.map((h) =>
+						h.id === hero.id ? { ...h, position: move.position } : h,
+					),
+				};
 			}
 		}
 
@@ -45,8 +54,20 @@ export function computeConfrontation(
 			throw new Error("Target not found !");
 		}
 
-		target.attributes.health -= 1;
-		return confrontation;
+		return {
+			...confrontation,
+			playerAHeroes: confrontation.playerAHeroes.map((h) =>
+				h.id === target.id
+					? {
+							...h,
+							attributes: {
+								...h.attributes,
+								health: h.attributes.health - 1,
+							},
+						}
+					: h,
+			),
+		};
 	}
 
 	throw new Error("No action found !");
