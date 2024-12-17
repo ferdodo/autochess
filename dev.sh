@@ -35,7 +35,7 @@ function setup_pre_commit_hook {
 
 	ls .git/hooks/pre-commit.sample
 	echo "#!/bin/sh" > .git/hooks/pre-commit
-	echo "docker compose down" >> .git/hooks/pre-commit
+	echo "docker compose down -v -t 1" >> .git/hooks/pre-commit
 	echo "docker compose up -d --build" >> .git/hooks/pre-commit
 	chmod +x .git/hooks/pre-commit
 }
