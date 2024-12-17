@@ -17,6 +17,7 @@ import type { MikroORM } from "@mikro-orm/core";
 import type { Game } from "core/types/game";
 import type { Queuer } from "core/types/queuer";
 import type { MongoSerialized } from "../types/mongo-serialized.js";
+import { deleteQueuer } from "./delete-queuer.js";
 
 export function createDataMapper(orm: MikroORM, db: Db): DataMapper {
 	const gameCollection = db.collection<MongoSerialized<Game>>("game");
@@ -37,6 +38,7 @@ export function createDataMapper(orm: MikroORM, db: Db): DataMapper {
 			readAndUpdatePoolWithGame(orm, playsig),
 		readQueuers: () => readQueuers(orm),
 		createQueuer: (queuer) => createQueuer(orm, queuer),
+		deleteQueuer: (publicKey) => deleteQueuer(orm, publicKey),
 		queuers$: observeQueuers(orm, queuerCollection),
 	};
 }

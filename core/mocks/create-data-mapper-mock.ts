@@ -3,6 +3,7 @@ import type { Queuer } from "../types/queuer.js";
 import { Subject, filter, map } from "rxjs";
 import type { DataMapper } from "../types/data-mapper.js";
 import type { Pool } from "../types/pool.js";
+import type { PublicKey } from "../types/public-key.js";
 
 export function createDataMapperMock(): DataMapper {
 	let games: Game[] = [];
@@ -136,6 +137,17 @@ export function createDataMapperMock(): DataMapper {
 			}
 
 			queuers.push(queuer);
+			currentQueuer$.next(queuers);
+			return true;
+		},
+		async deleteQueuer(publicKey: PublicKey) {
+			const index = queuers.findIndex((q) => q.publicKey === publicKey);
+
+			if (index === -1) {
+				return false;
+			}
+
+			queuers = queuers.filter((q) => q.publicKey !== publicKey);
 			currentQueuer$.next(queuers);
 			return true;
 		},

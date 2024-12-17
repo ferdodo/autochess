@@ -7,7 +7,7 @@ import { checkSignature } from "../utils/check-signature.js";
 
 export function initiateGameHandle({
 	connections$,
-	dataMapper: { createQueuer, createdGame$ },
+	dataMapper: { createQueuer, createdGame$, deleteQueuer },
 	queuerConnections,
 	isValidSignature,
 	serverPublicKey,
@@ -32,12 +32,13 @@ export function initiateGameHandle({
 						delete queuerConnections[publicKey];
 					}
 				}),
-				finalize(() => {
+				finalize(async () => {
 					const publicKey = Object.keys(queuerConnections).find(
 						(key) => queuerConnections[key] === connection,
 					);
 
 					if (publicKey) {
+						await deleteQueuer(publicKey);
 						delete queuerConnections[publicKey];
 					}
 				}),

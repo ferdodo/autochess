@@ -37,5 +37,6 @@ export interface DataMapper {
 	): Promise<ReadAndUpdatePoolWithGame | undefined>;
 	readQueuers(): Promise<Queuer[]>;
 	createQueuer(queuer: Queuer): Promise<boolean>;
+	deleteQueuer(publicKey: PublicKey): Promise<boolean>;
 	queuers$: Observable<Queuer[]>;
 }
