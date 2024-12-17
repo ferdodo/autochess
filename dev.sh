@@ -16,7 +16,7 @@ function sync-containers {
 }
 
 function at-least-5GB-free-space {
-	[ $(df --output=avail / | tail -n1) -gt 5000000 ]
+	[ $(df --output=avail / | tail -n1) -gt 5000000 ] || (echo "Not enough free space" && exit 1)
 }
 
 function set-state {
