@@ -20,7 +20,6 @@ interface ReadAndUpdateGame {
 
 export interface DataMapper {
 	readGame(playsig: string): Promise<Game | undefined>;
-	readAllGames(): Promise<Game[]>;
 	updateGame(game: Game): Promise<boolean>;
 	readAndUpdateGame(playsig: Playsig): Promise<ReadAndUpdateGame | undefined>;
 	createGameWithPoolAndDeleteQueuers(

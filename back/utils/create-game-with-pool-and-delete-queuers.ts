@@ -1,37 +1,32 @@
 import type { Game } from "core/types/game.js";
-import { GameEntity } from "../entities/game.js";
 import type { Pool } from "core/types/pool.js";
-import { PoolEntity } from "../entities/pool.js";
-import { QueuerEntity } from "../entities/queuer.js";
 import type { PublicKey } from "core/types/public-key.js";
-import type { MikroORM } from "@mikro-orm/core";
-import { mongoSerialize } from "./mongo-serialize.js";
+import type { RedisClientType } from "redis";
+import { RedisEvent } from "../types/redis-events.js";
 
 export async function createGameWithPoolAndDeleteQueuers(
-	orm: MikroORM,
+	redis: RedisClientType,
 	game: Game,
 	pool: Pool,
 	queuersPublicKeys: PublicKey[],
 ) {
-	const em = orm.em.fork();
+	const gameKey = `game:${game.playsig}`;
+	const poolKey = `pool:${pool.playsig}`;
+	const queuersKey = "queuers";
+	await redis.watch([queuersKey, gameKey, poolKey]);
+	const transaction = redis.multi();
+	const queuersString = await redis.get(queuersKey);
+	const queuers = queuersString ? JSON.parse(queuersString) : [];
 
-	try {
-		await em.begin();
-		const gameRepository = em.getRepository(GameEntity);
-		const poolRepository = em.getRepository(PoolEntity);
-		const queuerRepository = em.getRepository(QueuerEntity);
-		await gameRepository.create(mongoSerialize(game));
-		await poolRepository.create(mongoSerialize(pool));
+	const newQueuers = queuers.filter(
+		(queuer: PublicKey) => !queuersPublicKeys.includes(queuer),
+	);
 
-		for (const publicKey of queuersPublicKeys) {
-			await queuerRepository.nativeDelete({ publicKey });
-		}
-
-		await em.flush();
-		await em.commit();
-		return true;
-	} catch (error) {
-		await em.rollback();
-		throw error;
-	}
+	transaction.set(gameKey, JSON.stringify(game));
+	transaction.set(poolKey, JSON.stringify(pool));
+	transaction.set(queuersKey, JSON.stringify(newQueuers));
+	redis.publish(RedisEvent.GameCreate, game.playsig);
+	redis.publish(RedisEvent.QueuerLeave, "");
+	await transaction.exec();
+	return true;
 }

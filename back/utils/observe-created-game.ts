@@ -1,26 +1,23 @@
-import type { Collection } from "mongodb";
-import { Observable, share } from "rxjs";
+import type { Observable } from "rxjs";
 import type { Game } from "core/types/game.js";
-import type { MongoDeserialized } from "../types/mongo-deserialized.js";
-import { mongoDeserialize } from "./mongo-deserialize.js";
-import type { MongoSerialized } from "../types/mongo-serialized.js";
+import type { RedisClientType } from "redis";
+import { filter, mergeMap } from "rxjs/operators";
+import { RedisEvent } from "../types/redis-events.js";
 
 export function observeCreatedGame(
-	gameCollection: Collection<MongoSerialized<Game>>,
-): Observable<MongoDeserialized<Game>> {
-	return new Observable<MongoDeserialized<Game>>((subscriber) => {
-		const changeStream = gameCollection.watch([
-			{ $match: { operationType: "insert" } },
-		]);
+	redis: RedisClientType,
+	redisEvents$: Observable<[RedisEvent, string]>,
+): Observable<Game> {
+	return redisEvents$.pipe(
+		filter(([message]) => message === RedisEvent.GameCreate),
+		mergeMap(async ([_, playsig]) => {
+			const gameString = await redis.get(`game:${playsig}`);
 
-		changeStream.on("change", async (change) => {
-			if (change.operationType === "insert") {
-				subscriber.next(mongoDeserialize(change.fullDocument));
+			if (!gameString) {
+				return [];
 			}
-		});
 
-		return () => {
-			changeStream.close();
-		};
-	}).pipe(share());
+			return JSON.parse(gameString);
+		}),
+	);
 }

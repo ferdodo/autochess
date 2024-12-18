@@ -1,12 +1,18 @@
 import type { Pool } from "core/types/pool.js";
-import { PoolEntity } from "../entities/pool.js";
-import type { MikroORM } from "@mikro-orm/core";
-import { mongoSerialize } from "./mongo-serialize.js";
+import type { RedisClientType } from "redis";
 
-export async function createPool(orm: MikroORM, pool: Pool): Promise<boolean> {
-	const em = orm.em.fork();
-	const poolRepository = em.getRepository(PoolEntity);
-	await poolRepository.create(mongoSerialize(pool));
-	await em.flush();
+export async function createPool(
+	redis: RedisClientType,
+	pool: Pool,
+): Promise<boolean> {
+	const poolKey = `pool:${pool.playsig}`;
+	const existingPoolString = await redis.get(poolKey);
+
+	if (existingPoolString !== null) {
+		return false;
+	}
+
+	const poolString = JSON.stringify(pool);
+	await redis.set(poolKey, poolString);
 	return true;
 }

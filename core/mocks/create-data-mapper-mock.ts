@@ -32,9 +32,6 @@ export function createDataMapperMock(): DataMapper {
 
 	return {
 		readGame,
-		async readAllGames() {
-			return structuredClone(games);
-		},
 		async readAndUpdateGame(playsig: string) {
 			const game = structuredClone(
 				games.find((game) => game.playsig === playsig),

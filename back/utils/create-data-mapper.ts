@@ -1,6 +1,5 @@
 import type { DataMapper } from "core/types/data-mapper.js";
 import { readGame } from "./read-game.js";
-import { readAllGames } from "./read-all-games.js";
 import { updateGame } from "./update-game.js";
 import { readAndUpdateGame } from "./read-and-update-game.js";
 import { createGameWithPoolAndDeleteQueuers } from "./create-game-with-pool-and-delete-queuers.js";
@@ -12,33 +11,35 @@ import { createPool } from "./create-pool.js";
 import { readAndUpdatePoolWithGame } from "./read-and-update-pool-with-game.js";
 import { readQueuers } from "./read-queuers.js";
 import { createQueuer } from "./create-queuer.js";
-import type { Db } from "mongodb";
-import type { MikroORM } from "@mikro-orm/core";
-import type { Game } from "core/types/game.js";
-import type { Queuer } from "core/types/queuer.js";
-import type { MongoSerialized } from "../types/mongo-serialized.js";
 import { deleteQueuer } from "./delete-queuer.js";
+import type { RedisClientType } from "redis";
+import { Observable, share } from "rxjs";
+import type { RedisEvent } from "../types/redis-events.js";
 
-export function createDataMapper(orm: MikroORM, db: Db): DataMapper {
-	const gameCollection = db.collection<MongoSerialized<Game>>("game");
-	const queuerCollection = db.collection<MongoSerialized<Queuer>>("queuer");
+export function createDataMapper(redis: RedisClientType): DataMapper {
+	const RedisEvents$: Observable<[RedisEvent, string]> = new Observable<
+		[RedisEvent, string]
+	>((observer) => {
+		redis.on("message", (channel, message) => {
+			observer.next([channel as RedisEvent, message as string]);
+		});
+	}).pipe(share());
 
 	return {
-		readGame: (playsig) => readGame(orm, playsig),
-		readAllGames: () => readAllGames(orm),
-		updateGame: (game) => updateGame(orm, game),
-		readAndUpdateGame: (playsig) => readAndUpdateGame(orm, playsig),
+		readGame: (playsig) => readGame(redis, playsig),
+		updateGame: (game) => updateGame(redis, game),
+		readAndUpdateGame: (playsig) => readAndUpdateGame(redis, playsig),
 		createGameWithPoolAndDeleteQueuers: (game, pool, queuersPublicKeys) =>
-			createGameWithPoolAndDeleteQueuers(orm, game, pool, queuersPublicKeys),
-		createdGame$: observeCreatedGame(gameCollection),
-		observeGame: (playsig) => observeGame(gameCollection, playsig),
-		readPool: (playsig) => readPool(orm, playsig),
-		createPool: (pool) => createPool(orm, pool),
+			createGameWithPoolAndDeleteQueuers(redis, game, pool, queuersPublicKeys),
+		createdGame$: observeCreatedGame(redis, RedisEvents$),
+		observeGame: (playsig) => observeGame(redis, RedisEvents$, playsig),
+		readPool: (playsig) => readPool(redis, playsig),
+		createPool: (pool) => createPool(redis, pool),
 		readAndUpdatePoolWithGame: (playsig) =>
-			readAndUpdatePoolWithGame(orm, playsig),
-		readQueuers: () => readQueuers(orm),
-		createQueuer: (queuer) => createQueuer(orm, queuer),
-		deleteQueuer: (publicKey) => deleteQueuer(orm, publicKey),
-		queuers$: observeQueuers(orm, queuerCollection),
+			readAndUpdatePoolWithGame(redis, playsig),
+		readQueuers: () => readQueuers(redis),
+		createQueuer: (queuer) => createQueuer(redis, queuer),
+		deleteQueuer: (publicKey) => deleteQueuer(redis, publicKey),
+		queuers$: observeQueuers(redis, RedisEvents$),
 	};
 }

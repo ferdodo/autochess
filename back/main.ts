@@ -1,17 +1,14 @@
-import { initMikro } from "./utils/init-mikro.js";
-import { initMongo } from "./utils/init-mongo.js";
-import type { Db } from "mongodb";
-import type { MikroORM } from "@mikro-orm/core";
 import { createBackContext } from "./utils/create-back-context.js";
 import { startServer } from "core/utils/start-server.js";
+import { createRedisClient } from "./utils/create-redis-client.js";
+import { createDataMapper } from "./utils/create-data-mapper.js";
 
 console.log("Server is starting...");
 
 Promise.resolve()
 	.then(async () => {
-		const db: Db = await initMongo();
-		const orm: MikroORM = await initMikro();
-		const backContext = await createBackContext(orm, db);
+		const redis = await createRedisClient();
+		const backContext = await createBackContext(redis);
 		startServer(backContext);
 		console.log("\n╭───────────────────╮");
 		console.log("│ Autochess Backend |");

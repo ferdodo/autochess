@@ -1,16 +1,17 @@
 import type { Game } from "core/types/game.js";
-import { GameEntity } from "../entities/game.js";
 import type { Playsig } from "core/types/playsig.js";
-import type { MikroORM } from "@mikro-orm/core";
-import { mongoDeserialize } from "./mongo-deserialize.js";
-import type { MongoDeserialized } from "../types/mongo-deserialized.js";
+import type { RedisClientType } from "redis";
 
 export async function readGame(
-	orm: MikroORM,
+	redis: RedisClientType,
 	playsig: Playsig,
-): Promise<MongoDeserialized<Game> | undefined> {
-	const em = orm.em.fork();
-	const gameRepository = em.getRepository(GameEntity);
-	const game = await gameRepository.findOne({ playsig });
-	return game ? mongoDeserialize(game) : undefined;
+): Promise<Game | undefined> {
+	const key = `game:${playsig}`;
+	const existing = await redis.get(key);
+
+	if (!existing) {
+		return undefined;
+	}
+
+	return JSON.parse(existing);
 }

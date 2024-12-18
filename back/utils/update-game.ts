@@ -1,16 +1,19 @@
 import type { Game } from "core/types/game.js";
-import { GameEntity } from "../entities/game.js";
-import type { MikroORM } from "@mikro-orm/core";
+import type { RedisClientType } from "redis";
+import { RedisEvent } from "../types/redis-events.js";
 
-export async function updateGame(orm: MikroORM, game: Game): Promise<boolean> {
-	const em = orm.em.fork();
-	const gameRepository = em.getRepository(GameEntity);
-	const playsig = game.playsig;
+export async function updateGame(
+	redis: RedisClientType,
+	game: Game,
+): Promise<boolean> {
+	const key = `game:${game.playsig}`;
+	const existing = await redis.get(key);
 
-	if (!playsig) {
+	if (!existing) {
 		return false;
 	}
 
-	const affected = await gameRepository.nativeUpdate({ playsig }, game);
-	return Boolean(affected);
+	await redis.set(key, JSON.stringify(game));
+	redis.publish(RedisEvent.GameUpdate, game.playsig);
+	return true;
 }

@@ -1,16 +1,17 @@
 import type { Pool } from "core/types/pool.js";
 import type { Playsig } from "core/types/playsig.js";
-import type { MikroORM } from "@mikro-orm/core";
-import { PoolEntity } from "../entities/pool.js";
-import type { MongoDeserialized } from "../types/mongo-deserialized.js";
-import { mongoDeserialize } from "./mongo-deserialize.js";
+import type { RedisClientType } from "redis";
 
 export async function readPool(
-	orm: MikroORM,
+	redis: RedisClientType,
 	playsig: Playsig,
-): Promise<MongoDeserialized<Pool> | null> {
-	const em = orm.em.fork();
-	const poolRepository = em.getRepository(PoolEntity);
-	const pool = await poolRepository.findOne({ playsig });
-	return mongoDeserialize(pool);
+): Promise<Pool> {
+	const key = `pool:${playsig}`;
+	const existing = await redis.get(key);
+
+	if (!existing) {
+		throw new Error("Pool not found !");
+	}
+
+	return JSON.parse(existing);
 }

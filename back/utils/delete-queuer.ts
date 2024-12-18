@@ -1,18 +1,23 @@
-import { QueuerEntity } from "../entities/queuer.js";
-import type { MikroORM } from "@mikro-orm/core";
 import type { PublicKey } from "core/types/public-key.js";
+import type { RedisClientType } from "redis";
+import { RedisEvent } from "../types/redis-events.js";
 
 export async function deleteQueuer(
-	orm: MikroORM,
+	redisClient: RedisClientType,
 	publicKey: PublicKey,
 ): Promise<boolean> {
-	try {
-		const em = orm.em.fork();
-		const queuerRepository = em.getRepository(QueuerEntity);
-		await queuerRepository.nativeDelete({ publicKey });
-		await em.flush();
-		return true;
-	} catch (_e) {
+	const existingQueuerString = await redisClient.get(`queuer:${publicKey}`);
+
+	if (existingQueuerString === null) {
 		return false;
 	}
+
+	const queuers = JSON.parse(existingQueuerString);
+
+	const newQueuers = queuers.filter(
+		(queuer: PublicKey) => queuer !== publicKey,
+	);
+
+	await redisClient.set("queuers", JSON.stringify(newQueuers));
+	redisClient.publish(RedisEvent.QueuerLeave, "");
 }

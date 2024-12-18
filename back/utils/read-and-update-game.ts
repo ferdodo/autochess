@@ -1,27 +1,33 @@
 import type { Game } from "core/types/game.js";
-import { GameEntity } from "../entities/game.js";
 import type { Playsig } from "core/types/playsig.js";
-import type { MikroORM } from "@mikro-orm/core";
-import type { MongoDeserialized } from "../types/mongo-deserialized.js";
-import { mongoDeserialize } from "./mongo-deserialize.js";
+import type { RedisClientType } from "redis";
+import { RedisEvent } from "../types/redis-events.js";
 
-export async function readAndUpdateGame(orm: MikroORM, playsig: Playsig) {
-	const em = orm.em.fork();
-	await em.begin();
-	const gameRepository = em.getRepository(GameEntity);
-	const _game = await gameRepository.findOneOrFail({ playsig });
-	const game: MongoDeserialized<Game> = mongoDeserialize(_game);
+export async function readAndUpdateGame(
+	redis: RedisClientType,
+	playsig: Playsig,
+) {
+	const key = `game:${playsig}`;
+	await redis.watch(key);
+	const transaction = redis.multi();
+	const gameString = await redis.get(key);
+
+	if (!gameString) {
+		transaction.discard();
+		throw new Error("Game not found !");
+	}
 
 	async function commit(game: Game) {
-		const affected = await gameRepository.nativeUpdate({ playsig }, game);
-		await em.flush();
-		await em.commit();
-		return Boolean(affected);
+		transaction.set(key, JSON.stringify(game));
+		await transaction.exec();
+		redis.publish(RedisEvent.GameUpdate, playsig);
+		return true;
 	}
 
 	async function abort() {
-		await em.rollback();
+		await transaction.discard();
 	}
 
+	const game: Game = JSON.parse(gameString);
 	return { game, commit, abort };
 }

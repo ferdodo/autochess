@@ -6,11 +6,9 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@mikro-orm/core": "^6.4.1",
-		"@mikro-orm/mongodb": "^6.4.1",
 		"@types/node": "^22.10.1",
 		"core": "file:../core",
-		"mongodb": "^5.9.2",
+		"redis": "^4.7.0",
 		"rxjs": "^7.8.1",
 		"tinybench": "^3.0.7",
 		"typescript": "^5.7.2",
