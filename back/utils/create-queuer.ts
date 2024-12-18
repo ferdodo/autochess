@@ -1,5 +1,5 @@
 import { QueuerEntity } from "../entities/queuer.js";
-import type { Queuer } from "core/types/queuer";
+import type { Queuer } from "core/types/queuer.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { mongoSerialize } from "./mongo-serialize.js";
 

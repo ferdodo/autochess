@@ -13,4 +13,5 @@ COPY --from=1 /autochess /autochess
 COPY --from=0 /autochess/back /autochess/back
 WORKDIR /autochess/back
 COPY . .
+RUN bun run build
 CMD bun --watch run main.ts

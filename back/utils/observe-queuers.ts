@@ -1,4 +1,4 @@
-import type { Queuer } from "core/types/queuer";
+import type { Queuer } from "core/types/queuer.js";
 import type { Collection } from "mongodb";
 import { QueuerEntity } from "../entities/queuer.js";
 import { Observable, share } from "rxjs";

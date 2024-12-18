@@ -1,7 +1,7 @@
 import { WebSocketServer } from "ws";
 import { Observable, share } from "rxjs";
-import type { Connection } from "core/types/connection";
-import { validateClientMessage } from "core/utils/validate-client-message";
+import type { Connection } from "core/types/connection.js";
+import { validateClientMessage } from "core/utils/validate-client-message.js";
 import { createServer } from "node:https";
 import { readFileSync } from "node:fs";
 import { uid } from "uid";

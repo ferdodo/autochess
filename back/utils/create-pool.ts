@@ -1,4 +1,4 @@
-import type { Pool } from "core/types/pool";
+import type { Pool } from "core/types/pool.js";
 import { PoolEntity } from "../entities/pool.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { mongoSerialize } from "./mongo-serialize.js";

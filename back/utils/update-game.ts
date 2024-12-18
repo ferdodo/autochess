@@ -1,4 +1,4 @@
-import type { Game } from "core/types/game";
+import type { Game } from "core/types/game.js";
 import { GameEntity } from "../entities/game.js";
 import type { MikroORM } from "@mikro-orm/core";
 

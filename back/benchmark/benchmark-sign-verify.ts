@@ -1,5 +1,4 @@
 import { Bench } from "tinybench";
-import type { DataMapper } from "core/types/data-mapper";
 import { createKeyPair } from "../utils/create-key-pair.js";
 import { sign } from "../utils/sign.js";
 import { verify } from "../utils/verify.js";

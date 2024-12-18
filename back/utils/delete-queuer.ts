@@ -1,6 +1,6 @@
 import { QueuerEntity } from "../entities/queuer.js";
 import type { MikroORM } from "@mikro-orm/core";
-import type { PublicKey } from "core/types/public-key";
+import type { PublicKey } from "core/types/public-key.js";
 
 export async function deleteQueuer(
 	orm: MikroORM,

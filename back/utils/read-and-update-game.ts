@@ -1,6 +1,6 @@
-import type { Game } from "core/types/game";
+import type { Game } from "core/types/game.js";
 import { GameEntity } from "../entities/game.js";
-import type { Playsig } from "core/types/playsig";
+import type { Playsig } from "core/types/playsig.js";
 import type { MikroORM } from "@mikro-orm/core";
 import type { MongoDeserialized } from "../types/mongo-deserialized.js";
 import { mongoDeserialize } from "./mongo-deserialize.js";

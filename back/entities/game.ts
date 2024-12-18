@@ -1,13 +1,13 @@
-import type { Playsig } from "core/types/playsig";
-import type { PublicKey } from "core/types/public-key";
-import type { Hero } from "core/types/hero";
-import type { Appellation } from "core/types/appellation";
-import type { Money } from "core/types/money";
-import type { Level } from "core/types/level";
-import type { Health } from "core/types/health";
-import type { Combat } from "core/types/combat";
-import type { Phase } from "core/types/phase";
-import type { DateTime } from "core/types/date-time";
+import type { Playsig } from "core/types/playsig.js";
+import type { PublicKey } from "core/types/public-key.js";
+import type { Hero } from "core/types/hero.js";
+import type { Appellation } from "core/types/appellation.js";
+import type { Money } from "core/types/money.js";
+import type { Level } from "core/types/level.js";
+import type { Health } from "core/types/health.js";
+import type { Combat } from "core/types/combat.js";
+import type { Phase } from "core/types/phase.js";
+import type { DateTime } from "core/types/date-time.js";
 import { Entity, PrimaryKey, Property, Unique } from "@mikro-orm/core";
 
 @Entity()

@@ -3,7 +3,7 @@ import { initMongo } from "./utils/init-mongo.js";
 import type { Db } from "mongodb";
 import type { MikroORM } from "@mikro-orm/core";
 import { createBackContext } from "./utils/create-back-context.js";
-import { startServer } from "core/utils/start-server";
+import { startServer } from "core/utils/start-server.js";
 
 console.log("Server is starting...");
 

@@ -1,9 +1,9 @@
-import type { Game } from "core/types/game";
+import type { Game } from "core/types/game.js";
 import { GameEntity } from "../entities/game.js";
-import type { Pool } from "core/types/pool";
+import type { Pool } from "core/types/pool.js";
 import { PoolEntity } from "../entities/pool.js";
 import { QueuerEntity } from "../entities/queuer.js";
-import type { PublicKey } from "core/types/public-key";
+import type { PublicKey } from "core/types/public-key.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { mongoSerialize } from "./mongo-serialize.js";
 

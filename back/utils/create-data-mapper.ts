@@ -1,4 +1,4 @@
-import type { DataMapper } from "core/types/data-mapper";
+import type { DataMapper } from "core/types/data-mapper.js";
 import { readGame } from "./read-game.js";
 import { readAllGames } from "./read-all-games.js";
 import { updateGame } from "./update-game.js";
@@ -14,8 +14,8 @@ import { readQueuers } from "./read-queuers.js";
 import { createQueuer } from "./create-queuer.js";
 import type { Db } from "mongodb";
 import type { MikroORM } from "@mikro-orm/core";
-import type { Game } from "core/types/game";
-import type { Queuer } from "core/types/queuer";
+import type { Game } from "core/types/game.js";
+import type { Queuer } from "core/types/queuer.js";
 import type { MongoSerialized } from "../types/mongo-serialized.js";
 import { deleteQueuer } from "./delete-queuer.js";
 

@@ -1,10 +1,10 @@
-import type { BackContext } from "core/types/back-context";
+import type { BackContext } from "core/types/back-context.js";
 import { createWsServer } from "./create-ws-server.js";
 import { debounceTime } from "rxjs";
 import { createDataMapper } from "./create-data-mapper.js";
 import type { MikroORM } from "@mikro-orm/core";
 import type { Db } from "mongodb";
-import { createRoundTimer } from "core/utils/create-round-timer";
+import { createRoundTimer } from "core/utils/create-round-timer.js";
 import { sign } from "./sign.js";
 import { createKeyPair } from "./create-key-pair.js";
 import { verify } from "./verify.js";

@@ -1,6 +1,6 @@
-import type { PublicKey } from "core/types/public-key";
-import type { Nickname } from "core/types/nickname";
-import type { DateTime } from "core/types/date-time";
+import type { PublicKey } from "core/types/public-key.js";
+import type { Nickname } from "core/types/nickname.js";
+import type { DateTime } from "core/types/date-time.js";
 import { Entity, PrimaryKey, Property, Unique } from "@mikro-orm/core";
 
 @Entity()
