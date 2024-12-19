@@ -8,7 +8,8 @@ console.log("Server is starting...");
 Promise.resolve()
 	.then(async () => {
 		const redis = await createRedisClient();
-		const backContext = await createBackContext(redis);
+		const pubsub = await createRedisClient();
+		const backContext = await createBackContext(redis, pubsub);
 		startServer(backContext);
 		console.log("\n╭───────────────────╮");
 		console.log("│ Autochess Backend |");

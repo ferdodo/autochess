@@ -14,15 +14,20 @@ import { createQueuer } from "./create-queuer.js";
 import { deleteQueuer } from "./delete-queuer.js";
 import type { RedisClientType } from "redis";
 import { Observable, share } from "rxjs";
-import type { RedisEvent } from "../types/redis-events.js";
+import { RedisEvent } from "../types/redis-events.js";
 
-export function createDataMapper(redis: RedisClientType): DataMapper {
+export function createDataMapper(
+	redis: RedisClientType,
+	pubsub: RedisClientType,
+): DataMapper {
 	const RedisEvents$: Observable<[RedisEvent, string]> = new Observable<
 		[RedisEvent, string]
 	>((observer) => {
-		redis.on("message", (channel, message) => {
-			observer.next([channel as RedisEvent, message as string]);
-		});
+		for (const event of Object.values(RedisEvent)) {
+			pubsub.subscribe(event, (message) => {
+				observer.next([event, message]);
+			});
+		}
 	}).pipe(share());
 
 	return {

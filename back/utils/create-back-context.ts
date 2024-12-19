@@ -10,6 +10,7 @@ import type { RedisClientType } from "redis";
 
 export async function createBackContext(
 	redis: RedisClientType,
+	pubsub: RedisClientType,
 ): Promise<BackContext> {
 	const [serverPublicKey, serverPrivateKey] = await createKeyPair();
 
@@ -20,7 +21,7 @@ export async function createBackContext(
 		signMessage: (message) => sign(serverPublicKey, serverPrivateKey, message),
 		lateMatchmakingTimer: (source) => source.pipe(debounceTime(3000)),
 		roundTimer: createRoundTimer(),
-		dataMapper: createDataMapper(redis),
+		dataMapper: createDataMapper(redis, pubsub),
 		queuerConnections: {},
 	};
 }
