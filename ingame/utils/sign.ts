@@ -23,7 +23,10 @@ export async function sign<T>(
 		["sign"],
 	);
 
-	const payloadAsString: string = JSON.stringify(payload);
+	const payloadAsString: string = JSON.stringify(
+		payload,
+		Object.keys(payload || {}).sort(),
+	);
 	const payloadAsBuffer = new TextEncoder().encode(payloadAsString);
 	const ecdsaParams: EcdsaParams = { name: "ECDSA", hash: "SHA-384" };
 

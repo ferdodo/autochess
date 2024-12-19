@@ -30,7 +30,12 @@ export async function verify<T>({
 
 		const ecdsaParams: EcdsaParams = { name: "ECDSA", hash: "SHA-384" };
 		const signatureBuffer: Buffer = Buffer.from(signature, "hex");
-		const payloadSerialised: string = JSON.stringify(payload);
+
+		const payloadSerialised: string = JSON.stringify(
+			payload,
+			Object.keys(payload).sort(),
+		);
+
 		const payloadBuffer: Buffer = Buffer.from(payloadSerialised, "utf-8");
 
 		const valid = await subtle.verify(
@@ -42,7 +47,7 @@ export async function verify<T>({
 
 		return valid;
 	} catch (_e) {
-		console.log("error", _e);
+		console.error("error", _e);
 
 		return false;
 	}

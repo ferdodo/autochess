@@ -14,6 +14,6 @@ export async function shopBuy(
 		throw new Error("playsig is required to buy an item !");
 	}
 
-	const shopBuyRequest = await signMessage({ item, publicKey, stamp, playsig });
+	const shopBuyRequest = await signMessage({ item, stamp, playsig });
 	connection.send({ shopBuyRequest });
 }

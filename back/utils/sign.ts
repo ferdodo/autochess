@@ -23,7 +23,7 @@ export async function sign<T>(
 
 	const payloadAsString: string = JSON.stringify(
 		payload,
-		Object.keys(payload).sort(),
+		Object.keys(payload || {}).sort(),
 	);
 
 	const payloadAsBuffer: Buffer = Buffer.from(payloadAsString, "utf8");
