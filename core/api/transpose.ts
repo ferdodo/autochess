@@ -18,7 +18,6 @@ export async function transpose(
 
 	connection.send({
 		transposeRequest: await signMessage({
-			publicKey,
 			playsig,
 			grabPiece,
 			ungrabPiece,

@@ -11,6 +11,6 @@ export async function reroll(context: FrontContext): Promise<void> {
 		throw new Error("playsig is required to reroll !");
 	}
 
-	const rerollRequest = await signMessage({ publicKey, stamp, playsig });
+	const rerollRequest = await signMessage({ stamp, playsig });
 	connection.send({ rerollRequest });
 }

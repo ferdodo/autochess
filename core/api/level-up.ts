@@ -11,6 +11,6 @@ export async function levelUp(context: FrontContext): Promise<void> {
 		throw new Error("playsig is required to level up !");
 	}
 
-	const levelUpRequest = await signMessage({ publicKey, playsig, stamp });
+	const levelUpRequest = await signMessage({ playsig, stamp });
 	connection.send({ levelUpRequest });
 }
