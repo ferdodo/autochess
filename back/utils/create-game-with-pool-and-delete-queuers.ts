@@ -3,6 +3,7 @@ import type { Pool } from "core/types/pool.js";
 import type { PublicKey } from "core/types/public-key.js";
 import type { RedisClientType } from "redis";
 import { RedisEvent } from "../types/redis-events.js";
+import type { Queuer } from "core/types/queuer.js";
 
 export async function createGameWithPoolAndDeleteQueuers(
 	redis: RedisClientType,
@@ -19,7 +20,7 @@ export async function createGameWithPoolAndDeleteQueuers(
 	const queuers = queuersString ? JSON.parse(queuersString) : [];
 
 	const newQueuers = queuers.filter(
-		(queuer: PublicKey) => !queuersPublicKeys.includes(queuer),
+		(queuer: Queuer) => !queuersPublicKeys.includes(queuer.publicKey),
 	);
 
 	transaction.set(gameKey, JSON.stringify(game));

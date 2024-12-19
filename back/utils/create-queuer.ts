@@ -8,7 +8,7 @@ export async function createQueuer(
 	queuer: Queuer,
 ): Promise<boolean> {
 	const queuerKey = "queuers";
-	//await redis.watch(queuerKey);
+	await redis.watch(queuerKey);
 	const existingQueuersString = await redis.get(queuerKey);
 
 	const existingQueuers = existingQueuersString
@@ -19,6 +19,5 @@ export async function createQueuer(
 	const queuersString = JSON.stringify(newQueuers);
 	await redis.set(queuerKey, queuersString);
 	redis.publish(RedisEvent.QueuerJoin, "");
-	console.log("Queuer created:", humanReadable(queuer.publicKey));
 	return true;
 }

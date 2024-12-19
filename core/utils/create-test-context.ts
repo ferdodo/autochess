@@ -13,14 +13,15 @@ export function createTestContext(): TestContext {
 	const connectionMockFactory = new ConnectionMockFactory();
 	const lateMatchMakeDebounceSubject = new Subject<void>();
 	const roundTimerSubject = new Subject<void>();
+	const serverPublicKey = createRandomPublicKey();
 
 	const backContext: BackContext = {
 		connections$: connectionMockFactory.createServer(),
 		isValidSignature: () => Promise.resolve(true),
-		serverPublicKey: createRandomPublicKey(),
+		serverPublicKey,
 		signMessage: async (message) => ({
 			...message,
-			publicKey: createRandomPublicKey(),
+			publicKey: serverPublicKey,
 			signature: "ccccccccccc",
 			issuedAt: new Date().toISOString(),
 			expiresAt: new Date(Date.now() + 60000).toISOString(),
