@@ -14,10 +14,12 @@ export function observeCreatedGame(
 			const gameString = await redis.get(`game:${playsig}`);
 
 			if (!gameString) {
-				return [];
+				console.warn("Game should exist as it was just created !");
+				return null;
 			}
 
 			return JSON.parse(gameString);
 		}),
+		filter(Boolean),
 	);
 }

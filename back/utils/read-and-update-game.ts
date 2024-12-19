@@ -8,7 +8,7 @@ export async function readAndUpdateGame(
 	playsig: Playsig,
 ) {
 	const key = `game:${playsig}`;
-	await redis.watch(key);
+	//await redis.watch(key);
 	const transaction = redis.multi();
 	const gameString = await redis.get(key);
 

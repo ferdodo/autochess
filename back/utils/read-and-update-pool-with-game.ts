@@ -11,7 +11,7 @@ export async function readAndUpdatePoolWithGame(
 	const key = `pool:${playsig}`;
 	const gameKey = `game:${playsig}`;
 	const transaction = redis.multi();
-	await redis.watch([key, gameKey]);
+	//await redis.watch([key, gameKey]);
 	const poolString = await redis.get(key);
 
 	if (!poolString) {
