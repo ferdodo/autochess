@@ -68,9 +68,18 @@ services:
     depends_on:
       - core
       - database
+      - citus
+    restart: always
 
   database:
     image: redis
+
+  citus:
+    image: citusdata/citus
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: autochess
 
   ingame:
     build:

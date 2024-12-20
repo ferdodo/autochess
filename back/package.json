@@ -2,10 +2,15 @@
 	"main": "dist/main.js",
 	"type": "module",
 	"scripts": {
-		"build": "tsc && biome ci --organize-imports-enabled=false"
+		"build": "tsc && biome ci --organize-imports-enabled=false",
+		"migration:create": "mikro-orm migration:create"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
+		"@mikro-orm/cli": "^6.4.1",
+		"@mikro-orm/core": "^6.4.1",
+		"@mikro-orm/migrations": "^6.4.1",
+		"@mikro-orm/postgresql": "^6.4.1",
 		"@types/node": "^22.10.1",
 		"core": "file:../core",
 		"redis": "^4.7.0",

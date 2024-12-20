@@ -1,48 +1,41 @@
 import type { Game } from "core/types/game.js";
+import { GameEntity } from "../entities/game.js";
 import type { Pool } from "core/types/pool.js";
+import { PoolEntity } from "../entities/pool.js";
+import { QueuerEntity } from "../entities/queuer.js";
 import type { PublicKey } from "core/types/public-key.js";
+import type { MikroORM } from "@mikro-orm/core";
 import type { RedisClientType } from "redis";
 import { RedisEvent } from "../types/redis-events.js";
-import type { Queuer } from "core/types/queuer.js";
 
 export async function createGameWithPoolAndDeleteQueuers(
+	orm: MikroORM,
 	redis: RedisClientType,
 	game: Game,
 	pool: Pool,
 	queuersPublicKeys: PublicKey[],
-): Promise<boolean> {
+) {
+	const em = orm.em.fork();
+
 	try {
-		await new Promise((resolve) => setTimeout(resolve, 10));
-		const gameKey = `game:${game.playsig}`;
-		const poolKey = `pool:${pool.playsig}`;
-		const queuersKey = "queuers";
-		await redis.watch([queuersKey, gameKey, poolKey]);
-		const transaction = redis.multi();
-		const queuersString = await redis.get(queuersKey);
-		const queuers = queuersString ? JSON.parse(queuersString) : [];
+		await em.begin();
+		const gameRepository = em.getRepository(GameEntity);
+		const poolRepository = em.getRepository(PoolEntity);
+		const queuerRepository = em.getRepository(QueuerEntity);
+		await gameRepository.create(game);
+		await poolRepository.create(pool);
 
-		const newQueuers = queuers.filter(
-			(queuer: Queuer) => !queuersPublicKeys.includes(queuer.publicKey),
-		);
+		for (const publicKey of queuersPublicKeys) {
+			await queuerRepository.nativeDelete({ publicKey });
+		}
 
-		transaction.set(gameKey, JSON.stringify(game));
-		transaction.set(poolKey, JSON.stringify(pool));
-		transaction.set(queuersKey, JSON.stringify(newQueuers));
-		await transaction.exec();
-		await redis.unwatch();
+		await em.flush();
+		await em.commit();
 		redis.publish(RedisEvent.GameCreate, game.playsig);
 		redis.publish(RedisEvent.QueuerLeave, "");
 		return true;
-	} catch (e) {
-		await redis.unwatch();
-
-		if (
-			e.message.includes("One (or more) of the watched keys has been changed")
-		) {
-			console.warn("Game not created", e);
-			return false;
-		}
-
-		throw e;
+	} catch (error) {
+		await em.rollback();
+		throw error;
 	}
 }
