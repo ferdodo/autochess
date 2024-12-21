@@ -17,6 +17,7 @@ import { switchMap } from "rxjs/operators";
 import { sign } from "./utils/sign";
 import { createKeyPair } from "./utils/create-key-pair";
 import { notify } from "./utils/notify";
+import { pickBackend } from "./utils/pick-backend";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -26,11 +27,12 @@ waitTextureLoaded
 	.then(async () => {
 		notify("Connecting to servers...");
 		const [publicKey, privateKey] = await createKeyPair();
+		const [domain, port] = pickBackend();
 
 		const connection = await createWsClient(
 			import.meta.env.VITE_WEBSOCKET_PROTOCOL,
-			import.meta.env.VITE_WEBSOCKET_PORT,
-			import.meta.env.VITE_BACK_DOMAIN,
+			port,
+			domain,
 		).catch((err) => {
 			notify("Connection failed.");
 			throw err;

@@ -58,15 +58,14 @@ services:
   back:
     build: back
     environment:
-      BACK_HOSTNAME: back
-      BACK_HOSTNAMES: back
+      BACK_HOSTNAMES: ${BACK_HOSTNAMES}
       DATABASE_HOST: database
       DATABASE_USERNAME: user
       DATABASE_PASSWORD: example
       DATABASE_DB_NAME: autochess
       VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
     ports:
-      - ${VITE_WEBSOCKET_PORT}:3000
+      - ${VITE_WEBSOCKET_PORT_A}:3000
     depends_on:
       - core
       - database
@@ -84,12 +83,12 @@ services:
       context: ingame
       args:
         - VITE_WEBSOCKET_PROTOCOL=${VITE_WEBSOCKET_PROTOCOL}
-        - VITE_WEBSOCKET_PORT=${VITE_WEBSOCKET_PORT}
-        - VITE_BACK_DOMAIN=${VITE_BACK_DOMAIN}
+        - VITE_WEBSOCKET_PORTS=${VITE_WEBSOCKET_PORT_A}
+        - VITE_WEBSOCKET_DOMAINS=${VITE_WEBSOCKET_DOMAINS}
     environment:
       VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
-      VITE_WEBSOCKET_PORT: ${VITE_WEBSOCKET_PORT}
-      VITE_BACK_DOMAIN: ${VITE_BACK_DOMAIN}
+      VITE_WEBSOCKET_PORTS: ${VITE_WEBSOCKET_PORT_A}
+      VITE_WEBSOCKET_DOMAINS: ${VITE_WEBSOCKET_DOMAINS}
     ports:
       - 53015:53015
     depends_on:

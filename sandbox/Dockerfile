@@ -12,7 +12,7 @@ COPY --from=0 /autochess/sandbox /autochess/sandbox
 
 COPY . .
 
-ARG VITE_BACK_DOMAIN
+ARG VITE_WEBSOCKET_DOMAINS
 ARG VITE_WEBSOCKET_PROTOCOL
 
 RUN npm run build

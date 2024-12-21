@@ -2,8 +2,8 @@
 
 interface ImportMetaEnv {
 	readonly VITE_WEBSOCKET_PROTOCOL: string;
-	readonly VITE_WEBSOCKET_PORT: string;
-	readonly VITE_BACK_DOMAIN: string;
+	readonly VITE_WEBSOCKET_PORTS: string;
+	readonly VITE_WEBSOCKET_DOMAINS: string;
 }
 
 interface ImportMeta {

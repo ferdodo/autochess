@@ -21,7 +21,15 @@ export async function createBus(): Promise<Bus> {
 			socket.subscribe("*");
 
 			await new Promise((resolve, reject) => {
-				socket.on("connect", () => resolve(undefined));
+				const timeout = setTimeout(() => {
+					console.error(new Error(`Connection to ${node} timed out!`));
+					process.exit(1);
+				}, 6000);
+
+				socket.on("connect", () => {
+					clearTimeout(timeout);
+					resolve(undefined);
+				});
 
 				socket.on("error", (cause) => {
 					reject(new Error(`Failed to connect to ${node}`, { cause }));
