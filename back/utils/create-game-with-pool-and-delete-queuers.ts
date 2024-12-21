@@ -5,12 +5,12 @@ import { PoolEntity } from "../entities/pool.js";
 import { QueuerEntity } from "../entities/queuer.js";
 import type { PublicKey } from "core/types/public-key.js";
 import type { MikroORM } from "@mikro-orm/core";
-import type { RedisClientType } from "redis";
-import { RedisEvent } from "../types/redis-events.js";
+import { BackEvent } from "../types/back-events.js";
+import type { Bus } from "../types/pub-sub.js";
 
 export async function createGameWithPoolAndDeleteQueuers(
 	orm: MikroORM,
-	redis: RedisClientType,
+	bus: Bus,
 	game: Game,
 	pool: Pool,
 	queuersPublicKeys: PublicKey[],
@@ -31,8 +31,8 @@ export async function createGameWithPoolAndDeleteQueuers(
 
 		await em.flush();
 		await em.commit();
-		redis.publish(RedisEvent.GameCreate, game.playsig);
-		redis.publish(RedisEvent.QueuerLeave, "");
+		bus.publish(BackEvent.GameCreate, game.playsig);
+		bus.publish(BackEvent.QueuerLeave, "");
 		return true;
 	} catch (error) {
 		await em.rollback();

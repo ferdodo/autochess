@@ -12,38 +12,31 @@ import { readAndUpdatePoolWithGame } from "./read-and-update-pool-with-game.js";
 import { readQueuers } from "./read-queuers.js";
 import { createQueuer } from "./create-queuer.js";
 import { deleteQueuer } from "./delete-queuer.js";
-import type { RedisClientType } from "redis";
 import type { MikroORM } from "@mikro-orm/core";
-import { createPubsubEventObservable } from "./create-pubsub-event-observable.js";
+import type { Bus } from "../types/pub-sub.js";
 
-export function createDataMapper(
-	orm: MikroORM,
-	redis: RedisClientType,
-	redisPub: RedisClientType,
-): DataMapper {
-	const RedisEvents$ = createPubsubEventObservable(redis);
-
+export function createDataMapper(orm: MikroORM, bus: Bus): DataMapper {
 	return {
 		readGame: (playsig) => readGame(orm, playsig),
-		updateGame: (game) => updateGame(orm, redisPub, game),
-		readAndUpdateGame: (playsig) => readAndUpdateGame(orm, redisPub, playsig),
+		updateGame: (game) => updateGame(orm, bus, game),
+		readAndUpdateGame: (playsig) => readAndUpdateGame(orm, bus, playsig),
 		createGameWithPoolAndDeleteQueuers: (game, pool, queuersPublicKeys) =>
 			createGameWithPoolAndDeleteQueuers(
 				orm,
-				redisPub,
+				bus,
 				game,
 				pool,
 				queuersPublicKeys,
 			),
-		createdGame$: observeCreatedGame(orm, RedisEvents$),
-		observeGame: (playsig) => observeGame(orm, RedisEvents$, playsig),
+		createdGame$: observeCreatedGame(orm, bus),
+		observeGame: (playsig) => observeGame(orm, bus, playsig),
 		readPool: (playsig) => readPool(orm, playsig),
 		createPool: (pool) => createPool(orm, pool),
 		readAndUpdatePoolWithGame: (playsig) =>
-			readAndUpdatePoolWithGame(orm, redisPub, playsig),
+			readAndUpdatePoolWithGame(orm, bus, playsig),
 		readQueuers: () => readQueuers(orm),
-		createQueuer: (queuer) => createQueuer(orm, redisPub, queuer),
-		deleteQueuer: (publicKey) => deleteQueuer(orm, redisPub, publicKey),
-		queuers$: observeQueuers(orm, RedisEvents$),
+		createQueuer: (queuer) => createQueuer(orm, bus, queuer),
+		deleteQueuer: (publicKey) => deleteQueuer(orm, bus, publicKey),
+		queuers$: observeQueuers(orm, bus),
 	};
 }

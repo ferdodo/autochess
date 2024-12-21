@@ -1,20 +1,19 @@
 import { createBackContext } from "./utils/create-back-context.js";
 import { startServer } from "core/utils/start-server.js";
-import { createRedisClient } from "./utils/create-redis-client.js";
 import { createDataMapper } from "./utils/create-data-mapper.js";
 import { MikroORM } from "@mikro-orm/postgresql";
 import mikroOrmConfig from "./mikro-orm.config.js";
+import { createBus } from "./utils/create-bus.js";
 
 console.log("Server is starting...");
 
 Promise.resolve()
 	.then(async () => {
+		const bus = await createBus();
 		const orm = await MikroORM.init(mikroOrmConfig);
 		const migrator = orm.getMigrator();
 		await migrator.up();
-		const redis = await createRedisClient();
-		const redisPub = await createRedisClient();
-		const dataMapper = await createDataMapper(orm, redis, redisPub);
+		const dataMapper = await createDataMapper(orm, bus);
 		const backContext = await createBackContext(dataMapper);
 		startServer(backContext);
 		console.log("\n╭───────────────────╮");

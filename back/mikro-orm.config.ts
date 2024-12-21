@@ -7,10 +7,10 @@ import { Migrator } from "@mikro-orm/migrations";
 export default defineConfig({
 	entities: [GameEntity, QueuerEntity, PoolEntity],
 	extensions: [Migrator],
-	host: "citus",
-	dbName: process.env.MONGODB_DATABASE,
-	user: process.env.MONGODB_USERNAME,
-	password: process.env.MONGODB_PASSWORD,
+	host: process.env.DATABASE_HOST,
+	dbName: process.env.DATABASE_DB_NAME,
+	user: process.env.DATABASE_USERNAME,
+	password: process.env.DATABASE_PASSWORD,
 	migrations: {
 		tableName: "mikro_orm_migrations",
 		path: "./migrations",

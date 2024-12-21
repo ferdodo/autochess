@@ -4,12 +4,12 @@ import type { Playsig } from "core/types/playsig.js";
 import type { Pool } from "core/types/pool.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { PoolEntity } from "../entities/pool.js";
-import type { RedisClientType } from "redis";
-import { RedisEvent } from "../types/redis-events.js";
+import { BackEvent } from "../types/back-events.js";
+import type { Bus } from "../types/pub-sub.js";
 
 export async function readAndUpdatePoolWithGame(
 	orm: MikroORM,
-	redis: RedisClientType,
+	bus: Bus,
 	playsig: Playsig,
 ) {
 	const em = orm.em.fork();
@@ -24,8 +24,7 @@ export async function readAndUpdatePoolWithGame(
 		const affectedPool = await poolRepository.nativeUpdate({ playsig }, pool);
 		await em.flush();
 		await em.commit();
-		redis.publish(RedisEvent.GameUpdate, playsig);
-
+		bus.publish(BackEvent.GameUpdate, playsig);
 		return Boolean(affected && affectedPool);
 	}
 

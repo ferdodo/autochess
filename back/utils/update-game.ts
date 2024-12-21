@@ -1,12 +1,12 @@
 import type { Game } from "core/types/game.js";
-import type { RedisClientType } from "redis";
-import { RedisEvent } from "../types/redis-events.js";
+import { BackEvent } from "../types/back-events.js";
 import { GameEntity } from "../entities/game.js";
 import type { MikroORM } from "@mikro-orm/core";
+import type { Bus } from "../types/pub-sub.js";
 
 export async function updateGame(
 	orm: MikroORM,
-	redis: RedisClientType,
+	bus: Bus,
 	game: Game,
 ): Promise<boolean> {
 	const em = orm.em.fork();
@@ -20,7 +20,7 @@ export async function updateGame(
 	const affected = await gameRepository.nativeUpdate({ playsig }, game);
 
 	if (affected) {
-		redis.publish(RedisEvent.GameUpdate, game.playsig);
+		bus.publish(BackEvent.GameUpdate, game.playsig);
 	}
 
 	return Boolean(affected);

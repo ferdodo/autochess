@@ -58,23 +58,21 @@ services:
   back:
     build: back
     environment:
-      MONGODB_USERNAME: user
-      MONGODB_PASSWORD: example
-      MONGODB_DATABASE: autochess
+      BACK_HOSTNAME: back
+      BACK_HOSTNAMES: back
+      DATABASE_HOST: database
+      DATABASE_USERNAME: user
+      DATABASE_PASSWORD: example
+      DATABASE_DB_NAME: autochess
       VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
-      REDIS_URL: redis://database
     ports:
       - ${VITE_WEBSOCKET_PORT}:3000
     depends_on:
       - core
       - database
-      - citus
     restart: always
 
   database:
-    image: redis
-
-  citus:
     image: citusdata/citus
     environment:
       POSTGRES_USER: user
