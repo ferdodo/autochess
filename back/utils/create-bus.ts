@@ -1,6 +1,6 @@
 import axon from "axon";
-import { Observable, share, firstValueFrom, filter, timeout } from "rxjs";
-import { BackEvent } from "../types/back-events.js";
+import { Observable, share } from "rxjs";
+import type { BackEvent } from "../types/back-events.js";
 import type { Bus } from "../types/pub-sub.js";
 
 export async function createBus(): Promise<Bus> {
@@ -14,42 +14,36 @@ export async function createBus(): Promise<Bus> {
 
 	const nodes: string[] = (process.env.BACK_HOSTNAMES || "").split(",");
 
-	const subscribers = await Promise.all(
+	const sockets = await Promise.all(
 		nodes.map(async (node) => {
-			const subscriber = axon.socket("sub");
-			subscriber.connect(port, node);
-			subscriber.subscribe("*");
+			const socket = axon.socket("sub");
+			socket.connect(port, node);
+			socket.subscribe("*");
 
 			await new Promise((resolve, reject) => {
-				subscriber.on("connect", () => resolve(undefined));
-				subscriber.on("error", (err) => reject(err));
+				socket.on("connect", () => resolve(undefined));
 
-				subscriber.on("close", () => {
-					console.error(`Pubsub connection to ${node} closed, exiting nodejs.`);
-					setTimeout(() => process.exit(1), 5000);
+				socket.on("error", (cause) => {
+					reject(new Error(`Failed to connect to ${node}`, { cause }));
+				});
+
+				socket.on("close", (cause) => {
+					console.error(new Error(`Connection to ${node} closed!`, { cause }));
+					process.exit(1);
 				});
 			});
 
-			return subscriber;
+			return socket;
 		}),
 	);
 
-	const events$ = new Observable<[BackEvent, string]>((_subscriber) => {
-		for (const subscriber of subscribers) {
-			subscriber.on("message", (topic, message) => {
-				_subscriber.next([topic, message]);
+	const events$ = new Observable<[BackEvent, string]>((subscriber) => {
+		for (const socket of sockets) {
+			socket.on("message", (topic, message) => {
+				subscriber.next([topic, message]);
 			});
 		}
 	}).pipe(share());
 
-	const pingReceived = firstValueFrom(
-		events$.pipe(
-			filter(([topic]) => topic === BackEvent.Ping),
-			timeout(5000),
-		),
-	);
-
-	publish(BackEvent.Ping, "Hello, world!");
-	await pingReceived;
 	return { publish, events$ };
 }
