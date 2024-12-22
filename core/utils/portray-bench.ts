@@ -8,15 +8,17 @@ export function portrayBench(
 	transposedHero: HeroId | undefined,
 ): Record<number, Piece> {
 	return Object.fromEntries(
-		Object.entries(bench).map(([index, hero]) => [
-			Number.parseInt(index, 10),
-			{
-				hero,
-				animation: Animation.Idle,
-				transposed: hero.id === transposedHero,
-				animationStartAt: Date.now(),
-				right: false,
-			},
-		]),
+		Object.entries(bench)
+			.filter(([_, hero]) => Boolean(hero))
+			.map(([index, hero]) => [
+				Number.parseInt(index, 10),
+				{
+					hero,
+					animation: Animation.Idle,
+					transposed: hero.id === transposedHero,
+					animationStartAt: Date.now(),
+					right: false,
+				},
+			]),
 	);
 }
