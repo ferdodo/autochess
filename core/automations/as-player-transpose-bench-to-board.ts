@@ -8,6 +8,10 @@ import type { PieceSlot } from "../types/piece-slot.js";
 export async function asPlayerTransposeBenchToBoard(
 	testContext: TestContext,
 	playerNumber = 0,
+	ungrab: PieceSlot = {
+		positionX: 1,
+		positionY: 0,
+	},
 ) {
 	const frontContext = testContext.frontContexts[playerNumber];
 
@@ -23,11 +27,6 @@ export async function asPlayerTransposeBenchToBoard(
 
 	const grab: PieceSlot = {
 		benchPosition: 0,
-	};
-
-	const ungrab: PieceSlot = {
-		positionX: 1,
-		positionY: 0,
 	};
 
 	await transpose(frontContext, grab, ungrab);
