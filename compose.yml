@@ -72,11 +72,20 @@ services:
     restart: always
 
   database:
-    image: citusdata/citus
+    build: database
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: example
       POSTGRES_DB: autochess
+
+  database-secondary:
+    build: database-secondary
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: autochess
+    depends_on:
+      - database
 
   ingame:
     build:
