@@ -1,25 +1,44 @@
 #!/bin/bash
 set -e
 
+SSL_CERT_DIR=/etc/postgresql/ssl
+
+primary_is_ready() {
+    pg_isready -h database -U "$POSTGRES_USER"
+}
+
+
 setup_keys() {
-    cp /certs/secondary.key "$PGDATA/server.key"
-    cp /certs/secondary.crt "$PGDATA/server.crt"
-    cp /certs/ca.crt "$PGDATA/ca.crt"
-    chown postgres:postgres "$PGDATA/server.key" "$PGDATA/server.crt" "$PGDATA/ca.crt"
-    chmod 600 "$PGDATA/server.key"
-    chmod 644 $PGDATA/server.crt $PGDATA/ca.crt
-    echo "ssl = on" >> "$PGDATA/postgresql.auto.conf"
-    echo "ssl_cert_file = '$PGDATA/server.crt'" >> "$PGDATA/postgresql.auto.conf"
-    echo "ssl_key_file = '$PGDATA/server.key'" >> "$PGDATA/postgresql.auto.conf"
-    echo "ssl_ca_file = '$PGDATA/ca.crt'" >> "$PGDATA/postgresql.auto.conf"
+	mkdir -p "$SSL_CERT_DIR"
+	cp /certs/secondary.key "$SSL_CERT_DIR/server.key"
+	cp /certs/secondary.crt "$SSL_CERT_DIR/server.crt"
+	cp /certs/ca.crt "$SSL_CERT_DIR/ca.crt"
+	chown postgres:postgres "$SSL_CERT_DIR/server.key" "$SSL_CERT_DIR/server.crt" "$SSL_CERT_DIR/ca.crt"
+	chmod 600 "$SSL_CERT_DIR/server.key"
+	chmod 644 $SSL_CERT_DIR/server.crt $SSL_CERT_DIR/ca.crt
+	echo "ssl = on" >> "$PGDATA/postgresql.auto.conf"
+	echo "ssl_cert_file = '$SSL_CERT_DIR/server.crt'" >> "$PGDATA/postgresql.auto.conf"
+	echo "ssl_key_file = '$SSL_CERT_DIR/server.key'" >> "$PGDATA/postgresql.auto.conf"
+	echo "ssl_ca_file = '$SSL_CERT_DIR/ca.crt'" >> "$PGDATA/postgresql.auto.conf"
 }
 
 configure_replication() {
-    echo "primary_conninfo = 'host=database port=5432 user=$POSTGRES_USER'" >> "$PGDATA/postgresql.auto.conf"
+	echo "primary_conninfo = 'host=database port=5432 user=$POSTGRES_USER sslmode=verify-full sslcert=$SSL_CERT_DIR/server.crt sslkey=$SSL_CERT_DIR/server.key sslrootcert=$SSL_CERT_DIR/ca.crt'" >> "$PGDATA/postgresql.auto.conf" 
     echo "hot_standby = on" >> "$PGDATA/postgresql.auto.conf"
 }
 
+chmod 600 "/certs/secondary.key"
+chmod 644 /certs/secondary.crt /certs/ca.crt
+
+while ! primary_is_ready; do
+	echo "Waiting for primary..."
+	sleep 2
+done
+
+export PGPASSWORD="$POSTGRES_PASSWORD"
+pg_basebackup -h database -D "$PGDATA" -P -U "$POSTGRES_USER"
+psql -h database -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT pg_create_physical_replication_slot('autochessreplication');"
 setup_keys
 configure_replication
 touch "$PGDATA/standby.signal"
-
+exec docker-entrypoint.sh postgres

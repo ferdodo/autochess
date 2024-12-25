@@ -13,7 +13,7 @@ openssl req -x509 -new -nodes -key "$CERTS_DIR/ca.key" -sha256 -days 3650 -out "
 echo "Generating keys for primary..."
 openssl genrsa -out "$CERTS_DIR/primary.key" 2048
 openssl req -new -key "$CERTS_DIR/primary.key" -out "$CERTS_DIR/primary.csr" \
-  -subj "/CN=db-primary"
+  -subj "/CN=database"
 openssl x509 -req -in "$CERTS_DIR/primary.csr" -CA "$CERTS_DIR/ca.crt" -CAkey "$CERTS_DIR/ca.key" \
   -CAcreateserial -out "$CERTS_DIR/primary.crt" -days 3650 -sha256
 

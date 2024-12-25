@@ -20,6 +20,7 @@ configure_replication() {
     echo "max_wal_senders = 10" >> $PGDATA/postgresql.auto.conf
     echo "wal_keep_size = 1GB" >> $PGDATA/postgresql.auto.conf
     echo "host replication $POSTGRES_USER all md5" >> $PGDATA/pg_hba.conf
+    echo "hostssl replication $POSTGRES_USER all cert" >> $PGDATA/pg_hba.conf
 }
 
 configure_replication

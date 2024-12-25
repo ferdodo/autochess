@@ -69,6 +69,7 @@ services:
     depends_on:
       - core
       - database
+      - database-secondary
     restart: always
 
   database:
