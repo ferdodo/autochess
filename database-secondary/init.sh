@@ -35,9 +35,13 @@ while ! primary_is_ready; do
 	sleep 2
 done
 
-export PGPASSWORD="$POSTGRES_PASSWORD"
+export PGSSLMODE=verify-full
+export PGSSLROOTCERT=/certs/ca.crt
+export PGSSLKEY=/certs/secondary.key
+export PGSSLCERT=/certs/secondary.crt
+
 pg_basebackup -h database -D "$PGDATA" -P -U "$POSTGRES_USER"
-psql -h database -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT pg_create_physical_replication_slot('autochessreplication');"
+psql "postgresql://user@database:5432/autochess?sslmode=require"  -c "SELECT pg_create_physical_replication_slot('autochessreplication');"
 setup_keys
 configure_replication
 touch "$PGDATA/standby.signal"

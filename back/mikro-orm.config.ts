@@ -3,6 +3,7 @@ import { GameEntity } from "./entities/game.js";
 import { QueuerEntity } from "./entities/queuer.js";
 import { PoolEntity } from "./entities/pool.js";
 import { Migrator } from "@mikro-orm/migrations";
+import { readFileSync } from "node:fs";
 
 export default defineConfig({
 	entities: [GameEntity, QueuerEntity, PoolEntity],
@@ -16,5 +17,14 @@ export default defineConfig({
 		path: "./migrations",
 		transactional: true,
 		allOrNothing: true,
+	},
+	driverOptions: {
+		connection: {
+			ssl: {
+				ca: readFileSync("/certs/ca.crt"),
+				key: readFileSync("/certs/secondary.key"),
+				cert: readFileSync("/certs/secondary.crt"),
+			},
+		},
 	},
 });

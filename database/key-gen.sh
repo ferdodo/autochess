@@ -20,7 +20,7 @@ openssl x509 -req -in "$CERTS_DIR/primary.csr" -CA "$CERTS_DIR/ca.crt" -CAkey "$
 echo "Generating keys for secondary..."
 openssl genrsa -out "$CERTS_DIR/secondary.key" 2048
 openssl req -new -key "$CERTS_DIR/secondary.key" -out "$CERTS_DIR/secondary.csr" \
-  -subj "/CN=db-secondary"
+  -subj "/CN=user"
 openssl x509 -req -in "$CERTS_DIR/secondary.csr" -CA "$CERTS_DIR/ca.crt" -CAkey "$CERTS_DIR/ca.key" \
   -CAcreateserial -out "$CERTS_DIR/secondary.crt" -days 3650 -sha256
 
