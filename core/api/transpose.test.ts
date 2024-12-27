@@ -4,6 +4,7 @@ import { asPlayerTransposeBoardToBoard } from "../automations/as-player-transpos
 import { withOneBoughtHero } from "../fixtures/with-one-bought-hero.js";
 import { asPlayerTransposeBenchToBoard } from "../automations/as-player-transpose-bench-to-board.js";
 import { asPlayerTransposeBoardToBench } from "../automations/as-player-transpose-board-to-bench.js";
+import { asPlayerTransposeBenchToBench } from "../automations/as-player-transpose-bench-to-bench.js";
 import { getGame } from "../utils/get-game.js";
 
 test("Transpose shall move piece to an empty cell", async () => {
@@ -44,4 +45,9 @@ test("Transpose from bench to board on an occupied slot should swap pieces", asy
 	expect(initialHero).toBeTruthy();
 	expect(hero.id).toBeTruthy();
 	expect(hero.id).not.toEqual(initialHero.id);
+});
+
+test("Transpose from bench to board", async () => {
+	const testContext = await withOneBoughtHero();
+	await asPlayerTransposeBenchToBench(testContext);
 });
