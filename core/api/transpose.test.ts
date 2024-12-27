@@ -16,10 +16,8 @@ test("Transpose from bench to board", async () => {
 	const testContext = await withOneBoughtHero();
 	await asPlayerTransposeBenchToBoard(testContext);
 	const game = await getGame(testContext);
-
-	const bench =
-		game.playerBenches[testContext.frontContexts[0].publicKey || "Error"];
-
+	const publicKey = testContext.frontContexts[0].publicKey || "Error";
+	const bench = game.playerBenches[publicKey];
 	const occupied = Object.values(bench).filter(Boolean).length;
 	expect(occupied).toEqual(0);
 });
@@ -50,4 +48,9 @@ test("Transpose from bench to board on an occupied slot should swap pieces", asy
 test("Transpose from bench to board", async () => {
 	const testContext = await withOneBoughtHero();
 	await asPlayerTransposeBenchToBench(testContext);
+	const game = await getGame(testContext);
+	const publicKey = testContext.frontContexts[0].publicKey || "Error";
+	const bench = game.playerBenches[publicKey];
+	const benchSize = Object.values(bench).filter(Boolean).length;
+	expect(benchSize).toEqual(1);
 });
