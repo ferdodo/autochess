@@ -64,12 +64,14 @@ services:
       DATABASE_PASSWORD: example
       DATABASE_DB_NAME: autochess
       VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
+      REDIS_URL: redis://bus
     ports:
       - ${VITE_WEBSOCKET_PORT_A}:3000
     depends_on:
       - core
       - database
       - database-secondary
+      - bus
     restart: always
 
   database:
@@ -87,6 +89,9 @@ services:
       POSTGRES_DB: autochess
     depends_on:
       - database
+
+  bus:
+    image: redis
 
   ingame:
     build:

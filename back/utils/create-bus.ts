@@ -1,57 +1,27 @@
-import axon from "axon";
 import { Observable, share } from "rxjs";
-import type { BackEvent } from "../types/back-events.js";
+import { BackEvent } from "../types/back-events.js";
 import type { Bus } from "../types/pub-sub.js";
+import { createClient } from "redis";
+import type { RedisClientType } from "redis";
 
 export async function createBus(): Promise<Bus> {
-	const publisher = axon.socket("pub");
-	const port = 12345;
-	publisher.bind(port, "0.0.0.0");
+	const url = process.env.REDIS_URL;
+	const redisPub: RedisClientType = createClient({ url });
+	const redisSub: RedisClientType = createClient({ url });
+	await redisPub.connect();
+	await redisSub.connect();
 
-	const publish = (topic: BackEvent, message: string) => {
-		publisher.send(topic, message);
-	};
-
-	const nodes: string[] = (process.env.BACK_HOSTNAMES || "").split(",");
-
-	const sockets = await Promise.all(
-		nodes.map(async (node) => {
-			const socket = axon.socket("sub");
-			socket.connect(port, node);
-			socket.subscribe("*");
-
-			await new Promise((resolve, reject) => {
-				const timeout = setTimeout(() => {
-					console.error(new Error(`Connection to ${node} timed out!`));
-					process.exit(1);
-				}, 6000);
-
-				socket.on("connect", () => {
-					clearTimeout(timeout);
-					resolve(undefined);
-				});
-
-				socket.on("error", (cause) => {
-					reject(new Error(`Failed to connect to ${node}`, { cause }));
-				});
-
-				socket.on("close", (cause) => {
-					console.error(new Error(`Connection to ${node} closed!`, { cause }));
-					process.exit(1);
-				});
-			});
-
-			return socket;
-		}),
-	);
-
-	const events$ = new Observable<[BackEvent, string]>((subscriber) => {
-		for (const socket of sockets) {
-			socket.on("message", (topic, message) => {
-				subscriber.next([topic, message]);
+	const events$ = new Observable<[BackEvent, string]>((observer) => {
+		for (const event of Object.values(BackEvent)) {
+			redisSub.subscribe(event, (message) => {
+				observer.next([event, message]);
 			});
 		}
 	}).pipe(share());
+
+	const publish = (topic: BackEvent, message: string) => {
+		redisPub.publish(topic, message);
+	};
 
 	return { publish, events$ };
 }
