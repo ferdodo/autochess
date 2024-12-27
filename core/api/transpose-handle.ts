@@ -105,6 +105,13 @@ export function transposeHandle(context: BackContext): Subscription {
 								ungrabPiece.positionX !== undefined &&
 								ungrabPiece.positionY !== undefined
 							) {
+								grabbedHero.position = {
+									x: ungrabPiece.positionX,
+									y: ungrabPiece.positionY,
+									w: 1,
+									h: 1,
+								};
+
 								heroes.push(grabbedHero);
 								benchHeroes[grabPiece.benchPosition] = ungrabbedHero;
 								await commit(game);
