@@ -26,7 +26,12 @@ export async function createGameWithPoolAndDeleteQueuers(
 		await poolRepository.create(pool);
 
 		for (const publicKey of queuersPublicKeys) {
-			await queuerRepository.nativeDelete({ publicKey });
+			const deleted = await queuerRepository.nativeDelete({ publicKey });
+
+			if (deleted === 0) {
+				await em.rollback();
+				return;
+			}
 		}
 
 		await em.flush();
