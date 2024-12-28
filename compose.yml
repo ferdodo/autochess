@@ -75,19 +75,23 @@ services:
 
   back-b:
     extends: back
-    ports: !override []
+    ports: !override
+      - ${VITE_WEBSOCKET_PORT_B}:3000
 
   back-c:
     extends: back
-    ports: !override []
+    ports: !override
+      - ${VITE_WEBSOCKET_PORT_C}:3000
 
   back-d:
     extends: back
-    ports: !override []
+    ports: !override
+      - ${VITE_WEBSOCKET_PORT_D}:3000
 
   back-e:
     extends: back
-    ports: !override []
+    ports: !override
+      - ${VITE_WEBSOCKET_PORT_E}:3000
 
   database:
     build: database
@@ -113,11 +117,11 @@ services:
       context: ingame
       args:
         - VITE_WEBSOCKET_PROTOCOL=${VITE_WEBSOCKET_PROTOCOL}
-        - VITE_WEBSOCKET_PORTS=${VITE_WEBSOCKET_PORT_A}
+        - VITE_WEBSOCKET_PORTS=${VITE_WEBSOCKET_PORTS}
         - VITE_WEBSOCKET_DOMAINS=${VITE_WEBSOCKET_DOMAINS}
     environment:
       VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
-      VITE_WEBSOCKET_PORTS: ${VITE_WEBSOCKET_PORT_A}
+      VITE_WEBSOCKET_PORTS: ${VITE_WEBSOCKET_PORTS}
       VITE_WEBSOCKET_DOMAINS: ${VITE_WEBSOCKET_DOMAINS}
     ports:
       - 53015:53015
