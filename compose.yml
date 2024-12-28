@@ -58,7 +58,6 @@ services:
   back:
     build: back
     environment:
-      BACK_HOSTNAMES: ${BACK_HOSTNAMES}
       DATABASE_HOST: database
       DATABASE_USERNAME: user
       DATABASE_PASSWORD: example
@@ -73,6 +72,22 @@ services:
       - database-secondary
       - bus
     restart: always
+
+  back-b:
+    extends: back
+    ports: !override []
+
+  back-c:
+    extends: back
+    ports: !override []
+
+  back-d:
+    extends: back
+    ports: !override []
+
+  back-e:
+    extends: back
+    ports: !override []
 
   database:
     build: database

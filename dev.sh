@@ -4,7 +4,7 @@ touch $STATE/src
 touch $STATE/build
 
 function sync-containers {
-	for container in sandbox offline back ingame; do
+	for container in sandbox offline back ingame back-b back-c back-d back-e; do
 		docker cp core "autochess-$container-1:/autochess"
 		docker cp interface "autochess-$container-1:/autochess"
 	done
@@ -12,6 +12,10 @@ function sync-containers {
 	docker cp ingame "autochess-ingame-1:/autochess"
 	docker cp offline "autochess-offline-1:/autochess"
 	docker cp back "autochess-back-1:/autochess"
+	docker cp back "autochess-back-b-1:/autochess"
+	docker cp back "autochess-back-c-1:/autochess"
+	docker cp back "autochess-back-d-1:/autochess"
+	docker cp back "autochess-back-e-1:/autochess"
 	docker cp sandbox "autochess-sandbox-1:/autochess"
 }
 
@@ -43,7 +47,7 @@ function setup_pre_commit_hook {
 set -e
 setup_pre_commit_hook
 at-least-5GB-free-space
-docker compose up -d --build offline sandbox back ingame
+docker compose up -d --build offline sandbox back ingame back-b back-c back-d back-e
 trap "docker compose down -v --remove-orphans -t 1" EXIT
 echo "╭──────────────────────────────────────────────────╮"
 echo "│ Sandbox: http://localhost:2437                   │"
