@@ -35,6 +35,8 @@ while ! primary_is_ready; do
 	sleep 2
 done
 
+export POSTGRES_PASSWORD=$(openssl rand -base64 32 | tr -d '/+=' | cut -c1-20)
+
 export PGSSLMODE=verify-full
 export PGSSLROOTCERT=/certs/ca.crt
 export PGSSLKEY=/certs/secondary.key

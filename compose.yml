@@ -60,7 +60,6 @@ services:
     environment:
       DATABASE_HOST: database
       DATABASE_USERNAME: user
-      DATABASE_PASSWORD: example
       DATABASE_DB_NAME: autochess
       VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
       REDIS_URL: redis://bus
@@ -97,14 +96,12 @@ services:
     build: database
     environment:
       POSTGRES_USER: user
-      POSTGRES_PASSWORD: example
       POSTGRES_DB: autochess
 
   database-secondary:
     build: database-secondary
     environment:
       POSTGRES_USER: user
-      POSTGRES_PASSWORD: example
       POSTGRES_DB: autochess
     depends_on:
       - database

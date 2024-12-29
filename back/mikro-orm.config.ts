@@ -11,7 +11,6 @@ export default defineConfig({
 	host: process.env.DATABASE_HOST,
 	dbName: process.env.DATABASE_DB_NAME,
 	user: process.env.DATABASE_USERNAME,
-	password: process.env.DATABASE_PASSWORD,
 	migrations: {
 		tableName: "mikro_orm_migrations",
 		path: "./migrations",
