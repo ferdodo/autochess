@@ -94,15 +94,9 @@ services:
 
   database:
     build: database
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_DB: autochess
 
   database-secondary:
     build: database-secondary
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_DB: autochess
     depends_on:
       - database
 

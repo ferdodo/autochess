@@ -23,7 +23,7 @@ setup_keys() {
 }
 
 configure_replication() {
-	echo "primary_conninfo = 'host=database port=5432 user=$POSTGRES_USER sslmode=verify-full sslcert=$SSL_CERT_DIR/server.crt sslkey=$SSL_CERT_DIR/server.key sslrootcert=$SSL_CERT_DIR/ca.crt'" >> "$PGDATA/postgresql.auto.conf" 
+	echo "primary_conninfo = 'host=database port=5432 user=user sslmode=verify-full sslcert=$SSL_CERT_DIR/server.crt sslkey=$SSL_CERT_DIR/server.key sslrootcert=$SSL_CERT_DIR/ca.crt'" >> "$PGDATA/postgresql.auto.conf"
     echo "hot_standby = on" >> "$PGDATA/postgresql.auto.conf"
 }
 
@@ -42,7 +42,7 @@ export PGSSLROOTCERT=/certs/ca.crt
 export PGSSLKEY=/certs/secondary.key
 export PGSSLCERT=/certs/secondary.crt
 
-pg_basebackup -h database -D "$PGDATA" -P -U "$POSTGRES_USER"
+pg_basebackup -h database -D "$PGDATA" -P -U user
 psql "postgresql://user@database:5432/autochess?sslmode=require"  -c "SELECT pg_create_physical_replication_slot('autochessreplication');"
 setup_keys
 configure_replication
