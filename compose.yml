@@ -68,7 +68,7 @@ services:
     depends_on:
       - core
       - database
-      - database-secondary
+      - replication
       - bus
     restart: always
 
@@ -95,8 +95,8 @@ services:
   database:
     build: database
 
-  database-secondary:
-    build: database-secondary
+  replication:
+    build: replication
     depends_on:
       - database
 
