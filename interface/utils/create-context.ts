@@ -1,4 +1,5 @@
 import { PlaneGeometry, BoxGeometry, MeshBasicMaterial, Vector3 } from "three";
+import { DoubleSide } from "three";
 import type { ThreeContext } from "../types/three-context";
 import { createScene } from "./create-scene";
 import { createCamera } from "./create-camera";
@@ -24,6 +25,16 @@ export function createContext(): ThreeContext {
 		opacity: 0.4,
 	});
 
+	const pieceHighlightActiveMaterial = new MeshBasicMaterial({
+		color: 0xffd700,
+		side: DoubleSide,
+	});
+
+	const pieceHighlightInactiveMaterial = new MeshBasicMaterial({
+		color: 0x00aa00,
+		side: DoubleSide,
+	});
+
 	return {
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
@@ -41,7 +52,9 @@ export function createContext(): ThreeContext {
 		moneyGeometry: createMoneyGeometry(),
 		moneyMaterial: new MeshBasicMaterial({ color: 0xffd700 }),
 		moneyMesh: undefined,
-		pieceHighlightMeshes: createHighlightMesh(scene),
+		pieceHighlightActiveMaterial,
+		pieceHighlightInactiveMaterial,
+		pieceHighlightMeshes: [],
 		pieceTargetBoxes: {},
 		pieceTargetBoxesGeometry: new BoxGeometry(0.08, 0.05, 0.05),
 		pieceTargetBoxesMaterial,

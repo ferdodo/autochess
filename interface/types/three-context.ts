@@ -33,7 +33,9 @@ export interface ThreeContext {
 	moneyGeometry: TextGeometry;
 	moneyMaterial: MeshBasicMaterial;
 	moneyMesh?: Mesh;
-	pieceHighlightMeshes: Mesh;
+	pieceHighlightActiveMaterial: MeshBasicMaterial;
+	pieceHighlightInactiveMaterial: MeshBasicMaterial;
+	pieceHighlightMeshes: Record<number, Mesh>;
 	pieceTargetBoxes: Record<number, Mesh>;
 	pieceTargetBoxesGeometry: BoxGeometry;
 	pieceTargetBoxesMaterial: MeshBasicMaterial;
