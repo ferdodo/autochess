@@ -88,6 +88,8 @@ export class DisplayFactory implements Subscribable<Display> {
 		this.gui.add(this, "addPiece");
 		this.gui.add(this, "setPlanningPhase");
 		this.gui.add(this, "setCombatPhase");
+		this.gui.add(this, "setFullSCreen");
+		this.gui.add(this, "exitFullscreen");
 		this.gui.close();
 
 		observeInteractions(threeContext).subscribe((interaction) => {
@@ -147,6 +149,14 @@ export class DisplayFactory implements Subscribable<Display> {
 		return this.pieceHandles
 			.filter((handle) => handle.simulated)
 			.map((handle) => handle.iterator);
+	}
+
+	setFullSCreen() {
+		document.body.requestFullscreen();
+	}
+
+	exitFullscreen() {
+		document.exitFullscreen();
 	}
 
 	setPlanningPhase(): DisplayFactory {
