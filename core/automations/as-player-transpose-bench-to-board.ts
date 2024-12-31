@@ -4,6 +4,7 @@ import { observeGame } from "../api/observe-game.js";
 import { getGame } from "../utils/get-game.js";
 import { transpose } from "../api/transpose.js";
 import type { PieceSlot } from "../types/piece-slot.js";
+import { observeServerNotifications } from "../utils/observe-server-notifications.js";
 
 export async function asPlayerTransposeBenchToBoard(
 	testContext: TestContext,
@@ -31,7 +32,15 @@ export async function asPlayerTransposeBenchToBoard(
 
 	await transpose(frontContext, grab, ungrab);
 
-	await firstValueFrom(
+	const waitTranspositionInvalid = firstValueFrom(
+		observeServerNotifications(frontContext).pipe(
+			filter(
+				(notification) => notification === "Invalid transposition position !",
+			),
+		),
+	);
+
+	const waitTransposition = firstValueFrom(
 		observeGame(frontContext).pipe(
 			map((game) =>
 				game.playerHeroes[frontContext.publicKey]
@@ -41,4 +50,6 @@ export async function asPlayerTransposeBenchToBoard(
 			filter((positions) => positions !== playerPositionBefore),
 		),
 	);
+
+	await Promise.race([waitTransposition, waitTranspositionInvalid]);
 }

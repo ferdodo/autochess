@@ -4,4 +4,5 @@ import type { observeGameBroadcast } from "./observe-game-broadcast.js";
 export interface ServerMessage {
 	initiateGameResponse?: InitiateGameReponse;
 	observeGameBroadcast?: observeGameBroadcast;
+	serverNotification?: string;
 }

@@ -4,6 +4,7 @@ import type { BackContext } from "../types/back-context.js";
 import { checkSignature } from "../utils/check-signature.js";
 import { checkStamp } from "../utils/check-stamp.js";
 import type { Hero } from "../types/hero.js";
+import { isTranspositionLegal } from "../utils/is-transposition-legal.js";
 
 export function transposeHandle(context: BackContext): Subscription {
 	const {
@@ -20,7 +21,18 @@ export function transposeHandle(context: BackContext): Subscription {
 					filter(Boolean),
 					checkSignature(isValidSignature),
 					checkStamp(context),
-					tap(async ({ publicKey, grabPiece, ungrabPiece, playsig }) => {
+					tap(async (transposeRequest) => {
+						if (!isTranspositionLegal(transposeRequest)) {
+							connection.send({
+								serverNotification: "Invalid transposition position !",
+							});
+
+							return;
+						}
+
+						const { publicKey, grabPiece, ungrabPiece, playsig } =
+							transposeRequest;
+
 						const transaction = await readAndUpdateGame(playsig);
 
 						if (!transaction) {
