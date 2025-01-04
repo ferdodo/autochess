@@ -1,4 +1,4 @@
-FROM node
+FROM node AS deps
 WORKDIR /autochess/ingame
 COPY package.json .
 COPY npm-shrinkwrap.json .

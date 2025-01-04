@@ -103,6 +103,11 @@ services:
   bus:
     image: redis
 
+  ingame-deps:
+    build:
+      context: ingame
+      target: deps
+
   ingame:
     build:
       context: ingame
@@ -120,3 +125,4 @@ services:
       - back
       - core
       - interface
+      - ingame-deps
