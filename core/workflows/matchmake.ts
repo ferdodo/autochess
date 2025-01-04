@@ -63,6 +63,7 @@ export function matchmake({
 					playerLevel,
 					playerBenches,
 					playerHealths,
+					playerLostAt: {},
 					phase: Phase.Planning,
 					phaseStartAt: new Date().toISOString(),
 				},

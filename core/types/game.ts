@@ -25,6 +25,7 @@ export interface Game {
 	playerMoney: Record<PublicKey, Money>;
 	playerLevel: Record<PublicKey, Level>;
 	playerHealths: Record<PublicKey, Health>;
+	playerLostAt: Record<PublicKey, DateTime>;
 	combats?: Combat[];
 	phase: Phase;
 	phaseStartAt: DateTime;
@@ -47,6 +48,7 @@ export const gameSchema = {
 		"playerMoney",
 		"playerLevel",
 		"playerHealths",
+		"playerLostAt",
 		"phase",
 		"phaseStartAt",
 	],
@@ -148,6 +150,13 @@ export const gameSchema = {
 			description: "Healths of all players in the game.",
 			propertyNames: publicKeySchema,
 			additionalProperties: healthSchema,
+		},
+		playerLostAt: {
+			type: "object",
+			title: "Player lost at",
+			description: "Time when a player lost the game.",
+			propertyNames: publicKeySchema,
+			additionalProperties: dateTimeSchema,
 		},
 		phase: phaseSchema,
 		phaseStartAt: dateTimeSchema,

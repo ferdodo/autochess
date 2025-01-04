@@ -14,6 +14,65 @@
 					"length": 255,
 					"mappedType": "string"
 				},
+				"winner_public_key": {
+					"name": "winner_public_key",
+					"type": "varchar(255)",
+					"unsigned": false,
+					"autoincrement": false,
+					"primary": false,
+					"nullable": false,
+					"length": 255,
+					"mappedType": "string"
+				},
+				"loser_public_key": {
+					"name": "loser_public_key",
+					"type": "varchar(255)",
+					"unsigned": false,
+					"autoincrement": false,
+					"primary": false,
+					"nullable": false,
+					"length": 255,
+					"mappedType": "string"
+				},
+				"created_at": {
+					"name": "created_at",
+					"type": "varchar(255)",
+					"unsigned": false,
+					"autoincrement": false,
+					"primary": false,
+					"nullable": false,
+					"length": 255,
+					"mappedType": "string"
+				}
+			},
+			"name": "encounter",
+			"schema": "public",
+			"indexes": [
+				{
+					"keyName": "encounter_pkey",
+					"columnNames": ["playsig"],
+					"composite": false,
+					"constraint": true,
+					"primary": true,
+					"unique": true
+				}
+			],
+			"checks": [],
+			"foreignKeys": {},
+			"nativeEnums": {}
+		},
+		{
+			"columns": {
+				"playsig": {
+					"name": "playsig",
+					"type": "varchar(255)",
+					"unsigned": false,
+					"autoincrement": false,
+					"primary": false,
+					"nullable": false,
+					"length": 255,
+					"mappedType": "string"
+				},
 				"public_keys": {
 					"name": "public_keys",
 					"type": "jsonb",
@@ -93,6 +152,15 @@
 					"autoincrement": false,
 					"primary": false,
 					"nullable": true,
+					"mappedType": "json"
+				},
+				"player_lost_at": {
+					"name": "player_lost_at",
+					"type": "jsonb",
+					"unsigned": false,
+					"autoincrement": false,
+					"primary": false,
+					"nullable": false,
 					"mappedType": "json"
 				},
 				"phase": {
@@ -208,6 +276,44 @@
 			"indexes": [
 				{
 					"keyName": "queuer_pkey",
+					"columnNames": ["public_key"],
+					"composite": false,
+					"constraint": true,
+					"primary": true,
+					"unique": true
+				}
+			],
+			"checks": [],
+			"foreignKeys": {},
+			"nativeEnums": {}
+		},
+		{
+			"columns": {
+				"public_key": {
+					"name": "public_key",
+					"type": "varchar(255)",
+					"unsigned": false,
+					"autoincrement": false,
+					"primary": false,
+					"nullable": false,
+					"length": 255,
+					"mappedType": "string"
+				},
+				"elo": {
+					"name": "elo",
+					"type": "int",
+					"unsigned": false,
+					"autoincrement": false,
+					"primary": false,
+					"nullable": false,
+					"mappedType": "integer"
+				}
+			},
+			"name": "ranking",
+			"schema": "public",
+			"indexes": [
+				{
+					"keyName": "ranking_pkey",
 					"columnNames": ["public_key"],
 					"composite": false,
 					"constraint": true,

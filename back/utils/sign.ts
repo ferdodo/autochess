@@ -6,7 +6,10 @@ export async function sign<T>(
 	privateKeyStr: string,
 	payload: T,
 ): Promise<T & Signed> {
-	const privateKeyBuffer: ArrayBuffer = Buffer.from(privateKeyStr, "hex");
+	const privateKeyBuffer: Buffer<ArrayBuffer> = Buffer.from(
+		privateKeyStr,
+		"hex",
+	);
 
 	const ecKeyImportParams: EcKeyImportParams = {
 		name: "ECDSA",

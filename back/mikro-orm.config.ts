@@ -4,9 +4,17 @@ import { QueuerEntity } from "./entities/queuer.js";
 import { PoolEntity } from "./entities/pool.js";
 import { Migrator } from "@mikro-orm/migrations";
 import { readFileSync } from "node:fs";
+import { RankingEntity } from "./entities/ranking.js";
+import { EncounterEntity } from "./entities/encounter.js";
 
 export default defineConfig({
-	entities: [GameEntity, QueuerEntity, PoolEntity],
+	entities: [
+		GameEntity,
+		QueuerEntity,
+		PoolEntity,
+		RankingEntity,
+		EncounterEntity,
+	],
 	extensions: [Migrator],
 	host: process.env.DATABASE_HOST,
 	dbName: process.env.DATABASE_DB_NAME,

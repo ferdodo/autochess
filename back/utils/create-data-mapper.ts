@@ -14,6 +14,8 @@ import { createQueuer } from "./create-queuer.js";
 import { deleteQueuer } from "./delete-queuer.js";
 import type { MikroORM } from "@mikro-orm/core";
 import type { Bus } from "../types/pub-sub.js";
+import { readRanking } from "./read-ranking.js";
+import { readAndUpsertRankingsAndCreateEncounters } from "./read-and-upsert-rankings-and-create-encounters.js";
 
 export function createDataMapper(orm: MikroORM, bus: Bus): DataMapper {
 	return {
@@ -38,5 +40,8 @@ export function createDataMapper(orm: MikroORM, bus: Bus): DataMapper {
 		createQueuer: (queuer) => createQueuer(orm, bus, queuer),
 		deleteQueuer: (publicKey) => deleteQueuer(orm, bus, publicKey),
 		queuers$: observeQueuers(orm, bus),
+		readAndUpsertRankingsAndCreateEncounters: (playersPublicKeys) =>
+			readAndUpsertRankingsAndCreateEncounters(orm, playersPublicKeys),
+		readRanking: (publicKey) => readRanking(orm, publicKey),
 	};
 }

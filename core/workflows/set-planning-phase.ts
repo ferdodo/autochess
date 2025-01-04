@@ -34,8 +34,15 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 					}
 
 					if (game.combats) {
+						const date = new Date().toISOString();
+
 						for (const combat of game.combats) {
-							game.playerHealths[computeCombatLoser(combat)] -= 1;
+							const loser = computeCombatLoser(combat);
+							game.playerHealths[loser] -= 1;
+
+							if (game.playerHealths[loser] <= 0) {
+								game.playerLostAt[loser] = date;
+							}
 						}
 					}
 

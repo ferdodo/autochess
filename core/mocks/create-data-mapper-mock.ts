@@ -4,6 +4,8 @@ import { Subject, filter, map } from "rxjs";
 import type { DataMapper } from "../types/data-mapper.js";
 import type { Pool } from "../types/pool.js";
 import type { PublicKey } from "../types/public-key.js";
+import type { Ranking } from "../types/ranking.js";
+import type { Encounter } from "../types/encounter.js";
 
 export function createDataMapperMock(): DataMapper {
 	let games: Game[] = [];
@@ -12,6 +14,8 @@ export function createDataMapperMock(): DataMapper {
 	const currentQueuer$ = new Subject<Queuer[]>();
 	let pools: Pool[] = [];
 	let queuers: Queuer[] = [];
+	let rankings: Ranking[] = [];
+	const encounters: Encounter[] = [];
 
 	async function readGame(playsig: string) {
 		const game = games.find((game) => game.playsig === playsig);
@@ -149,5 +153,58 @@ export function createDataMapperMock(): DataMapper {
 			return true;
 		},
 		queuers$: currentQueuer$.pipe(map((queuers) => structuredClone(queuers))),
+		async readAndUpsertRankingsAndCreateEncounters(
+			playersPublicKeys: PublicKey[],
+		) {
+			return {
+				rankings: structuredClone(
+					rankings.filter((ranking) =>
+						playersPublicKeys.includes(ranking.publicKey),
+					),
+				),
+				async commit(newEncounters: Encounter[], newRankings: Ranking[]) {
+					if (
+						newEncounters.some((encounter) =>
+							encounters.some(
+								(e) =>
+									e.playsig === encounter.playsig &&
+									e.winnerPublicKey === encounter.winnerPublicKey &&
+									e.loserPublicKey === encounter.loserPublicKey,
+							),
+						)
+					) {
+						return false;
+					}
+
+					encounters.push(...newEncounters);
+
+					rankings = rankings.filter(
+						(elo) =>
+							!newRankings.some((newElo) => newElo.publicKey === elo.publicKey),
+					);
+
+					rankings.push(...newRankings);
+
+					return true;
+				},
+				async abort() {
+					return;
+				},
+			};
+		},
+		async readRanking(publicKey: PublicKey): Promise<Ranking> {
+			const ranking = rankings.find(
+				(ranking) => ranking.publicKey === publicKey,
+			);
+
+			if (!ranking) {
+				return {
+					publicKey,
+					elo: 1000,
+				};
+			}
+
+			return structuredClone(ranking);
+		},
 	};
 }
