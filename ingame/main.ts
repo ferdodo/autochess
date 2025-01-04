@@ -18,6 +18,8 @@ import { sign } from "./utils/sign";
 import { createKeyPair } from "./utils/create-key-pair";
 import { notify } from "./utils/notify";
 import { pickBackend } from "./utils/pick-backend";
+import { toggleFullscreen } from "./utils/toggle-fullscreen";
+import { filter, map } from "rxjs/operators";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -86,6 +88,13 @@ waitTextureLoaded
 			.subscribe((interactions) => {
 				cast(frontContext1, interactions);
 			});
+
+		observeInteractions(threeContext1)
+			.pipe(
+				map((i) => i.clickFullscreen),
+				filter(Boolean),
+			)
+			.subscribe(toggleFullscreen);
 	})
 	.catch((err) => {
 		console.error(err);

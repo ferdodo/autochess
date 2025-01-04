@@ -6,4 +6,5 @@ export interface Interaction {
 	shopBuy?: number;
 	reroll?: true;
 	levelUp?: true;
+	clickFullscreen?: true;
 }

@@ -13,6 +13,7 @@ import { createMoneyGeometry } from "./create-money-geometry";
 import { createHealthGeometry } from "./create-health-geometry";
 import { createRenderer } from "./create-renderer";
 import { createRerollGeometry } from "./create-reroll-geometry";
+import { crateFullScreenButtonMesh } from "./create-full-screen-button-mesh";
 
 export function createContext(): ThreeContext {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
@@ -87,6 +88,7 @@ export function createContext(): ThreeContext {
 		shopProductTraitGeometry: createShopProductTraitGeometry(),
 		shopProductTraitMaterial: new MeshBasicMaterial({ color: 0 }),
 		shopProductTraitMeshes: {},
+		fullscreenButtonMesh: crateFullScreenButtonMesh(scene, camera),
 		transpositionPlane: createTranspositionPlane(scene),
 	};
 }

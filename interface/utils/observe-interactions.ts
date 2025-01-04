@@ -108,6 +108,15 @@ export function observeInteractions(
 				}
 			}
 
+			if (grabbing && threeContext.fullscreenButtonMesh) {
+				if (
+					raycaster.intersectObject(threeContext.fullscreenButtonMesh).length >
+					0
+				) {
+					interaction.clickFullscreen = true;
+				}
+			}
+
 			return interaction;
 		}),
 		filter((interaction) => Object.keys(interaction).length > 0),

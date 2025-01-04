@@ -68,5 +68,6 @@ export interface ThreeContext {
 	shopProductTraitGeometry: Record<Trait, TextGeometry>;
 	shopProductTraitMaterial: MeshBasicMaterial;
 	shopProductTraitMeshes: Record<string, Record<number, Mesh>>;
+	fullscreenButtonMesh: Mesh;
 	transpositionPlane: Mesh;
 }
