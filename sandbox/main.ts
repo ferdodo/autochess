@@ -55,6 +55,14 @@ waitTextureLoaded
 
 		observeInteractions(threeContext).subscribe((interaction: Interaction) => {
 			logEvent(JSON.stringify(interaction));
+
+			if (interaction.clickFullscreen) {
+				if (document.fullscreenElement) {
+					document.exitFullscreen();
+				} else {
+					document.body.requestFullscreen();
+				}
+			}
 		});
 
 		createFpsCounter(threeContext).catch(console.error);
