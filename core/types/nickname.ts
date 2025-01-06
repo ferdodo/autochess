@@ -9,7 +9,7 @@ export const nicknameSchema = {
 	description: "Nickname of a player.",
 	minLength: 1,
 	maxLength: 20,
-	pattern: "^[\\p{L}]+$",
+	pattern: "^[\\p{L}0-9-]+$",
 } as const;
 
 const a: Nickname = {} as FromSchema<typeof nicknameSchema>;

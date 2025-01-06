@@ -13,15 +13,14 @@ export function findHittableHero(
 		heroId,
 	);
 
-	if (isTeamA) {
-		return confrontation.playerBHeroes.find((h) => {
+	const heroes = isTeamA
+		? confrontation.playerBHeroes
+		: confrontation.playerAHeroes;
+
+	return heroes
+		.filter((h) => h.attributes.health > 0)
+		.find((h) => {
 			const pos = revertPosition(h.position);
 			return pos.x === hero.position.x + 1 && pos.y === hero.position.y;
 		});
-	}
-
-	return confrontation.playerAHeroes.find((h) => {
-		const pos = revertPosition(h.position);
-		return pos.x === hero.position.x + 1 && pos.y === hero.position.y;
-	});
 }

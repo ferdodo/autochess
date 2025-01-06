@@ -20,6 +20,9 @@ import { notify } from "./utils/notify";
 import { pickBackend } from "./utils/pick-backend";
 import { toggleFullscreen } from "./utils/toggle-fullscreen";
 import { filter, map } from "rxjs/operators";
+import { doubleClick$ } from "./utils/double-click";
+import { take } from "rxjs/operators";
+import { connectBot } from "core/utils/connect-bot";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -40,7 +43,7 @@ waitTextureLoaded
 			throw err;
 		});
 
-		notify("Matchmaking...");
+		notify("Matchmaking... Double click to play with bots");
 
 		connection.messages$.subscribe({
 			complete: () => {
@@ -55,14 +58,31 @@ waitTextureLoaded
 			signMessage: (message) => sign(publicKey, privateKey, message),
 		};
 
-		const [initiateGameResponse1] = await Promise.all([
-			initiateGame(frontContext1),
-		]);
+		const keySubscription = doubleClick$.pipe(take(1)).subscribe(() =>
+			Promise.all(
+				Array(7)
+					.fill(undefined)
+					.map(async () => {
+						const [botPublicKey, botPrivateKey] = await createKeyPair();
 
-		frontContext1.playsig = initiateGameResponse1.playsig;
-		frontContext1.stamp = initiateGameResponse1.stamp;
+						const frontContext: FrontContext = {
+							connection,
+							publicKey: botPublicKey,
+							nickname: `bot-${Math.floor(Math.random() * 1000)}`,
+							signMessage: <T>(message: T) =>
+								sign(botPublicKey, botPrivateKey, message),
+						};
+
+						await connectBot(frontContext);
+					}),
+			),
+		);
+
+		const initiateGameResponse = await initiateGame(frontContext1);
+		keySubscription.unsubscribe();
+		frontContext1.playsig = initiateGameResponse.playsig;
+		frontContext1.stamp = initiateGameResponse.stamp;
 		const threeContext1 = createContext();
-
 		notify("");
 
 		connection.messages$

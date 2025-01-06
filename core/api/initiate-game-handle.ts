@@ -10,7 +10,6 @@ export function initiateGameHandle({
 	dataMapper: { createQueuer, createdGame$, deleteQueuer },
 	queuerConnections,
 	isValidSignature,
-	serverPublicKey,
 	signMessage,
 }: BackContext): Subscription {
 	const handleRequests$ = connections$.pipe(

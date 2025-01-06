@@ -67,6 +67,17 @@ export function computeConfrontation(
 						}
 					: h,
 			),
+			playerBHeroes: confrontation.playerBHeroes.map((h) =>
+				h.id === target.id
+					? {
+							...h,
+							attributes: {
+								...h.attributes,
+								health: h.attributes.health - 1,
+							},
+						}
+					: h,
+			),
 		};
 	}
 

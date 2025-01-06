@@ -9,7 +9,8 @@ export function checkSignature<T>(
 		source.pipe(
 			filter(({ issuedAt, expiresAt }) => {
 				const now = new Date().toISOString();
-				return issuedAt <= now && now <= expiresAt;
+				const nearFuture = new Date(Date.now() + 5000).toISOString();
+				return issuedAt <= nearFuture && now <= expiresAt;
 			}),
 			mergeMap(async (message) => ({
 				message,

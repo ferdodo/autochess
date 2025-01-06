@@ -18,6 +18,10 @@ export async function initiateGame({
 		connection.messages$.pipe(
 			map((message) => message.initiateGameResponse),
 			filter(Boolean),
+			filter(
+				(initiateGameResponse) =>
+					initiateGameResponse.stamp.playerPublicKey === publicKey,
+			),
 		),
 	);
 }

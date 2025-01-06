@@ -2,6 +2,7 @@ import type { Combat } from "../types/combat.js";
 import type { PublicKey } from "../types/public-key.js";
 import type { Confrontation } from "../types/confrontation.js";
 import { computeConfrontation } from "./compute-confrontation.js";
+import { humanReadable } from "./human-readable.js";
 
 export function computeCombatLoser(combat: Combat): PublicKey {
 	let confrontation: Confrontation = {
@@ -13,12 +14,9 @@ export function computeCombatLoser(combat: Combat): PublicKey {
 		confrontation = computeConfrontation(confrontation, action);
 	}
 
-	const aMinHP = Math.min(
-		...confrontation.playerAHeroes.map((hero) => hero.attributes.health),
-	);
-	const bMinHP = Math.min(
-		...confrontation.playerBHeroes.map((hero) => hero.attributes.health),
+	const bWins = !Object.values(confrontation.playerBHeroes).some(
+		(h) => h.attributes.health > 0,
 	);
 
-	return aMinHP > bMinHP ? combat.playerBPublicKey : combat.playerAPublicKey;
+	return bWins ? combat.playerBPublicKey : combat.playerAPublicKey;
 }
