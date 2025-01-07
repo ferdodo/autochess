@@ -4,6 +4,7 @@ import { createDataMapper } from "./utils/create-data-mapper.js";
 import { MikroORM } from "@mikro-orm/postgresql";
 import mikroOrmConfig from "./mikro-orm.config.js";
 import { createBus } from "./utils/create-bus.js";
+import { migrate } from "./utils/migrate.js";
 
 console.log("Server is starting...");
 
@@ -11,8 +12,7 @@ Promise.resolve()
 	.then(async () => {
 		const bus = await createBus();
 		const orm = await MikroORM.init(mikroOrmConfig);
-		const migrator = orm.getMigrator();
-		await migrator.up();
+		await migrate(orm);
 		const dataMapper = await createDataMapper(orm, bus);
 		const backContext = await createBackContext(dataMapper);
 		startServer(backContext);
