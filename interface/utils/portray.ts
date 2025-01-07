@@ -20,7 +20,7 @@ export function portray(
 	return (source: Observable<Game>) =>
 		source.pipe(
 			combineLatestWith(
-				source.pipe(observePortrayedConfrontation(publicKey)),
+				source.pipe(observePortrayedConfrontation(publicKey, interval(1000))),
 				source.pipe(trackTransposedHero(threeContext, publicKey)),
 			),
 			map(
