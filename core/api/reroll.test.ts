@@ -21,4 +21,5 @@ test("Reroll should swap the shop items with random hero from pool", async () =>
 	const merged = [...shopAfter, ...(poolAfter?.heroes || [])].sort();
 	const mergedAfter = [...shop, ...(pool?.heroes || [])].sort();
 	expect(merged).toEqual(mergedAfter);
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });

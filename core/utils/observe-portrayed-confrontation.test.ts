@@ -31,6 +31,7 @@ test("Initial animation should be idle", async () => {
 	expect(portrayed[0].hero.position.y).toEqual(0);
 	expect(portrayed[1].hero.position.x).toEqual(9);
 	expect(portrayed[1].hero.position.y).toEqual(9);
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });
 
 test("Second animation should be moving toward adversary", async () => {
@@ -69,4 +70,6 @@ test("Second animation should be moving toward adversary", async () => {
 	expect(
 		portrayed[1].hero.position.x + portrayed[1].hero.position.y,
 	).not.toEqual(9);
+
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });

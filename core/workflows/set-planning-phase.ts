@@ -49,6 +49,14 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 					game.phase = Phase.Planning;
 					game.phaseStartAt = new Date().toISOString();
 					game.combats = undefined;
+
+					game.playerMoney = Object.fromEntries(
+						Object.entries(game.playerMoney).map(([key, value]) => [
+							key,
+							value + 1,
+						]),
+					);
+
 					await commit(game);
 				} catch (error) {
 					console.error(error);

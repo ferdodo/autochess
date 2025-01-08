@@ -1,5 +1,6 @@
 import type { TestContext } from "../types/test-context.js";
 import { firstValueFrom, map, filter } from "rxjs";
+import { timeout } from "rxjs/operators";
 import { observeGame } from "../api/observe-game.js";
 import { getGame } from "../utils/get-game.js";
 import { transpose } from "../api/transpose.js";
@@ -37,6 +38,7 @@ export async function asPlayerTransposeBenchToBoard(
 			filter(
 				(notification) => notification === "Invalid transposition position !",
 			),
+			timeout(1000),
 		),
 	);
 
@@ -47,7 +49,10 @@ export async function asPlayerTransposeBenchToBoard(
 					.map((hero) => `${hero.position.x}${hero.position.y}`)
 					.join(""),
 			),
-			filter((positions) => positions !== playerPositionBefore),
+			filter((positions) => {
+				return positions !== playerPositionBefore;
+			}),
+			timeout(1000),
 		),
 	);
 

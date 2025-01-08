@@ -10,4 +10,5 @@ test("findOwnHeroFromSlot", async () => {
 	const slot = { positionX: 0, positionY: 0 };
 	const hero = findOwnHeroFromSlot(game, slot, publicKey);
 	expect(hero).toBeDefined();
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });

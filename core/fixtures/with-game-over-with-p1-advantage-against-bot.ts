@@ -7,10 +7,9 @@ import { goToNextPhase } from "../automations/go-to-next-phase.js";
 import type { TestContext } from "../types/test-context.js";
 import { connectBot } from "../utils/connect-bot.js";
 import { getGame } from "../utils/get-game.js";
-import { humanReadable } from "../utils/human-readable.js";
 import { isGameInProgress } from "../utils/is-game-in-progress.js";
 import { withServerStarted } from "./with-server-started.js";
-import { firstValueFrom, filter, tap } from "rxjs";
+import { firstValueFrom, filter, timeout } from "rxjs";
 
 export async function withGameOverWithP1AdvantageAgainstBot(): Promise<TestContext> {
 	const testContext = withServerStarted();
@@ -37,14 +36,22 @@ export async function withGameOverWithP1AdvantageAgainstBot(): Promise<TestConte
 		throw new Error("Front context not found !");
 	}
 
+	await goToNextPhase(testContext);
+	await goToNextPhase(testContext);
+	await goToNextPhase(testContext);
+	await goToNextPhase(testContext);
+
 	await firstValueFrom(
 		observeGame(frontContext).pipe(
-			filter(
-				(game) =>
-					Object.values(game.playerHeroes[frontContext.publicKey]).filter(
+			filter((game) => {
+				return (
+					game.playerMoney[frontContext.publicKey] < 3 &&
+					Object.values(game.playerBenches[frontContext.publicKey]).filter(
 						Boolean,
-					).length > 3,
-			),
+					).length === 0
+				);
+			}),
+			timeout(1000),
 		),
 	);
 

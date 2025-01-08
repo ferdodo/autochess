@@ -16,19 +16,22 @@ export async function asPlayerShopBuy(
 
 	const gameBefore = await getGame(testContext, playerNumber);
 
-	const benchSizeBefore = Object.keys(
+	const benchSizeBefore = Object.values(
 		gameBefore.playerBenches[frontContext.publicKey] || {},
-	).length;
+	).filter(Boolean).length;
 
-	await shopBuy(frontContext, 0);
-
-	await firstValueFrom(
+	const waitBought = firstValueFrom(
 		observeGame(frontContext).pipe(
-			map(
-				(game) =>
-					Object.keys(game.playerBenches[frontContext.publicKey] || {}).length,
-			),
+			map((game) => {
+				return Object.values(
+					game.playerBenches[frontContext.publicKey] || {},
+				).filter(Boolean).length;
+			}),
 			filter((benchSize) => benchSize !== benchSizeBefore),
 		),
 	);
+
+	await shopBuy(frontContext, 0);
+
+	await waitBought;
 }

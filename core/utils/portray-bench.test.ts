@@ -10,4 +10,5 @@ test("portray-bench", async () => {
 	const bench = game.playerBenches[publicKey] || {};
 	const portrayed = portrayBench(bench, undefined);
 	expect(portrayed).toBeDefined();
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });

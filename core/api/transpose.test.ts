@@ -54,6 +54,7 @@ test("Transpose from bench to board", async () => {
 	const bench = game.playerBenches[publicKey];
 	const benchSize = Object.values(bench).filter(Boolean).length;
 	expect(benchSize).toEqual(1);
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });
 
 test("Transpose on right side of the board should not work", async () => {
@@ -72,6 +73,7 @@ test("Transpose on right side of the board should not work", async () => {
 	expect(initialHero).toBeTruthy();
 	expect(hero.position.x).toEqual(0);
 	expect(hero.position.y).toEqual(0);
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });
 
 test("Transpose from board to board on an occupied slot should swap pieces", async () => {
@@ -99,4 +101,5 @@ test("Transpose from board to board on an occupied slot should swap pieces", asy
 	expect(hero1.position.y).toEqual(initHero2.position.y);
 	expect(hero2.position.x).toEqual(initHero1.position.x);
 	expect(hero2.position.y).toEqual(initHero1.position.y);
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });

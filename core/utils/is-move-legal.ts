@@ -16,9 +16,11 @@ export function isMoveLegal(confrontation: Confrontation, hero: Hero) {
 
 		const heroBlocks = [
 			...confrontation.playerAHeroes
+				.filter((hero) => hero.attributes.health > 0)
 				.map((hero) => hero.position)
 				.map((pos) => (isATeam ? pos : revertPosition(pos))),
 			...confrontation.playerBHeroes
+				.filter((hero) => hero.attributes.health > 0)
 				.map((hero) => hero.position)
 				.map((pos) => (isATeam ? revertPosition(pos) : pos)),
 		];

@@ -1,6 +1,7 @@
 import type { Action } from "../types/action.js";
 import { combatSchema, type Combat } from "../types/combat.js";
 import type { Confrontation } from "../types/confrontation.js";
+import type { Game } from "../types/game.js";
 import { computeConfrontation } from "./compute-confrontation.js";
 import { createConfrontationHeroOrder } from "./create-confrontation-hero-order.js";
 import { findHittableHero } from "./find-hittable-hero.js";

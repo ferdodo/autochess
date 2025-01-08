@@ -6,6 +6,7 @@ import { checkStamp } from "../utils/check-stamp.js";
 import type { Appellation } from "../types/appellation.js";
 import { getHeroCost } from "../utils/get-hero-cost.js";
 import { HeroFactory } from "../utils/hero-factory.js";
+import type { Game } from "../types/game.js";
 
 export function shopBuyHandle(context: BackContext): Subscription {
 	const {
@@ -50,7 +51,7 @@ export function shopBuyHandle(context: BackContext): Subscription {
 
 							const bench = game.playerBenches[publicKey] || [];
 
-							if (Object.keys(bench).length >= 6) {
+							if (Object.values(bench).filter(Boolean).length >= 6) {
 								await abort();
 								return;
 							}
@@ -59,7 +60,7 @@ export function shopBuyHandle(context: BackContext): Subscription {
 								appellation,
 							);
 
-							const newGame = {
+							const newGame: Game = {
 								...game,
 								playerMoney: {
 									...game.playerMoney,

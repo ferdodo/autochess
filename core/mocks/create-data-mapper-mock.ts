@@ -6,6 +6,7 @@ import type { Pool } from "../types/pool.js";
 import type { PublicKey } from "../types/public-key.js";
 import type { Ranking } from "../types/ranking.js";
 import type { Encounter } from "../types/encounter.js";
+import { cloneGame } from "../utils/clone-game.js";
 
 export function createDataMapperMock(): DataMapper {
 	let games: Game[] = [];
@@ -19,7 +20,12 @@ export function createDataMapperMock(): DataMapper {
 
 	async function readGame(playsig: string) {
 		const game = games.find((game) => game.playsig === playsig);
-		return structuredClone(game);
+
+		if (!game) {
+			return undefined;
+		}
+
+		return cloneGame(game);
 	}
 
 	async function updateGame(game: Game) {
@@ -37,18 +43,16 @@ export function createDataMapperMock(): DataMapper {
 	return {
 		readGame,
 		async readAndUpdateGame(playsig: string) {
-			const game = structuredClone(
-				games.find((game) => game.playsig === playsig),
-			);
+			const game = games.find((game) => game.playsig === playsig);
 
 			if (!game) {
 				return;
 			}
 
 			return {
-				game,
+				game: cloneGame(game),
 				commit: async (game: Game) => {
-					return await updateGame(game);
+					return await updateGame(cloneGame(game));
 				},
 				async abort() {
 					return;
@@ -79,11 +83,11 @@ export function createDataMapperMock(): DataMapper {
 			currentQueuer$.next(queuers);
 			return true;
 		},
-		createdGame$: createdGames$.pipe(map((game) => structuredClone(game))),
+		createdGame$: createdGames$.pipe(map((game) => cloneGame(game))),
 		observeGame(playsig: string) {
 			return game$.pipe(
 				filter((game) => game.playsig === playsig),
-				map((game) => structuredClone(game)),
+				map((game) => cloneGame(game)),
 			);
 		},
 		async readPool(playsig: string) {

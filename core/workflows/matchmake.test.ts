@@ -22,6 +22,7 @@ test("Should create game with all players nicknames", async () => {
 
 	expect(Object.values(game.nicknames)).toEqual(allNicknames);
 	expect(Object.values(game.nicknames).length).toBeTruthy();
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });
 
 test("Should create a game with 8 maximum players", async () => {
@@ -64,6 +65,7 @@ test("Should create a game with 8 maximum players", async () => {
 	const game = await firstValueFrom(observeGame(frontContext));
 
 	expect(Object.values(game.nicknames).length).toBe(8);
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });
 
 test("Should not start a game with 1 player", async () => {
@@ -84,4 +86,5 @@ test("Should not start a game with 1 player", async () => {
 				}, 1);
 			}),
 	).rejects.toThrow("Good error");
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });

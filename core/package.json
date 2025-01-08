@@ -7,7 +7,7 @@
 		"@biomejs/biome": "^1.8.3",
 		"@stryker-mutator/core": "^8.6.0",
 		"@stryker-mutator/vitest-runner": "^8.6.0",
-		"@types/node": "^22.7.4",
+		"@types/node": "^22.10.5",
 		"blockwise": "^2.12.0",
 		"humanhash": "^1.0.4",
 		"json-schema-library": "^10.0.0-rc2",

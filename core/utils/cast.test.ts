@@ -27,4 +27,6 @@ test("cast a reroll", async () => {
 			filter((money) => money !== moneyBefore),
 		),
 	);
+
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });
