@@ -56,9 +56,13 @@ export function shopBuyHandle(context: BackContext): Subscription {
 								return;
 							}
 
-							bench[Object.keys(bench).length] = new HeroFactory().build(
-								appellation,
-							);
+							let firstEmptySlot = 0;
+
+							while (bench[firstEmptySlot]) {
+								firstEmptySlot++;
+							}
+
+							bench[firstEmptySlot] = new HeroFactory().build(appellation);
 
 							const newGame: Game = {
 								...game,

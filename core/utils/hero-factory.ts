@@ -15,8 +15,8 @@ export class HeroFactory {
 				h: 1,
 			},
 			attributes: {
-				maxHealth: 10,
-				health: 10,
+				maxHealth: 5,
+				health: 5,
 				maxMana: 10,
 				mana: 10,
 			},

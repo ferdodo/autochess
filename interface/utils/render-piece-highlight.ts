@@ -54,9 +54,9 @@ export function renderPieceHighlight(
 				.map((p) => p.hero.position)
 				.some((p) => isBlockPositionEqual(p, position));
 
-			const somePieceIsTransposed = display.pieces.some(
-				(piece) => piece.transposed,
-			);
+			const somePieceIsTransposed =
+				display.pieces.some((piece) => piece.transposed) ||
+				Object.values(display.bench).some((piece) => piece.transposed);
 
 			if (createdHighlightMesh) {
 				highlightMesh.position.copy(targetBox.position);
