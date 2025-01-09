@@ -31,9 +31,7 @@ export async function asPlayerTransposeBenchToBench(
 		benchPosition: 1,
 	};
 
-	await transpose(frontContext, grab, ungrab);
-
-	await firstValueFrom(
+	const waitTranspose = firstValueFrom(
 		observeGame(frontContext).pipe(
 			map((game) =>
 				Object.entries(game.playerBenches[frontContext.publicKey] || {})
@@ -43,4 +41,8 @@ export async function asPlayerTransposeBenchToBench(
 			filter((positions) => positions !== playerPositionBefore),
 		),
 	);
+
+	await transpose(frontContext, grab, ungrab);
+
+	await waitTranspose;
 }

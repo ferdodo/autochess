@@ -24,12 +24,14 @@ export async function asPlayerReroll(
 		return;
 	}
 
-	await reroll(frontContext);
-
-	await firstValueFrom(
+	const waitReroll = firstValueFrom(
 		observeGame(frontContext).pipe(
 			map((game) => game.playerMoney[frontContext.publicKey]),
 			filter((money) => money !== moneyBefore),
 		),
 	);
+
+	await reroll(frontContext);
+
+	await waitReroll;
 }

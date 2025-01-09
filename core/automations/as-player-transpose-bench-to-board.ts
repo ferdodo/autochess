@@ -31,8 +31,6 @@ export async function asPlayerTransposeBenchToBoard(
 		benchPosition: 0,
 	};
 
-	await transpose(frontContext, grab, ungrab);
-
 	const waitTranspositionInvalid = firstValueFrom(
 		observeServerNotifications(frontContext).pipe(
 			filter(
@@ -55,6 +53,8 @@ export async function asPlayerTransposeBenchToBoard(
 			timeout(1000),
 		),
 	);
+
+	await transpose(frontContext, grab, ungrab);
 
 	await Promise.race([waitTransposition, waitTranspositionInvalid]);
 }

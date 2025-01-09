@@ -32,9 +32,7 @@ export async function asPlayerTransposeBoardToBench(
 		benchPosition: 0,
 	};
 
-	await transpose(frontContext, grab, ungrab);
-
-	await firstValueFrom(
+	const waitTranspose = firstValueFrom(
 		observeGame(frontContext).pipe(
 			map((game) =>
 				Object.values(game.playerBenches[frontContext.publicKey] || {})
@@ -44,4 +42,8 @@ export async function asPlayerTransposeBoardToBench(
 			filter((positions) => positions !== playerPositionBefore),
 		),
 	);
+
+	await transpose(frontContext, grab, ungrab);
+
+	await waitTranspose;
 }

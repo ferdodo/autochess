@@ -31,9 +31,7 @@ export async function asPlayerTransposeBoardToBoard(
 		positionY: 0,
 	};
 
-	await transpose(frontContext, grab, ungrab);
-
-	await firstValueFrom(
+	const waitTranspose = firstValueFrom(
 		observeGame(frontContext).pipe(
 			map((game) =>
 				game.playerHeroes[frontContext.publicKey]
@@ -43,4 +41,8 @@ export async function asPlayerTransposeBoardToBoard(
 			filter((positions) => positions !== playerPositionBefore),
 		),
 	);
+
+	await transpose(frontContext, grab, ungrab);
+
+	await waitTranspose;
 }
