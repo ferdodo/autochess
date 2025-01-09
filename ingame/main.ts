@@ -58,25 +58,26 @@ waitTextureLoaded
 			signMessage: (message) => sign(publicKey, privateKey, message),
 		};
 
-		const keySubscription = doubleClick$.pipe(take(1)).subscribe(() =>
-			Promise.all(
-				Array(7)
-					.fill(undefined)
-					.map(async () => {
-						const [botPublicKey, botPrivateKey] = await createKeyPair();
+		let botCount = 0;
 
-						const frontContext: FrontContext = {
-							connection,
-							publicKey: botPublicKey,
-							nickname: `bot-${Math.floor(Math.random() * 1000)}`,
-							signMessage: <T>(message: T) =>
-								sign(botPublicKey, botPrivateKey, message),
-						};
+		const keySubscription = doubleClick$.subscribe(async () => {
+			botCount++;
+			notify(
+				`${botCount} Bots were created, double click to add more. please wait for matchmaking...`,
+			);
 
-						await connectBot(frontContext);
-					}),
-			),
-		);
+			const [botPublicKey, botPrivateKey] = await createKeyPair();
+
+			const frontContext: FrontContext = {
+				connection,
+				publicKey: botPublicKey,
+				nickname: `bot-${Math.floor(Math.random() * 1000)}`,
+				signMessage: <T>(message: T) =>
+					sign(botPublicKey, botPrivateKey, message),
+			};
+
+			await connectBot(frontContext);
+		});
 
 		const initiateGameResponse = await initiateGame(frontContext1);
 		keySubscription.unsubscribe();

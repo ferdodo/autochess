@@ -17,7 +17,7 @@ export async function createBackContext(
 		isValidSignature: (signed) => verify(signed),
 		serverPublicKey,
 		signMessage: (message) => sign(serverPublicKey, serverPrivateKey, message),
-		lateMatchmakingTimer: (source) => source.pipe(debounceTime(3000)),
+		lateMatchmakingTimer: (source) => source.pipe(debounceTime(5000)),
 		roundTimer: createRoundTimer(),
 		dataMapper,
 		queuerConnections: {},

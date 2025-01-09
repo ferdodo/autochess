@@ -1,8 +1,8 @@
 # coverage
 
-Coverage is a service that runs mutation service on core.
+Coverage is a service that runs mutation testing on service core.
 
-This service is automatically built when making new commits, to ensure that modified and added code is properly tested.
+This service is automatically built when making new commits, to ensure that modified and added code has proper coverage.
 
 See https://stryker-mutator.io to learn more about mutation testing.
 
