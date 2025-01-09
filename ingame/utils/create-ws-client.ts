@@ -3,12 +3,14 @@ import type { Connection } from "core/types/connection";
 import { uid } from "uid";
 import type { ClientMessage } from "core/types/client-message";
 import type { ServerMessage } from "core/types/server-message";
+import { pickBackend } from "./pick-backend";
 
-async function _createWsClient(
-	wsProtocol: string,
-	wsPort: string,
-	webDomain: string,
-): Promise<Connection<ServerMessage, ClientMessage>> {
+async function _createWsClient(): Promise<
+	Connection<ServerMessage, ClientMessage>
+> {
+	const wsProtocol = import.meta.env.VITE_WEBSOCKET_PROTOCOL;
+	const [webDomain, wsPort] = pickBackend();
+
 	const showPort =
 		(wsProtocol === "ws" && Number(wsPort) !== 80) ||
 		(wsProtocol === "wss" && Number(wsPort) !== 443);
@@ -21,23 +23,8 @@ async function _createWsClient(
 	});
 
 	const waitConnected = new Promise((resolve, reject) => {
-		//const timeout = setTimeout(() => {
-		//	reject(new Error("Connection timeout !"));
-		//	socket.close();
-		//}, 3000);
-
 		socket.onopen = () => {
-			//clearTimeout(timeout);
 			resolve(undefined);
-		};
-
-		socket.onerror = (error) => {
-			//reject(error);
-		};
-
-		socket.onclose = (event) => {
-			//clearTimeout(timeout);
-			reject(event);
 		};
 
 		waitDisconnected.finally(() => reject(new Error("Connection closed !")));
@@ -68,7 +55,8 @@ async function _createWsClient(
 			keepAliveInteval = setInterval(() => socket.send("KEEP_ALIVE"), 25000);
 			return waitDisconnected;
 		})
-		.finally(() => clearInterval(keepAliveInteval));
+		.finally(() => clearInterval(keepAliveInteval))
+		.catch(() => {});
 
 	await waitConnected;
 
@@ -80,27 +68,6 @@ async function _createWsClient(
 			const serialized = JSON.stringify(message);
 			socket.send(serialized);
 		},
-	};
-}
-
-function _retryStrategy(fn: typeof _createWsClient): typeof _createWsClient {
-	return async function retry(...args: Parameters<typeof fn>) {
-		let lastError: Error | undefined;
-
-		for (let i = 0; i < 30; i++) {
-			try {
-				return await fn(...args);
-			} catch (error) {
-				console.error(error);
-
-				console.error(
-					`${i} Failed to connect ${args[0]}://${args[2]}:${args[1]}`,
-				);
-				await new Promise((resolve) => setTimeout(resolve, 1000));
-			}
-		}
-
-		throw lastError || new Error("Too many retries !");
 	};
 }
 

@@ -14,7 +14,7 @@ export async function initiateGame({
 		}),
 	});
 
-	return firstValueFrom(
+	const response = await firstValueFrom(
 		connection.messages$.pipe(
 			map((message) => message.initiateGameResponse),
 			filter(Boolean),
@@ -23,5 +23,16 @@ export async function initiateGame({
 					initiateGameResponse.stamp.playerPublicKey === publicKey,
 			),
 		),
+		{
+			defaultValue: {
+				playsig: "Connection closed !",
+			} as InitiateGameReponse,
+		},
 	);
+
+	if (response.playsig === "Connection closed !") {
+		throw new Error("Connection closed !");
+	}
+
+	return response;
 }

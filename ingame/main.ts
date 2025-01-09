@@ -17,39 +17,28 @@ import { switchMap } from "rxjs/operators";
 import { sign } from "./utils/sign";
 import { createKeyPair } from "./utils/create-key-pair";
 import { notify } from "./utils/notify";
-import { pickBackend } from "./utils/pick-backend";
 import { toggleFullscreen } from "./utils/toggle-fullscreen";
 import { filter, map } from "rxjs/operators";
 import { doubleClick$ } from "./utils/double-click";
-import { take } from "rxjs/operators";
 import { connectBot } from "core/utils/connect-bot";
+import { take } from "rxjs/operators";
+import { lastValueFrom } from "rxjs";
+import type { Subscription } from "rxjs";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
 });
 
-waitTextureLoaded
-	.then(async () => {
+async function main() {
+	let keySubscription: Subscription | undefined;
+
+	try {
+		await waitTextureLoaded;
 		notify("Connecting to servers...");
 		const [publicKey, privateKey] = await createKeyPair();
-		const [domain, port] = pickBackend();
-
-		const connection = await createWsClient(
-			import.meta.env.VITE_WEBSOCKET_PROTOCOL,
-			port,
-			domain,
-		).catch((err) => {
-			notify("Connection failed.");
-			throw err;
-		});
+		const connection = await createWsClient();
 
 		notify("Matchmaking... Double click to play with bots");
-
-		connection.messages$.subscribe({
-			complete: () => {
-				notify("Connection lost !");
-			},
-		});
 
 		const frontContext1: FrontContext = {
 			connection,
@@ -60,7 +49,7 @@ waitTextureLoaded
 
 		let botCount = 0;
 
-		const keySubscription = doubleClick$.subscribe(async () => {
+		keySubscription = doubleClick$.subscribe(async () => {
 			botCount++;
 			notify(
 				`${botCount} Bots were created, double click to add more. please wait for matchmaking...`,
@@ -87,7 +76,10 @@ waitTextureLoaded
 		notify("");
 
 		connection.messages$
-			.pipe(switchMap(() => observeWindowDimentions()))
+			.pipe(
+				take(1),
+				switchMap(() => observeWindowDimentions()),
+			)
 			.subscribe(() => {
 				threeContext1.camera = createCamera();
 				removeRenderer(threeContext1.renderer);
@@ -116,8 +108,22 @@ waitTextureLoaded
 				filter(Boolean),
 			)
 			.subscribe(toggleFullscreen);
-	})
-	.catch((err) => {
-		console.error(err);
-		notify("An error occured.");
-	});
+
+		await lastValueFrom(connection.messages$);
+		removeRenderer(threeContext1.renderer);
+		throw new Error("Connection closed !");
+	} catch (err) {
+		keySubscription?.unsubscribe();
+
+		if (err instanceof Error && err.message.includes("Connection closed !")) {
+			notify("Connection closed ! Reconnecting in 5 seconds...");
+			await new Promise((resolve) => setTimeout(resolve, 5000));
+			await main();
+		} else {
+			console.log(err);
+			notify("An error occured.");
+		}
+	}
+}
+
+main();

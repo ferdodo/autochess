@@ -37,14 +37,16 @@ export function renderBenchHeroMeshes(
 
 		const slot = threeContext.benchSlotMeshes[slotNumber];
 
-		if (!slot) {
-			throw new Error("Slot not found !");
-		}
+		if (piece && slot) {
+			if (!slot) {
+				throw new Error("Slot not found !");
+			}
 
-		threeContext.scene.add(pieceRessources.group);
-		pieceRessources.group.position.y = slot.position.y + 0.6;
-		pieceRessources.group.position.z = slot.position.z + 0.05;
-		pieceRessources.group.position.x = slot.position.x;
+			threeContext.scene.add(pieceRessources.group);
+			pieceRessources.group.position.y = slot.position.y + 0.6;
+			pieceRessources.group.position.z = slot.position.z + 0.05;
+			pieceRessources.group.position.x = slot.position.x;
+		}
 
 		if (piece?.transposed) {
 			const raycaster = new Raycaster();

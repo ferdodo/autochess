@@ -1,9 +1,4 @@
-import type { Connection } from "../types/connection.js";
-import type { ClientMessage } from "../types/client-message.js";
-import type { ServerMessage } from "../types/server-message.js";
 import type { FrontContext } from "../types/front-context.js";
-import type { PublicKey } from "../types/public-key.js";
-import type { SignedMessage } from "../types/signed-message.js";
 import { initiateGame } from "../api/initiate-game.js";
 import { observeGame } from "../api/observe-game.js";
 import { Phase } from "../types/phase.js";
