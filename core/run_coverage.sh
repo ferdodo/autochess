@@ -35,4 +35,6 @@ fi
 
 files_to_mutate=$(echo "$filtered_files" | tr '\n' ',' | sed 's/,$//')
 rm -r dist
+
+for _ in {1..10}; do npx vitest run; done
 npx stryker run --mutate "$files_to_mutate"

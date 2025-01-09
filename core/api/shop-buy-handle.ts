@@ -52,6 +52,7 @@ export function shopBuyHandle(context: BackContext): Subscription {
 							const bench = game.playerBenches[publicKey] || [];
 
 							if (Object.values(bench).filter(Boolean).length >= 6) {
+								connection.send({ serverNotification: "Bench is full !" });
 								await abort();
 								return;
 							}

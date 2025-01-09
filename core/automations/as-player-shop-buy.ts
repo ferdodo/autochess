@@ -3,6 +3,7 @@ import { firstValueFrom, map, filter } from "rxjs";
 import { observeGame } from "../api/observe-game.js";
 import { getGame } from "../utils/get-game.js";
 import { shopBuy } from "../api/shop-buy.js";
+import { observeServerNotifications } from "../utils/observe-server-notifications.js";
 
 export async function asPlayerShopBuy(
 	testContext: TestContext,
@@ -20,6 +21,15 @@ export async function asPlayerShopBuy(
 		gameBefore.playerBenches[frontContext.publicKey] || {},
 	).filter(Boolean).length;
 
+	const invalidShopBuy = firstValueFrom(
+		observeServerNotifications(frontContext).pipe(
+			map((notification) => {
+				return notification === "Bench is full !";
+			}),
+			filter(Boolean),
+		),
+	);
+
 	const waitBought = firstValueFrom(
 		observeGame(frontContext).pipe(
 			map((game) => {
@@ -33,5 +43,5 @@ export async function asPlayerShopBuy(
 
 	await shopBuy(frontContext, 0);
 
-	await waitBought;
+	await Promise.race([invalidShopBuy, waitBought]);
 }
