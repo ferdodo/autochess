@@ -11,11 +11,7 @@ export function setCombatPhase(backContext: BackContext): Subscription {
 				merge(
 					backContext.dataMapper.observeGame(game.playsig),
 					from(backContext.dataMapper.readGame(game.playsig)),
-				).pipe(
-					filter(Boolean),
-					filter((game) => game.phase === Phase.Planning),
-					backContext.roundTimer,
-				),
+				).pipe(filter(Boolean), backContext.roundTimer),
 			),
 			tap(async ({ playsig }) => {
 				const transaction =
