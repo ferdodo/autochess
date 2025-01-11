@@ -28,6 +28,14 @@ export async function* generateActions(
 				throw new Error("Too many actions !");
 			}
 
+			const currentHero =
+				confrontation.playerAHeroes.find((h) => h.id === hero.id) ||
+				confrontation.playerBHeroes.find((h) => h.id === hero.id);
+
+			if (currentHero?.attributes.health === 0) {
+				continue;
+			}
+
 			const hittableHero = findHittableHero(confrontation, hero.id);
 
 			if (hittableHero) {
