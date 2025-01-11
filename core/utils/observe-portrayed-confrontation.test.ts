@@ -73,3 +73,20 @@ test("Second animation should be moving toward adversary", async () => {
 
 	await new Promise((resolve) => setTimeout(resolve, 1));
 });
+
+test("Both players should see a combat", async () => {
+	const testContext = await withTwoPlayersInCombat();
+	const game = await getGame(testContext);
+	const publicKey1 = testContext.frontContexts[0].publicKey || "Error";
+	const publicKey2 = testContext.frontContexts[1].publicKey || "Error";
+
+	await firstValueFrom(
+		of(game).pipe(observePortrayedConfrontation(publicKey1, of(undefined))),
+	);
+
+	await firstValueFrom(
+		of(game).pipe(observePortrayedConfrontation(publicKey2, of(undefined))),
+	);
+
+	await new Promise((resolve) => setTimeout(resolve, 1));
+});

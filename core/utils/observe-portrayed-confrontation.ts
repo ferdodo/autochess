@@ -73,11 +73,11 @@ export function observePortrayedConfrontation<T>(
 					})),
 				];
 
+				let item = actionIterator.next();
+
 				return animationTicker.pipe(
 					map(() => {
 						const actions: Action[] = [];
-
-						let item = actionIterator.next();
 
 						if (item.done) {
 							return undefined;

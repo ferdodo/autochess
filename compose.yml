@@ -54,6 +54,10 @@ services:
     depends_on:
       - core
 
+  back-deps:
+    build:
+      context: back
+      target: deps
 
   back:
     build: back
@@ -70,6 +74,7 @@ services:
       - database
       - replication
       - bus
+      - back-deps
     restart: always
 
   back-b:

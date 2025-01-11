@@ -6,7 +6,7 @@ import mikroOrmConfig from "./mikro-orm.config.js";
 import { createBus } from "./utils/create-bus.js";
 import { migrate } from "./utils/migrate.js";
 
-console.log("Server is starting...");
+process.stdout.write("Server is starting...\n");
 
 Promise.resolve()
 	.then(async () => {
@@ -16,9 +16,9 @@ Promise.resolve()
 		const dataMapper = await createDataMapper(orm, bus);
 		const backContext = await createBackContext(dataMapper);
 		startServer(backContext);
-		console.log("\n╭───────────────────╮");
-		console.log("│ Autochess Backend |");
-		console.log("╰───────────────────╯\n");
+		process.stdout.write("\n╭───────────────────╮\n");
+		process.stdout.write("│ Autochess Backend |\n");
+		process.stdout.write("╰───────────────────╯\n\n");
 	})
 	.catch((err) => {
 		console.error(err);
