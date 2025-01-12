@@ -1,5 +1,6 @@
 import { NearestFilter, CanvasTexture, SRGBColorSpace } from "three";
 import type { Texture } from "three";
+import { frame$ } from "./frame";
 
 const availableCanvas: [
 	HTMLCanvasElement,
@@ -66,7 +67,6 @@ export function composeAnimatedTexture(
 		}
 
 		if (time - lastFrame < period) {
-			requestAnimationFrame(paintCanvas);
 			return;
 		}
 
@@ -101,11 +101,9 @@ export function composeAnimatedTexture(
 		}
 
 		canvasTexture.needsUpdate = true;
-
-		requestAnimationFrame(paintCanvas);
 	};
 
-	paintCanvas(0);
+	const frameSubscription = frame$.subscribe(paintCanvas);
 
 	//canvasTexture.minFilter = NearestFilter;
 	canvasTexture.magFilter = NearestFilter;
@@ -115,6 +113,7 @@ export function composeAnimatedTexture(
 		canvasTexture,
 		function dispose() {
 			disposed = true;
+			frameSubscription.unsubscribe();
 			releaseCanvas(canvas, canvasTexture, canvasContext);
 		},
 	];

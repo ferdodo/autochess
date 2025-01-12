@@ -12,6 +12,7 @@ import { portrayBench } from "core/utils/portray-bench";
 import { trackTransposedHero } from "./track-transposed-hero";
 import type { ThreeContext } from "../types/three-context";
 import type { HeroId } from "core/types/hero-id";
+import { frame$ } from "./frame";
 
 export function portray(
 	publicKey: PublicKey,
@@ -60,7 +61,7 @@ export function portray(
 					return display;
 				},
 			),
-			combineLatestWith(interval(10).pipe(startWith(0))),
+			combineLatestWith(frame$),
 			map(([display]) => display),
 		);
 }
