@@ -35,26 +35,33 @@ export function renderBoardPieceMeshes(
 		const targetX = relativeOriginX + pieceSize * piece.hero.position.x;
 		const targetY = relativeOriginY;
 		const targetZ = relativeOriginZ - pieceSize * piece.hero.position.y;
-		const treshold = 0.01;
+		const timeElapsed = Date.now() - new Date(piece.animationStartAt).getTime();
 
-		const diffX = targetX - pieceRessources.group.position.x;
-		const diffY = targetY - pieceRessources.group.position.y;
-		const diffZ = targetZ - pieceRessources.group.position.z;
+		if (timeElapsed > 1000 * 0.95) {
+			pieceRessources.previousPosition = { x: targetX, y: targetZ, w: 1, h: 1 };
+		}
 
-		const moveX =
-			diffX > treshold ? treshold : diffX < -treshold ? -treshold : 0;
+		if (
+			pieceRessources.previousPosition &&
+			(pieceRessources.previousPosition.x !== piece.hero.position.x ||
+				pieceRessources.previousPosition.y !== piece.hero.position.y)
+		) {
+			const timeRatio = Math.min(1000, timeElapsed) / 1000;
 
-		const moveY =
-			diffY > treshold ? treshold : diffY < -treshold ? -treshold : 0;
+			const x =
+				pieceRessources.previousPosition.x +
+				(targetX - pieceRessources.previousPosition.x) * timeRatio;
 
-		const moveZ =
-			diffZ > treshold ? treshold : diffZ < -treshold ? -treshold : 0;
+			const y = targetY;
 
-		pieceRessources.group.position.set(
-			pieceRessources.group.position.x + moveX,
-			pieceRessources.group.position.y + moveY,
-			pieceRessources.group.position.z + moveZ,
-		);
+			const z =
+				pieceRessources.previousPosition.y +
+				(targetZ - pieceRessources.previousPosition.y) * timeRatio;
+
+			pieceRessources.group.position.set(x, y, z);
+		} else {
+			pieceRessources.group.position.set(targetX, targetY, targetZ);
+		}
 
 		const distance = pieceRessources.group.position.distanceTo(
 			new Vector3(targetX, targetY, targetZ),
@@ -62,6 +69,7 @@ export function renderBoardPieceMeshes(
 
 		if (distance > 0.15) {
 			pieceRessources.group.position.set(targetX, targetY, targetZ);
+			pieceRessources.previousPosition = { x: targetX, y: targetZ, w: 1, h: 1 };
 		}
 
 		if (piece.transposed) {

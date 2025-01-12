@@ -1,5 +1,6 @@
 import type { Mesh, PlaneGeometry, MeshBasicMaterial, Group } from "three";
 import type { PieceAnimatedTexture } from "./piece-animated-texture";
+import type { Block } from "blockwise";
 
 export interface PieceRessources {
 	animatedTexture?: PieceAnimatedTexture;
@@ -10,4 +11,5 @@ export interface PieceRessources {
 	healthBarMesh?: Mesh;
 	material?: MeshBasicMaterial;
 	mesh?: Mesh;
+	previousPosition?: Block;
 }

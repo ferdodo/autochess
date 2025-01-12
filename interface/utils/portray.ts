@@ -60,7 +60,7 @@ export function portray(
 					return display;
 				},
 			),
-			combineLatestWith(interval(100).pipe(startWith(0))),
+			combineLatestWith(interval(10).pipe(startWith(0))),
 			map(([display]) => display),
 		);
 }
