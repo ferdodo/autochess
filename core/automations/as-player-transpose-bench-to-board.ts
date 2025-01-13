@@ -24,7 +24,7 @@ export async function asPlayerTransposeBenchToBoard(
 	const gameBefore = await getGame(testContext, playerNumber);
 
 	const playerPositionBefore = gameBefore.playerHeroes[frontContext.publicKey]
-		.map((hero) => `${hero.position.x}${hero.position.y}`)
+		.map((hero) => `${hero.id}${hero.position.x}${hero.position.y}`)
 		.join("");
 
 	const grab: PieceSlot = {
@@ -44,7 +44,7 @@ export async function asPlayerTransposeBenchToBoard(
 		observeGame(frontContext).pipe(
 			map((game) =>
 				game.playerHeroes[frontContext.publicKey]
-					.map((hero) => `${hero.position.x}${hero.position.y}`)
+					.map((hero) => `${hero.id}${hero.position.x}${hero.position.y}`)
 					.join(""),
 			),
 			filter((positions) => {

@@ -20,6 +20,9 @@ test("Transpose from bench to board", async () => {
 	const publicKey = testContext.frontContexts[0].publicKey || "Error";
 	const bench = game.playerBenches[publicKey];
 	const occupied = Object.values(bench).filter(Boolean).length;
+	const hero = game.playerHeroes[publicKey][0];
+	expect(hero.position.x).toEqual(0);
+	expect(hero.position.y).toEqual(0);
 	expect(occupied).toEqual(0);
 });
 
@@ -34,26 +37,59 @@ test("Transpose from bench to board on an occupied slot should swap pieces", asy
 	const publicKey = testContext.frontContexts[0].publicKey || "Error";
 	const initialHero = initialGame.playerBenches[publicKey][0];
 
+	const gameBefore = await getGame(testContext);
+
+	const totalHeroCountBefore =
+		Object.values(gameBefore.playerHeroes[publicKey]).filter(Boolean).length +
+		Object.values(gameBefore.playerBenches[publicKey]).filter(Boolean).length;
+
 	await asPlayerTransposeBenchToBoard(testContext, 0, {
 		positionX: 0,
 		positionY: 0,
 	});
 
 	const game = await getGame(testContext);
+
+	const totalHeroCount =
+		Object.values(game.playerHeroes[publicKey]).filter(Boolean).length +
+		Object.values(game.playerBenches[publicKey]).filter(Boolean).length;
+
+	expect(totalHeroCountBefore).toEqual(totalHeroCount);
+
 	const hero = game.playerBenches[publicKey][0];
+	const heroBoard = game.playerHeroes[publicKey][0];
 	expect(initialHero).toBeTruthy();
+	expect(heroBoard).toBeTruthy();
 	expect(hero.id).toBeTruthy();
 	expect(hero.id).not.toEqual(initialHero.id);
+	expect(heroBoard.id).toEqual(initialHero.id);
+	expect(heroBoard.position.x).toEqual(0);
+	expect(heroBoard.position.y).toEqual(0);
+	await new Promise((resolve) => setTimeout(resolve, 1));
 });
 
-test("Transpose from bench to board", async () => {
+test("Transpose from bench to bench", async () => {
 	const testContext = await withOneBoughtHero();
+	const gameBefore = await getGame(testContext);
+	const publicKey = testContext.frontContexts[0].publicKey || "Error";
+
+	const totalHeroCountBefore =
+		Object.values(gameBefore.playerHeroes[publicKey]).filter(Boolean).length +
+		Object.values(gameBefore.playerBenches[publicKey]).filter(Boolean).length;
+
 	await asPlayerTransposeBenchToBench(testContext);
 	const game = await getGame(testContext);
-	const publicKey = testContext.frontContexts[0].publicKey || "Error";
+
+	const totalHeroCount =
+		Object.values(gameBefore.playerHeroes[publicKey]).filter(Boolean).length +
+		Object.values(gameBefore.playerBenches[publicKey]).filter(Boolean).length;
+
+	expect(totalHeroCountBefore).toEqual(totalHeroCount);
 	const bench = game.playerBenches[publicKey];
 	const benchSize = Object.values(bench).filter(Boolean).length;
+	const benchSlot1 = bench[1];
 	expect(benchSize).toEqual(1);
+	expect(benchSlot1).toBeTruthy();
 	await new Promise((resolve) => setTimeout(resolve, 1));
 });
 
@@ -84,8 +120,21 @@ test("Transpose from board to board on an occupied slot should swap pieces", asy
 	const initHero2 = initialGame.playerHeroes[pubKey][1];
 	expect(initHero1).toBeTruthy();
 	expect(initHero2).toBeTruthy();
+
+	const gameBefore = await getGame(testContext);
+
+	const totalHeroCountBefore =
+		Object.values(gameBefore.playerHeroes[pubKey]).filter(Boolean).length +
+		Object.values(gameBefore.playerBenches[pubKey]).filter(Boolean).length;
+
 	await asPlayerTransposeBoardToBoard(testContext);
 	const game = await getGame(testContext);
+
+	const totalHeroCount =
+		Object.values(game.playerHeroes[pubKey]).filter(Boolean).length +
+		Object.values(game.playerBenches[pubKey]).filter(Boolean).length;
+
+	expect(totalHeroCountBefore).toEqual(totalHeroCount);
 
 	const hero1 = game.playerHeroes[pubKey].filter(
 		(h) => h.id === initHero1.id,
@@ -101,5 +150,38 @@ test("Transpose from board to board on an occupied slot should swap pieces", asy
 	expect(hero1.position.y).toEqual(initHero2.position.y);
 	expect(hero2.position.x).toEqual(initHero1.position.x);
 	expect(hero2.position.y).toEqual(initHero1.position.y);
+	await new Promise((resolve) => setTimeout(resolve, 1));
+});
+
+test("Transpose from bench to bench on occupied slot should swap heroes", async () => {
+	const testContext = await withOneBoughtHero();
+	await asPlayerTransposeBoardToBench(testContext, 0, 1);
+	const gameBefore = await getGame(testContext);
+	const publicKey = testContext.frontContexts[0].publicKey || "Error";
+
+	const benchHeroesCountBefore = Object.values(
+		gameBefore.playerBenches[publicKey],
+	).filter(Boolean).length;
+
+	const totalHeroCountBefore =
+		Object.values(gameBefore.playerHeroes[publicKey]).filter(Boolean).length +
+		benchHeroesCountBefore;
+
+	expect(benchHeroesCountBefore).toEqual(2);
+	const firstSlotHeroIdBefore = gameBefore.playerBenches[publicKey][0].id;
+	const secondSlotHeroIdBefore = gameBefore.playerBenches[publicKey][1].id;
+
+	await asPlayerTransposeBenchToBench(testContext);
+	const game = await getGame(testContext);
+
+	const totalHeroCount =
+		Object.values(gameBefore.playerHeroes[publicKey]).filter(Boolean).length +
+		Object.values(gameBefore.playerBenches[publicKey]).filter(Boolean).length;
+
+	expect(totalHeroCountBefore).toEqual(totalHeroCount);
+	const firstSlotHeroId = game.playerBenches[publicKey][0].id;
+	const secondSlotHeroId = game.playerBenches[publicKey][1].id;
+	expect(firstSlotHeroId).toEqual(secondSlotHeroIdBefore);
+	expect(secondSlotHeroId).toEqual(firstSlotHeroIdBefore);
 	await new Promise((resolve) => setTimeout(resolve, 1));
 });

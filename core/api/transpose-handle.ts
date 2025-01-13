@@ -124,7 +124,13 @@ export function transposeHandle(context: BackContext): Subscription {
 									h: 1,
 								};
 
-								heroes.push(grabbedHero);
+								if (ungrabbedHero) {
+									game.playerHeroes[publicKey] = game.playerHeroes[
+										publicKey
+									].filter((hero) => hero.id !== ungrabbedHero.id);
+								}
+
+								game.playerHeroes[publicKey].push(grabbedHero);
 								benchHeroes[grabPiece.benchPosition] = ungrabbedHero;
 								await commit(game);
 								return;
@@ -135,13 +141,7 @@ export function transposeHandle(context: BackContext): Subscription {
 								ungrabPiece.benchPosition !== undefined
 							) {
 								benchHeroes[ungrabPiece.benchPosition] = grabbedHero;
-
-								if (ungrabbedHero) {
-									benchHeroes[grabPiece.benchPosition] = ungrabbedHero;
-								} else {
-									delete benchHeroes[grabPiece.benchPosition];
-								}
-
+								benchHeroes[grabPiece.benchPosition] = ungrabbedHero;
 								await commit(game);
 								return;
 							}
