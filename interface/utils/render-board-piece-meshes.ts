@@ -2,6 +2,7 @@ import { Raycaster, Vector3 } from "three";
 import type { Display } from "core/types/display";
 import type { ThreeContext } from "../types/three-context";
 import { getBoardBlock } from "core/utils/get-board-block";
+import { Animation } from "core/types/animation";
 
 export function renderBoardPieceMeshes(
 	threeContext: ThreeContext,
@@ -67,7 +68,7 @@ export function renderBoardPieceMeshes(
 			new Vector3(targetX, targetY, targetZ),
 		);
 
-		if (distance > 0.15) {
+		if (distance > 0.15 || piece.animation !== Animation.Walk) {
 			pieceRessources.group.position.set(targetX, targetY, targetZ);
 			pieceRessources.previousPosition = { x: targetX, y: targetZ, w: 1, h: 1 };
 		}
