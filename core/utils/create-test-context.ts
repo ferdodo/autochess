@@ -40,6 +40,7 @@ export function createTestContext(): TestContext {
 				share(),
 			);
 		},
+		testingTimeOffset: 0,
 	};
 
 	return {

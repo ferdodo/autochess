@@ -19,4 +19,5 @@ export interface BackContext {
 	lateMatchmakingTimer: MonoTypeOperatorFunction<Queuer[]>;
 	roundTimer: MonoTypeOperatorFunction<Game>;
 	queuerConnections: Record<string, Connection<ClientMessage, ServerMessage>>;
+	testingTimeOffset: number;
 }

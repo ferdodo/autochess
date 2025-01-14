@@ -9,11 +9,14 @@ import { getRandomAppellation } from "../utils/get-random-appellation.js";
 import { createPool } from "../utils/create-pool.js";
 import type { Level } from "../types/level.js";
 import { uid } from "uid";
+import { getDate } from "../utils/get-date.js";
 
-export function matchmake({
-	dataMapper: { queuers$, createGameWithPoolAndDeleteQueuers },
-	lateMatchmakingTimer,
-}: BackContext): Subscription {
+export function matchmake(backContext: BackContext): Subscription {
+	const {
+		dataMapper: { queuers$, createGameWithPoolAndDeleteQueuers },
+		lateMatchmakingTimer,
+	} = backContext;
+
 	return queuers$
 		.pipe(
 			lateMatchmakingTimer,
@@ -65,7 +68,7 @@ export function matchmake({
 					playerHealths,
 					playerLostAt: {},
 					phase: Phase.Planning,
-					phaseStartAt: new Date().toISOString(),
+					phaseStartAt: getDate(backContext).toISOString(),
 				},
 				pool,
 				players.map((player) => player.publicKey),

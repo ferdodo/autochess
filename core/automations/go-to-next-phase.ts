@@ -1,5 +1,6 @@
 import type { TestContext } from "../types/test-context.js";
 import { firstValueFrom, filter } from "rxjs";
+import { getPhaseDuration } from "../utils/get-phase-duration.js";
 
 export async function goToNextPhase(testContext: TestContext, playerIndex = 0) {
 	const frontContext = testContext.frontContexts[playerIndex];
@@ -24,6 +25,10 @@ export async function goToNextPhase(testContext: TestContext, playerIndex = 0) {
 		testContext.backContext.dataMapper
 			.observeGame(frontContext.playsig)
 			.pipe(filter((game) => game.phase !== initialGame.phase)),
+	);
+
+	testContext.backContext.testingTimeOffset += getPhaseDuration(
+		initialGame.phase,
 	);
 
 	testContext.triggerRoundTimer();

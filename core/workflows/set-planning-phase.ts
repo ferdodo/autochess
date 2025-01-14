@@ -3,6 +3,7 @@ import type { Subscription } from "rxjs";
 import { tap, mergeMap, filter, merge, from } from "rxjs";
 import { Phase } from "../types/phase.js";
 import { computeCombatLoser } from "../utils/compute-combat-loser.js";
+import { getDate } from "../utils/get-date.js";
 
 export function setPlanningPhase(backContext: BackContext): Subscription {
 	return backContext.dataMapper.createdGame$
@@ -11,11 +12,7 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 				merge(
 					backContext.dataMapper.observeGame(game.playsig),
 					from(backContext.dataMapper.readGame(game.playsig)),
-				).pipe(
-					filter(Boolean),
-					backContext.roundTimer,
-					filter((game) => game.phase === Phase.Combat),
-				),
+				).pipe(filter(Boolean), backContext.roundTimer),
 			),
 			tap(async ({ playsig }) => {
 				const transaction =
@@ -28,7 +25,10 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 				const { game, commit, abort } = transaction;
 
 				try {
-					if (game.phase !== Phase.Combat) {
+					if (
+						game.phase !== Phase.Combat ||
+						new Date(game.phaseStartAt) > getDate(backContext, -10000)
+					) {
 						await abort();
 						return;
 					}
@@ -47,7 +47,7 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 					}
 
 					game.phase = Phase.Planning;
-					game.phaseStartAt = new Date().toISOString();
+					game.phaseStartAt = getDate(backContext).toISOString();
 					game.combats = undefined;
 
 					game.playerMoney = Object.fromEntries(

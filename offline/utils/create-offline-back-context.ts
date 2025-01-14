@@ -25,5 +25,6 @@ export function createOfflineBackContext(
 		lateMatchmakingTimer: (source) => source.pipe(debounceTime(10)),
 		roundTimer: createRoundTimer(),
 		queuerConnections: {},
+		testingTimeOffset: 0,
 	};
 }
