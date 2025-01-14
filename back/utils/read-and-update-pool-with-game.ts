@@ -6,6 +6,7 @@ import type { MikroORM } from "@mikro-orm/core";
 import { PoolEntity } from "../entities/pool.js";
 import { BackEvent } from "../types/back-events.js";
 import type { Bus } from "../types/pub-sub.js";
+import { LockMode } from "@mikro-orm/core";
 
 export async function readAndUpdatePoolWithGame(
 	orm: MikroORM,
@@ -16,8 +17,16 @@ export async function readAndUpdatePoolWithGame(
 	await em.begin();
 	const gameRepository = em.getRepository(GameEntity);
 	const poolRepository = em.getRepository(PoolEntity);
-	const game = await gameRepository.findOneOrFail({ playsig });
-	const pool = await poolRepository.findOneOrFail({ playsig });
+
+	const game = await gameRepository.findOneOrFail(
+		{ playsig },
+		{ lockMode: LockMode.PESSIMISTIC_WRITE },
+	);
+
+	const pool = await poolRepository.findOneOrFail(
+		{ playsig },
+		{ lockMode: LockMode.PESSIMISTIC_WRITE },
+	);
 
 	async function commit(pool: Pool, game: Game) {
 		const affected = await gameRepository.nativeUpdate({ playsig }, game);

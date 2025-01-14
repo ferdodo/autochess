@@ -4,6 +4,7 @@ import { EncounterEntity } from "../entities/encounter.js";
 import type { Ranking } from "core/types/ranking.js";
 import type { Encounter } from "core/types/encounter.js";
 import type { PublicKey } from "core/types/public-key.js";
+import { LockMode } from "@mikro-orm/core";
 
 interface ReadAndUpsertRankingsAndCreateEncounters {
 	rankings: Ranking[];
@@ -25,9 +26,12 @@ export async function readAndUpsertRankingsAndCreateEncounters(
 		const rankingRepository = em.getRepository(RankingEntity);
 		const encounterRepository = em.getRepository(EncounterEntity);
 
-		const rankings = await rankingRepository.find({
-			publicKey: { $in: playersPublicKeys },
-		});
+		const rankings = await rankingRepository.find(
+			{
+				publicKey: { $in: playersPublicKeys },
+			},
+			{ lockMode: LockMode.PESSIMISTIC_WRITE },
+		);
 
 		return {
 			rankings,

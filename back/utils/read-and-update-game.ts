@@ -4,6 +4,7 @@ import type { Playsig } from "core/types/playsig.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { BackEvent } from "../types/back-events.js";
 import type { Bus } from "../types/pub-sub.js";
+import { LockMode } from "@mikro-orm/core";
 
 export async function readAndUpdateGame(
 	orm: MikroORM,
@@ -13,7 +14,11 @@ export async function readAndUpdateGame(
 	const em = orm.em.fork();
 	await em.begin();
 	const gameRepository = em.getRepository(GameEntity);
-	const game = await gameRepository.findOneOrFail({ playsig });
+
+	const game = await gameRepository.findOneOrFail(
+		{ playsig },
+		{ lockMode: LockMode.PESSIMISTIC_WRITE },
+	);
 
 	async function commit(game: Game) {
 		const affected = await gameRepository.nativeUpdate({ playsig }, game);
