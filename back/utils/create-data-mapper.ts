@@ -31,7 +31,7 @@ export function createDataMapper(orm: MikroORM, bus: Bus): DataMapper {
 				queuersPublicKeys,
 			),
 		createdGame$: observeCreatedGame(orm, bus),
-		observeGame: (playsig) => observeGame(orm, bus, playsig),
+		observeGame: observeGame(orm, bus),
 		readPool: (playsig) => readPool(orm, playsig),
 		createPool: (pool) => createPool(orm, pool),
 		readAndUpdatePoolWithGame: (playsig) =>
