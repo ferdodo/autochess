@@ -6,6 +6,7 @@ import type { ClientMessage } from "../types/client-message.js";
 import type { ServerMessage } from "../types/server-message.js";
 import { validateClientMessage } from "../utils/validate-client-message.js";
 import { uid } from "uid";
+import { throttleMessageByPublicKey } from "../utils/throttle-message-by-public-key.js";
 
 export class ConnectionMockFactory {
 	serverConnections = new Subject<Connection<ClientMessage, ServerMessage>>();
@@ -45,6 +46,7 @@ export class ConnectionMockFactory {
 				}),
 				filter(([valid]: [boolean, ClientMessage]) => valid),
 				map(([_, message]) => message),
+				throttleMessageByPublicKey(0),
 				share(),
 			),
 			send(message: ServerMessage) {

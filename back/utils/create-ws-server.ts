@@ -6,8 +6,11 @@ import { createServer } from "node:https";
 import { readFileSync } from "node:fs";
 import { uid } from "uid";
 import type { Server } from "node:https";
+import type { MonoTypeOperatorFunction } from "rxjs";
 
-export function createWsServer<I, O>(): Observable<Connection<I, O>> {
+export function createWsServer<I, O>(
+	throttler: MonoTypeOperatorFunction<I>,
+): Observable<Connection<I, O>> {
 	const wss = createWebSocketServer();
 
 	return new Observable<Connection<I, O>>((connexionSubscriber) => {
@@ -39,7 +42,7 @@ export function createWsServer<I, O>(): Observable<Connection<I, O>> {
 				ws.on("close", () => {
 					messageSubscriber.complete();
 				});
-			}).pipe(share());
+			}).pipe(throttler, share());
 
 			const send = (payload: O) => {
 				const serialized = JSON.stringify(payload);

@@ -6,14 +6,16 @@ import { sign } from "./sign.js";
 import { createKeyPair } from "./create-key-pair.js";
 import { verify } from "./verify.js";
 import type { DataMapper } from "core/types/data-mapper.js";
+import { throttleMessageByPublicKey } from "core/utils/throttle-message-by-public-key.js";
 
 export async function createBackContext(
 	dataMapper: DataMapper,
 ): Promise<BackContext> {
 	const [serverPublicKey, serverPrivateKey] = await createKeyPair();
+	const messageThrottler = throttleMessageByPublicKey(250);
 
 	return {
-		connections$: createWsServer(),
+		connections$: createWsServer(messageThrottler),
 		isValidSignature: (signed) => verify(signed),
 		serverPublicKey,
 		signMessage: (message) => sign(serverPublicKey, serverPrivateKey, message),
