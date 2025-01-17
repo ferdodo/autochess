@@ -44,22 +44,41 @@ function setup_pre_commit_hook {
 	chmod +x .git/hooks/pre-commit
 }
 
+
+function rebuild {
+	set -e
+	echo ""
+	echo "╭────────────────────────────╮"
+	echo "│ Rebuilding containers..    │ "
+	echo "│ press ctrl-c again to stop │ "
+	echo "╰────────────────────────────╯"
+	docker compose down -v --remove-orphans -t 1
+	docker compose up -d --build offline sandbox back ingame back-b back-c back-d back-e
+	print_startup
+	set +e
+}
+
+function print_startup {
+	echo ""
+	echo "╭──────────────────────────────────────────────────╮"
+	echo "│ Sandbox: http://localhost:2437                   │"
+	echo "│ Offline: http://localhost:5423                   │"
+	echo "│ Ingame:  http://localhost:53015                  │"
+	echo "│                                                  │"
+	echo "│ Live feedback:                                   │"
+	echo "│   docker compose logs -f --no-log-prefix back    │"
+	echo "│   docker compose logs -f --no-log-prefix ingame  │"
+	echo "│   docker compose logs -f --no-log-prefix sandbox │"
+	echo "│   docker compose logs -f --no-log-prefix offline │"
+	echo "╰──────────────────────────────────────────────────╯"
+}
+
 set -e
 setup_pre_commit_hook
 at-least-5GB-free-space
 docker compose up -d --build offline sandbox back ingame back-b back-c back-d back-e
-trap "docker compose down -v --remove-orphans -t 1" EXIT
-echo "╭──────────────────────────────────────────────────╮"
-echo "│ Sandbox: http://localhost:2437                   │"
-echo "│ Offline: http://localhost:5423                   │"
-echo "│ Ingame:  http://localhost:53015                  │"
-echo "│                                                  │"
-echo "│ Live feedback:                                   │"
-echo "│   docker compose logs -f --no-log-prefix back    │"
-echo "│   docker compose logs -f --no-log-prefix ingame  │"
-echo "│   docker compose logs -f --no-log-prefix sandbox │"
-echo "│   docker compose logs -f --no-log-prefix offline │"
-echo "╰──────────────────────────────────────────────────╯"
+trap rebuild SIGINT
+print_startup
 set +e
 
 while true
