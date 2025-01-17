@@ -21,6 +21,10 @@ function find-obj {
     find . -name "*.obj"
 }
 
+function find-mtl {
+    find . -name "*.mtl"
+}
+
 function image-to-base64 {
     base64 -w 0 "$1"
 }
@@ -37,10 +41,18 @@ function convert-to-base64-obj-data-url-js {
     echo "export default \"data:model/obj;base64,$(image-to-base64 "$1")\";" > "$2"
 }
 
+function convert-to-base64-mtl-data-url-js {
+    echo "export default \"data:model/mtl;base64,$(image-to-base64 "$1")\";" > "$2"
+}
+
 find-images | while IFS= read -r image; do
     convert-to-base64-png-data-url-js "$image" "$(output-filename png "$image")"
 done
 
 find-obj | while IFS= read -r obj; do
     convert-to-base64-obj-data-url-js "$obj" "$(output-filename obj "$obj")"
+done
+
+find-mtl | while IFS= read -r mtl; do
+    convert-to-base64-mtl-data-url-js "$mtl" "$(output-filename mtl "$mtl")"
 done
