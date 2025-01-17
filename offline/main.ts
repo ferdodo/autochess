@@ -67,8 +67,8 @@ waitTextureLoaded
 			currentPlayer = value;
 		});
 
-		const threeContext1 = createContext();
-		const threeContext2 = createContext();
+		const threeContext1 = await createContext();
+		const threeContext2 = await createContext();
 
 		playerSwitch.switchPlayer1();
 

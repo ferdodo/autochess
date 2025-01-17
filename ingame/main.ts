@@ -72,7 +72,7 @@ async function main() {
 		keySubscription.unsubscribe();
 		frontContext1.playsig = initiateGameResponse.playsig;
 		frontContext1.stamp = initiateGameResponse.stamp;
-		const threeContext1 = createContext();
+		const threeContext1 = await createContext();
 		notify("");
 
 		connection.messages$

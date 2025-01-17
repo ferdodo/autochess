@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"build": "./build-images.sh && tsc && biome ci ."
+		"build": "./build-assets.sh && tsc && biome ci ."
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",

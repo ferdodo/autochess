@@ -14,11 +14,14 @@ import { createHealthGeometry } from "./create-health-geometry";
 import { createRenderer } from "./create-renderer";
 import { createRerollGeometry } from "./create-reroll-geometry";
 import { crateFullScreenButtonMesh } from "./create-full-screen-button-mesh";
+import { loadArena } from "./load-arena";
 
-export function createContext(): ThreeContext {
+export async function createContext(): Promise<ThreeContext> {
 	const idleAnimationsByAppellations = createIdleAnimationsByAppellations();
 	const scene = createScene();
 	const camera = createCamera();
+	const arena = await loadArena();
+	scene.add(arena);
 
 	const pieceTargetBoxesMaterial = new MeshBasicMaterial({
 		color: 0x2bfafa,

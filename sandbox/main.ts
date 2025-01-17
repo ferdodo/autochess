@@ -17,9 +17,8 @@ document.addEventListener("contextmenu", (e) => {
 });
 
 waitTextureLoaded
-	.then(() => {
-		const threeContext = createContext();
-
+	.then(createContext)
+	.then((threeContext) => {
 		observeWindowDimentions().subscribe(() => {
 			threeContext.camera = createCamera();
 			removeRenderer(threeContext.renderer);

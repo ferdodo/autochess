@@ -18,6 +18,7 @@ export function createBenchSlotMeshes(scene: Scene): Record<number, Mesh> {
 
 	for (let i = 0; i < 6; i++) {
 		const smallCube = new Mesh(smallCubeGeometry, smallCubeMaterial);
+		smallCube.visible = false;
 		scene.add(smallCube);
 		meshes[i] = smallCube;
 		smallCube.position.x = -0.19 + (i % 3) * -0.13;

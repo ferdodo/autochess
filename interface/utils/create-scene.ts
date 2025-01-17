@@ -14,6 +14,7 @@ export function createScene(): Scene {
 	const material = new MeshStandardMaterial({ color: 0x00ff00 });
 	const cube = new Mesh(geometry, material);
 	scene.add(cube);
+	cube.visible = false;
 	const ambientLight = new AmbientLight(0xffffff, 0.5);
 	scene.add(ambientLight);
 	const hemisphereLight = new HemisphereLight(0xffffff, 0x444444, 0.5);
