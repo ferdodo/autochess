@@ -13,46 +13,59 @@ fi
 
 unzip -u -q "$ZIP_FILE"
 
-function find-images {
-    find . -name "*.png"
-}
-
-function find-obj {
-    find . -name "*.obj"
-}
-
-function find-mtl {
-    find . -name "*.mtl"
+function output-filename {
+    echo "$2" | sed -E "s/\.$1/\.$1\.base64-data-url\.ts/g"
 }
 
 function image-to-base64 {
     base64 -w 0 "$1"
 }
 
-function output-filename {
-    echo "$2" | sed -E "s/\.$1/\.$1\.base64-data-url\.ts/g"
+function convert-to-base64-data-url-js {
+    case "$1" in
+        obj)
+            mime="model/obj"
+            ;;
+        png)
+            mime="image/png"
+            ;;
+        gltf)
+            mime="model/gltf"
+            ;;
+        glb)
+            mime="model/gltf"
+            ;;
+        mtl)
+            mime="model/mtl"
+            ;;
+        *)
+            echo "Unknown file format !"
+            exit 1
+            ;;
+    esac
+
+    echo "export default \"data:$mime;base64,$(image-to-base64 "$2")\";" > "$3"
 }
 
-function convert-to-base64-png-data-url-js {
-    echo "export default \"data:image/png;base64,$(image-to-base64 "$1")\";" > "$2"
+function export-blender-file {
+    # blender -b arena.blend --python-expr "import bpy; bpy.ops.export_scene.obj(filepath='arena.obj')"
+    blender -b arena.blend --python-expr "import bpy; bpy.ops.export_scene.gltf(filepath='arena.gltf', export_draco_mesh_compression_enable=False)"
 }
 
-function convert-to-base64-obj-data-url-js {
-    echo "export default \"data:model/obj;base64,$(image-to-base64 "$1")\";" > "$2"
-}
+export-blender-file
 
-function convert-to-base64-mtl-data-url-js {
-    echo "export default \"data:model/mtl;base64,$(image-to-base64 "$1")\";" > "$2"
-}
-
-find-images | while IFS= read -r image; do
-    convert-to-base64-png-data-url-js "$image" "$(output-filename png "$image")"
+find . -name "*.png" | while IFS= read -r image; do
+    convert-to-base64-data-url-js png "$image" "$(output-filename png "$image")"
 done
 
-find-obj | while IFS= read -r obj; do
-    convert-to-base64-obj-data-url-js "$obj" "$(output-filename obj "$obj")"
+find . -name "*.obj" | while IFS= read -r obj; do
+    convert-to-base64-data-url-js obj "$obj" "$(output-filename obj "$obj")"
 done
 
-find-mtl | while IFS= read -r mtl; do
-    convert-to-base64-mtl-data-url-js "$mtl" "$(output-filename mtl "$mtl")"
+find . -name "*.mtl" | while IFS= read -r mtl; do
+    convert-to-base64-data-url-js mtl "$mtl" "$(output-filename mtl "$mtl")"
+done
+
+find . -name "*.glb" | while IFS= read -r glb; do
+    convert-to-base64-data-url-js glb "$glb" "$(output-filename glb "$glb")"
 done
