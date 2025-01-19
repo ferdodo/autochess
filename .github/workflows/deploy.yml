@@ -28,8 +28,7 @@ jobs:
 
       - name: 🏗️ Build assets
         run: |
-          apt-get update
-          apt-get install blender draco libdraco7 python3-numpy -y
+          sudo apt-get update && sudo apt-get install blender draco python3-numpy -y
           npm install
           npm run build
         working-directory: ./assets
