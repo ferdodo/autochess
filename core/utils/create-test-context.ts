@@ -7,6 +7,7 @@ import type { Queuer } from "../types/queuer.js";
 import type { Observable } from "rxjs";
 import type { Game } from "../types/game.js";
 import { createRandomPublicKey } from "../mocks/create-random-public-key.js";
+import { createMetrics } from "./create-metrics.js";
 
 export function createTestContext(): TestContext {
 	const dataMapper = createDataMapperMock();
@@ -41,6 +42,7 @@ export function createTestContext(): TestContext {
 			);
 		},
 		testingTimeOffset: 0,
+		metrics: createMetrics(),
 	};
 
 	return {

@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 3s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+
+rule_files:
+
+scrape_configs:
+  - job_name: "back"
+    static_configs:
+      - targets: ["back:23053"]
+  - job_name: "back-b"
+    static_configs:
+      - targets: ["back-b:23053"]
+  - job_name: "back-c"
+    static_configs:
+      - targets: ["back-c:23053"]
+  - job_name: "back-d"
+    static_configs:
+      - targets: ["back-d:23053"]
+  - job_name: "back-e"
+    static_configs:
+      - targets: ["back-e:23053"]
+      

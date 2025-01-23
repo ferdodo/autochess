@@ -52,7 +52,9 @@ function rebuild {
 	echo "│ Rebuilding containers..    │ "
 	echo "│ press ctrl-c again to stop │ "
 	echo "╰────────────────────────────╯"
+	set +e
 	docker compose down -v --remove-orphans -t 1
+	set -e
 	docker compose up -d --build offline sandbox back ingame back-b back-c back-d back-e
 	print_startup
 	set +e

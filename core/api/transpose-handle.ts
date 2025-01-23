@@ -11,6 +11,7 @@ export function transposeHandle(context: BackContext): Subscription {
 		connections$,
 		dataMapper: { readAndUpdateGame },
 		isValidSignature,
+		metrics,
 	} = context;
 
 	return connections$
@@ -21,7 +22,9 @@ export function transposeHandle(context: BackContext): Subscription {
 					filter(Boolean),
 					checkSignature(isValidSignature),
 					checkStamp(context),
-					tap(async (transposeRequest) => {
+					mergeMap(async (transposeRequest) => {
+						metrics.transposeRequestCount++;
+
 						if (!isTranspositionLegal(transposeRequest)) {
 							connection.send({
 								serverNotification: "Invalid transposition position !",
@@ -152,6 +155,7 @@ export function transposeHandle(context: BackContext): Subscription {
 							throw error;
 						}
 					}),
+					tap(() => metrics.transposeDoneCount++),
 				),
 			),
 		)

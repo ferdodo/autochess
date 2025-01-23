@@ -9,6 +9,7 @@ import type { MonoTypeOperatorFunction } from "rxjs";
 import type { Queuer } from "./queuer.js";
 import type { Game } from "./game.js";
 import type { PublicKey } from "./public-key.js";
+import type { Metrics } from "./metrics.js";
 
 export interface BackContext {
 	connections$: Observable<Connection<ClientMessage, ServerMessage>>;
@@ -20,4 +21,5 @@ export interface BackContext {
 	roundTimer: MonoTypeOperatorFunction<Game>;
 	queuerConnections: Record<string, Connection<ClientMessage, ServerMessage>>;
 	testingTimeOffset: number;
+	metrics: Metrics;
 }

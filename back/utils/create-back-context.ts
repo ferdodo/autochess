@@ -7,6 +7,7 @@ import { createKeyPair } from "./create-key-pair.js";
 import { verify } from "./verify.js";
 import type { DataMapper } from "core/types/data-mapper.js";
 import { throttleMessageByPublicKey } from "core/utils/throttle-message-by-public-key.js";
+import { createMetrics } from "core/utils/create-metrics.js";
 
 export async function createBackContext(
 	dataMapper: DataMapper,
@@ -24,5 +25,6 @@ export async function createBackContext(
 		dataMapper,
 		queuerConnections: {},
 		testingTimeOffset: 0,
+		metrics: createMetrics(),
 	};
 }

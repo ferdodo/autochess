@@ -19,8 +19,8 @@ export async function createBus(): Promise<Bus> {
 		}
 	}).pipe(share());
 
-	const publish = (topic: BackEvent, message: string) => {
-		redisPub.publish(topic, message);
+	const publish = (event: BackEvent, message: string) => {
+		redisPub.publish(event, message);
 	};
 
 	return { publish, events$ };

@@ -3,6 +3,7 @@ import type { ConnectionMockFactory } from "core/mocks/connection-mock-factory";
 import { createDataMapperMock } from "core/mocks/create-data-mapper-mock";
 import { debounceTime } from "rxjs";
 import { createRoundTimer } from "core/utils/create-round-timer";
+import { createMetrics } from "core/utils/create-metrics";
 
 export function createOfflineBackContext(
 	connectionMockFactory: ConnectionMockFactory,
@@ -26,5 +27,6 @@ export function createOfflineBackContext(
 		roundTimer: createRoundTimer(),
 		queuerConnections: {},
 		testingTimeOffset: 0,
+		metrics: createMetrics(),
 	};
 }

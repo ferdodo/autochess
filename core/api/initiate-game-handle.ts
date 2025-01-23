@@ -11,6 +11,7 @@ export function initiateGameHandle({
 	queuerConnections,
 	isValidSignature,
 	signMessage,
+	metrics,
 }: BackContext): Subscription {
 	const handleRequests$ = connections$.pipe(
 		mergeMap((connection) =>
@@ -19,6 +20,7 @@ export function initiateGameHandle({
 				filter(Boolean),
 				checkSignature(isValidSignature),
 				tap(async ({ publicKey, nickname }: InitiateGameRequest) => {
+					metrics.initiateGameRequestCount++;
 					const createdAt = new Date().toISOString();
 					queuerConnections[publicKey] = connection;
 
@@ -52,6 +54,7 @@ export function initiateGameHandle({
 				const connection = queuerConnections[publicKey];
 
 				if (connection) {
+					metrics.initiateGameResponseCount++;
 					connection.send({
 						initiateGameResponse: {
 							playsig: game.playsig,

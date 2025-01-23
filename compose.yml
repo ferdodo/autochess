@@ -75,6 +75,7 @@ services:
       - replication
       - bus
       - back-deps
+      - prometheus
     restart: always
 
   back-b:
@@ -131,3 +132,8 @@ services:
       - core
       - interface
       - ingame-deps
+
+  prometheus:
+    build: prometheus
+    ports:
+      - 32090:9090
