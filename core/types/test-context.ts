@@ -8,4 +8,5 @@ export interface TestContext {
 	skipMatchmakeLateDebounce: () => void;
 	triggerRoundTimer: () => void;
 	frontContexts: Record<number, FrontContext>;
+	closeConnection: Record<number, () => void>;
 }

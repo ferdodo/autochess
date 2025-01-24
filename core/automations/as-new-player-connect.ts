@@ -3,7 +3,8 @@ import type { FrontContext } from "../types/front-context.js";
 import type { TestContext } from "../types/test-context.js";
 
 export function asNewPlayerConnect(testContext: TestContext) {
-	const [connection] = testContext.connectionMockFactory.createClient();
+	const [connection, closeConnection] =
+		testContext.connectionMockFactory.createClient();
 	const playersCount = Object.keys(testContext.frontContexts).length;
 
 	const numberToLetter = (n: number) =>
@@ -27,4 +28,5 @@ export function asNewPlayerConnect(testContext: TestContext) {
 	};
 
 	testContext.frontContexts[playersCount] = frontContext;
+	testContext.closeConnection[playersCount] = closeConnection;
 }

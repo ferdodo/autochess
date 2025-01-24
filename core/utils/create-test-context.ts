@@ -53,5 +53,6 @@ export function createTestContext(): TestContext {
 		triggerRoundTimer: () => {
 			roundTimerSubject.next();
 		},
+		closeConnection: {},
 	};
 }
