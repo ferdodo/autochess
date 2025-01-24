@@ -13,7 +13,7 @@ export async function createBackContext(
 	dataMapper: DataMapper,
 ): Promise<BackContext> {
 	const [serverPublicKey, serverPrivateKey] = await createKeyPair();
-	const messageThrottler = throttleMessageByPublicKey(250);
+	const messageThrottler = throttleMessageByPublicKey(350, 5);
 
 	return {
 		connections$: createWsServer(messageThrottler),

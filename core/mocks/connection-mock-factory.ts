@@ -46,7 +46,7 @@ export class ConnectionMockFactory {
 				}),
 				filter(([valid]: [boolean, ClientMessage]) => valid),
 				map(([_, message]) => message),
-				throttleMessageByPublicKey(0),
+				throttleMessageByPublicKey(0, 0),
 				share(),
 			),
 			send(message: ServerMessage) {
