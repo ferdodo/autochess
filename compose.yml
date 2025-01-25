@@ -76,6 +76,7 @@ services:
       - bus
       - back-deps
       - prometheus
+      - loki
     restart: always
 
   back-b:
@@ -137,3 +138,8 @@ services:
     build: prometheus
     ports:
       - 32090:9090
+
+  loki:
+    image: grafana/loki
+    ports:
+      - 31090:3100

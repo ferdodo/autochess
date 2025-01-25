@@ -6,6 +6,7 @@ import mikroOrmConfig from "./mikro-orm.config.js";
 import { createBus } from "./utils/create-bus.js";
 import { migrate } from "./utils/migrate.js";
 import { initTelemetry } from "./utils/init-telemetry.js";
+import { saveLog } from "./utils/save-log.js";
 
 (async function main() {
 	try {
@@ -16,8 +17,9 @@ import { initTelemetry } from "./utils/init-telemetry.js";
 		const backContext = await createBackContext(dataMapper);
 		await initTelemetry(backContext);
 		startServer(backContext);
+		saveLog("Server started");
 	} catch (error) {
-		console.error(error);
+		saveLog(error);
 		process.exit(1);
 	}
 })();
