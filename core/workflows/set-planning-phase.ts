@@ -4,6 +4,7 @@ import { tap, mergeMap, filter, merge, from } from "rxjs";
 import { Phase } from "../types/phase.js";
 import { computeCombatLoser } from "../utils/compute-combat-loser.js";
 import { getDate } from "../utils/get-date.js";
+import { swapPlayerShopWithPool } from "../utils/swap-player-shop-with-pool.js";
 
 export function setPlanningPhase(backContext: BackContext): Subscription {
 	return backContext.dataMapper.createdGame$
@@ -16,13 +17,13 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 			),
 			tap(async ({ playsig }) => {
 				const transaction =
-					await backContext.dataMapper.readAndUpdateGame(playsig);
+					await backContext.dataMapper.readAndUpdatePoolWithGame(playsig);
 
 				if (!transaction) {
 					return;
 				}
 
-				const { game, commit, abort } = transaction;
+				const { game, pool, commit, abort } = transaction;
 
 				try {
 					if (
@@ -57,7 +58,18 @@ export function setPlanningPhase(backContext: BackContext): Subscription {
 						]),
 					);
 
-					await commit(game);
+					let newGame = game;
+					let newPool = pool;
+
+					for (const publicKey of Object.keys(game.playerShops)) {
+						[newGame, newPool] = swapPlayerShopWithPool(
+							publicKey,
+							newGame,
+							newPool,
+						);
+					}
+
+					await commit(newPool, newGame);
 				} catch (error) {
 					console.error(error);
 					await abort();

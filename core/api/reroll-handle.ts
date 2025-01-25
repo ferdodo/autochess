@@ -5,6 +5,7 @@ import { checkSignature } from "../utils/check-signature.js";
 import type { Pool } from "../types/pool.js";
 import { checkStamp } from "../utils/check-stamp.js";
 import { getRerollCost } from "../utils/get-reroll-cost.js";
+import { swapPlayerShopWithPool } from "../utils/swap-player-shop-with-pool.js";
 
 export function rerollHandle(context: BackContext): Subscription {
 	const {
@@ -36,27 +37,17 @@ export function rerollHandle(context: BackContext): Subscription {
 								return;
 							}
 
-							const newPool: Pool = {
-								heroes: [...pool.heroes],
-								playsig: pool.playsig,
-							};
+							let [newGame, newPool] = swapPlayerShopWithPool(
+								publicKey,
+								game,
+								pool,
+							);
 
-							const threeFirstHeroesOfPool = newPool.heroes.slice(0, 3);
-							newPool.heroes = newPool.heroes.slice(3) as Pool["heroes"];
-
-							for (const appellation of game.playerShops[publicKey]) {
-								newPool.heroes.push(appellation);
-							}
-
-							const newGame = {
-								...game,
-								playerShops: {
-									...game.playerShops,
-									[publicKey]: threeFirstHeroesOfPool,
-								},
+							newGame = {
+								...newGame,
 								playerMoney: {
 									...game.playerMoney,
-									[publicKey]: game.playerMoney[publicKey] - getRerollCost(),
+									[publicKey]: newGame.playerMoney[publicKey] - getRerollCost(),
 								},
 							};
 
