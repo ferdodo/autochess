@@ -8,7 +8,7 @@ export const levelSchema = {
 	description: "Level for a player.",
 	type: "integer",
 	minimum: 1,
-	maximum: 10,
+	maximum: 6,
 } as const;
 
 const a: FromSchema<typeof levelSchema> = {} as Level;

@@ -36,6 +36,10 @@ export function levelUpHandle(context: BackContext): Subscription {
 								game.playerMoney[publicKey] < cost ||
 								game.playerLevel[publicKey] >= levelSchema.maximum
 							) {
+								connection.send({
+									serverNotification: "Invalid level up request.",
+								});
+
 								await abort();
 								return;
 							}
