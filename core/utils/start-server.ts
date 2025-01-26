@@ -10,6 +10,7 @@ import { matchmake } from "../workflows/matchmake.js";
 import { setCombatPhase } from "../workflows/set-combat-phase.js";
 import { setPlanningPhase } from "../workflows/set-planning-phase.js";
 import { merge } from "rxjs";
+import { share } from "rxjs/operators";
 
 export function startServer(
 	context: BackContext,
@@ -21,12 +22,14 @@ export function startServer(
 			observeGameHandle(context),
 			matchmake(context),
 			rerollHandle(context),
-		).subscribe({
-			error: saveLog,
-		}),
-		levelUpHandle(context),
-		transposeHandle(context),
-		setCombatPhase(context),
+			levelUpHandle(context),
+			transposeHandle(context),
+			setCombatPhase(context),
+		)
+			.pipe(share())
+			.subscribe({
+				error: saveLog,
+			}),
 		setPlanningPhase(context),
 		shopBuyHandle(context),
 		concludeGame(context),

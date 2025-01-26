@@ -185,3 +185,10 @@ test("Transpose from bench to bench on occupied slot should swap heroes", async 
 	expect(secondSlotHeroId).toEqual(firstSlotHeroIdBefore);
 	await new Promise((resolve) => setTimeout(resolve, 1));
 });
+
+test("Transpose should increase transposition metrics", async () => {
+	const testContext = await withTwoPiecesOnBoard();
+	const metrics = testContext.backContext.metrics;
+	expect(metrics.transposeRequestCount).toBeGreaterThan(0);
+	expect(metrics.transposeDoneCount).toBeGreaterThan(0);
+});
