@@ -9,13 +9,21 @@ import { concludeGame } from "../workflows/conclude-game.js";
 import { matchmake } from "../workflows/matchmake.js";
 import { setCombatPhase } from "../workflows/set-combat-phase.js";
 import { setPlanningPhase } from "../workflows/set-planning-phase.js";
+import { merge } from "rxjs";
 
-export function startServer(context: BackContext) {
+export function startServer(
+	context: BackContext,
+	saveLog: <T>(log: T) => void = () => {},
+) {
 	const subscriptions = [
-		initiateGameHandle(context),
-		observeGameHandle(context),
-		matchmake(context),
-		rerollHandle(context),
+		merge(
+			initiateGameHandle(context),
+			observeGameHandle(context),
+			matchmake(context),
+			rerollHandle(context),
+		).subscribe({
+			error: saveLog,
+		}),
 		levelUpHandle(context),
 		transposeHandle(context),
 		setCombatPhase(context),

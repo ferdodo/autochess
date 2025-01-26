@@ -1,13 +1,16 @@
 import http from "node:http";
+import { serializeError } from "serialize-error";
 
-export function saveLog(logObject) {
+export function saveLog(log) {
 	const payload = {
 		streams: [
 			{
 				stream: {
 					app: "autochess",
 				},
-				values: [[`${Date.now() * 1000000}`, JSON.stringify(logObject)]],
+				values: [
+					[`${Date.now() * 1000000}`, JSON.stringify(serializeError(log))],
+				],
 			},
 		],
 	};
@@ -35,5 +38,5 @@ export function saveLog(logObject) {
 
 		req.write(JSON.stringify(payload));
 		req.end();
-	}).catch(() => console.log(logObject));
+	}).catch(() => console.log(log));
 }

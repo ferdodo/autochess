@@ -1,6 +1,6 @@
-import type { Subscription } from "rxjs";
+import type { Observable } from "rxjs";
 import type { BackContext } from "../types/back-context.js";
-import { filter } from "rxjs";
+import { filter, mergeMap } from "rxjs";
 import type { Hero } from "../types/hero.js";
 import { HeroFactory } from "../utils/hero-factory.js";
 import type { Appellation } from "../types/appellation.js";
@@ -11,18 +11,16 @@ import type { Level } from "../types/level.js";
 import { uid } from "uid";
 import { getDate } from "../utils/get-date.js";
 
-export function matchmake(backContext: BackContext): Subscription {
+export function matchmake(backContext: BackContext): Observable<void> {
 	const {
 		dataMapper: { queuers$, createGameWithPoolAndDeleteQueuers },
 		lateMatchmakingTimer,
 	} = backContext;
 
-	return queuers$
-		.pipe(
-			lateMatchmakingTimer,
-			filter((queuers) => queuers.length > 1),
-		)
-		.subscribe(async (queuers) => {
+	return queuers$.pipe(
+		lateMatchmakingTimer,
+		filter((queuers) => queuers.length > 1),
+		mergeMap(async (queuers) => {
 			const players = queuers.slice(0, 8);
 
 			const nicknames = players.reduce(
@@ -73,5 +71,6 @@ export function matchmake(backContext: BackContext): Subscription {
 				pool,
 				players.map((player) => player.publicKey),
 			);
-		});
+		}),
+	);
 }

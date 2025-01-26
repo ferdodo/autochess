@@ -15,7 +15,7 @@ try {
 	const dataMapper = await createDataMapper(orm, bus);
 	const backContext = await createBackContext(dataMapper);
 	await initTelemetry(backContext);
-	startServer(backContext);
+	startServer(backContext, saveLog);
 	saveLog("Server started");
 } catch (error) {
 	saveLog(error);

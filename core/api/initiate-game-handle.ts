@@ -1,9 +1,10 @@
-import type { Subscription } from "rxjs";
-import { map, mergeMap, filter, tap, finalize } from "rxjs/operators";
+import type { Observable } from "rxjs";
+import { map, mergeMap, filter, finalize } from "rxjs/operators";
 import { merge } from "rxjs";
 import type { BackContext } from "../types/back-context.js";
 import type { InitiateGameRequest } from "../types/initiate-game-request.js";
 import { checkSignature } from "../utils/check-signature.js";
+import { Subject } from "rxjs";
 
 export function initiateGameHandle({
 	connections$,
@@ -12,14 +13,16 @@ export function initiateGameHandle({
 	isValidSignature,
 	signMessage,
 	metrics,
-}: BackContext): Subscription {
+}: BackContext): Observable<void> {
+	const errors$: Subject<void> = new Subject();
+
 	const handleRequests$ = connections$.pipe(
 		mergeMap((connection) =>
 			connection.messages$.pipe(
 				map((message) => message.initiateGameRequest),
 				filter(Boolean),
 				checkSignature(isValidSignature),
-				tap(async ({ publicKey, nickname }: InitiateGameRequest) => {
+				mergeMap(async ({ publicKey, nickname }: InitiateGameRequest) => {
 					metrics.initiateGameRequestCount++;
 					const createdAt = new Date().toISOString();
 					queuerConnections[publicKey] = connection;
@@ -35,13 +38,17 @@ export function initiateGameHandle({
 					}
 				}),
 				finalize(async () => {
-					const publicKey = Object.keys(queuerConnections).find(
-						(key) => queuerConnections[key] === connection,
-					);
+					try {
+						const publicKey = Object.keys(queuerConnections).find(
+							(key) => queuerConnections[key] === connection,
+						);
 
-					if (publicKey) {
-						await deleteQueuer(publicKey);
-						delete queuerConnections[publicKey];
+						if (publicKey) {
+							await deleteQueuer(publicKey);
+							delete queuerConnections[publicKey];
+						}
+					} catch (error) {
+						errors$.error(error);
 					}
 				}),
 			),
@@ -49,7 +56,7 @@ export function initiateGameHandle({
 	);
 
 	const sendResponses$ = createdGame$.pipe(
-		tap(async (game) => {
+		mergeMap(async (game) => {
 			for (const publicKey of game.publicKeys) {
 				const connection = queuerConnections[publicKey];
 
@@ -69,5 +76,7 @@ export function initiateGameHandle({
 		}),
 	);
 
-	return merge(sendResponses$, handleRequests$).subscribe();
+	return merge(sendResponses$, handleRequests$, errors$).pipe(
+		map(() => undefined),
+	);
 }
