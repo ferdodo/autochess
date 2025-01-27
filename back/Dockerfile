@@ -1,4 +1,4 @@
-FROM node as deps
+FROM node:23 AS deps
 WORKDIR /autochess/back
 COPY package.json .
 COPY npm-shrinkwrap.json .
@@ -10,7 +10,7 @@ COPY --from=0 /autochess/back /autochess/back
 
 FROM autochess-database
 
-FROM oven/bun
+FROM oven/bun:1
 COPY --from=1 /autochess /autochess
 COPY --from=0 /autochess/back /autochess/back
 COPY --from=2 /certs /certs

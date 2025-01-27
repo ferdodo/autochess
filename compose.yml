@@ -108,7 +108,7 @@ services:
       - database
 
   bus:
-    image: redis
+    image: redis:7
 
   ingame-deps:
     build:
