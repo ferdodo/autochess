@@ -57,7 +57,13 @@
 					"unique": true
 				}
 			],
-			"checks": [],
+			"checks": [
+				{
+					"name": "encounter_check",
+					"expression": "winner_public_key != loser_public_key",
+					"definition": "check ((winner_public_key != loser_public_key))"
+				}
+			],
 			"foreignKeys": {},
 			"nativeEnums": {}
 		},

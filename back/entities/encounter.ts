@@ -2,8 +2,10 @@ import { Entity, PrimaryKey, Property, PrimaryKeyProp } from "@mikro-orm/core";
 import type { PublicKey } from "core/types/public-key.js";
 import type { Playsig } from "core/types/playsig.js";
 import type { DateTime } from "core/types/date-time.js";
+import { Check } from "@mikro-orm/core";
 
 @Entity()
+@Check({ expression: "winner_public_key != loser_public_key" })
 class Encounter {
 	@PrimaryKey()
 	playsig: Playsig;

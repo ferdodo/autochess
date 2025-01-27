@@ -14,9 +14,6 @@ import { share } from "rxjs/operators";
 import type { Observable } from "rxjs";
 
 export function startServer(context: BackContext): Observable<void> {
-	shopBuyHandle(context);
-	concludeGame(context);
-
 	return merge(
 		initiateGameHandle(context),
 		observeGameHandle(context),
@@ -26,5 +23,7 @@ export function startServer(context: BackContext): Observable<void> {
 		transposeHandle(context),
 		setCombatPhase(context),
 		setPlanningPhase(context),
+		shopBuyHandle(context),
+		concludeGame(context),
 	).pipe(share());
 }

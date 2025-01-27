@@ -1,4 +1,4 @@
-import type { Subscription } from "rxjs";
+import type { Observable } from "rxjs";
 import type { BackContext } from "../types/back-context.js";
 import { filter, mergeMap, merge, from, take } from "rxjs";
 import { isGameInProgress } from "../utils/is-game-in-progress.js";
@@ -9,21 +9,19 @@ import { computeEncounter } from "../utils/compute-encounter.js";
 import { calculateElo } from "../utils/calculate-elo.js";
 import { randomizeArray } from "../utils/randomize-array.js";
 
-export function concludeGame(backContext: BackContext): Subscription {
-	return backContext.dataMapper.createdGame$
-		.pipe(
-			mergeMap((game) =>
-				merge(
-					backContext.dataMapper.observeGame(game.playsig),
-					from(backContext.dataMapper.readGame(game.playsig)),
-				).pipe(
-					filter(Boolean),
-					filter((g) => !isGameInProgress(g)),
-					take(1),
-				),
+export function concludeGame(backContext: BackContext): Observable<void> {
+	return backContext.dataMapper.createdGame$.pipe(
+		mergeMap((game) =>
+			merge(
+				backContext.dataMapper.observeGame(game.playsig),
+				from(backContext.dataMapper.readGame(game.playsig)),
+			).pipe(
+				filter(Boolean),
+				filter((g) => !isGameInProgress(g)),
+				take(1),
 			),
-		)
-		.subscribe(async (game) => {
+		),
+		mergeMap(async (game) => {
 			let encounters: Encounter[] = [];
 			const processedEncounter = new Set();
 
@@ -33,7 +31,7 @@ export function concludeGame(backContext: BackContext): Subscription {
 						continue;
 					}
 
-					const key = [player1PublicKey, player2PublicKey].sort().join(",");
+					const key = [player1PublicKey, player2PublicKey].sort().join();
 
 					if (processedEncounter.has(key)) {
 						continue;
@@ -96,5 +94,6 @@ export function concludeGame(backContext: BackContext): Subscription {
 				console.error(e);
 				await abort();
 			}
-		});
+		}),
+	);
 }

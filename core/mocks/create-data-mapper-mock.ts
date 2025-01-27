@@ -191,6 +191,15 @@ export function createDataMapperMock(metrics: Metrics): DataMapper {
 						return false;
 					}
 
+					if (
+						newEncounters.some(
+							(encounter) =>
+								encounter.winnerPublicKey === encounter.loserPublicKey,
+						)
+					) {
+						return false;
+					}
+
 					encounters.push(...newEncounters);
 
 					rankings = rankings.filter(
