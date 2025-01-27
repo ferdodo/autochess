@@ -7,14 +7,17 @@ import { PoolEntity } from "../entities/pool.js";
 import { BackEvent } from "../types/back-events.js";
 import type { Bus } from "../types/pub-sub.js";
 import { LockMode } from "@mikro-orm/core";
+import type { Metrics } from "core/types/metrics.js";
 
 export async function readAndUpdatePoolWithGame(
 	orm: MikroORM,
 	bus: Bus,
+	metrics: Metrics,
 	playsig: Playsig,
 ) {
 	const em = orm.em.fork();
 	await em.begin();
+	metrics.transactionBeginCount++;
 	const gameRepository = em.getRepository(GameEntity);
 	const poolRepository = em.getRepository(PoolEntity);
 
@@ -34,11 +37,13 @@ export async function readAndUpdatePoolWithGame(
 		await em.flush();
 		await em.commit();
 		bus.publish(BackEvent.GameUpdate, playsig);
+		metrics.transactionEndCount++;
 		return Boolean(affected && affectedPool);
 	}
 
 	async function abort() {
 		await em.rollback();
+		metrics.transactionEndCount++;
 	}
 
 	return { game, pool, commit, abort };

@@ -3,4 +3,6 @@ export interface Metrics {
 	initiateGameResponseCount: bigint;
 	transposeRequestCount: bigint;
 	transposeDoneCount: bigint;
+	transactionBeginCount: bigint;
+	transactionEndCount: bigint;
 }

@@ -8,6 +8,8 @@ import { createMetrics } from "core/utils/create-metrics";
 export function createOfflineBackContext(
 	connectionMockFactory: ConnectionMockFactory,
 ): BackContext {
+	const metrics = createMetrics();
+
 	return {
 		connections$: connectionMockFactory.createServer(),
 		isValidSignature: () => Promise.resolve(true),
@@ -22,11 +24,11 @@ export function createOfflineBackContext(
 			issuedAt: new Date().toISOString(),
 			expiresAt: new Date(Date.now() + 60000).toISOString(),
 		}),
-		dataMapper: createDataMapperMock(),
+		dataMapper: createDataMapperMock(metrics),
 		lateMatchmakingTimer: (source) => source.pipe(debounceTime(10)),
 		roundTimer: createRoundTimer(),
 		queuerConnections: {},
 		testingTimeOffset: 0,
-		metrics: createMetrics(),
+		metrics,
 	};
 }

@@ -11,33 +11,20 @@ import { setCombatPhase } from "../workflows/set-combat-phase.js";
 import { setPlanningPhase } from "../workflows/set-planning-phase.js";
 import { merge } from "rxjs";
 import { share } from "rxjs/operators";
+import type { Observable } from "rxjs";
 
-export function startServer(
-	context: BackContext,
-	saveLog: <T>(log: T) => void = () => {},
-) {
-	const subscriptions = [
-		merge(
-			initiateGameHandle(context),
-			observeGameHandle(context),
-			matchmake(context),
-			rerollHandle(context),
-			levelUpHandle(context),
-			transposeHandle(context),
-			setCombatPhase(context),
-		)
-			.pipe(share())
-			.subscribe({
-				error: saveLog,
-			}),
+export function startServer(context: BackContext): Observable<void> {
+	shopBuyHandle(context);
+	concludeGame(context);
+
+	return merge(
+		initiateGameHandle(context),
+		observeGameHandle(context),
+		matchmake(context),
+		rerollHandle(context),
+		levelUpHandle(context),
+		transposeHandle(context),
+		setCombatPhase(context),
 		setPlanningPhase(context),
-		shopBuyHandle(context),
-		concludeGame(context),
-	];
-
-	return function stopServer() {
-		for (const subscription of subscriptions) {
-			subscription.unsubscribe();
-		}
-	};
+	).pipe(share());
 }

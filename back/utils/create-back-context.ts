@@ -7,10 +7,11 @@ import { createKeyPair } from "./create-key-pair.js";
 import { verify } from "./verify.js";
 import type { DataMapper } from "core/types/data-mapper.js";
 import { throttleMessageByPublicKey } from "core/utils/throttle-message-by-public-key.js";
-import { createMetrics } from "core/utils/create-metrics.js";
+import type { Metrics } from "core/types/metrics.js";
 
 export async function createBackContext(
 	dataMapper: DataMapper,
+	metrics: Metrics,
 ): Promise<BackContext> {
 	const [serverPublicKey, serverPrivateKey] = await createKeyPair();
 	const messageThrottler = throttleMessageByPublicKey(350, 5);
@@ -25,6 +26,6 @@ export async function createBackContext(
 		dataMapper,
 		queuerConnections: {},
 		testingTimeOffset: 0,
-		metrics: createMetrics(),
+		metrics,
 	};
 }

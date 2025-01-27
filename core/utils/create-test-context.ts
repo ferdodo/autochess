@@ -10,7 +10,8 @@ import { createRandomPublicKey } from "../mocks/create-random-public-key.js";
 import { createMetrics } from "./create-metrics.js";
 
 export function createTestContext(): TestContext {
-	const dataMapper = createDataMapperMock();
+	const metrics = createMetrics();
+	const dataMapper = createDataMapperMock(metrics);
 	const connectionMockFactory = new ConnectionMockFactory();
 	const lateMatchMakeDebounceSubject = new Subject<void>();
 	const roundTimerSubject = new Subject<void>();
@@ -42,7 +43,7 @@ export function createTestContext(): TestContext {
 			);
 		},
 		testingTimeOffset: 0,
-		metrics: createMetrics(),
+		metrics,
 	};
 
 	return {

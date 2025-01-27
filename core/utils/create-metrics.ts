@@ -6,5 +6,7 @@ export function createMetrics(): Metrics {
 		initiateGameResponseCount: BigInt(0),
 		transposeRequestCount: BigInt(0),
 		transposeDoneCount: BigInt(0),
+		transactionBeginCount: BigInt(0),
+		transactionEndCount: BigInt(0),
 	};
 }

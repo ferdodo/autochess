@@ -7,8 +7,9 @@ import type { PublicKey } from "../types/public-key.js";
 import type { Ranking } from "../types/ranking.js";
 import type { Encounter } from "../types/encounter.js";
 import { cloneGame } from "../utils/clone-game.js";
+import type { Metrics } from "../types/metrics.js";
 
-export function createDataMapperMock(): DataMapper {
+export function createDataMapperMock(metrics: Metrics): DataMapper {
 	let games: Game[] = [];
 	const game$ = new Subject<Game>();
 	const createdGames$ = new Subject<Game>();
@@ -49,12 +50,16 @@ export function createDataMapperMock(): DataMapper {
 				return;
 			}
 
+			metrics.transactionBeginCount++;
+
 			return {
 				game: cloneGame(game),
 				commit: async (game: Game) => {
+					metrics.transactionEndCount++;
 					return await updateGame(cloneGame(game));
 				},
 				async abort() {
+					metrics.transactionEndCount++;
 					return;
 				},
 			};
@@ -112,6 +117,8 @@ export function createDataMapperMock(): DataMapper {
 				return;
 			}
 
+			metrics.transactionBeginCount++;
+
 			return {
 				game,
 				pool,
@@ -119,14 +126,16 @@ export function createDataMapperMock(): DataMapper {
 					const saved = await updateGame(game);
 
 					if (!saved) {
+						metrics.transactionEndCount++;
 						return false;
 					}
 
 					pools = pools.map((p) => (p.playsig === pool.playsig ? pool : p));
-
+					metrics.transactionEndCount++;
 					return true;
 				},
 				async abort() {
+					metrics.transactionEndCount++;
 					return;
 				},
 			};
@@ -160,6 +169,7 @@ export function createDataMapperMock(): DataMapper {
 		async readAndUpsertRankingsAndCreateEncounters(
 			playersPublicKeys: PublicKey[],
 		) {
+			metrics.transactionBeginCount++;
 			return {
 				rankings: structuredClone(
 					rankings.filter((ranking) =>
@@ -177,6 +187,7 @@ export function createDataMapperMock(): DataMapper {
 							),
 						)
 					) {
+						metrics.transactionEndCount++;
 						return false;
 					}
 
@@ -189,9 +200,11 @@ export function createDataMapperMock(): DataMapper {
 
 					rankings.push(...newRankings);
 
+					metrics.transactionEndCount++;
 					return true;
 				},
 				async abort() {
+					metrics.transactionEndCount++;
 					return;
 				},
 			};

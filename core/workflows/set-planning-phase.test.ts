@@ -27,6 +27,10 @@ test("Should reroll player shops when entering planning phase", async () => {
 				),
 		);
 	}
+
+	expect(testContext.backContext.metrics.transactionBeginCount).toEqual(
+		testContext.backContext.metrics.transactionEndCount,
+	);
 });
 
 test("Entering planning phase should add one gold to each players", async () => {
@@ -45,10 +49,18 @@ test("Entering planning phase should add one gold to each players", async () => 
 	expect(Object.values(game.playerMoney)).toEqual(
 		Object.values(initialGame.playerMoney).map((money) => money + 1),
 	);
+
+	expect(testContext.backContext.metrics.transactionBeginCount).toEqual(
+		testContext.backContext.metrics.transactionEndCount,
+	);
 });
 
 test("playerLostAt should be set if player has no health points left", async () => {
 	const testContext = await withGameOver();
 	const game = await getGame(testContext);
 	expect(Object.values(game.playerLostAt).length).toBe(1);
+
+	expect(testContext.backContext.metrics.transactionBeginCount).toEqual(
+		testContext.backContext.metrics.transactionEndCount,
+	);
 });

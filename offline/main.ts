@@ -15,7 +15,6 @@ import { observeGame } from "core/api/observe-game";
 import { portray } from "interface/utils/portray";
 import { cast } from "core/utils/cast";
 import { observeInteractions } from "interface/utils/observe-interactions";
-import { map } from "rxjs";
 import { observeInteractionHistory } from "core/utils/observe-interaction-history";
 import { logBench } from "./utils/log-bench";
 
@@ -28,8 +27,7 @@ waitTextureLoaded
 		const playerSwitch = new PlayerSwitch();
 		const connectionMockFactory = new ConnectionMockFactory();
 		const backContext = createOfflineBackContext(connectionMockFactory);
-
-		startServer(backContext);
+		startServer(backContext).subscribe();
 
 		const frontContext1: FrontContext = {
 			connection: connectionMockFactory.createClient()[0],

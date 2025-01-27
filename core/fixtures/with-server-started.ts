@@ -10,6 +10,6 @@ export function withServerStarted(dataMapper?: DataMapper): TestContext {
 		testContext.backContext.dataMapper = dataMapper;
 	}
 
-	startServer(testContext.backContext);
+	startServer(testContext.backContext).subscribe();
 	return testContext;
 }

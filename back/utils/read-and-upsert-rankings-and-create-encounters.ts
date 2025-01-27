@@ -5,6 +5,7 @@ import type { Ranking } from "core/types/ranking.js";
 import type { Encounter } from "core/types/encounter.js";
 import type { PublicKey } from "core/types/public-key.js";
 import { LockMode } from "@mikro-orm/core";
+import type { Metrics } from "../../core/types/metrics.js";
 
 interface ReadAndUpsertRankingsAndCreateEncounters {
 	rankings: Ranking[];
@@ -17,12 +18,14 @@ interface ReadAndUpsertRankingsAndCreateEncounters {
 
 export async function readAndUpsertRankingsAndCreateEncounters(
 	orm: MikroORM,
+	metrics: Metrics,
 	playersPublicKeys: PublicKey[],
 ): Promise<ReadAndUpsertRankingsAndCreateEncounters | undefined> {
 	const em = orm.em.fork();
 
 	try {
 		await em.begin();
+		metrics.transactionBeginCount++;
 		const rankingRepository = em.getRepository(RankingEntity);
 		const encounterRepository = em.getRepository(EncounterEntity);
 
@@ -43,10 +46,12 @@ export async function readAndUpsertRankingsAndCreateEncounters(
 				await rankingRepository.upsertMany(newRankings);
 				await em.flush();
 				await em.commit();
+				metrics.transactionEndCount++;
 				return true;
 			},
 			async abort() {
 				await em.rollback();
+				metrics.transactionEndCount++;
 			},
 		};
 	} catch (error) {
