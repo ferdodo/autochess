@@ -38,7 +38,7 @@ async function main() {
 		const [publicKey, privateKey] = await createKeyPair();
 		const connection = await createWsClient();
 
-		notify("Matchmaking... Double click to play with bots");
+		notify("Matchmaking...");
 
 		const frontContext1: FrontContext = {
 			connection,
