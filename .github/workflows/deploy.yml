@@ -60,7 +60,19 @@ jobs:
           ./run_coverage.sh
         working-directory: ./core
 
+      - name: 🏗️ Build ingame
+        env:
+          VITE_WEBSOCKET_DOMAINS: vps-23842e3b.vps.ovh.net
+          VITE_WEBSOCKET_PORTS: 28035
+          VITE_WEBSOCKET_PORT_A: 28035
+          VITE_WEBSOCKET_PROTOCOL: wss
+        run: |
+          npm install
+          npm audit --audit-level=low
+          npm run build
+        working-directory: ./ingame
+
       - name: 🚀 Deploy
         uses: JamesIves/github-pages-deploy-action@v4.6.4
         with:
-          folder: ./sandbox/dist
+          folder: ./ingame/dist
