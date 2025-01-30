@@ -5,6 +5,7 @@ import { checkSignature } from "../utils/check-signature.js";
 import { checkStamp } from "../utils/check-stamp.js";
 import type { Hero } from "../types/hero.js";
 import { isTranspositionLegal } from "../utils/is-transposition-legal.js";
+import { getDate } from "../utils/get-date.js";
 
 export function transposeHandle(context: BackContext): Observable<void> {
 	const {
@@ -35,6 +36,8 @@ export function transposeHandle(context: BackContext): Observable<void> {
 					const { publicKey, grabPiece, ungrabPiece, playsig } =
 						transposeRequest;
 
+					const readStartTime = getDate(context);
+
 					const transaction = await readAndUpdateGame(playsig);
 
 					if (!transaction) {
@@ -42,6 +45,12 @@ export function transposeHandle(context: BackContext): Observable<void> {
 					}
 
 					const { game, commit, abort } = transaction;
+					const readEndTime = getDate(context);
+
+					if (readEndTime.getTime() - readStartTime.getTime() > 100) {
+						await abort();
+						return;
+					}
 
 					try {
 						const heroes = game.playerHeroes[publicKey];
