@@ -42,6 +42,9 @@ class Game {
 	@Property({ type: "json", nullable: true })
 	combats?: Combat[];
 
+	@Property({ type: "json", nullable: true })
+	previousCombats?: Combat[];
+
 	@Property({ type: "json" })
 	playerLostAt: Record<PublicKey, DateTime>;
 

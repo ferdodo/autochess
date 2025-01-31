@@ -27,6 +27,7 @@ export interface Game {
 	playerHealths: Record<PublicKey, Health>;
 	playerLostAt: Record<PublicKey, DateTime>;
 	combats?: Combat[];
+	previousCombats?: Combat[];
 	phase: Phase;
 	phaseStartAt: DateTime;
 }
@@ -139,6 +140,15 @@ export const gameSchema = {
 			type: "array",
 			title: "Combats",
 			description: "List of combats only during combat phase.",
+			items: combatSchema,
+			minItems: 0,
+			maxItems: 9999,
+			uniqueItems: false,
+		},
+		previousCombats: {
+			type: "array",
+			title: "Combats",
+			description: "List of the previous combats of the last combat phase.",
 			items: combatSchema,
 			minItems: 0,
 			maxItems: 9999,

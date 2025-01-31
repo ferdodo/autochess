@@ -48,6 +48,7 @@ export function setPlanningPhase(backContext: BackContext): Observable<void> {
 
 				game.phase = Phase.Planning;
 				game.phaseStartAt = getDate(backContext).toISOString();
+				game.previousCombats = game.combats;
 				game.combats = undefined;
 
 				game.playerMoney = Object.fromEntries(

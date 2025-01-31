@@ -160,6 +160,15 @@
 					"nullable": true,
 					"mappedType": "json"
 				},
+				"previous_combats": {
+					"name": "previous_combats",
+					"type": "jsonb",
+					"unsigned": false,
+					"autoincrement": false,
+					"primary": false,
+					"nullable": true,
+					"mappedType": "json"
+				},
 				"player_lost_at": {
 					"name": "player_lost_at",
 					"type": "jsonb",
