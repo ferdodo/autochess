@@ -5,6 +5,7 @@ import { checkSignature } from "../utils/check-signature.js";
 import { checkStamp } from "../utils/check-stamp.js";
 import { getLevelUpCost } from "../utils/get-level-up-cost.js";
 import { levelSchema, type Level } from "../types/level.js";
+import { ServerNotification } from "../types/server-notifications.js";
 
 export function levelUpHandle(context: BackContext): Observable<void> {
 	const {
@@ -36,7 +37,7 @@ export function levelUpHandle(context: BackContext): Observable<void> {
 							game.playerLevel[publicKey] >= levelSchema.maximum
 						) {
 							connection.send({
-								serverNotification: "Invalid level up request.",
+								serverNotification: ServerNotification.InvalidLevelUp,
 							});
 
 							await abort();

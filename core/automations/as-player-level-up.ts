@@ -4,6 +4,7 @@ import { observeGame } from "../api/observe-game.js";
 import { getGame } from "../utils/get-game.js";
 import { levelUp } from "../api/level-up.js";
 import { observeServerNotifications } from "../utils/observe-server-notifications.js";
+import { ServerNotification } from "../types/server-notifications.js";
 
 export async function asPlayerLevelUp(
 	testContext: TestContext,
@@ -21,7 +22,7 @@ export async function asPlayerLevelUp(
 	const waitInvalidLevelUp = firstValueFrom(
 		observeServerNotifications(frontContext).pipe(
 			map((notification) => {
-				return notification === "Invalid level up request.";
+				return notification === ServerNotification.InvalidLevelUp;
 			}),
 			filter(Boolean),
 		),

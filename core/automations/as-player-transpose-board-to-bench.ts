@@ -4,6 +4,9 @@ import { observeGame } from "../api/observe-game.js";
 import { getGame } from "../utils/get-game.js";
 import { transpose } from "../api/transpose.js";
 import type { PieceSlot } from "../types/piece-slot.js";
+import { observeServerNotifications } from "../utils/observe-server-notifications.js";
+import { ServerNotification } from "../types/server-notifications.js";
+import { timeout } from "rxjs";
 
 export async function asPlayerTransposeBoardToBench(
 	testContext: TestContext,
@@ -33,6 +36,16 @@ export async function asPlayerTransposeBoardToBench(
 		benchPosition,
 	};
 
+	const waitTranspositionNotAllowedInCombat = firstValueFrom(
+		observeServerNotifications(frontContext).pipe(
+			filter(
+				(notification) =>
+					notification === ServerNotification.TranspositionNotAllowedInCombat,
+			),
+			timeout(1000),
+		),
+	);
+
 	const waitTranspose = firstValueFrom(
 		observeGame(frontContext).pipe(
 			map((game) =>
@@ -46,5 +59,5 @@ export async function asPlayerTransposeBoardToBench(
 
 	await transpose(frontContext, grab, ungrab);
 
-	await waitTranspose;
+	await Promise.race([waitTranspose, waitTranspositionNotAllowedInCombat]);
 }

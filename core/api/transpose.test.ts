@@ -7,6 +7,8 @@ import { asPlayerTransposeBoardToBench } from "../automations/as-player-transpos
 import { asPlayerTransposeBenchToBench } from "../automations/as-player-transpose-bench-to-bench.js";
 import { withTwoPiecesOnBoard } from "../fixtures/with-two-pieces-on-board.js";
 import { getGame } from "../utils/get-game.js";
+import { withTwoPlayersInCombat } from "../fixtures/with-two-players-in-combat.js";
+import { asPlayerShopBuy } from "../automations/as-player-shop-buy.js";
 
 test("Transpose shall move piece to an empty cell", async () => {
 	const testContext = await withTwoPlayerGameStarted();
@@ -191,4 +193,63 @@ test("Transpose should increase transposition metrics", async () => {
 	const metrics = testContext.backContext.metrics;
 	expect(metrics.transposeRequestCount).toBeGreaterThan(0);
 	expect(metrics.transposeDoneCount).toBeGreaterThan(0);
+});
+
+test("Transposition from board to bench in combat phase should have no effect", async () => {
+	const testContext = await withTwoPlayersInCombat();
+	const game = await getGame(testContext);
+	const publicKey = testContext.frontContexts[0].publicKey || "Error";
+
+	const p1Hero = game.playerHeroes[publicKey].find(
+		(h) => h.position.x === 0 && h.position.y === 0,
+	);
+
+	if (!p1Hero) {
+		throw new Error("Hero not found !");
+	}
+
+	await asPlayerTransposeBoardToBench(testContext);
+
+	const gameAfter = await getGame(testContext);
+
+	const p1HeroAfter = gameAfter.playerHeroes[publicKey].find(
+		(h) => h.position.x === 0 && h.position.y === 0,
+	);
+
+	if (!p1HeroAfter) {
+		throw new Error("Hero shall not be moved by transposition !");
+	}
+});
+
+test("Transposition from bench to board in combat phase should have no effect", async () => {
+	const testContext = await withTwoPlayersInCombat();
+	const publicKey = testContext.frontContexts[0].publicKey || "Error";
+
+	await asPlayerShopBuy(testContext);
+	await asPlayerTransposeBenchToBoard(testContext);
+
+	const gameAfter = await getGame(testContext);
+
+	const p1BenchHeroAfter = gameAfter.playerBenches[publicKey][0];
+
+	if (!p1BenchHeroAfter) {
+		throw new Error("Hero shall not be moved by transposition !");
+	}
+});
+
+test("Transposition from board to board in combat phase should have no effect", async () => {
+	const testContext = await withTwoPlayersInCombat();
+	const publicKey = testContext.frontContexts[0].publicKey || "Error";
+
+	await asPlayerTransposeBoardToBoard(testContext);
+
+	const gameAfter = await getGame(testContext);
+
+	const p1HeroAfter = gameAfter.playerHeroes[publicKey].find(
+		(h) => h.position.x === 0 && h.position.y === 0,
+	);
+
+	if (!p1HeroAfter) {
+		throw new Error("Hero shall not be moved by transposition !");
+	}
 });

@@ -6,6 +6,8 @@ import { checkStamp } from "../utils/check-stamp.js";
 import type { Hero } from "../types/hero.js";
 import { isTranspositionLegal } from "../utils/is-transposition-legal.js";
 import { getDate } from "../utils/get-date.js";
+import { ServerNotification } from "../types/server-notifications.js";
+import { Phase } from "../types/phase.js";
 
 export function transposeHandle(context: BackContext): Observable<void> {
 	const {
@@ -27,7 +29,8 @@ export function transposeHandle(context: BackContext): Observable<void> {
 
 					if (!isTranspositionLegal(transposeRequest)) {
 						connection.send({
-							serverNotification: "Invalid transposition position !",
+							serverNotification:
+								ServerNotification.InvalidTranspositionPosition,
 						});
 
 						return;
@@ -45,14 +48,31 @@ export function transposeHandle(context: BackContext): Observable<void> {
 					}
 
 					const { game, commit, abort } = transaction;
-					const readEndTime = getDate(context);
-
-					if (readEndTime.getTime() - readStartTime.getTime() > 100) {
-						await abort();
-						return;
-					}
 
 					try {
+						const readEndTime = getDate(context);
+
+						if (readEndTime.getTime() - readStartTime.getTime() > 100) {
+							await abort();
+							return;
+						}
+
+						if (
+							(grabPiece.positionX !== undefined ||
+								grabPiece.positionY !== undefined ||
+								ungrabPiece.positionX !== undefined ||
+								ungrabPiece.positionY !== undefined) &&
+							game.phase === Phase.Combat
+						) {
+							connection.send({
+								serverNotification:
+									ServerNotification.TranspositionNotAllowedInCombat,
+							});
+
+							await abort();
+							return;
+						}
+
 						const heroes = game.playerHeroes[publicKey];
 
 						if (!heroes) {

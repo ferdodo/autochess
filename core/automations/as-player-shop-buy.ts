@@ -4,6 +4,7 @@ import { observeGame } from "../api/observe-game.js";
 import { getGame } from "../utils/get-game.js";
 import { shopBuy } from "../api/shop-buy.js";
 import { observeServerNotifications } from "../utils/observe-server-notifications.js";
+import { ServerNotification } from "../types/server-notifications.js";
 
 export async function asPlayerShopBuy(
 	testContext: TestContext,
@@ -24,7 +25,7 @@ export async function asPlayerShopBuy(
 	const invalidShopBuy = firstValueFrom(
 		observeServerNotifications(frontContext).pipe(
 			map((notification) => {
-				return notification === "Bench is full !";
+				return notification === ServerNotification.FullBench;
 			}),
 			filter(Boolean),
 		),

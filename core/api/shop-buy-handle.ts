@@ -7,6 +7,7 @@ import type { Appellation } from "../types/appellation.js";
 import { getHeroCost } from "../utils/get-hero-cost.js";
 import { HeroFactory } from "../utils/hero-factory.js";
 import type { Game } from "../types/game.js";
+import { ServerNotification } from "../types/server-notifications.js";
 
 export function shopBuyHandle(context: BackContext): Observable<void> {
 	const {
@@ -51,7 +52,10 @@ export function shopBuyHandle(context: BackContext): Observable<void> {
 						const bench = game.playerBenches[publicKey] || [];
 
 						if (Object.values(bench).filter(Boolean).length >= 6) {
-							connection.send({ serverNotification: "Bench is full !" });
+							connection.send({
+								serverNotification: ServerNotification.FullBench,
+							});
+
 							await abort();
 							return;
 						}
