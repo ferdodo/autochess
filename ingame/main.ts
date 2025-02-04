@@ -65,7 +65,8 @@ async function main() {
 					sign(botPublicKey, botPrivateKey, message),
 			};
 
-			await connectBot(frontContext);
+			const debounce = Math.random() * 1000;
+			await connectBot(frontContext, debounce);
 		});
 
 		const initiateGameResponse = await initiateGame(frontContext1);
