@@ -77,7 +77,7 @@ services:
       - back-deps
       - prometheus
       - loki
-    restart: always
+    restart: on-failure:3
 
   back-b:
     extends: back
@@ -101,6 +101,7 @@ services:
 
   database:
     build: database
+    restart: on-failure:3
 
   replication:
     build: replication
@@ -109,6 +110,7 @@ services:
 
   bus:
     image: redis:7
+    restart: on-failure:3
 
   ingame-deps:
     build:
