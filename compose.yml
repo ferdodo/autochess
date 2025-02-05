@@ -107,6 +107,7 @@ services:
     build: replication
     depends_on:
       - database
+    restart: on-failure:3
 
   bus:
     image: redis:7
@@ -140,8 +141,10 @@ services:
     build: prometheus
     ports:
       - 32090:9090
+    restart: on-failure:3
 
   loki:
     image: grafana/loki
     ports:
       - 31090:3100
+    restart: on-failure:3
