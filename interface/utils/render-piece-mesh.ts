@@ -39,4 +39,10 @@ export function renderPieceMesh(
 	mesh.rotation.set(0, piece.right ? Math.PI : 0, 0);
 	const scale = 5.3;
 	mesh.scale.set(scale, scale, 1);
+
+	if (piece.hero.attributes.health <= 0) {
+		mesh.position.z = -0.005;
+	} else {
+		mesh.position.z = 0;
+	}
 }

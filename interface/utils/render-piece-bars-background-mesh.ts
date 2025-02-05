@@ -30,4 +30,6 @@ export function renderPieceBarsBackgroundMesh(
 		pieceRessources.group.add(mesh);
 		mesh.position.set(0, 0.11, 0);
 	}
+
+	mesh.visible = piece.hero.attributes.health > 0;
 }
