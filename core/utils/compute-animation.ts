@@ -3,6 +3,10 @@ import type { Action } from "../types/action.js";
 import { Animation } from "../types/animation.js";
 
 export function computeAnimation(hero: Hero, actions: Action[]) {
+	if (hero.attributes.health <= 0) {
+		return Animation.Death;
+	}
+
 	for (const action of actions) {
 		if (action.move?.heroId === hero.id) {
 			return Animation.Walk;
@@ -13,11 +17,7 @@ export function computeAnimation(hero: Hero, actions: Action[]) {
 		}
 
 		if (action.attack?.target === hero.id) {
-			if (hero.attributes.health > 0) {
-				return Animation.Hurt;
-			}
-
-			return Animation.Death;
+			return Animation.Hurt;
 		}
 	}
 

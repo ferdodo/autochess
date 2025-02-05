@@ -2,17 +2,14 @@ import type { Game } from "../types/game.js";
 import type { OperatorFunction } from "rxjs";
 import { switchMap, distinctUntilKeyChanged } from "rxjs/operators";
 import type { Observable } from "rxjs";
-import type { Confrontation } from "../types/confrontation.js";
 import { Phase } from "../types/phase.js";
 import type { PublicKey } from "../types/public-key.js";
 import { computeConfrontation } from "./compute-confrontation.js";
 import type { Piece } from "../types/piece.js";
-import { Animation } from "../types/animation.js";
-import { revertPosition } from "./revert-position.js";
-import { computeAnimation } from "./compute-animation.js";
 import type { Action } from "../types/action.js";
 import { isScopeCompatible } from "./is-scope-compatible.js";
 import { map, startWith, filter, of } from "rxjs";
+import { portrayHero } from "./portray-hero.js";
 
 export function observePortrayedConfrontation<T>(
 	publicKey: PublicKey,
@@ -53,24 +50,11 @@ export function observePortrayedConfrontation<T>(
 							: combat.playerAHeroes,
 				};
 
-				const portrayedConfrontation: Piece[] = [
-					...confrontation.playerAHeroes.map((hero) => ({
-						hero,
-						animation: Animation.Idle,
-						transposed: false,
-						animationStartAt: Date.now(),
-						right: false,
-					})),
-					...confrontation.playerBHeroes.map((hero) => ({
-						hero: {
-							...hero,
-							position: revertPosition(hero.position),
-						},
-						animation: Animation.Idle,
-						transposed: false,
-						animationStartAt: Date.now(),
-						right: true,
-					})),
+				let portrayedConfrontation: Piece[] = [
+					...confrontation.playerAHeroes.map((hero) =>
+						portrayHero(hero, false),
+					),
+					...confrontation.playerBHeroes.map((hero) => portrayHero(hero, true)),
 				];
 
 				let item = actionIterator.next();
@@ -89,25 +73,22 @@ export function observePortrayedConfrontation<T>(
 							item = actionIterator.next();
 						} while (!item.done && isScopeCompatible(actions, item.value));
 
-						return [
-							...confrontation.playerAHeroes.map((hero) => ({
-								hero,
-								animation: computeAnimation(hero, actions),
-								transposed: false,
-								animationStartAt: Date.now(),
-								right: false,
-							})),
-							...confrontation.playerBHeroes.map((hero) => ({
-								hero: {
-									...hero,
-									position: revertPosition(hero.position),
-								},
-								animation: computeAnimation(hero, actions),
-								transposed: false,
-								animationStartAt: Date.now(),
-								right: true,
-							})),
+						const currentPortrayedConfrontation = [
+							...confrontation.playerAHeroes.map((hero) => {
+								return portrayHero(
+									hero,
+									false,
+									actions,
+									portrayedConfrontation,
+								);
+							}),
+							...confrontation.playerBHeroes.map((hero) => {
+								return portrayHero(hero, true, actions, portrayedConfrontation);
+							}),
 						];
+
+						portrayedConfrontation = currentPortrayedConfrontation;
+						return currentPortrayedConfrontation;
 					}),
 					startWith(portrayedConfrontation),
 					filter(Boolean),
