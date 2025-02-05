@@ -49,6 +49,8 @@ async function main() {
 
 		let botCount = 0;
 
+		let botDebounce = 0;
+
 		keySubscription = doubleClick$.subscribe(async () => {
 			botCount++;
 			notify(
@@ -65,8 +67,8 @@ async function main() {
 					sign(botPublicKey, botPrivateKey, message),
 			};
 
-			const debounce = Math.random() * 1000;
-			await connectBot(frontContext, debounce);
+			botDebounce += 500;
+			await connectBot(frontContext, botDebounce);
 		});
 
 		const initiateGameResponse = await initiateGame(frontContext1);
