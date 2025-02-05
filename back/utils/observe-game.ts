@@ -1,7 +1,7 @@
 import type { Observable } from "rxjs";
 import type { Game } from "core/types/game.js";
 import type { Playsig } from "core/types/playsig.js";
-import { filter, mergeMap, tap } from "rxjs/operators";
+import { filter, mergeMap, tap, take } from "rxjs/operators";
 import { BackEvent } from "../types/back-events.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { GameEntity } from "../entities/game.js";
@@ -35,8 +35,13 @@ export function observeGame(
 					message === BackEvent.GameUpdate && content === playsig,
 			),
 			tap(() => subscribedGames$.next(playsig)),
-			mergeMap(() => queryResults$),
-			filter((game) => game.playsig === playsig),
+			mergeMap(() =>
+				queryResults$.pipe(
+					filter((game) => game.playsig === playsig),
+					take(1),
+				),
+			),
+			share(),
 		);
 	};
 }
