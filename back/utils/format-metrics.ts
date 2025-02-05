@@ -15,6 +15,7 @@ transaction_begin_count ${metrics.transactionBeginCount}
 transaction_end_count ${metrics.transactionEndCount}
 cpu_idle_time ${cpu.times.idle}
 process_uptime ${process.uptime()}
+heap_total ${process.memoryUsage().heapTotal}
 
 `;
 }
