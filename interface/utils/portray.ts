@@ -41,6 +41,7 @@ export function portray(
 								right: false,
 							})) ||
 							[],
+						level: game.playerLevel[publicKey] || 1,
 						players: game.publicKeys.map((p) => ({
 							name: game.nicknames[p],
 							health: game.playerHealths[p] || 0,

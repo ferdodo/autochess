@@ -163,6 +163,15 @@ export function transposeHandle(context: BackContext): Observable<void> {
 
 							game.playerHeroes[publicKey].push(grabbedHero);
 							benchHeroes[grabPiece.benchPosition] = ungrabbedHero;
+
+							if (
+								game.playerHeroes[publicKey].length >
+								game.playerLevel[publicKey]
+							) {
+								await abort();
+								return;
+							}
+
 							await commit(game);
 							return;
 						}

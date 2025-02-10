@@ -3,7 +3,7 @@ import { getGame } from "../utils/get-game.js";
 import { Phase } from "../types/phase.js";
 import { goToNextPhase } from "./go-to-next-phase.js";
 
-export async function goToNextCombatPhase(
+export async function goToNextPlanningPhase(
 	testContext: TestContext,
 	playerIndex = 0,
 ) {
@@ -22,5 +22,5 @@ export async function goToNextCombatPhase(
 	do {
 		await goToNextPhase(testContext);
 		game = await getGame(testContext);
-	} while (game?.phase !== Phase.Combat);
+	} while (game?.phase !== Phase.Planning);
 }

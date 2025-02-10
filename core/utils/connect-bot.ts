@@ -6,6 +6,8 @@ import { getHeroCost } from "./get-hero-cost.js";
 import { shopBuy } from "../api/shop-buy.js";
 import { transpose } from "../api/transpose.js";
 import { debounceTime } from "rxjs/operators";
+import { getLevelUpCost } from "./get-level-up-cost.js";
+import { levelUp } from "../api/level-up.js";
 
 export async function connectBot(frontContext: FrontContext, debounce = 0) {
 	const initiateGameResponse = await initiateGame(frontContext);
@@ -18,11 +20,23 @@ export async function connectBot(frontContext: FrontContext, debounce = 0) {
 			if (game.phase === Phase.Planning) {
 				const bench = game.playerBenches[frontContext.publicKey] || {};
 				const benchEntries = Object.entries(bench);
+				const levelUpCost = getLevelUpCost(game, frontContext.publicKey);
+
+				if (game.playerMoney[frontContext.publicKey] >= levelUpCost) {
+					await levelUp(frontContext);
+					return;
+				}
+
+				const board = game.playerHeroes[frontContext.publicKey];
+				const boardSize = board.filter(Boolean).length;
+
+				const availableBoardSlot =
+					boardSize < game.playerLevel[frontContext.publicKey];
 
 				for (const [_benchPosition, hero] of benchEntries) {
 					const benchPosition = Number.parseInt(_benchPosition);
 
-					if (hero) {
+					if (hero && availableBoardSlot) {
 						const grab = { benchPosition };
 						const positionX = Math.floor(Math.random() * 5);
 						const positionY = Math.floor(Math.random() * 10);

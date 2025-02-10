@@ -5,6 +5,7 @@ import type { Appellation } from "./appellation.js";
 
 export interface Display {
 	pieces: Piece[];
+	level: number;
 	players: PlayerDisplay[];
 	shop: Appellation[];
 	bench: Record<number, Piece>;

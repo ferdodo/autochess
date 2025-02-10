@@ -1,12 +1,15 @@
 import { observeGame } from "../api/observe-game.js";
 import { asNewPlayerConnect } from "../automations/as-new-player-connect.js";
 import { asPlayerInitiateGame } from "../automations/as-player-initiate-game.js";
+import { asPlayerLevelUp } from "../automations/as-player-level-up.js";
 import { asPlayerShopBuy } from "../automations/as-player-shop-buy.js";
 import { asPlayerTransposeBenchToBoard } from "../automations/as-player-transpose-bench-to-board.js";
 import { goToNextPhase } from "../automations/go-to-next-phase.js";
+import { goToNextPlanningPhase } from "../automations/go-to-next-planning-phase.js";
 import type { TestContext } from "../types/test-context.js";
 import { connectBot } from "../utils/connect-bot.js";
 import { getGame } from "../utils/get-game.js";
+import { isBotOutOfMoves } from "../utils/is-bot-out-of-moves.js";
 import { isGameInProgress } from "../utils/is-game-in-progress.js";
 import { withServerStarted } from "./with-server-started.js";
 import { firstValueFrom, filter, timeout } from "rxjs";
@@ -27,7 +30,9 @@ export async function withGameOverWithP1AdvantageAgainstBot(): Promise<TestConte
 		),
 	]);
 
+	await goToNextPlanningPhase(testContext);
 	await asPlayerShopBuy(testContext);
+	await asPlayerLevelUp(testContext);
 	await asPlayerTransposeBenchToBoard(testContext);
 
 	const frontContext = testContext.frontContexts[1];
@@ -43,14 +48,7 @@ export async function withGameOverWithP1AdvantageAgainstBot(): Promise<TestConte
 
 	await firstValueFrom(
 		observeGame(frontContext).pipe(
-			filter((game) => {
-				return (
-					game.playerMoney[frontContext.publicKey] < 3 &&
-					Object.values(game.playerBenches[frontContext.publicKey]).filter(
-						Boolean,
-					).length === 0
-				);
-			}),
+			filter((game) => isBotOutOfMoves(game, frontContext.publicKey)),
 			timeout(1000),
 		),
 	);

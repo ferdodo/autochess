@@ -5,6 +5,7 @@ import { withTwoBotGameStarted } from "./with-two-bot-game-started.js";
 import { observeGame } from "../api/observe-game.js";
 import { firstValueFrom, filter, timeout } from "rxjs";
 import { Phase } from "../types/phase.js";
+import { isBotOutOfMoves } from "../utils/is-bot-out-of-moves.js";
 
 export async function withTwoBotGameFighting(): Promise<TestContext> {
 	const testContext = await withTwoBotGameStarted();
@@ -19,35 +20,20 @@ export async function withTwoBotGameFighting(): Promise<TestContext> {
 	while (getHeroCountA() < 5 || getHeroCountB() < 5) {
 		await firstValueFrom(
 			observeGame(frontContextA).pipe(
-				filter((game) => {
-					return (
-						game.playerMoney[frontContextA.publicKey] < 3 &&
-						Object.values(game.playerBenches[frontContextA.publicKey]).filter(
-							Boolean,
-						).length === 0
-					);
-				}),
+				filter((game) => isBotOutOfMoves(game, frontContextA.publicKey)),
 				timeout(1000),
 			),
 		);
 
 		await firstValueFrom(
 			observeGame(frontContextB).pipe(
-				filter((game) => {
-					return (
-						game.playerMoney[frontContextB.publicKey] < 3 &&
-						Object.values(game.playerBenches[frontContextB.publicKey]).filter(
-							Boolean,
-						).length === 0
-					);
-				}),
+				filter((game) => isBotOutOfMoves(game, frontContextB.publicKey)),
 				timeout(1000),
 			),
 		);
 
 		await goToNextPhase(testContext);
 		await goToNextPhase(testContext);
-
 		game = await getGame(testContext);
 	}
 

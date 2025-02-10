@@ -42,6 +42,7 @@ export class DisplayFactory implements Subscribable<Display> {
 			level,
 			isMe,
 		})),
+		level: 1,
 		bench: [
 			{
 				hero: {
@@ -211,6 +212,7 @@ export class DisplayFactory implements Subscribable<Display> {
 					(handle) => handle.id !== piece.hero.id,
 				);
 
+				this.display.level--;
 				return this;
 			},
 			setTransposed: () => {
@@ -240,6 +242,7 @@ export class DisplayFactory implements Subscribable<Display> {
 		gui.add(pieceHandle, "removePiece");
 
 		this.pieceHandles.push(pieceHandle);
+		this.display.level++;
 		return this;
 	}
 

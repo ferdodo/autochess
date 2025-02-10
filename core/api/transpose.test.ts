@@ -9,6 +9,7 @@ import { withTwoPiecesOnBoard } from "../fixtures/with-two-pieces-on-board.js";
 import { getGame } from "../utils/get-game.js";
 import { withTwoPlayersInCombat } from "../fixtures/with-two-players-in-combat.js";
 import { asPlayerShopBuy } from "../automations/as-player-shop-buy.js";
+import { withOneBoughtHeroAndLevelTwo } from "../fixtures/with-one-bought-hero-and-level-two.js";
 
 test("Transpose shall move piece to an empty cell", async () => {
 	const testContext = await withTwoPlayerGameStarted();
@@ -16,7 +17,7 @@ test("Transpose shall move piece to an empty cell", async () => {
 });
 
 test("Transpose from bench to board", async () => {
-	const testContext = await withOneBoughtHero();
+	const testContext = await withOneBoughtHeroAndLevelTwo();
 	await asPlayerTransposeBenchToBoard(testContext);
 	const game = await getGame(testContext);
 	const publicKey = testContext.frontContexts[0].publicKey || "Error";

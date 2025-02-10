@@ -63,7 +63,13 @@ export function renderPieceHighlight(
 				highlightMesh.position.y = 0.501;
 			}
 
-			highlightMesh.visible = true;
+			highlightMesh.visible =
+				display.pieces.length < display.level ||
+				display.pieces.some((piece) => piece.transposed) ||
+				(Object.values(display.bench)
+					.filter(Boolean)
+					.some((piece) => piece.transposed) &&
+					boardSlotHasPiece);
 
 			if (
 				highlightMesh.material !== threeContext.pieceHighlightInactiveMaterial
