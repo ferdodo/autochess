@@ -8,7 +8,7 @@
 		"assets": "file:../assets",
 		"blockwise": "^2.12.0",
 		"core": "file:../core",
-		"rxjs": "^7.8.1",
+		"rxjs": "^7.8.2",
 		"three": "^0.167.1",
 		"typescript": "^5.5.4"
 	}
