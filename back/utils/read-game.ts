@@ -1,6 +1,6 @@
-import type { Game } from "core/types/game.js";
+import type { Game } from "core/src/types/Game.js";
 import { GameEntity } from "../entities/game.js";
-import type { Playsig } from "core/types/playsig.js";
+import type { Playsig } from "core/src/types/Playsig.js";
 import type { MikroORM } from "@mikro-orm/core";
 
 export async function readGame(

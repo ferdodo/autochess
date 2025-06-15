@@ -1,7 +1,7 @@
 import { Mesh, Vector3 } from "three";
-import type { Display } from "core/types/display";
+import type { Display } from "core/src/types/Display";
 import type { ThreeContext } from "../types/three-context";
-import { getHeroTraits } from "core/utils/get-hero-traits";
+import { getHeroTraits } from "core/src/utils/getHeroTraits";
 
 export function renderShopProductTraitMeshes(
 	threeContext: ThreeContext,

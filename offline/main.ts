@@ -1,5 +1,5 @@
 import { createRenderer } from "interface/utils/create-renderer";
-import { observeWindowDimentions } from "core/utils/observe-window-dimentions";
+import { observeWindowDimentions } from "core/src/utils/observeWindowDimentions";
 import { createContext } from "interface/utils/create-context";
 import { waitTextureLoaded } from "interface/utils/load-texture";
 import { createCamera } from "interface/utils/create-camera";
@@ -7,15 +7,15 @@ import { removeRenderer } from "interface/utils/remove-renderer";
 import { render } from "interface/utils/render";
 import { PlayerSwitch } from "./utils/player-switch";
 import { createOfflineBackContext } from "./utils/create-offline-back-context";
-import { ConnectionMockFactory } from "core/mocks/connection-mock-factory";
-import { startServer } from "core/utils/start-server";
-import type { FrontContext } from "core/types/front-context";
-import { initiateGame } from "core/api/initiate-game";
-import { observeGame } from "core/api/observe-game";
+import { ConnectionMockFactory } from "core/src/mocks/ConnectionMockFactory";
+import { startServer } from "core/src/utils/startServer";
+import type { FrontContext } from "core/src/types/FrontContext";
+import { initiateGame } from "core/src/api/initiateGame";
+import { observeGame } from "core/src/api/observeGame";
 import { portray } from "interface/utils/portray";
-import { cast } from "core/utils/cast";
+import { cast } from "core/src/utils/cast";
 import { observeInteractions } from "interface/utils/observe-interactions";
-import { observeInteractionHistory } from "core/utils/observe-interaction-history";
+import { observeInteractionHistory } from "core/src/utils/observeInteractionHistory";
 import { logBench } from "./utils/log-bench";
 
 document.addEventListener("contextmenu", (e) => {

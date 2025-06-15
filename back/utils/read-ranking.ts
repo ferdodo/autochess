@@ -1,7 +1,7 @@
 import type { MikroORM } from "@mikro-orm/core";
-import type { Ranking } from "core/types/ranking.js";
+import type { Ranking } from "core/src/types/Ranking.js";
 import { RankingEntity } from "../entities/ranking.js";
-import type { PublicKey } from "core/types/public-key.js";
+import type { PublicKey } from "core/src/types/PublicKey.js";
 
 export async function readRanking(
 	orm: MikroORM,

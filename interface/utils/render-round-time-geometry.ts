@@ -1,7 +1,7 @@
 import { PlaneGeometry } from "three";
-import type { Display } from "core/types/display";
+import type { Display } from "core/src/types/Display";
 import type { ThreeContext } from "../types/three-context";
-import { getPhaseDuration } from "core/utils/get-phase-duration";
+import { getPhaseDuration } from "core/src/utils/getPhaseDuration";
 
 export function renderRoundTimeGeometry(
 	threeContext: ThreeContext,

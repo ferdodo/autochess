@@ -11,6 +11,6 @@
 		"interface": "file:../interface",
 		"rxjs": "^7.8.2",
 		"typescript": "^5.5.4",
-		"vite": "^6.2.0"
+		"vite": "^6.3.5"
 	}
 }

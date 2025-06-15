@@ -1,8 +1,8 @@
 import { Observable, share } from "rxjs";
-import type { Connection } from "core/types/connection";
+import type { Connection } from "core/src/types/Connection";
 import { uid } from "uid";
-import type { ClientMessage } from "core/types/client-message";
-import type { ServerMessage } from "core/types/server-message";
+import type { ClientMessage } from "core/src/types/ClientMessage";
+import type { ServerMessage } from "core/src/types/ServerMessage";
 import { pickBackend } from "./pick-backend";
 
 async function _createWsClient(): Promise<

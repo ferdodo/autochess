@@ -1,7 +1,7 @@
 import { Entity, PrimaryKey, Property, PrimaryKeyProp } from "@mikro-orm/core";
-import type { PublicKey } from "core/types/public-key.js";
-import type { Playsig } from "core/types/playsig.js";
-import type { DateTime } from "core/types/date-time.js";
+import type { PublicKey } from "core/src/types/PublicKey.js";
+import type { Playsig } from "core/src/types/Playsig.js";
+import type { DateTime } from "core/src/types/DateTime.js";
 import { Check } from "@mikro-orm/core";
 
 @Entity()

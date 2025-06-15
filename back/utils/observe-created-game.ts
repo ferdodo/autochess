@@ -1,5 +1,5 @@
 import type { Observable } from "rxjs";
-import type { Game } from "core/types/game.js";
+import type { Game } from "core/src/types/Game.js";
 import { filter, mergeMap } from "rxjs/operators";
 import { BackEvent } from "../types/back-events.js";
 import { GameEntity } from "../entities/game.js";

@@ -1,4 +1,4 @@
-import type { DataMapper } from "core/types/data-mapper.js";
+import type { DataMapper } from "core/src/types/DataMapper.js";
 import { readGame } from "./read-game.js";
 import { updateGame } from "./update-game.js";
 import { readAndUpdateGame } from "./read-and-update-game.js";
@@ -16,7 +16,7 @@ import type { MikroORM } from "@mikro-orm/core";
 import type { Bus } from "../types/pub-sub.js";
 import { readRanking } from "./read-ranking.js";
 import { readAndUpsertRankingsAndCreateEncounters } from "./read-and-upsert-rankings-and-create-encounters.js";
-import type { Metrics } from "core/types/metrics.js";
+import type { Metrics } from "core/src/types/Metrics.js";
 
 export function createDataMapper(
 	orm: MikroORM,

@@ -1,4 +1,4 @@
-import { frameStart$, frameEnd$ } from "core/utils/observe-fps";
+import { fpsCounter } from "core/src/utils/fpsCounter";
 import { firstValueFrom } from "rxjs";
 import Stats from "stats.js";
 import type { ThreeContext } from "interface/types/three-context";
@@ -30,7 +30,7 @@ export async function createFpsCounter(threeContext: ThreeContext) {
 
 	waitBetweenRendersStat.begin();
 	while (true) {
-		await firstValueFrom(frameStart$);
+		await firstValueFrom(fpsCounter.frameStart$);
 
 		trianglePanel.update(threeContext.renderer.info.render.triangles, 150000);
 		texturesPanel.update(threeContext.renderer.info.memory.textures, 80);
@@ -39,7 +39,7 @@ export async function createFpsCounter(threeContext: ThreeContext) {
 		fpsStat.begin();
 		renderTimeStat.begin();
 		triangleStats.begin();
-		await firstValueFrom(frameEnd$);
+		await firstValueFrom(fpsCounter.frameEnd$);
 		waitBetweenRendersStat.begin();
 		fpsStat.end();
 		renderTimeStat.end();

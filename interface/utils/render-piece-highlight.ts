@@ -2,12 +2,12 @@ import { Raycaster } from "three";
 import type { Mesh } from "three";
 import type { ThreeContext } from "../types/three-context";
 import type { Vector3 } from "three";
-import type { Display } from "core/types/display";
+import type { Display } from "core/src/types/Display";
 import { isBlockPositionEqual } from "blockwise";
 import type { Block } from "blockwise";
-import { getBoardBlock } from "core/utils/get-board-block";
+import { getBoardBlock } from "core/src/utils/getBoardBlock";
 import { createHighlightMesh } from "./create-highlight-mesh";
-import { Phase } from "core/types/phase";
+import { Phase } from "core/src/types/Phase";
 
 export function renderPieceHighlight(
 	threeContext: ThreeContext,

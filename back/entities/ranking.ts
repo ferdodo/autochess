@@ -1,5 +1,5 @@
 import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
-import type { PublicKey } from "core/types/public-key.js";
+import type { PublicKey } from "core/src/types/PublicKey.js";
 
 @Entity()
 class Ranking {

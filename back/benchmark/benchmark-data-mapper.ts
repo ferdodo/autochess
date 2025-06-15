@@ -1,5 +1,5 @@
 import { Bench } from "tinybench";
-import type { DataMapper } from "core/types/data-mapper.js";
+import type { DataMapper } from "core/src/types/DataMapper.js";
 
 export async function benchMarkDataMapper(dataMapper: DataMapper) {
 	let queuer = {

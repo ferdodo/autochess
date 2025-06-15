@@ -1,9 +1,9 @@
-import type { BackContext } from "core/types/back-context";
-import type { ConnectionMockFactory } from "core/mocks/connection-mock-factory";
-import { createDataMapperMock } from "core/mocks/create-data-mapper-mock";
+import type { BackContext } from "core/src/types/BackContext";
+import type { ConnectionMockFactory } from "core/src/mocks/ConnectionMockFactory";
+import { createDataMapperMock } from "core/src/mocks/createDataMapperMock";
 import { debounceTime } from "rxjs";
-import { createRoundTimer } from "core/utils/create-round-timer";
-import { createMetrics } from "core/utils/create-metrics";
+import { createRoundTimer } from "core/src/utils/createRoundTimer";
+import { createMetrics } from "core/src/utils/createMetrics";
 
 export function createOfflineBackContext(
 	connectionMockFactory: ConnectionMockFactory,

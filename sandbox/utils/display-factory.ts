@@ -1,16 +1,16 @@
 import { Subject, interval, map, combineLatestWith, startWith } from "rxjs";
 import { uid } from "uid";
-import { Animation } from "core/types/animation";
-import type { Display } from "core/types/display";
-import type { Piece } from "core/types/piece";
+import { Animation } from "core/src/types/Animation";
+import type { Display } from "core/src/types/Display";
+import type { Piece } from "core/src/types/Piece";
 import type { Subscription, Subscribable, Observer } from "rxjs";
 import { GUI } from "dat.gui";
-import { getRandomAppellation } from "core/utils/get-random-appellation";
-import { Phase } from "core/types/phase";
+import { getRandomAppellation } from "core/src/utils/getRandomAppellation";
+import { Phase } from "core/src/types/Phase";
 import { observeInteractions } from "interface/utils/observe-interactions";
 import type { ThreeContext } from "interface/types/three-context";
 import { createRandomPiece } from "./create-random-piece";
-import { getBoardBlock } from "core/utils/get-board-block";
+import { getBoardBlock } from "core/src/utils/getBoardBlock";
 
 interface PieceHandle {
 	id: string;

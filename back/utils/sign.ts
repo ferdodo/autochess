@@ -1,4 +1,4 @@
-import type { Signed } from "core/types/signed.js";
+import type { Signed } from "core/src/types/Signed.js";
 import { webcrypto } from "node:crypto";
 
 export async function sign<T>(

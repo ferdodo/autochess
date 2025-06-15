@@ -1,4 +1,4 @@
-import type { Display } from "core/types/display";
+import type { Display } from "core/src/types/Display";
 import type { ThreeContext } from "../types/three-context";
 import { createPieceRessources } from "./create-piece-ressources";
 import { renderPieceAnimatedTexture } from "./render-piece-animated-texture";
@@ -9,7 +9,7 @@ import { renderPieceHealthBarGeometry } from "./render-piece-health-bar-geometry
 import { renderPieceHealthBarMeshes } from "./render-piece-health-bar-meshes";
 import { renderPieceGradeMesh } from "./render-piece-grade-mesh";
 import { Raycaster } from "three";
-import type { Piece } from "core/types/piece";
+import type { Piece } from "core/src/types/Piece";
 
 export function renderBenchHeroMeshes(
 	threeContext: ThreeContext,

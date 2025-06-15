@@ -1,6 +1,6 @@
 import { Mesh } from "three";
 import { createPieceGeometry } from "./create-piece-geometry";
-import type { Piece } from "core/types/piece";
+import type { Piece } from "core/src/types/Piece";
 import type { PieceRessources } from "../types/piece-ressources";
 
 const pieceGeometry = createPieceGeometry();

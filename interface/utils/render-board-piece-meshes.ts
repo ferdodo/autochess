@@ -1,8 +1,8 @@
 import { Raycaster, Vector3 } from "three";
-import type { Display } from "core/types/display";
+import type { Display } from "core/src/types/Display";
 import type { ThreeContext } from "../types/three-context";
-import { getBoardBlock } from "core/utils/get-board-block";
-import { Animation } from "core/types/animation";
+import { getBoardBlock } from "core/src/utils/getBoardBlock";
+import { Animation } from "core/src/types/Animation";
 
 export function renderBoardPieceMeshes(
 	threeContext: ThreeContext,

@@ -1,7 +1,7 @@
 import { WebGLRenderer } from "three";
 import type { PerspectiveCamera, OrthographicCamera, Scene } from "three";
-import { notifyFrameStart, notifyFrameEnd } from "core/utils/observe-fps";
-import { getWindowDimentions } from "core/utils/get-window-dimentions";
+import { fpsCounter } from "core/src/utils/fpsCounter";
+import { getWindowDimentions } from "core/src/utils/getWindowDimentions";
 
 export function createRenderer(
 	camera: PerspectiveCamera | OrthographicCamera,
@@ -14,9 +14,9 @@ export function createRenderer(
 	document.body.appendChild(renderer.domElement);
 
 	renderer.setAnimationLoop(() => {
-		notifyFrameStart();
+		fpsCounter.notifyFrameStart();
 		renderer.render(scene, camera);
-		notifyFrameEnd();
+		fpsCounter.notifyFrameEnd();
 	});
 
 	return renderer;

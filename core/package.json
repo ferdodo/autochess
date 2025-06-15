@@ -1,22 +1,22 @@
 {
 	"type": "module",
 	"scripts": {
-		"build": "tsc --noEmit && vitest run && biome ci --organize-imports-enabled=false"
+		"build": "tsc --noEmit && exportcase check src && vitest run && biome ci --organize-imports-enabled=false"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
-		"@stryker-mutator/core": "^8.6.0",
-		"@stryker-mutator/vitest-runner": "^8.6.0",
+		"@stryker-mutator/core": "^9.0.1",
+		"@stryker-mutator/vitest-runner": "^9.0.1",
 		"@types/node": "^22.10.5",
 		"blockwise": "^2.12.0",
+		"exportcase": "^0.11.0",
 		"humanhash": "^1.0.4",
-		"json-schema-library": "^10.0.0-rc2",
-		"json-schema-policies": "^0.6.0",
-		"json-schema-to-ts": "^3.1.1",
-		"rxjs": "^7.8.2",
+		"json-schema-library": "^10.1.2",
+		"json-schema-policies": "^0.7.0",
+		"rxjs": "^7.8.1",
 		"tinybench": "^3.0.7",
 		"typescript": "^5.5.4",
 		"uid": "^2.0.2",
-		"vitest": "^3.0.7"
+		"vitest": "^3.1.3"
 	}
 }

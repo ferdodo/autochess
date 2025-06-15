@@ -1,5 +1,5 @@
 import { createBackContext } from "./utils/create-back-context.js";
-import { startServer } from "core/utils/start-server.js";
+import { startServer } from "core/src/utils/startServer.js";
 import { createDataMapper } from "./utils/create-data-mapper.js";
 import { MikroORM } from "@mikro-orm/postgresql";
 import mikroOrmConfig from "./mikro-orm.config.js";
@@ -7,7 +7,7 @@ import { createBus } from "./utils/create-bus.js";
 import { migrate } from "./utils/migrate.js";
 import { initTelemetry } from "./utils/init-telemetry.js";
 import { saveLog } from "./utils/save-log.js";
-import { createMetrics } from "core/utils/create-metrics.js";
+import { createMetrics } from "core/src/utils/createMetrics.js";
 
 try {
 	const bus = await createBus();

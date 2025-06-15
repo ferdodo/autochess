@@ -1,13 +1,13 @@
-import type { BackContext } from "core/types/back-context.js";
+import type { BackContext } from "core/src/types/BackContext.js";
 import { createWsServer } from "./create-ws-server.js";
 import { debounceTime } from "rxjs";
-import { createRoundTimer } from "core/utils/create-round-timer.js";
+import { createRoundTimer } from "core/src/utils/createRoundTimer.js";
 import { sign } from "./sign.js";
 import { createKeyPair } from "./create-key-pair.js";
 import { verify } from "./verify.js";
-import type { DataMapper } from "core/types/data-mapper.js";
-import { throttleMessageByPublicKey } from "core/utils/throttle-message-by-public-key.js";
-import type { Metrics } from "core/types/metrics.js";
+import type { DataMapper } from "core/src/types/DataMapper.js";
+import { throttleMessageByPublicKey } from "core/src/utils/throttleMessageByPublicKey.js";
+import type { Metrics } from "core/src/types/Metrics.js";
 
 export async function createBackContext(
 	dataMapper: DataMapper,

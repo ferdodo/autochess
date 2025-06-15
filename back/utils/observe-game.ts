@@ -1,6 +1,6 @@
 import type { Observable } from "rxjs";
-import type { Game } from "core/types/game.js";
-import type { Playsig } from "core/types/playsig.js";
+import type { Game } from "core/src/types/Game.js";
+import type { Playsig } from "core/src/types/Playsig.js";
 import { filter, mergeMap, tap, take } from "rxjs/operators";
 import { BackEvent } from "../types/back-events.js";
 import type { MikroORM } from "@mikro-orm/core";

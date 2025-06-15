@@ -1,4 +1,4 @@
-import type { Display } from "core/types/display";
+import type { Display } from "core/src/types/Display";
 import type { ThreeContext } from "../types/three-context";
 import { renderPieceAnimatedTexture } from "./render-piece-animated-texture";
 import type { PieceRessources } from "../types/piece-ressources";

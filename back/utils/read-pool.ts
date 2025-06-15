@@ -1,5 +1,5 @@
-import type { Pool } from "core/types/pool.js";
-import type { Playsig } from "core/types/playsig.js";
+import type { Pool } from "core/src/types/Pool.js";
+import type { Playsig } from "core/src/types/Playsig.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { PoolEntity } from "../entities/pool.js";
 

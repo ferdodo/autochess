@@ -1,4 +1,4 @@
-import type { Game } from "core/types/game.js";
+import type { Game } from "core/src/types/Game.js";
 import { BackEvent } from "../types/back-events.js";
 import { GameEntity } from "../entities/game.js";
 import type { MikroORM } from "@mikro-orm/core";

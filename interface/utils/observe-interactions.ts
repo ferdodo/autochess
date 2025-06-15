@@ -1,11 +1,11 @@
 import { merge, fromEvent, debounceTime, map, filter, delayWhen } from "rxjs";
 import type { Observable } from "rxjs";
 import type { ThreeContext } from "../types/three-context";
-import type { Interaction } from "core/types/interaction";
+import type { Interaction } from "core/src/types/Interaction";
 import { Raycaster } from "three";
 import type { Vector3 } from "three";
 import { renderCalls$ } from "./render";
-import { getBoardBlock } from "core/utils/get-board-block";
+import { getBoardBlock } from "core/src/utils/getBoardBlock";
 
 export function observeInteractions(
 	threeContext: ThreeContext,

@@ -1,17 +1,17 @@
-import type { Display } from "core/types/display";
-import type { Game } from "core/types/game";
+import type { Display } from "core/src/types/Display";
+import type { Game } from "core/src/types/Game";
 import type { Observable, OperatorFunction } from "rxjs";
-import { map, combineLatestWith, startWith } from "rxjs/operators";
-import { Animation } from "core/types/animation";
+import { map, combineLatestWith } from "rxjs/operators";
+import { Animation } from "core/src/types/Animation";
 import { interval } from "rxjs";
-import { getLevelUpCost } from "core/utils/get-level-up-cost";
-import { observePortrayedConfrontation } from "core/utils/observe-portrayed-confrontation";
-import type { PublicKey } from "core/types/public-key";
-import type { Piece } from "core/types/piece";
-import { portrayBench } from "core/utils/portray-bench";
+import { getLevelUpCost } from "core/src/utils/getLevelUpCost";
+import { observePortrayedConfrontation } from "core/src/utils/observePortrayedConfrontation";
+import type { PublicKey } from "core/src/types/PublicKey";
+import type { Piece } from "core/src/types/Piece";
+import { portrayBench } from "core/src/utils/portrayBench";
 import { trackTransposedHero } from "./track-transposed-hero";
 import type { ThreeContext } from "../types/three-context";
-import type { HeroId } from "core/types/hero-id";
+import type { HeroId } from "core/src/types/HeroId";
 import { frame$ } from "./frame";
 
 export function portray(

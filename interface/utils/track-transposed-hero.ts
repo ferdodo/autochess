@@ -1,14 +1,14 @@
-import type { Game } from "core/types/game";
+import type { Game } from "core/src/types/Game";
 import type { OperatorFunction } from "rxjs";
-import type { PublicKey } from "core/types/public-key";
+import type { PublicKey } from "core/src/types/PublicKey";
 import { map, combineLatestWith, startWith } from "rxjs/operators";
 import { observeInteractions } from "./observe-interactions";
 import type { ThreeContext } from "../types/three-context";
 import { share, scan } from "rxjs";
-import type { Interaction } from "core/types/interaction";
-import type { HeroId } from "core/types/hero-id";
-import { Phase } from "core/types/phase";
-import { findOwnHeroFromSlot } from "../../core/utils/find-own-hero-from-slot";
+import type { Interaction } from "core/src/types/Interaction";
+import type { HeroId } from "core/src/types/HeroId";
+import { Phase } from "core/src/types/Phase";
+import { findOwnHeroFromSlot } from "core/src/utils/findOwnHeroFromSlot";
 
 interface ScanValue {
 	game: Game;

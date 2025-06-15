@@ -1,5 +1,5 @@
 import type { CanvasTexture } from "three";
-import type { Piece } from "core/types/piece";
+import type { Piece } from "core/src/types/Piece";
 import { createPieceAnimatedTexture } from "./create-piece-animated-texture";
 import type { PieceRessources } from "../types/piece-ressources";
 

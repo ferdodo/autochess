@@ -1,5 +1,5 @@
 import { MeshBasicMaterial, DoubleSide } from "three";
-import type { Piece } from "core/types/piece";
+import type { Piece } from "core/src/types/Piece";
 import type { PieceRessources } from "../types/piece-ressources";
 
 export function renderPieceMaterial(

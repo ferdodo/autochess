@@ -1,11 +1,11 @@
 import type { MikroORM } from "@mikro-orm/core";
 import { RankingEntity } from "../entities/ranking.js";
 import { EncounterEntity } from "../entities/encounter.js";
-import type { Ranking } from "core/types/ranking.js";
-import type { Encounter } from "core/types/encounter.js";
-import type { PublicKey } from "core/types/public-key.js";
+import type { Ranking } from "core/src/types/Ranking.js";
+import type { Encounter } from "core/src/types/Encounter.js";
+import type { PublicKey } from "core/src/types/PublicKey.js";
 import { LockMode } from "@mikro-orm/core";
-import type { Metrics } from "../../core/types/metrics.js";
+import type { Metrics } from "core/src/types/Metrics.js";
 
 interface ReadAndUpsertRankingsAndCreateEncounters {
 	rankings: Ranking[];

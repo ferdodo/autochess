@@ -1,11 +1,11 @@
-import type { Game } from "core/types/game.js";
+import type { Game } from "core/src/types/Game.js";
 import { GameEntity } from "../entities/game.js";
-import type { Playsig } from "core/types/playsig.js";
+import type { Playsig } from "core/src/types/Playsig.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { BackEvent } from "../types/back-events.js";
 import type { Bus } from "../types/pub-sub.js";
 import { LockMode } from "@mikro-orm/core";
-import type { Metrics } from "core/types/metrics.js";
+import type { Metrics } from "core/src/types/Metrics.js";
 
 export async function readAndUpdateGame(
 	orm: MikroORM,

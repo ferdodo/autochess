@@ -1,4 +1,4 @@
-import { Appellation } from "core/types/appellation";
+import { Appellation } from "core/src/types/Appellation";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import { Font } from "three/examples/jsm/loaders/FontLoader.js";
 import fontJson from "three/examples/fonts/helvetiker_bold.typeface.json";

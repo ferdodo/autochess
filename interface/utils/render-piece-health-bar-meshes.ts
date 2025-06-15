@@ -1,6 +1,6 @@
 import { Mesh, MeshBasicMaterial } from "three";
 import type { PieceRessources } from "../types/piece-ressources";
-import type { Piece } from "core/types/piece";
+import type { Piece } from "core/src/types/Piece";
 
 const pieceHealthBarMaterial = new MeshBasicMaterial({ color: 0x02eeee });
 const pieceEnemyHealthBarMaterial = new MeshBasicMaterial({ color: 0xee0202 });

@@ -1,4 +1,4 @@
-import type { Queuer } from "core/types/queuer.js";
+import type { Queuer } from "core/src/types/Queuer.js";
 import type { Observable } from "rxjs";
 import { filter, mergeMap } from "rxjs/operators";
 import { BackEvent } from "../types/back-events.js";

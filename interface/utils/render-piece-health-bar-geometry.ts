@@ -1,7 +1,7 @@
 import { PlaneGeometry } from "three";
 import { createPiecesBarsBackgroundGeometry } from "./create-piece-bars-background-geometry";
 import type { PieceRessources } from "../types/piece-ressources";
-import type { Piece } from "core/types/piece";
+import type { Piece } from "core/src/types/Piece";
 
 const pieceBarsBackgroundGeometry = createPiecesBarsBackgroundGeometry();
 

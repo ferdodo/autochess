@@ -1,7 +1,7 @@
 import { WebSocketServer } from "ws";
 import { Observable, share } from "rxjs";
-import type { Connection } from "core/types/connection.js";
-import { validateClientMessage } from "core/utils/validate-client-message.js";
+import type { Connection } from "core/src/types/Connection.js";
+import { createClientMessageValidator } from "core/src/utils/createClientMessageValidator.js";
 import { createServer } from "node:https";
 import { readFileSync } from "node:fs";
 import { uid } from "uid";
@@ -12,6 +12,7 @@ export function createWsServer<I, O>(
 	throttler: MonoTypeOperatorFunction<I>,
 ): Observable<Connection<I, O>> {
 	const wss = createWebSocketServer();
+	const validateClientMessage = createClientMessageValidator();
 
 	return new Observable<Connection<I, O>>((connexionSubscriber) => {
 		wss.on("connection", (ws) => {

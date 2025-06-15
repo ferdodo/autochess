@@ -126,8 +126,8 @@ import ArcherDeathTexture from "assets/Tiny RPG Character Asset Pack v1.03 -Full
 
 import { TextureLoader } from "three";
 import type { Texture } from "three";
-import { Appellation } from "core/types/appellation";
-import type { Animation } from "core/types/animation";
+import { Appellation } from "core/src/types/Appellation";
+import type { Animation } from "core/src/types/Animation";
 
 const textureLoader = new TextureLoader();
 

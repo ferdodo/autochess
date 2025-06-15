@@ -1,4 +1,4 @@
-import type { Signed } from "core/types/signed.js";
+import type { Signed } from "core/src/types/Signed.js";
 import { subtle } from "node:crypto";
 
 export async function verify<T>({

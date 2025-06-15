@@ -1,14 +1,14 @@
 import { createRenderer } from "interface/utils/create-renderer";
-import { observeWindowDimentions } from "core/utils/observe-window-dimentions";
+import { observeWindowDimentions } from "core/src/utils/observeWindowDimentions";
 import { createContext } from "interface/utils/create-context";
 import { DisplayFactory } from "./utils/display-factory";
-import type { Display } from "core/types/display";
+import type { Display } from "core/src/types/Display";
 import { waitTextureLoaded } from "interface/utils/load-texture";
 import { render } from "interface/utils/render";
 import { createFpsCounter } from "./utils/create-fps-counter";
 import { observeInteractions } from "interface/utils/observe-interactions";
 import { logEvent } from "./utils/log-event";
-import type { Interaction } from "core/types/interaction";
+import type { Interaction } from "core/src/types/Interaction";
 import { createCamera } from "interface/utils/create-camera";
 import { removeRenderer } from "interface/utils/remove-renderer";
 

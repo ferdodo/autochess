@@ -1,4 +1,4 @@
-import type { Display } from "core/types/display";
+import type { Display } from "core/src/types/Display";
 import { renderShopProductBackgroundMeshes } from "./render-shop-product-background-meshes";
 import { renderShopProductImageMeshes } from "./render-shop-product-image-meshes";
 import type { ThreeContext } from "../types/three-context";

@@ -2,7 +2,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import { Font } from "three/examples/jsm/loaders/FontLoader.js";
 import fontJson from "three/examples/fonts/helvetiker_bold.typeface.json";
 import type { ThreeContext } from "../types/three-context";
-import type { Display } from "core/types/display";
+import type { Display } from "core/src/types/Display";
 
 export function renderMoneyGeometry(
 	threeContext: ThreeContext,

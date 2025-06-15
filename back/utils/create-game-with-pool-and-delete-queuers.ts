@@ -1,9 +1,9 @@
-import type { Game } from "core/types/game.js";
+import type { Game } from "core/src/types/Game.js";
 import { GameEntity } from "../entities/game.js";
-import type { Pool } from "core/types/pool.js";
+import type { Pool } from "core/src/types/Pool.js";
 import { PoolEntity } from "../entities/pool.js";
 import { QueuerEntity } from "../entities/queuer.js";
-import type { PublicKey } from "core/types/public-key.js";
+import type { PublicKey } from "core/src/types/PublicKey.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { BackEvent } from "../types/back-events.js";
 import type { Bus } from "../types/pub-sub.js";

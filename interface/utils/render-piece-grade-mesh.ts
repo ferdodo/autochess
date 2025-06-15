@@ -1,6 +1,6 @@
 import { Mesh, CircleGeometry, MeshBasicMaterial } from "three";
 import type { PieceRessources } from "../types/piece-ressources";
-import type { Piece } from "core/types/piece";
+import type { Piece } from "core/src/types/Piece";
 
 const pieceGradeGeometry = new CircleGeometry(0.005, 32);
 const pieceGradeMaterial = new MeshBasicMaterial({ color: 0xffd700 });

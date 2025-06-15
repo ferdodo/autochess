@@ -1,5 +1,5 @@
-import type { FrontContext } from "core/types/front-context";
-import { observeGame } from "core/api/observe-game";
+import type { FrontContext } from "core/src/types/FrontContext";
+import { observeGame } from "core/src/api/observeGame";
 
 export function logBench(frontContext: FrontContext) {
 	const publicKey = frontContext.publicKey;

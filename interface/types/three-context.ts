@@ -11,9 +11,9 @@ import type {
 	WebGLRenderer,
 } from "three";
 
-import type { Appellation } from "core/types/appellation";
+import type { Appellation } from "core/src/types/Appellation";
 import type { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
-import type { Trait } from "core/types/trait";
+import type { Trait } from "core/src/types/Trait";
 import type { PieceRessources } from "./piece-ressources";
 
 export interface ThreeContext {

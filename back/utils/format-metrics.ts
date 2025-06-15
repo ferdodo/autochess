@@ -1,4 +1,4 @@
-import type { Metrics } from "../../core/types/metrics.js";
+import type { Metrics } from "core/src/types/Metrics.js";
 import os from "node:os";
 import process from "node:process";
 

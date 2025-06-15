@@ -1,5 +1,5 @@
 import { QueuerEntity } from "../entities/queuer.js";
-import type { Queuer } from "core/types/queuer.js";
+import type { Queuer } from "core/src/types/Queuer.js";
 import type { MikroORM } from "@mikro-orm/core";
 
 export async function readQueuers(orm: MikroORM): Promise<Queuer[]> {

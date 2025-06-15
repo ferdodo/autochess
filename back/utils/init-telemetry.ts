@@ -1,6 +1,6 @@
 import http from "node:http";
 import { formatMetrics } from "./format-metrics.js";
-import type { BackContext } from "core/types/back-context.js";
+import type { BackContext } from "core/src/types/BackContext.js";
 
 export async function initTelemetry(backContext: BackContext) {
 	await new Promise((resolve, reject) => {

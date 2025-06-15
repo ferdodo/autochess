@@ -1,4 +1,4 @@
-import type { Signed } from "core/types/signed";
+import type { Signed } from "core/src/types/Signed";
 
 export async function sign<T>(
 	publicKey: string,

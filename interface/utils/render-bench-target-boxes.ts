@@ -1,7 +1,7 @@
 import { Mesh } from "three";
 import type { ThreeContext } from "../types/three-context";
-import type { Display } from "core/types/display";
-import { getBoardBlock } from "core/utils/get-board-block";
+import type { Display } from "core/src/types/Display";
+import { getBoardBlock } from "core/src/utils/getBoardBlock";
 
 export function renderBenchTargetBoxes(
 	threeContext: ThreeContext,

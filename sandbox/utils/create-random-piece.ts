@@ -1,9 +1,9 @@
 import { uid } from "uid";
-import { Animation } from "core/types/animation";
-import type { Display } from "core/types/display";
-import type { Piece } from "core/types/piece";
-import { getRandomAppellation } from "../../core/utils/get-random-appellation";
-import { getBoardBlock } from "../../core/utils/get-board-block";
+import { Animation } from "core/src/types/Animation";
+import type { Display } from "core/src/types/Display";
+import type { Piece } from "core/src/types/Piece";
+import { getRandomAppellation } from "core/src/utils/getRandomAppellation";
+import { getBoardBlock } from "core/src/utils/getBoardBlock";
 
 export function createRandomPiece(display: Display): Piece {
 	const id = uid();

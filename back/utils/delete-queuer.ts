@@ -1,4 +1,4 @@
-import type { PublicKey } from "core/types/public-key.js";
+import type { PublicKey } from "core/src/types/PublicKey.js";
 import { BackEvent } from "../types/back-events.js";
 import type { MikroORM } from "@mikro-orm/core";
 import { QueuerEntity } from "../entities/queuer.js";
