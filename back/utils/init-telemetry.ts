@@ -14,10 +14,10 @@ export async function initTelemetry(backContext: BackContext) {
 			if (req.url === "/metrics") {
 				res.writeHead(200, { "Content-Type": "text/plain" });
 				res.end(formatMetrics(backContext.metrics));
+			} else {
+				res.writeHead(404);
+				res.end();
 			}
-
-			res.writeHead(404);
-			res.end();
 		});
 
 		server.listen(23053, () => {
