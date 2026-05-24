@@ -1,7 +1,7 @@
 import http from "node:http";
 import { serializeError } from "serialize-error";
 
-export function saveLog(log) {
+export function saveLog(log: unknown) {
 	const payload = {
 		streams: [
 			{

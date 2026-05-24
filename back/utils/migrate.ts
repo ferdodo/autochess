@@ -6,6 +6,7 @@ export async function migrate(orm: MikroORM) {
 		await migrator.up();
 	} catch (error) {
 		if (
+			error instanceof Error &&
 			error.message.includes("create table") &&
 			(error.message.includes("duplicate key value") ||
 				error.message.includes("already exists"))
