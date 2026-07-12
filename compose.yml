@@ -148,3 +148,6 @@ services:
     ports:
       - 31090:3100
     restart: on-failure:3
+
+  blog:
+    build: blog
