@@ -67,6 +67,15 @@ services:
           path: core
           target: /autochess/core
 
+  offline-publish:
+    build:
+      context: .
+      dockerfile: offline/publish.Dockerfile
+      additional_contexts:
+        autochess-offline: service:offline
+    stdin_open: true
+    tty: true
+
   coverage:
     build:
       context: .
