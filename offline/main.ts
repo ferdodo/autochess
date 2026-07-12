@@ -17,6 +17,7 @@ import { cast } from "core/src/utils/cast";
 import { observeInteractions } from "interface/utils/observe-interactions";
 import { observeInteractionHistory } from "core/src/utils/observeInteractionHistory";
 import { logBench } from "./utils/log-bench";
+import { connectBot } from "core/src/utils/connectBot";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -32,7 +33,7 @@ waitTextureLoaded
 		const frontContext1: FrontContext = {
 			connection: connectionMockFactory.createClient()[0],
 			publicKey:
-				"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+				"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 			nickname: "playerone",
 			signMessage: async (message) => ({
 				...message,
@@ -40,22 +41,22 @@ waitTextureLoaded
 				issuedAt: new Date().toISOString(),
 				expiresAt: new Date(Date.now() + 60000).toISOString(),
 				signature:
-					"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+					"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 			}),
 		};
 
 		const frontContext2: FrontContext = {
 			connection: connectionMockFactory.createClient()[0],
 			publicKey:
-				"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-			nickname: "playertwo",
+				"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+			nickname: "bot",
 			signMessage: async (message) => ({
 				...message,
 				publicKey: frontContext2.publicKey,
 				issuedAt: new Date().toISOString(),
 				expiresAt: new Date(Date.now() + 60000).toISOString(),
 				signature:
-					"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+					"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
 			}),
 		};
 
@@ -89,15 +90,13 @@ waitTextureLoaded
 			playerSwitch.switchPlayer(currentPlayer);
 		});
 
-		const [initiateGameResponse1, initiateGameResponse2] = await Promise.all([
+		const [initiateGameResponse1, botPlayerContext] = await Promise.all([
 			initiateGame(frontContext1),
-			initiateGame(frontContext2),
+			connectBot(frontContext2, 250),
 		]);
 
 		frontContext1.playsig = initiateGameResponse1.playsig;
-		frontContext2.playsig = initiateGameResponse2.playsig;
 		frontContext1.stamp = initiateGameResponse1.stamp;
-		frontContext2.stamp = initiateGameResponse2.stamp;
 
 		logBench(frontContext1);
 
@@ -113,7 +112,7 @@ waitTextureLoaded
 			.pipe(observeInteractionHistory())
 			.subscribe((interactions) => {
 				if (currentPlayer === 1) {
-					cast(frontContext2, interactions);
+					cast(botPlayerContext, interactions);
 				}
 			});
 

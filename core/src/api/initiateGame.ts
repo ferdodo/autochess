@@ -13,7 +13,6 @@ export async function initiateGame({
 			nickname,
 		}),
 	});
-
 	const response = await firstValueFrom(
 		connection.messages$.pipe(
 			map((message) => message.initiateGameResponse),

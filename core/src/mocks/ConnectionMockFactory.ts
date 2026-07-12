@@ -20,7 +20,9 @@ export class ConnectionMockFactory {
 		const _clientMessage$: Subject<ServerMessage> = new Subject();
 		const _serverMessage$: Subject<ClientMessage> = new Subject();
 		// @ts-ignore
-		const env = process?.env?.NODE_ENV === "test";
+		globalThis.process = globalThis.process || {};
+		// @ts-ignore
+		const env = process && process?.env?.NODE_ENV === "test";
 		const totalAllowedProcessingTime = env ? 5 : Number.POSITIVE_INFINITY;
 		const validateClientMessage = createClientMessageValidator();
 

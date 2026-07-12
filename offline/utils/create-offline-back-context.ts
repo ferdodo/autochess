@@ -14,13 +14,13 @@ export function createOfflineBackContext(
 		connections$: connectionMockFactory.createServer(),
 		isValidSignature: () => Promise.resolve(true),
 		serverPublicKey:
-			"aaaaaaaaaa00000000000000000000000000000000000000000000000000000000",
+			"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
 		signMessage: async (message) => ({
 			...message,
 			publicKey:
-				"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+				"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
 			signature:
-				"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+				"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
 			issuedAt: new Date().toISOString(),
 			expiresAt: new Date(Date.now() + 60000).toISOString(),
 		}),

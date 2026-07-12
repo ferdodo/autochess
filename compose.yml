@@ -11,11 +11,11 @@ services:
       target: deps
 
   interface:
-    build: interface
-    depends_on:
-      - assets
-      - core
-      - interface-deps
+    build:
+      context: interface
+      additional_contexts:
+        autochess-assets: service:assets
+        autochess-core: service:core
 
   sandbox-deps:
     build:
@@ -23,13 +23,24 @@ services:
       target: deps
 
   sandbox:
-    build: sandbox
+    build:
+      context: sandbox
+      additional_contexts:
+        autochess-core: service:core
+        autochess-interface: service:interface
     ports:
-      - "127.0.0.1:2437:5173"
-    depends_on:
-      - sandbox-deps
-      - core
-      - interface
+      - "127.0.0.1:29:2437"
+    develop:
+      watch:
+        - action: sync
+          path: sandbox
+          target: /autochess/sandbox
+        - action: sync
+          path: interface
+          target: /autochess/interface
+        - action: sync
+          path: core
+          target: /autochess/core
 
   offline-deps:
     build:
@@ -37,22 +48,33 @@ services:
       target: deps
 
   offline:
-    build: offline
+    build:
+      context: offline
+      additional_contexts:
+        autochess-core: service:core
+        autochess-interface: service:interface
     ports:
-      - "127.0.0.1:5423:5173"
-    depends_on:
-      - offline-deps
-      - core
-      - interface
+      - "28020:28020"
+    develop:
+      watch:
+        - action: sync
+          path: offline
+          target: /autochess/offline
+        - action: sync
+          path: interface
+          target: /autochess/interface
+        - action: sync
+          path: core
+          target: /autochess/core
 
   coverage:
     build:
       context: .
       dockerfile: coverage/Dockerfile
+      additional_contexts:
+        autochess-core: service:core
     ports:
       - "6245:80"
-    depends_on:
-      - core
 
   back-deps:
     build:
@@ -60,7 +82,11 @@ services:
       target: deps
 
   back:
-    build: back
+    build:
+      context: back
+      additional_contexts:
+        autochess-core: service:core
+        autochess-database: service:database
     environment:
       DATABASE_HOST: database
       DATABASE_USERNAME: user
@@ -70,14 +96,18 @@ services:
     ports:
       - ${VITE_WEBSOCKET_PORT_A}:3000
     depends_on:
-      - core
       - database
       - replication
       - bus
-      - back-deps
       - prometheus
       - loki
     restart: on-failure:3
+    develop:
+      watch:
+        - action: rebuild
+          path: back
+        - action: rebuild
+          path: core
 
   back-b:
     extends: back
@@ -104,7 +134,10 @@ services:
     restart: on-failure:3
 
   replication:
-    build: replication
+    build:
+      context: replication
+      additional_contexts:
+        autochess-database: service:database
     depends_on:
       - database
     restart: on-failure:3
@@ -125,6 +158,8 @@ services:
         - VITE_WEBSOCKET_PROTOCOL=${VITE_WEBSOCKET_PROTOCOL}
         - VITE_WEBSOCKET_PORTS=${VITE_WEBSOCKET_PORTS}
         - VITE_WEBSOCKET_DOMAINS=${VITE_WEBSOCKET_DOMAINS}
+      additional_contexts:
+        autochess-interface: service:interface
     environment:
       VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
       VITE_WEBSOCKET_PORTS: ${VITE_WEBSOCKET_PORTS}
@@ -133,9 +168,17 @@ services:
       - 53015:53015
     depends_on:
       - back
-      - core
-      - interface
-      - ingame-deps
+    develop:
+      watch:
+        - action: sync
+          path: ingame
+          target: /autochess/ingame
+        - action: sync
+          path: interface
+          target: /autochess/interface
+        - action: sync
+          path: core
+          target: /autochess/core
 
   prometheus:
     build: prometheus

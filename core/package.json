@@ -10,14 +10,13 @@
 		"@types/node": "^22.10.5",
 		"blockwise": "^2.12.0",
 		"exportcase": "^0.11.0",
-		"humanhash": "^1.0.4",
 		"json-schema-library": "^10.1.2",
 		"json-schema-policies": "^0.7.0",
 		"rxjs": "^7.8.1",
 		"tinybench": "^3.0.7",
 		"typescript": "^5.5.4",
 		"uid": "^2.0.2",
-		"vite": "^8.0.13",
-		"vitest": "^3.2.4"
+		"vite": "^8.1.4",
+		"vitest": "^4.1.10"
 	}
 }
