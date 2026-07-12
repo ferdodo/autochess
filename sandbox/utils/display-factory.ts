@@ -7,8 +7,8 @@ import type { Subscription, Subscribable, Observer } from "rxjs";
 import { GUI } from "dat.gui";
 import { getRandomAppellation } from "core/src/utils/getRandomAppellation";
 import { Phase } from "core/src/types/Phase";
-import { observeInteractions } from "interface/utils/observe-interactions";
-import type { ThreeContext } from "interface/types/three-context";
+import { observeInteractions } from "interface/utils/observeInteractions";
+import type { ThreeContext } from "interface/types/ThreeContext";
 import { createRandomPiece } from "./create-random-piece";
 import { getBoardBlock } from "core/src/utils/getBoardBlock";
 

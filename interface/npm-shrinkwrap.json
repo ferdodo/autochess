@@ -10,6 +10,7 @@
 				"assets": "file:../assets",
 				"blockwise": "^2.12.0",
 				"core": "file:../core",
+				"exportcase": "^1.2.5",
 				"rxjs": "^7.8.2",
 				"three": "^0.167.1",
 				"typescript": "^5.5.4"
@@ -237,6 +238,19 @@
 		"node_modules/core": {
 			"resolved": "../core",
 			"link": true
+		},
+		"node_modules/exportcase": {
+			"version": "1.2.5",
+			"resolved": "https://registry.npmjs.org/exportcase/-/exportcase-1.2.5.tgz",
+			"integrity": "sha512-RhtcQNpaxx3zL9OvVytPFuUBCHoBkIk7x3uBGmsWjPy5DctwJ1J4aRZ9WO6GaNGHoZYkkUDabps3dd1sWArOjA==",
+			"dev": true,
+			"license": "MIT",
+			"bin": {
+				"exportcase": "bin/exportcase.js"
+			},
+			"engines": {
+				"node": ">=16.0.0"
+			}
 		},
 		"node_modules/fflate": {
 			"version": "0.8.2",

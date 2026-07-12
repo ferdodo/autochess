@@ -9,10 +9,10 @@ import { observePortrayedConfrontation } from "core/src/utils/observePortrayedCo
 import type { PublicKey } from "core/src/types/PublicKey";
 import type { Piece } from "core/src/types/Piece";
 import { portrayBench } from "core/src/utils/portrayBench";
-import { trackTransposedHero } from "./track-transposed-hero";
-import type { ThreeContext } from "../types/three-context";
+import { trackTransposedHero } from "./trackTransposedHero";
+import type { ThreeContext } from "../types/ThreeContext";
 import type { HeroId } from "core/src/types/HeroId";
-import { frame$ } from "./frame";
+import { frameObservable } from "./frameObservable";
 
 export function portray(
 	publicKey: PublicKey,
@@ -62,7 +62,7 @@ export function portray(
 					return display;
 				},
 			),
-			combineLatestWith(frame$),
+			combineLatestWith(frameObservable),
 			map(([display]) => display),
 		);
 }

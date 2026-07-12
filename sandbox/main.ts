@@ -1,16 +1,16 @@
-import { createRenderer } from "interface/utils/create-renderer";
+import { createRenderer } from "interface/utils/createRenderer";
 import { observeWindowDimentions } from "core/src/utils/observeWindowDimentions";
-import { createContext } from "interface/utils/create-context";
+import { createContext } from "interface/utils/createContext";
 import { DisplayFactory } from "./utils/display-factory";
 import type { Display } from "core/src/types/Display";
-import { waitTextureLoaded } from "interface/utils/load-texture";
+import { waitTextureLoaded } from "interface/utils/waitTextureLoaded";
 import { render } from "interface/utils/render";
 import { createFpsCounter } from "./utils/create-fps-counter";
-import { observeInteractions } from "interface/utils/observe-interactions";
+import { observeInteractions } from "interface/utils/observeInteractions";
 import { logEvent } from "./utils/log-event";
 import type { Interaction } from "core/src/types/Interaction";
-import { createCamera } from "interface/utils/create-camera";
-import { removeRenderer } from "interface/utils/remove-renderer";
+import { createCamera } from "interface/utils/createCamera";
+import { removeRenderer } from "interface/utils/removeRenderer";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();

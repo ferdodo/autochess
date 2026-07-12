@@ -1,7 +1,7 @@
 import { fpsCounter } from "core/src/utils/fpsCounter";
 import { firstValueFrom } from "rxjs";
 import Stats from "stats.js";
-import type { ThreeContext } from "interface/types/three-context";
+import type { ThreeContext } from "interface/types/ThreeContext";
 
 export async function createFpsCounter(threeContext: ThreeContext) {
 	const fpsStat = new Stats();
