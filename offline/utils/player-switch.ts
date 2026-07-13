@@ -1,14 +1,15 @@
-import { GUI } from "dat.gui";
 import type { Observable } from "rxjs";
 import { Subject } from "rxjs";
+import type { GuiManager } from "./gui";
 
 export class PlayerSwitch {
-	#gui: GUI = new GUI();
 	#currentPlayer: Subject<number> = new Subject();
 
-	constructor() {
-		this.#gui.add(this, "switchPlayer1");
-		this.#gui.add(this, "switchPlayer2");
+	constructor(guiManager: GuiManager) {
+		guiManager.addPlayerSwitch(
+			() => this.switchPlayer1(),
+			() => this.switchPlayer2(),
+		);
 	}
 
 	observeCurrentPlayer(): Observable<number> {

@@ -57,6 +57,13 @@ export function portray(
 						money: game.playerMoney[publicKey] || 0,
 						levelUpCost: getLevelUpCost(game, publicKey),
 						phaseStartAt: game.phaseStartAt,
+						cameraOverride: {
+							positionX: 0,
+							positionY: 0,
+							positionZ: 0,
+							rotationX: 0,
+							rotationY: 0,
+						},
 					};
 
 					return display;

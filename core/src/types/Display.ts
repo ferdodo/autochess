@@ -13,4 +13,11 @@ export interface Display {
 	money: number;
 	levelUpCost: number | null;
 	phaseStartAt: string;
+	cameraOverride: {
+		positionX: number;
+		positionY: number;
+		positionZ: number;
+		rotationX: number;
+		rotationY: number;
+	};
 }

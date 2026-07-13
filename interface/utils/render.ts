@@ -23,8 +23,10 @@ import { renderLevelUpMesh } from "./renderLevelUpMesh";
 import { renderLevelUpGeometry } from "./renderLevelUpGeometry";
 import { renderRoundTimeMesh } from "./renderRoundTimeMesh";
 import { renderRoundTimeGeometry } from "./renderRoundTimeGeometry";
+import { renderCameraOverride } from "./renderCameraOverride";
 
 export function render(threeContext: ThreeContext, display: Display) {
+	renderCameraOverride(threeContext, display);
 	renderBoardPieces(threeContext, display);
 	renderShopProductBackgroundMeshes(threeContext, display);
 	renderShopProductImageMeshes(threeContext, display);

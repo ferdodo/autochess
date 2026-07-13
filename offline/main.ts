@@ -18,6 +18,8 @@ import { observeInteractions } from "interface/utils/observeInteractions";
 import { observeInteractionHistory } from "core/src/utils/observeInteractionHistory";
 import { logBench } from "./utils/log-bench";
 import { connectBot } from "core/src/utils/connectBot";
+import { GuiManager } from "./utils/gui";
+import { map } from "rxjs/operators";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -25,7 +27,8 @@ document.addEventListener("contextmenu", (e) => {
 
 waitTextureLoaded
 	.then(async () => {
-		const playerSwitch = new PlayerSwitch();
+		const guiManager = new GuiManager();
+		const playerSwitch = new PlayerSwitch(guiManager);
 		const connectionMockFactory = new ConnectionMockFactory();
 		const backContext = createOfflineBackContext(connectionMockFactory);
 		startServer(backContext).subscribe();
@@ -117,13 +120,37 @@ waitTextureLoaded
 			});
 
 		observeGame(frontContext1)
-			.pipe(portray(frontContext1.publicKey, threeContext1))
+			.pipe(
+				portray(frontContext1.publicKey, threeContext1),
+				map((display) => ({
+					...display,
+					cameraOverride: {
+						positionX: guiManager.cameraOverride.positionX,
+						positionY: guiManager.cameraOverride.positionY,
+						positionZ: guiManager.cameraOverride.positionZ,
+						rotationX: guiManager.cameraOverride.rotationX,
+						rotationY: guiManager.cameraOverride.rotationY,
+					},
+				})),
+			)
 			.subscribe((display) => {
 				render(threeContext1, display);
 			});
 
 		observeGame(frontContext2)
-			.pipe(portray(frontContext2.publicKey, threeContext2))
+			.pipe(
+				portray(frontContext2.publicKey, threeContext2),
+				map((display) => ({
+					...display,
+					cameraOverride: {
+						positionX: guiManager.cameraOverride.positionX,
+						positionY: guiManager.cameraOverride.positionY,
+						positionZ: guiManager.cameraOverride.positionZ,
+						rotationX: guiManager.cameraOverride.rotationX,
+						rotationY: guiManager.cameraOverride.rotationY,
+					},
+				})),
+			)
 			.subscribe((display) => {
 				render(threeContext2, display);
 			});
