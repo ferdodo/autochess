@@ -8,6 +8,10 @@ import { HeroFactory } from "../utils/HeroFactory.js";
 import type { Game } from "../types/Game.js";
 import type { BackContext } from "../types/BackContext.js";
 import type { Appellation } from "../types/Appellation.js";
+import type { PublicKey } from "../types/PublicKey.js";
+import type { Hero } from "../types/Hero.js";
+import { findHeroesToMerge } from "../utils/findHeroesToMerge.js";
+import { applyHeroMerge } from "../utils/applyHeroMerge.js";
 
 export function shopBuyHandle(context: BackContext): Observable<void> {
 	const {
@@ -68,7 +72,7 @@ export function shopBuyHandle(context: BackContext): Observable<void> {
 
 						bench[firstEmptySlot] = new HeroFactory().build(appellation);
 
-						const newGame: Game = {
+						let newGame: Game = {
 							...game,
 							playerMoney: {
 								...game.playerMoney,
@@ -79,6 +83,11 @@ export function shopBuyHandle(context: BackContext): Observable<void> {
 								[publicKey]: bench,
 							},
 						};
+
+						const mergeableTuples = findHeroesToMerge(newGame, publicKey);
+						for (const heroesToMerge of mergeableTuples) {
+							newGame = applyHeroMerge(newGame, publicKey, heroesToMerge);
+						}
 
 						await commit(newGame);
 					} catch (error) {
