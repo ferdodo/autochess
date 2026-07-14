@@ -1,7 +1,7 @@
 {
 	"scripts": {
 		"build": "tsc && biome ci --organize-imports-enabled=false && vite build --base ./",
-		"start": "vite --host"
+		"start": "vite --host --port 2437"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",

@@ -4,6 +4,7 @@ import { renderShopProductImageMeshes } from "./renderShopProductImageMeshes";
 import type { ThreeContext } from "../types/ThreeContext";
 import { renderShopProductTraitMeshes } from "./renderShopProductTraitMeshes";
 import { renderShopProductAppellationMeshes } from "./renderShopProductAppellationMeshes";
+import { renderShopProductCostMeshes } from "./renderShopProductCostMeshes";
 import { renderBenchHeroMeshes } from "./renderBenchHeroMeshes";
 import { renderPointerHelper } from "./renderPointerHelper";
 import { renderPieceTargetBoxes } from "./renderPieceTargetBoxes";
@@ -32,6 +33,7 @@ export function render(threeContext: ThreeContext, display: Display) {
 	renderShopProductImageMeshes(threeContext, display);
 	renderShopProductTraitMeshes(threeContext, display);
 	renderShopProductAppellationMeshes(threeContext, display);
+	renderShopProductCostMeshes(threeContext, display);
 	renderBenchHeroMeshes(threeContext, display);
 	renderPointerHelper(threeContext);
 	renderPieceTargetBoxes(threeContext, display);

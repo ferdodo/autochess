@@ -6,6 +6,7 @@ import { createCamera } from "./createCamera";
 import { createShopProductTraitGeometry } from "./createShopProductTraitGeometry";
 import { createBenchSlotMeshes } from "./createBenchSlotMeshes";
 import { createShopProductAppellationGeometry } from "./createShopProductAppellationGeometry";
+import { createShopProductCostGeometry } from "./createShopProductCostGeometry";
 import { createIdleAnimationsByAppellations } from "./createIdleAnimationsByAppellations";
 import { createTranspositionPlane } from "./createTranspositionPlane";
 import { createHighlightMesh } from "./createHighlightMesh";
@@ -91,6 +92,9 @@ export async function createContext(): Promise<ThreeContext> {
 		shopProductTraitGeometry: createShopProductTraitGeometry(),
 		shopProductTraitMaterial: new MeshBasicMaterial({ color: 0 }),
 		shopProductTraitMeshes: {},
+		shopProductCostGeometry: createShopProductCostGeometry(),
+		shopProductCostMaterial: new MeshBasicMaterial({ color: 0x000000 }),
+		shopProductCostMeshes: {},
 		fullscreenButtonMesh: crateFullScreenButtonMesh(scene, camera),
 		transpositionPlane: createTranspositionPlane(scene),
 	};
