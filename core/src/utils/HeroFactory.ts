@@ -1,9 +1,11 @@
 import type { Hero } from "../types/Hero.js";
 import { uid } from "uid";
 import { getRandomAppellation } from "./getRandomAppellation.js";
+import { getHeroBaseHp } from "./getHeroBaseHp.js";
 
 export class HeroFactory {
 	build(appellation = getRandomAppellation()): Hero {
+		const baseHp = getHeroBaseHp(appellation);
 		return {
 			id: uid(),
 			appellation,
@@ -15,8 +17,8 @@ export class HeroFactory {
 				h: 1,
 			},
 			attributes: {
-				maxHealth: 5,
-				health: 5,
+				maxHealth: baseHp,
+				health: baseHp,
 				maxMana: 10,
 				mana: 10,
 			},
