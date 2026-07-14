@@ -17,7 +17,7 @@ export async function withTwoBotGameFighting(): Promise<TestContext> {
 	const getHeroCountA = () => game.playerHeroes[publicKeyA]?.length || 0;
 	const getHeroCountB = () => game.playerHeroes[publicKeyB]?.length || 0;
 
-	while (getHeroCountA() < 5 || getHeroCountB() < 5) {
+	while (getHeroCountA() < 2 || getHeroCountB() < 2) {
 		await firstValueFrom(
 			observeGame(frontContextA).pipe(
 				filter((game) => isBotOutOfMoves(game, frontContextA.publicKey)),
