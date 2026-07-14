@@ -9,6 +9,7 @@
 				"@types/dat.gui": "^0.7.13",
 				"core": "file:../core",
 				"dat.gui": "^0.7.9",
+				"exportcase": "^1.2.5",
 				"interface": "file:../interface",
 				"rxjs": "^7.8.2",
 				"typescript": "^5.5.4",
@@ -558,6 +559,19 @@
 			"license": "Apache-2.0",
 			"engines": {
 				"node": ">=8"
+			}
+		},
+		"node_modules/exportcase": {
+			"version": "1.2.5",
+			"resolved": "https://registry.npmjs.org/exportcase/-/exportcase-1.2.5.tgz",
+			"integrity": "sha512-RhtcQNpaxx3zL9OvVytPFuUBCHoBkIk7x3uBGmsWjPy5DctwJ1J4aRZ9WO6GaNGHoZYkkUDabps3dd1sWArOjA==",
+			"dev": true,
+			"license": "MIT",
+			"bin": {
+				"exportcase": "bin/exportcase.js"
+			},
+			"engines": {
+				"node": ">=16.0.0"
 			}
 		},
 		"node_modules/fdir": {

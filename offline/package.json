@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"build": "tsc && biome ci --organize-imports-enabled=false && vite build --base ./",
+		"build": "tsc && exportcase check utils && biome ci --organize-imports-enabled=false && vite build --base ./",
 		"start": "vite --host --port 28020"
 	},
 	"devDependencies": {
@@ -8,6 +8,7 @@
 		"@types/dat.gui": "^0.7.13",
 		"core": "file:../core",
 		"dat.gui": "^0.7.9",
+		"exportcase": "^1.2.5",
 		"interface": "file:../interface",
 		"rxjs": "^7.8.2",
 		"typescript": "^5.5.4",

@@ -5,8 +5,8 @@ import { waitTextureLoaded } from "interface/utils/waitTextureLoaded";
 import { createCamera } from "interface/utils/createCamera";
 import { removeRenderer } from "interface/utils/removeRenderer";
 import { render } from "interface/utils/render";
-import { PlayerSwitch } from "./utils/player-switch";
-import { createOfflineBackContext } from "./utils/create-offline-back-context";
+import { PlayerSwitch } from "./utils/PlayerSwitch";
+import { createOfflineBackContext } from "./utils/createOfflineBackContext";
 import { ConnectionMockFactory } from "core/src/mocks/ConnectionMockFactory";
 import { startServer } from "core/src/utils/startServer";
 import type { FrontContext } from "core/src/types/FrontContext";
@@ -16,9 +16,9 @@ import { portray } from "interface/utils/portray";
 import { cast } from "core/src/utils/cast";
 import { observeInteractions } from "interface/utils/observeInteractions";
 import { observeInteractionHistory } from "core/src/utils/observeInteractionHistory";
-import { logBench } from "./utils/log-bench";
+import { logBench } from "./utils/logBench";
 import { connectBot } from "core/src/utils/connectBot";
-import { GuiManager } from "./utils/gui";
+import { GuiManager } from "./utils/GuiManager";
 import { map } from "rxjs/operators";
 
 document.addEventListener("contextmenu", (e) => {

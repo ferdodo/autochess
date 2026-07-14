@@ -1,6 +1,6 @@
 import type { Observable } from "rxjs";
 import { Subject } from "rxjs";
-import type { GuiManager } from "./gui";
+import type { GuiManager } from "./GuiManager";
 
 export class PlayerSwitch {
 	#currentPlayer: Subject<number> = new Subject();
