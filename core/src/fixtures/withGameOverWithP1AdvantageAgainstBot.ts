@@ -46,14 +46,15 @@ export async function withGameOverWithP1AdvantageAgainstBot(): Promise<TestConte
 	await goToNextPhase(testContext);
 	await goToNextPhase(testContext);
 
-	await firstValueFrom(
-		observeGame(frontContext).pipe(
-			filter((game) => isBotOutOfMoves(game, frontContext.publicKey)),
-			timeout(1000),
-		),
-	);
-
 	while (isGameInProgress(await getGame(testContext))) {
+		await firstValueFrom(
+			observeGame(frontContext).pipe(
+				filter((game) => isBotOutOfMoves(game, frontContext.publicKey)),
+				timeout(1000),
+			),
+		);
+
+		await goToNextPhase(testContext);
 		await goToNextPhase(testContext);
 	}
 

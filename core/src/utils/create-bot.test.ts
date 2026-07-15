@@ -9,6 +9,7 @@ test("Bot should win against advantaged player", async () => {
 	const p1Ranking = await testContext.backContext.dataMapper.readRanking(
 		p1.publicKey,
 	);
+
 	const p2Ranking = await testContext.backContext.dataMapper.readRanking(
 		p2.publicKey,
 	);

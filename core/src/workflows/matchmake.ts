@@ -10,6 +10,7 @@ import { getRandomAppellation } from "../utils/getRandomAppellation.js";
 import { Phase } from "../types/Phase.js";
 import { getDate } from "../utils/getDate.js";
 import type { BackContext } from "../types/BackContext.js";
+import { getRandomOneCostHero } from "../utils/getRandomOneCostHero.js";
 
 export function matchmake(backContext: BackContext): Observable<void> {
 	const {
@@ -41,7 +42,7 @@ export function matchmake(backContext: BackContext): Observable<void> {
 			const pool = createPool(playsig);
 
 			for (const player of players) {
-				playerHeroes[player.publicKey] = [new HeroFactory().build()];
+				playerHeroes[player.publicKey] = [getRandomOneCostHero()];
 				playerShops[player.publicKey] = [
 					getRandomAppellation(),
 					getRandomAppellation(),

@@ -54,6 +54,8 @@ export function computeConfrontation(
 			throw new Error("Target not found !");
 		}
 
+		const damage = 1 + attacker.grade;
+
 		return {
 			...confrontation,
 			playerAHeroes: confrontation.playerAHeroes.map((h) =>
@@ -62,7 +64,7 @@ export function computeConfrontation(
 							...h,
 							attributes: {
 								...h.attributes,
-								health: h.attributes.health - 1,
+								health: h.attributes.health - damage,
 							},
 						}
 					: h,
@@ -73,7 +75,7 @@ export function computeConfrontation(
 							...h,
 							attributes: {
 								...h.attributes,
-								health: h.attributes.health - 1,
+								health: h.attributes.health - damage,
 							},
 						}
 					: h,
