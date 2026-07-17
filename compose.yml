@@ -29,7 +29,7 @@ services:
         autochess-core: service:core
         autochess-interface: service:interface
     ports:
-      - "2437:2437"
+      - "127.0.0.1:2437:2437"
     develop:
       watch:
         - action: sync
@@ -54,7 +54,7 @@ services:
         autochess-core: service:core
         autochess-interface: service:interface
     ports:
-      - "28020:28020"
+      - "127.0.0.1:28020:28020"
     develop:
       watch:
         - action: sync
@@ -83,7 +83,7 @@ services:
       additional_contexts:
         autochess-core: service:core
     ports:
-      - "6245:80"
+      - "127.0.0.1:6245:80"
 
   back-deps:
     build:
@@ -103,7 +103,7 @@ services:
       VITE_WEBSOCKET_PROTOCOL: ${VITE_WEBSOCKET_PROTOCOL}
       REDIS_URL: redis://bus
     ports:
-      - ${VITE_WEBSOCKET_PORT_A}:3000
+      - 127.0.0.1:${VITE_WEBSOCKET_PORT_A}:3000
     depends_on:
       - database
       - replication
@@ -121,22 +121,22 @@ services:
   back-b:
     extends: back
     ports: !override
-      - ${VITE_WEBSOCKET_PORT_B}:3000
+      - 127.0.0.1:${VITE_WEBSOCKET_PORT_B}:3000
 
   back-c:
     extends: back
     ports: !override
-      - ${VITE_WEBSOCKET_PORT_C}:3000
+      - 127.0.0.1:${VITE_WEBSOCKET_PORT_C}:3000
 
   back-d:
     extends: back
     ports: !override
-      - ${VITE_WEBSOCKET_PORT_D}:3000
+      - 127.0.0.1:${VITE_WEBSOCKET_PORT_D}:3000
 
   back-e:
     extends: back
     ports: !override
-      - ${VITE_WEBSOCKET_PORT_E}:3000
+      - 127.0.0.1:${VITE_WEBSOCKET_PORT_E}:3000
 
   database:
     build: database
@@ -174,7 +174,7 @@ services:
       VITE_WEBSOCKET_PORTS: ${VITE_WEBSOCKET_PORTS}
       VITE_WEBSOCKET_DOMAINS: ${VITE_WEBSOCKET_DOMAINS}
     ports:
-      - 53015:53015
+      - 127.0.0.1:53015:53015
     depends_on:
       - back
     develop:
@@ -192,13 +192,13 @@ services:
   prometheus:
     build: prometheus
     ports:
-      - 32090:9090
+      - 127.0.0.1:32090:9090
     restart: on-failure:3
 
   loki:
     image: grafana/loki
     ports:
-      - 31090:3100
+      - 127.0.0.1:31090:3100
     restart: on-failure:3
 
   blog:
