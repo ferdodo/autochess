@@ -2,6 +2,7 @@ import type { Appellation } from "./Appellation.js";
 import type { Phase } from "./Phase.js";
 import type { Piece } from "./Piece.js";
 import type { PlayerDisplay } from "./PlayerDisplay.js";
+import type { ViewDisplay } from "./ViewDisplay.js";
 
 export interface Display {
 	pieces: Piece[];
@@ -13,11 +14,5 @@ export interface Display {
 	money: number;
 	levelUpCost: number | null;
 	phaseStartAt: string;
-	cameraOverride: {
-		positionX: number;
-		positionY: number;
-		positionZ: number;
-		rotationX: number;
-		rotationY: number;
-	};
+	viewDisplay: ViewDisplay;
 }

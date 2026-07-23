@@ -80,12 +80,14 @@ export class DisplayFactory implements Subscribable<Display> {
 		money: 100,
 		levelUpCost: 40,
 		phaseStartAt: new Date().toISOString(),
-		cameraOverride: {
-			positionX: 0,
-			positionY: 0,
-			positionZ: 0,
-			rotationX: 0,
-			rotationY: 0,
+		viewDisplay: {
+			cameraOverride: {
+				positionX: 0,
+				positionY: 0,
+				positionZ: 0,
+				rotationX: 0,
+				rotationY: 0,
+			},
 		},
 	};
 

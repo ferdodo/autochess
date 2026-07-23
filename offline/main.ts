@@ -19,7 +19,8 @@ import { observeInteractionHistory } from "core/src/utils/observeInteractionHist
 import { logBench } from "./utils/logBench";
 import { connectBot } from "core/src/utils/connectBot";
 import { GuiManager } from "./utils/GuiManager";
-import { map } from "rxjs/operators";
+import type { Display } from "core/src/types/Display";
+import { observeGuiViewDisplay } from "./utils/observeGuiViewDisplay";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -121,37 +122,25 @@ waitTextureLoaded
 
 		observeGame(frontContext1)
 			.pipe(
-				portray(frontContext1.publicKey, threeContext1),
-				map((display) => ({
-					...display,
-					cameraOverride: {
-						positionX: guiManager.cameraOverride.positionX,
-						positionY: guiManager.cameraOverride.positionY,
-						positionZ: guiManager.cameraOverride.positionZ,
-						rotationX: guiManager.cameraOverride.rotationX,
-						rotationY: guiManager.cameraOverride.rotationY,
-					},
-				})),
+				portray(
+					frontContext1.publicKey,
+					threeContext1,
+					observeGuiViewDisplay(guiManager.cameraOverride$),
+				),
 			)
-			.subscribe((display) => {
+			.subscribe((display: Display) => {
 				render(threeContext1, display);
 			});
 
 		observeGame(frontContext2)
 			.pipe(
-				portray(frontContext2.publicKey, threeContext2),
-				map((display) => ({
-					...display,
-					cameraOverride: {
-						positionX: guiManager.cameraOverride.positionX,
-						positionY: guiManager.cameraOverride.positionY,
-						positionZ: guiManager.cameraOverride.positionZ,
-						rotationX: guiManager.cameraOverride.rotationX,
-						rotationY: guiManager.cameraOverride.rotationY,
-					},
-				})),
+				portray(
+					frontContext2.publicKey,
+					threeContext2,
+					observeGuiViewDisplay(guiManager.cameraOverride$),
+				),
 			)
-			.subscribe((display) => {
+			.subscribe((display: Display) => {
 				render(threeContext2, display);
 			});
 	})

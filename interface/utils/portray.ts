@@ -13,22 +13,26 @@ import { trackTransposedHero } from "./trackTransposedHero";
 import type { ThreeContext } from "../types/ThreeContext";
 import type { HeroId } from "core/src/types/HeroId";
 import { frameObservable } from "./frameObservable";
+import type { ViewDisplay } from "core/src/types/ViewDisplay";
 
 export function portray(
 	publicKey: PublicKey,
 	threeContext: ThreeContext,
+	viewDisplay$: Observable<ViewDisplay>,
 ): OperatorFunction<Game, Display> {
 	return (source: Observable<Game>) =>
 		source.pipe(
 			combineLatestWith(
 				source.pipe(observePortrayedConfrontation(publicKey, interval(1000))),
 				source.pipe(trackTransposedHero(threeContext, publicKey)),
+				viewDisplay$,
 			),
 			map(
-				([game, confrontationPieces, transposedHero]: [
+				([game, confrontationPieces, transposedHero, viewDisplay]: [
 					Game,
 					Piece[] | undefined,
 					HeroId | undefined,
+					ViewDisplay,
 				]) => {
 					const display: Display = {
 						pieces:
@@ -57,13 +61,7 @@ export function portray(
 						money: game.playerMoney[publicKey] || 0,
 						levelUpCost: getLevelUpCost(game, publicKey),
 						phaseStartAt: game.phaseStartAt,
-						cameraOverride: {
-							positionX: 0,
-							positionY: 0,
-							positionZ: 0,
-							rotationX: 0,
-							rotationY: 0,
-						},
+						viewDisplay,
 					};
 
 					return display;

@@ -24,6 +24,7 @@ import { connectBot } from "core/src/utils/connectBot";
 import { take } from "rxjs/operators";
 import { lastValueFrom } from "rxjs";
 import type { Subscription } from "rxjs";
+import { observeDefaultViewDisplay } from "./utils/observeDefaultViewDisplay";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -94,7 +95,13 @@ async function main() {
 			});
 
 		observeGame(frontContext1)
-			.pipe(portray(frontContext1.publicKey, threeContext1))
+			.pipe(
+				portray(
+					frontContext1.publicKey,
+					threeContext1,
+					observeDefaultViewDisplay(),
+				),
+			)
 			.subscribe((display) => {
 				render(threeContext1, display);
 			});
