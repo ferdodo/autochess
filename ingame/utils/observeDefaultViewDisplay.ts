@@ -2,6 +2,7 @@ import type { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import type { ViewDisplay } from "core/src/types/ViewDisplay";
 import { observeWindowDimentions } from "core/src/utils/observeWindowDimentions";
+import { getFov } from "interface/utils/getFov";
 
 export function observeDefaultViewDisplay(): Observable<ViewDisplay> {
 	return observeWindowDimentions().pipe(
@@ -12,6 +13,7 @@ export function observeDefaultViewDisplay(): Observable<ViewDisplay> {
 				positionZ: 0,
 				rotationX: 0,
 				rotationY: 0,
+				fov: getFov(),
 			},
 			windowWidth: w,
 			windowHeight: h,

@@ -2,6 +2,13 @@ import { GUI } from "dat.gui";
 import { ReplaySubject } from "rxjs";
 import type { Observable } from "rxjs";
 import type { ViewDisplay } from "core/src/types/ViewDisplay";
+import { getWindowRatio } from "../../interface/utils/getWindowRatio";
+
+function getDefaultFov(): number {
+	const compensationValue =
+		Math.max(0, (-getWindowRatio() + 1.6) / 0.055) ** 1.3;
+	return 25 + compensationValue;
+}
 
 export class GuiManager {
 	#gui: GUI = new GUI();
@@ -13,6 +20,7 @@ export class GuiManager {
 		positionZ: 0,
 		rotationX: 0,
 		rotationY: 0,
+		fov: getDefaultFov(),
 	};
 
 	get cameraOverride$(): Observable<ViewDisplay["cameraOverride"]> {
@@ -46,6 +54,9 @@ export class GuiManager {
 			.onChange(() => {
 				this.#emitCameraOverride();
 			});
+		cameraFolder.add(this.cameraOverride, "fov", 10, 90, 0.1).onChange(() => {
+			this.#emitCameraOverride();
+		});
 		this.#emitCameraOverride();
 	}
 

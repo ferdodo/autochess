@@ -12,6 +12,13 @@ import type { ThreeContext } from "interface/types/ThreeContext";
 import { createRandomPiece } from "./create-random-piece";
 import { getBoardBlock } from "core/src/utils/getBoardBlock";
 import { getWindowDimentions } from "core/src/utils/getWindowDimentions";
+import { getWindowRatio } from "../../interface/utils/getWindowRatio";
+
+function getFov(): number {
+	const compensationValue =
+		Math.max(0, (-getWindowRatio() + 1.6) / 0.055) ** 1.3;
+	return 25 + compensationValue;
+}
 
 interface PieceHandle {
 	id: string;
@@ -88,6 +95,7 @@ export class DisplayFactory implements Subscribable<Display> {
 				positionZ: 0,
 				rotationX: 0,
 				rotationY: 0,
+				fov: getFov(),
 			},
 			windowWidth: getWindowDimentions().w,
 			windowHeight: getWindowDimentions().h,
