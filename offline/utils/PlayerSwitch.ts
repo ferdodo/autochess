@@ -21,10 +21,9 @@ export class PlayerSwitch {
 
 		for (const [i, canvas] of Object.entries(canvases)) {
 			const isVisible = Number.parseInt(i) === index;
-			canvas.style.display = isVisible ? "block" : "none";
 
 			if (isVisible) {
-				this.#currentPlayer.next(index);
+				canvas.scrollIntoView({ behavior: "smooth" });
 			}
 		}
 	}

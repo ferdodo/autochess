@@ -1,9 +1,5 @@
-import { createRenderer } from "interface/utils/createRenderer";
-import { observeWindowDimentions } from "core/src/utils/observeWindowDimentions";
 import { createContext } from "interface/utils/createContext";
 import { waitTextureLoaded } from "interface/utils/waitTextureLoaded";
-import { createCamera } from "interface/utils/createCamera";
-import { removeRenderer } from "interface/utils/removeRenderer";
 import { render } from "interface/utils/render";
 import type { FrontContext } from "core/src/types/FrontContext";
 import { initiateGame } from "core/src/api/initiateGame";
@@ -13,7 +9,6 @@ import { cast } from "core/src/utils/cast";
 import { observeInteractions } from "interface/utils/observeInteractions";
 import { observeInteractionHistory } from "core/src/utils/observeInteractionHistory";
 import { createWsClient } from "./utils/create-ws-client";
-import { switchMap } from "rxjs/operators";
 import { sign } from "./utils/sign";
 import { createKeyPair } from "./utils/create-key-pair";
 import { notify } from "./utils/notify";
@@ -21,10 +16,10 @@ import { toggleFullscreen } from "./utils/toggle-fullscreen";
 import { filter, map } from "rxjs/operators";
 import { doubleClick$ } from "./utils/double-click";
 import { connectBot } from "core/src/utils/connectBot";
-import { take } from "rxjs/operators";
 import { lastValueFrom } from "rxjs";
 import type { Subscription } from "rxjs";
 import { observeDefaultViewDisplay } from "./utils/observeDefaultViewDisplay";
+import { removeRenderer } from "interface/utils/removeRenderer";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -78,21 +73,6 @@ async function main() {
 		frontContext1.stamp = initiateGameResponse.stamp;
 		const threeContext1 = await createContext();
 		notify("");
-
-		connection.messages$
-			.pipe(
-				take(1),
-				switchMap(() => observeWindowDimentions()),
-			)
-			.subscribe(() => {
-				threeContext1.camera = createCamera();
-				removeRenderer(threeContext1.renderer);
-
-				threeContext1.renderer = createRenderer(
-					threeContext1.camera,
-					threeContext1.scene,
-				);
-			});
 
 		observeGame(frontContext1)
 			.pipe(

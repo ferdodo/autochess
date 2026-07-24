@@ -6,4 +6,6 @@ export interface ViewDisplay {
 		rotationX: number;
 		rotationY: number;
 	};
+	windowWidth: number;
+	windowHeight: number;
 }

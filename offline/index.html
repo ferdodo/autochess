@@ -11,6 +11,17 @@
 				margin: 0;
 				padding: 0;
 				touch-action: none;
+				overflow: hidden;
+			}
+
+			body {
+				scroll-snap-type: y mandatory;
+				overflow: hidden;
+				height: 100vh;
+
+				canvas {
+					scroll-snap-align: center;
+				}
 			}
 		</style>
 	</head>

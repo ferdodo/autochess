@@ -11,6 +11,7 @@ import { observeInteractions } from "interface/utils/observeInteractions";
 import type { ThreeContext } from "interface/types/ThreeContext";
 import { createRandomPiece } from "./create-random-piece";
 import { getBoardBlock } from "core/src/utils/getBoardBlock";
+import { getWindowDimentions } from "core/src/utils/getWindowDimentions";
 
 interface PieceHandle {
 	id: string;
@@ -88,6 +89,8 @@ export class DisplayFactory implements Subscribable<Display> {
 				rotationX: 0,
 				rotationY: 0,
 			},
+			windowWidth: getWindowDimentions().w,
+			windowHeight: getWindowDimentions().h,
 		},
 	};
 

@@ -1,9 +1,5 @@
-import { createRenderer } from "interface/utils/createRenderer";
-import { observeWindowDimentions } from "core/src/utils/observeWindowDimentions";
 import { createContext } from "interface/utils/createContext";
 import { waitTextureLoaded } from "interface/utils/waitTextureLoaded";
-import { createCamera } from "interface/utils/createCamera";
-import { removeRenderer } from "interface/utils/removeRenderer";
 import { render } from "interface/utils/render";
 import { PlayerSwitch } from "./utils/PlayerSwitch";
 import { createOfflineBackContext } from "./utils/createOfflineBackContext";
@@ -21,6 +17,8 @@ import { connectBot } from "core/src/utils/connectBot";
 import { GuiManager } from "./utils/GuiManager";
 import type { Display } from "core/src/types/Display";
 import { observeGuiViewDisplay } from "./utils/observeGuiViewDisplay";
+import { delayWhen } from "rxjs";
+import { frameObservable } from "interface/utils/frameObservable";
 
 document.addEventListener("contextmenu", (e) => {
 	e.preventDefault();
@@ -75,25 +73,6 @@ waitTextureLoaded
 
 		playerSwitch.switchPlayer1();
 
-		observeWindowDimentions().subscribe(() => {
-			threeContext1.camera = createCamera();
-			threeContext2.camera = createCamera();
-			removeRenderer(threeContext1.renderer);
-			removeRenderer(threeContext2.renderer);
-
-			threeContext1.renderer = createRenderer(
-				threeContext1.camera,
-				threeContext1.scene,
-			);
-
-			threeContext2.renderer = createRenderer(
-				threeContext2.camera,
-				threeContext2.scene,
-			);
-
-			playerSwitch.switchPlayer(currentPlayer);
-		});
-
 		const [initiateGameResponse1, botPlayerContext] = await Promise.all([
 			initiateGame(frontContext1),
 			connectBot(frontContext2, 250),
@@ -137,7 +116,9 @@ waitTextureLoaded
 				portray(
 					frontContext2.publicKey,
 					threeContext2,
-					observeGuiViewDisplay(guiManager.cameraOverride$),
+					observeGuiViewDisplay(guiManager.cameraOverride$).pipe(
+						delayWhen(() => frameObservable),
+					),
 				),
 			)
 			.subscribe((display: Display) => {

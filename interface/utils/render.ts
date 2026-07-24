@@ -3,6 +3,7 @@ import { renderShopProductBackgroundMeshes } from "./renderShopProductBackground
 import { renderShopProductImageMeshes } from "./renderShopProductImageMeshes";
 import type { ThreeContext } from "../types/ThreeContext";
 import { renderShopProductTraitMeshes } from "./renderShopProductTraitMeshes";
+import { renderRenderer } from "./renderRenderer";
 import { renderShopProductAppellationMeshes } from "./renderShopProductAppellationMeshes";
 import { renderShopProductCostMeshes } from "./renderShopProductCostMeshes";
 import { renderBenchHeroMeshes } from "./renderBenchHeroMeshes";
@@ -27,6 +28,7 @@ import { renderRoundTimeGeometry } from "./renderRoundTimeGeometry";
 import { renderCameraOverride } from "./renderCameraOverride";
 
 export function render(threeContext: ThreeContext, display: Display) {
+	renderRenderer(threeContext, display);
 	renderCameraOverride(threeContext, display);
 	renderBoardPieces(threeContext, display);
 	renderShopProductBackgroundMeshes(threeContext, display);
