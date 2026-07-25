@@ -21,6 +21,9 @@ export function canBotShopBuy(game: Game, publicKey: PublicKey): boolean {
 
 	// Check if there's an interesting item to buy
 	for (const product of shop) {
+		if (product === null) {
+			continue;
+		}
 		const cost = getHeroCost(product);
 		if (money >= cost) {
 			// Buy if there's room for a new type, or if it's a type already owned

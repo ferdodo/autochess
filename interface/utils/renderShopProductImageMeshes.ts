@@ -1,6 +1,6 @@
 import { Mesh, Vector3 } from "three";
-import type { Display } from "core/src/types/Display";
-import type { ThreeContext } from "../types/ThreeContext";
+import type { Display } from "core/src/types/Display.js";
+import type { ThreeContext } from "../types/ThreeContext.js";
 
 export function renderShopProductImageMeshes(
 	threeContext: ThreeContext,
@@ -8,6 +8,11 @@ export function renderShopProductImageMeshes(
 ): void {
 	for (const [_id, appellation] of Object.entries(display.shop)) {
 		const id = String(_id);
+
+		if (!appellation) {
+			continue;
+		}
+
 		const meshCreated = !threeContext.shopProductImageMeshes[id];
 
 		threeContext.shopProductImageMeshes[id] ||= new Mesh(
@@ -43,7 +48,10 @@ export function renderShopProductImageMeshes(
 	}
 
 	for (const productId of Object.keys(threeContext.shopProductImageMeshes)) {
-		if (!display.shop.find((_p, id) => String(id) === productId)) {
+		const index = Number.parseInt(productId, 10);
+		const product = display.shop[index];
+
+		if (!product) {
 			threeContext.scene.remove(threeContext.shopProductImageMeshes[productId]);
 			delete threeContext.shopProductImageMeshes[productId];
 		}

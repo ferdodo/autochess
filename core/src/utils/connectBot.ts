@@ -45,7 +45,7 @@ export async function connectBot(frontContext: FrontContext, debounce = 0) {
 				}
 
 				const botMoney = game.playerMoney[frontContext.publicKey] || 0;
-				const shop = game.playerShops[frontContext.publicKey] || {};
+				const shop = game.playerShops[frontContext.publicKey] || [];
 				const shopEntries = Object.entries(shop);
 
 				if (canBotShopBuy(game, frontContext.publicKey)) {
@@ -56,6 +56,9 @@ export async function connectBot(frontContext: FrontContext, debounce = 0) {
 					const heroTypes = new Set(allHeroes.map((h) => h.appellation));
 
 					for (const [_item, product] of shopEntries) {
+						if (product === null) {
+							continue;
+						}
 						const item = Number.parseInt(_item);
 						const cost = getHeroCost(product);
 						if (botMoney >= cost) {

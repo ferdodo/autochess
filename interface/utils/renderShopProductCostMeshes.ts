@@ -1,7 +1,7 @@
 import { Mesh, Vector3 } from "three";
-import type { Display } from "core/src/types/Display";
-import type { ThreeContext } from "../types/ThreeContext";
-import { getHeroCost } from "core/src/utils/getHeroCost";
+import type { Display } from "core/src/types/Display.js";
+import type { ThreeContext } from "../types/ThreeContext.js";
+import { getHeroCost } from "core/src/utils/getHeroCost.js";
 
 export function renderShopProductCostMeshes(
 	threeContext: ThreeContext,
@@ -9,6 +9,11 @@ export function renderShopProductCostMeshes(
 ): void {
 	for (const [_id, appellation] of Object.entries(display.shop)) {
 		const id = String(_id);
+
+		if (!appellation) {
+			continue;
+		}
+
 		const background = threeContext.shopProductBackgroundMeshes[id];
 		const cost = getHeroCost(appellation);
 
@@ -41,7 +46,10 @@ export function renderShopProductCostMeshes(
 	}
 
 	for (const productId of Object.keys(threeContext.shopProductCostMeshes)) {
-		if (!display.shop.find((_p, id) => String(id) === productId)) {
+		const index = Number.parseInt(productId, 10);
+		const product = display.shop[index];
+
+		if (!product) {
 			const mesh = threeContext.shopProductCostMeshes[productId];
 
 			if (!mesh) {

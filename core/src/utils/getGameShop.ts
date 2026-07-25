@@ -2,7 +2,10 @@ import type { Game } from "../types/Game.js";
 import type { Appellation } from "../types/Appellation.js";
 import type { PublicKey } from "../types/PublicKey.js";
 
-export function getGameShop(game: Game, publicKey: PublicKey): Appellation[] {
+export function getGameShop(
+	game: Game,
+	publicKey: PublicKey,
+): (Appellation | null)[] {
 	const shop = game.playerShops[publicKey];
 
 	if (!shop) {

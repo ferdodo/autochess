@@ -1,6 +1,6 @@
 import { Mesh, Vector3 } from "three";
-import type { Display } from "core/src/types/Display";
-import type { ThreeContext } from "../types/ThreeContext";
+import type { Display } from "core/src/types/Display.js";
+import type { ThreeContext } from "../types/ThreeContext.js";
 
 export function renderShopProductAppellationMeshes(
 	threeContext: ThreeContext,
@@ -8,6 +8,11 @@ export function renderShopProductAppellationMeshes(
 ): void {
 	for (const [_id, appellation] of Object.entries(display.shop)) {
 		const id = String(_id);
+
+		if (!appellation) {
+			continue;
+		}
+
 		const background = threeContext.shopProductBackgroundMeshes[id];
 
 		if (!background) {
@@ -43,7 +48,10 @@ export function renderShopProductAppellationMeshes(
 	for (const productId of Object.keys(
 		threeContext.shopProductAppellationMeshes,
 	)) {
-		if (!display.shop.find((_p, id) => String(id) === productId)) {
+		const index = Number.parseInt(productId, 10);
+		const product = display.shop[index];
+
+		if (!product) {
 			const mesh = threeContext.shopProductAppellationMeshes[productId];
 
 			if (!mesh) {

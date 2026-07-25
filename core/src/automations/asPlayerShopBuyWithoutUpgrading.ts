@@ -12,12 +12,19 @@ export async function asPlayerShopBuyWithoutUpgrading(
 		testContext.frontContexts[playerNumber].publicKey || "Error";
 
 	let foundGoodItem = false;
+
 	while (!foundGoodItem) {
 		const game = await getGame(testContext, playerNumber);
-		const shop = game.playerShops[publicKey] || [];
-		const heroToAcquire = shop[0];
+		const money = game.playerMoney[publicKey];
 
-		if (!heroToAcquire) {
+		if (money <= 2) {
+			throw new Error("Player is missing money to buy without upgrading");
+		}
+
+		const shop = game.playerShops[publicKey] || [];
+		const heroesToAquire = shop.filter((item) => item !== null);
+
+		if (!heroesToAquire.length) {
 			await asPlayerReroll(testContext, playerNumber);
 			continue;
 		}
@@ -27,15 +34,15 @@ export async function asPlayerShopBuyWithoutUpgrading(
 			...(game.playerHeroes[publicKey] || []),
 		];
 
-		const countOfSameType = allHeroes.filter(
-			(h) => h.appellation === heroToAcquire && h.grade === 0,
-		).length;
+		for (const [i, product] of shop.entries()) {
+			const countOfSameType = allHeroes.filter(
+				(h) => h.appellation === product && h.grade === 0,
+			).length;
 
-		if (countOfSameType >= 2) {
-			await asPlayerReroll(testContext, playerNumber);
-		} else {
-			foundGoodItem = true;
-			await asPlayerShopBuy(testContext, playerNumber);
+			if (countOfSameType < 2) {
+				foundGoodItem = true;
+				await asPlayerShopBuy(testContext, playerNumber, i);
+			}
 		}
 	}
 }

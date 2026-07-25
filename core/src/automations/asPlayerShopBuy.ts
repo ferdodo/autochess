@@ -9,6 +9,7 @@ import { ServerNotification } from "../types/ServerNotification.js";
 export async function asPlayerShopBuy(
 	testContext: TestContext,
 	playerNumber = 0,
+	itemIndex = 0,
 ) {
 	const frontContext = testContext.frontContexts[playerNumber];
 
@@ -42,7 +43,7 @@ export async function asPlayerShopBuy(
 		),
 	);
 
-	await shopBuy(frontContext, 0);
+	await shopBuy(frontContext, itemIndex);
 
 	await Promise.race([invalidShopBuy, waitBought]);
 }

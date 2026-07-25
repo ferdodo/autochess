@@ -8,7 +8,7 @@ export interface Display {
 	pieces: Piece[];
 	level: number;
 	players: PlayerDisplay[];
-	shop: Appellation[];
+	shop: (Appellation | null)[];
 	bench: Record<number, Piece>;
 	phase: Phase;
 	money: number;

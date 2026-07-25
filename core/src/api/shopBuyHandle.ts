@@ -38,7 +38,7 @@ export function shopBuyHandle(context: BackContext): Observable<void> {
 
 					try {
 						const shop = game.playerShops[publicKey] || [];
-						const appellation: Appellation | undefined = shop[item];
+						const appellation: Appellation | null | undefined = shop[item];
 
 						if (!appellation) {
 							await abort();
@@ -72,8 +72,15 @@ export function shopBuyHandle(context: BackContext): Observable<void> {
 
 						bench[firstEmptySlot] = new HeroFactory().build(appellation);
 
+						const updatedShop = [...shop];
+						updatedShop[item] = null;
+
 						let newGame: Game = {
 							...game,
+							playerShops: {
+								...game.playerShops,
+								[publicKey]: updatedShop,
+							},
 							playerMoney: {
 								...game.playerMoney,
 								[publicKey]: playerMoney - cost,

@@ -16,7 +16,9 @@ export function swapPlayerShopWithPool(
 	newPool.heroes = newPool.heroes.slice(3) as Pool["heroes"];
 
 	for (const appellation of game.playerShops[publicKey]) {
-		newPool.heroes.push(appellation);
+		if (appellation !== null) {
+			newPool.heroes.push(appellation);
+		}
 	}
 
 	const newGame: Game = {

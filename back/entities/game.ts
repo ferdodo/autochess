@@ -28,7 +28,7 @@ class Game {
 	playerBenches: Record<PublicKey, Record<number, Hero>>;
 
 	@Property({ type: "json" })
-	playerShops: Record<PublicKey, Appellation[]>;
+	playerShops: Record<PublicKey, (Appellation | null)[]>;
 
 	@Property({ type: "json" })
 	playerMoney: Record<PublicKey, Money>;
