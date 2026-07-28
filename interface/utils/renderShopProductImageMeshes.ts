@@ -30,15 +30,11 @@ export function renderShopProductImageMeshes(
 		if (meshCreated) {
 			threeContext.scene.add(mesh);
 			mesh.rotation.x = background.rotation.x;
-			mesh.position.y = background.position.y;
-			mesh.position.z = background.position.z + 0.0001;
 			mesh.position.x = background.position.x;
-
-			const vector = new Vector3(0, 0.01, 0);
+			const vector = new Vector3(0, 0, 0.001);
 			vector.applyEuler(background.rotation);
 			mesh.position.y = background.position.y + vector.y;
 			mesh.position.z = background.position.z + vector.z;
-
 			mesh.scale.set(2, 2, 2);
 		}
 
