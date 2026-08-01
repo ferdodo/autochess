@@ -14,6 +14,7 @@ import type { ThreeContext } from "../types/ThreeContext";
 import type { HeroId } from "core/src/types/HeroId";
 import { frameObservable } from "./frameObservable";
 import type { ViewDisplay } from "core/src/types/ViewDisplay";
+import calculateSynergies from "core/src/utils/calculateSynergies";
 
 export function portray(
 	publicKey: PublicKey,
@@ -34,19 +35,21 @@ export function portray(
 					HeroId | undefined,
 					ViewDisplay,
 				]) => {
+					const playerBoardHeroes = game.playerHeroes[publicKey] || [];
+					const boardPieces = playerBoardHeroes.map(
+						(hero: (typeof playerBoardHeroes)[0]) => ({
+							hero,
+							animation: Animation.Idle,
+							transposed: hero.id === transposedHero,
+							animationStartAt: Date.now(),
+							right: false,
+						}),
+					);
+					const pieces = confrontationPieces || boardPieces;
 					const display: Display = {
-						pieces:
-							confrontationPieces ||
-							game.playerHeroes[publicKey]?.map((hero) => ({
-								hero,
-								animation: Animation.Idle,
-								transposed: hero.id === transposedHero,
-								animationStartAt: Date.now(),
-								right: false,
-							})) ||
-							[],
+						pieces,
 						level: game.playerLevel[publicKey] || 1,
-						players: game.publicKeys.map((p) => ({
+						players: game.publicKeys.map((p: PublicKey) => ({
 							name: game.nicknames[p],
 							health: game.playerHealths[p] || 0,
 							level: game.playerLevel[p] || 1,
@@ -62,12 +65,13 @@ export function portray(
 						levelUpCost: getLevelUpCost(game, publicKey),
 						phaseStartAt: game.phaseStartAt,
 						viewDisplay,
+						synergies: calculateSynergies(boardPieces),
 					};
 
 					return display;
 				},
 			),
 			combineLatestWith(frameObservable),
-			map(([display]) => display),
+			map(([display]: [Display, number]) => display),
 		);
 }

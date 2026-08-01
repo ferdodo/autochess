@@ -40,6 +40,14 @@ export async function createContext(): Promise<ThreeContext> {
 		side: DoubleSide,
 	});
 
+	const activeSynergyMaterial = new MeshBasicMaterial({
+		color: 0xffd700,
+	});
+
+	const inactiveSynergyMaterial = new MeshBasicMaterial({
+		color: 0x000000,
+	});
+
 	return {
 		benchHeroMeshes: {},
 		benchSlotMeshes: createBenchSlotMeshes(scene),
@@ -97,5 +105,9 @@ export async function createContext(): Promise<ThreeContext> {
 		shopProductCostMeshes: {},
 		fullscreenButtonMesh: crateFullScreenButtonMesh(scene, camera),
 		transpositionPlane: createTranspositionPlane(scene),
+		synergiesGeometries: [],
+		synergyMeshes: [],
+		activeSynergyMaterial,
+		inactiveSynergyMaterial,
 	};
 }

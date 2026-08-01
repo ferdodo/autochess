@@ -14,6 +14,8 @@ Create `post.md` inside. Write in markdown, but remember the post will be publis
 
 Optionally, add an image (`image.png`, `image.jpg`, or `image.gif`). To make it visible in the markdown preview, reference it in your post: `![](image.png)`. When published to Mastodon, the image will be attached to the post.
 
+When creating a post, do not add a date prefix. Posts without dates remain in draft status for review before publishing.
+
 ## How to Publish a Post
 
 Rename the folder from `xxxx-post-name` to `2026-07-26-post-name`. Use today's date. The date prefix marks the post as published.

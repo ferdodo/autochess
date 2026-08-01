@@ -51,6 +51,7 @@ export class DisplayFactory implements Subscribable<Display> {
 			isMe,
 		})),
 		level: 1,
+		synergies: [],
 		bench: [
 			{
 				hero: {

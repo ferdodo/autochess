@@ -3,6 +3,7 @@ import type { Phase } from "./Phase.js";
 import type { Piece } from "./Piece.js";
 import type { PlayerDisplay } from "./PlayerDisplay.js";
 import type { ViewDisplay } from "./ViewDisplay.js";
+import type SynergyDisplay from "./SynergyDisplay.js";
 
 export interface Display {
 	pieces: Piece[];
@@ -15,4 +16,5 @@ export interface Display {
 	levelUpCost: number | null;
 	phaseStartAt: string;
 	viewDisplay: ViewDisplay;
+	synergies: SynergyDisplay[];
 }

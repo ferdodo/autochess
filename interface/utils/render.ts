@@ -26,6 +26,8 @@ import { renderLevelUpGeometry } from "./renderLevelUpGeometry";
 import { renderRoundTimeMesh } from "./renderRoundTimeMesh";
 import { renderRoundTimeGeometry } from "./renderRoundTimeGeometry";
 import { renderCameraOverride } from "./renderCameraOverride";
+import { renderSynergiesGeometry } from "./renderSynergiesGeometry";
+import { renderSynergyMeshes } from "./renderSynergyMeshes";
 
 export function render(threeContext: ThreeContext, display: Display) {
 	renderRenderer(threeContext, display);
@@ -52,6 +54,8 @@ export function render(threeContext: ThreeContext, display: Display) {
 	renderLevelUpMesh(threeContext, display);
 	renderRoundTimeGeometry(threeContext, display);
 	renderRoundTimeMesh(threeContext, display);
+	renderSynergiesGeometry(threeContext, display);
+	renderSynergyMeshes(threeContext, display);
 }
 
 //const _renderCalls$ = new Subject<void>();

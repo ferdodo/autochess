@@ -73,4 +73,8 @@ export interface ThreeContext {
 	shopProductCostMeshes: Record<string, Mesh>;
 	fullscreenButtonMesh: Mesh;
 	transpositionPlane: Mesh;
+	synergiesGeometries: TextGeometry[];
+	synergyMeshes: Mesh[];
+	activeSynergyMaterial: MeshBasicMaterial;
+	inactiveSynergyMaterial: MeshBasicMaterial;
 }
