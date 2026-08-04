@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"noImplicitReturns": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"module": "esnext",
+		"moduleResolution": "bundler"
+	},
+	"include": ["src/**/*"]
+}

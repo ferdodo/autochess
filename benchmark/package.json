@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "build": "bash scripts/run.sh && tsc --project tsconfig.perf.json && tsc && bash scripts/check-type-assertions.sh && biome ci && exportcase check src && exportcase check perf && vite build",
+    "start": "vite --port 52010 --host"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "recharts": "^3.10.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.6",
+    "@types/node": "^26.1.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "exportcase": "^1.2.5",
+    "tsx": "^4.23.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.0"
+  }
+}

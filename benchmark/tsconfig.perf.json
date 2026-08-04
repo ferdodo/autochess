@@ -1,0 +1,8 @@
+{
+	"compilerOptions": {
+		"noImplicitReturns": true,
+		"noEmit": true,
+		"types": ["node"]
+	},
+	"include": ["perf/**/*"]
+}

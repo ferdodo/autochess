@@ -203,3 +203,11 @@ services:
 
   blog:
     build: blog
+
+  benchmark:
+    build:
+      context: benchmark
+      additional_contexts:
+        autochess-core: service:core
+    ports:
+      - "127.0.0.1:52010:52010"

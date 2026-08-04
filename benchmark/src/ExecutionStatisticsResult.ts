@@ -1,0 +1,45 @@
+export type ExecutionStatisticsResult = {
+	name: string;
+	latency: {
+		aad: number;
+		critical: number;
+		df: number;
+		mad: number;
+		max: number;
+		mean: number;
+		min: number;
+		moe: number;
+		p50: number;
+		p75: number;
+		p99: number;
+		p995: number;
+		p999: number;
+		rme: number;
+		samplesCount: number;
+		sd: number;
+		sem: number;
+		variance: number;
+	};
+	throughput: {
+		aad: number;
+		critical: number;
+		df: number;
+		mad: number;
+		max: number;
+		mean: number;
+		min: number;
+		moe: number;
+		p50: number;
+		p75: number;
+		p99: number;
+		p995: number;
+		p999: number;
+		rme: number;
+		samplesCount: number;
+		sd: number;
+		sem: number;
+		variance: number;
+	};
+	period: number;
+	totalTime: number;
+};
