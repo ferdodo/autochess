@@ -34,15 +34,16 @@ export async function createFpsCounter(threeContext: ThreeContext) {
 
 		trianglePanel.update(threeContext.renderer.info.render.triangles, 150000);
 		texturesPanel.update(threeContext.renderer.info.memory.textures, 80);
-
 		waitBetweenRendersStat.end();
 		fpsStat.begin();
 		renderTimeStat.begin();
 		triangleStats.begin();
+		texturesStats.begin();
 		await firstValueFrom(fpsCounter.frameEnd$);
 		waitBetweenRendersStat.begin();
 		fpsStat.end();
 		renderTimeStat.end();
 		triangleStats.end();
+		texturesStats.end();
 	}
 }
