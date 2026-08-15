@@ -211,3 +211,12 @@ services:
         autochess-core: service:core
     ports:
       - "127.0.0.1:52010:52010"
+
+  codex:
+    build:
+      context: codex
+      additional_contexts:
+        autochess-assets: service:assets
+        autochess-core: service:core
+    ports:
+      - "127.0.0.1:41010:41010"

@@ -1,0 +1,19 @@
+{
+	"scripts": {
+		"build": "tsc && biome ci && vite build --base ./",
+		"start": "vite --host --port 41010"
+	},
+	"dependencies": {
+		"react": "^19.2.8",
+		"react-dom": "^19.2.8"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.8",
+		"@types/react": "^19.2.18",
+		"@types/react-dom": "^19.2.4",
+		"assets": "file:../assets",
+		"core": "file:../core",
+		"typescript": "^7.0.2",
+		"vite": "^8.2.1"
+	}
+}

@@ -1,6 +1,7 @@
 import type { Confrontation } from "../types/Confrontation.js";
 import type { Action } from "../types/Action.js";
 import type { Move } from "../types/Move.js";
+import { computeDamage } from "./computeDamage.js";
 
 export function computeConfrontation(
 	confrontation: Confrontation,
@@ -54,7 +55,13 @@ export function computeConfrontation(
 			throw new Error("Target not found !");
 		}
 
-		const damage = 1 + attacker.grade;
+		const attackerTeam = confrontation.playerAHeroes.some(
+			(hero) => hero.id === attacker.id,
+		)
+			? confrontation.playerAHeroes
+			: confrontation.playerBHeroes;
+
+		const damage = computeDamage(attacker, attackerTeam);
 
 		return {
 			...confrontation,
