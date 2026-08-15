@@ -1,8 +1,7 @@
 import type { Game } from "../types/Game.js";
 import type { Hero } from "../types/Hero.js";
 import type { PublicKey } from "../types/PublicKey.js";
-
-const MAX_GRADE = 5;
+import { getMaxGrade } from "./getMaxGrade.js";
 
 export function findHeroesToMerge(
 	game: Game,
@@ -13,7 +12,7 @@ export function findHeroesToMerge(
 	const mergeableTuples: Array<[Hero, Hero, Hero]> = [];
 
 	for (const heroes of Object.values(groups)) {
-		if (heroes.length >= 3 && heroes[0].grade < MAX_GRADE) {
+		if (heroes.length >= 3 && heroes[0].grade < getMaxGrade()) {
 			for (let i = 0; i + 2 < heroes.length; i += 3)
 				mergeableTuples.push([heroes[i], heroes[i + 1], heroes[i + 2]]);
 		}

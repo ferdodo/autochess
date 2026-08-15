@@ -1,5 +1,6 @@
 import type { Hero } from "../types/Hero.js";
 import { Trait } from "../types/Trait.js";
+import { getBaseDamage } from "./getBaseDamage.js";
 import { getHeroTraits } from "./getHeroTraits.js";
 import { getOrcSynergyDamageBonus } from "./getOrcSynergyDamageBonus.js";
 import { getSynergiesThresholds } from "./getSynergiesThresholds.js";
@@ -18,8 +19,7 @@ export function computeDamage(attacker: Hero, attackerTeam: Hero[]): number {
 	const orcSynergyActive = orcCount >= getSynergiesThresholds()[Trait.Orc];
 
 	return (
-		1 +
-		attacker.grade +
+		getBaseDamage(attacker.grade) +
 		(attackerHasOrcTrait && orcSynergyActive ? getOrcSynergyDamageBonus() : 0)
 	);
 }
