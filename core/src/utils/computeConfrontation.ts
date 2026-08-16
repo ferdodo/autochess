@@ -1,7 +1,9 @@
 import type { Confrontation } from "../types/Confrontation.js";
 import type { Action } from "../types/Action.js";
+import type { Hero } from "../types/Hero.js";
 import type { Move } from "../types/Move.js";
 import { computeDamage } from "./computeDamage.js";
+import { computeDarkLifeSteal } from "./computeDarkLifeSteal.js";
 
 export function computeConfrontation(
 	confrontation: Confrontation,
@@ -62,31 +64,39 @@ export function computeConfrontation(
 			: confrontation.playerBHeroes;
 
 		const damage = computeDamage(attacker, attackerTeam);
+		const attackerHeal = computeDarkLifeSteal(attacker, attackerTeam, damage);
+
+		const applyAttack = (hero: Hero): Hero => {
+			if (hero.id === target.id) {
+				return {
+					...hero,
+					attributes: {
+						...hero.attributes,
+						health: hero.attributes.health - damage,
+					},
+				};
+			}
+
+			if (hero.id === attacker.id && attackerHeal > 0) {
+				return {
+					...hero,
+					attributes: {
+						...hero.attributes,
+						health: Math.min(
+							hero.attributes.maxHealth,
+							hero.attributes.health + attackerHeal,
+						),
+					},
+				};
+			}
+
+			return hero;
+		};
 
 		return {
 			...confrontation,
-			playerAHeroes: confrontation.playerAHeroes.map((h) =>
-				h.id === target.id
-					? {
-							...h,
-							attributes: {
-								...h.attributes,
-								health: h.attributes.health - damage,
-							},
-						}
-					: h,
-			),
-			playerBHeroes: confrontation.playerBHeroes.map((h) =>
-				h.id === target.id
-					? {
-							...h,
-							attributes: {
-								...h.attributes,
-								health: h.attributes.health - damage,
-							},
-						}
-					: h,
-			),
+			playerAHeroes: confrontation.playerAHeroes.map(applyAttack),
+			playerBHeroes: confrontation.playerBHeroes.map(applyAttack),
 		};
 	}
 

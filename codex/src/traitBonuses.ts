@@ -1,4 +1,5 @@
 import { Trait } from "core/src/types/Trait";
+import { getDarkSynergyLifeStealPercentage } from "core/src/utils/getDarkSynergyLifeStealPercentage";
 import { getOrcSynergyDamageBonus } from "core/src/utils/getOrcSynergyDamageBonus";
 
 export const traitBonuses: Record<Trait, string> = {
@@ -11,6 +12,6 @@ export const traitBonuses: Record<Trait, string> = {
 	[Trait.BladeMaster]: "",
 	[Trait.Dead]: "",
 	[Trait.Light]: "",
-	[Trait.Dark]: "",
+	[Trait.Dark]: `Heals for ${getDarkSynergyLifeStealPercentage() * 100}% of the damage it deals`,
 	[Trait.Armored]: "",
 };
