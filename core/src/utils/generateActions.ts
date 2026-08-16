@@ -4,6 +4,7 @@ import type { Combat } from "../types/Combat.js";
 import type { Confrontation } from "../types/Confrontation.js";
 import { computeConfrontation } from "./computeConfrontation.js";
 import { createConfrontationHeroOrder } from "./createConfrontationHeroOrder.js";
+import { findBladeMasterExtraAttack } from "./findBladeMasterExtraAttack.js";
 import { findHittableHero } from "./findHittableHero.js";
 import { isConfrontationInProgress } from "./isConfrontationInProgress.js";
 import { moveToClosestHittableHero } from "./moveToClosestHittableHero.js";
@@ -48,6 +49,19 @@ export async function* generateActions(
 
 				confrontation = computeConfrontation(confrontation, action);
 				yield action;
+
+				const extraAttack = findBladeMasterExtraAttack(confrontation, hero.id);
+
+				if (extraAttack) {
+					actionCount += 1;
+
+					if (actionCount > combatSchema.properties.actions.maxItems) {
+						throw new Error("Too many actions !");
+					}
+
+					confrontation = computeConfrontation(confrontation, extraAttack);
+					yield extraAttack;
+				}
 			} else {
 				const action = {
 					move: {

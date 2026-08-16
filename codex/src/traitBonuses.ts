@@ -9,7 +9,7 @@ export const traitBonuses: Record<Trait, string> = {
 	[Trait.Ranged]: "",
 	[Trait.Magic]: "",
 	[Trait.Beast]: "",
-	[Trait.BladeMaster]: "",
+	[Trait.BladeMaster]: "Attacks twice instead of once",
 	[Trait.Dead]: "",
 	[Trait.Light]: "",
 	[Trait.Dark]: `Heals for ${getDarkSynergyLifeStealPercentage() * 100}% of the damage it deals`,
