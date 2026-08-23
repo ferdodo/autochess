@@ -3,9 +3,12 @@
 cd /tmp
 git clone -b pages https://codeberg.org/ferdodo/autochess.git
 cd autochess
-git rm -r *
+mv .git /tmp/.git.save
+rm -rfv * .*
+mv /tmp/.git.save .git
 cp -r /offline-dist/* .
 git add .
+git status
 
 read -p "Enter email: " email
 git config --global user.email "$email"
